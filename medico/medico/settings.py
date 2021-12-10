@@ -126,6 +126,17 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_USER_MODEL = 'userauth.ExtendUser'
 
+GRAPHQL_JWT = {
+    "JWT_ALLOW_ANY_CLASS": [
+        "graphql_auth.mutations.Register",
+        "graphql_auth.mutations.VerifyAccount",
+        "graphql_auth.mutations.ObtainJSONWebToken",
+        
+    ],
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_LONG_RUNNING_REFRESH_TOKEN":True,
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -156,3 +167,6 @@ GRAPHENE = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

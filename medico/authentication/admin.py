@@ -8,8 +8,6 @@ from .models import Customer
 
 
 
-
-
 admin.site.register(Doctor)
 admin.site.register(Customer)
 admin.site.register(Appointment)

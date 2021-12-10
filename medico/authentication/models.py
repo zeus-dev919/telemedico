@@ -20,7 +20,7 @@ class Doctor(models.Model):
     #award_Pic = models.ImageField(upload_to=path_and_rename,verbose_name="Award_ Picture", blank=True)
     #consultation_fees = models.ImageField(upload_to=path_and_rename, verbose_name="Consultation Fees", blank=True)
     bio = models.IntegerField(default='0000$')
-
+    traige_score = models.IntegerField( null=False)
     def __str__(self):
         return self.title
 
