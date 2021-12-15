@@ -11,6 +11,8 @@ import {
   Home,
   Doctors,
   Symthoms,
+  DoctorsList,
+  Appointment,
 } from "./index.js";
 
 const Stack = createStackNavigator();
@@ -43,6 +45,8 @@ const AppMain = () => {
             <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
             <Stack.Screen name="symthoms" component={Symthoms} />
+            <Stack.Screen name="doctorList" component={DoctorsList} />
+            <Stack.Screen name="appointment" component={Appointment} />
           </>
         )}
       </Stack.Navigator>

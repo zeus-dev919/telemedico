@@ -78,12 +78,12 @@ const HomePage = ({ navigation }) => {
   // dispatch(ResetAddMatterportForm());
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
-    console.log("Sympptoms Checker !!")
-    navigation.navigate('symthoms')
+    console.log("Sympptoms Checker !!");
+    navigation.navigate("symthoms");
   };
   const handleDoctors = () => {
-    console.log("Doctors !!")
-    navigation.navigate('doctors')
+    console.log("Doctors !!");
+    navigation.navigate("doctors");
   };
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
@@ -156,10 +156,7 @@ const HomePage = ({ navigation }) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.Headercard}
-              onPress={handleDoctors}
-            >
+            <TouchableOpacity style={styles.Headercard} onPress={handleDoctors}>
               <Image
                 style={styles.cardImg}
                 source={images.mrAi}
@@ -244,6 +241,83 @@ const HomePage = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
+          <View style={styles.specContainer}>
+            <Text style={styles.SpecTitle}>Packages</Text>
+          </View>
+          <View style={styles.packages}>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+            {/* Antigent Test */}
+            <View style={styles.package}>
+              <Image
+                style={styles.packageImg}
+                source={{
+                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.packageTitle1}>Antigent Test</Text>
+              <Text style={styles.packageTitle2}>K-Klinic</Text>
+            </View>
+          </View>
         </ScrollView>
       </View>
       <ImageBackground
@@ -357,14 +431,15 @@ const styles = StyleSheet.create({
   menuContent: {
     flexDirection: "row",
     flexWrap: "wrap",
+    // backgroundColor: "yellow",
   },
   // Specialities
   specContainer: {
     margin: 10,
-    marginVertical: 20,
+    marginTop: 20,
   },
   SpecTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: COLORS.fontColor1,
   },
@@ -409,5 +484,37 @@ const styles = StyleSheet.create({
 
     elevation: 8,
     // Shadow End
+  },
+
+  // Packages
+  packages: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  package: {
+    padding: 0,
+    margin: 5,
+    marginHorizontal: 10,
+    width: "44%",
+    marginBottom: 10,
+  },
+  packageImg: {
+    width: "100%",
+    height: 100,
+    borderRadius: 40,
+    // marginBottom: 5,
+  },
+  packageTitle1: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 2,
+    paddingLeft: 10,
+    color: COLORS.fontColor1,
+  },
+  packageTitle2: {
+    fontSize: 14,
+    marginBottom: 5,
+    paddingLeft: 10,
+    color: COLORS.fontColor2,
   },
 });

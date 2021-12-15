@@ -9,6 +9,7 @@ export const COLORS = {
   fontColor2: "#6E8FA3",
   fontColor3: "#B2D3F6",
   fontColor4: "#384062",
+  fontColor5: "#2758E4",
   bgColor1: "#f0f4f7",
   bgColor2: "#f5f6f8",
   blueColor: "#40e0d0", // blue
