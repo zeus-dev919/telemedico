@@ -13,6 +13,8 @@ const tooth2 = require("../assets/icons/tooth.png");
 const heart2 = require("../assets/icons/heart-attack.png");
 const eye = require("../assets/icons/view.png");
 const syringe = require("../assets/icons/syringe.png");
+const phone = require("../assets/icons/phone.png");
+const video = require("../assets/icons/video-camera.png");
 
 // body
 const lungs = require("../assets/icons/body/lungs.png");
@@ -40,6 +42,8 @@ export default {
   heart2,
   eye,
   syringe,
+  phone,
+  video,
   // body
   lungs,
   tooth,

@@ -25,7 +25,10 @@ import Symthoms from './Main/Symthoms'
 
 const CustomDrawerContent = ({ navigation }) => {
   const handleHome = () => {
-    navigation.navigate("homeUser");
+    navigation.navigate("home");
+  };
+  const handleProfile = () => {
+    navigation.navigate("home");
   };
   const handleChat = () => {
     navigation.navigate("chat");
@@ -55,6 +58,16 @@ const CustomDrawerContent = ({ navigation }) => {
         <View style={styles.drawerContent}>
           {/* Home */}
           <TouchableOpacity onPress={handleHome} style={styles.item}>
+            <FontAwesome5
+              style={styles.itemIcon}
+              name="home"
+              size={20}
+              color="#9ba8bb"
+            />
+            <Text style={styles.itemText}>Home</Text>
+          </TouchableOpacity>
+          {/* Home */}
+          <TouchableOpacity onPress={handleProfile} style={styles.item}>
             <FontAwesome5
               style={styles.itemIcon}
               name="user-alt"
@@ -188,7 +201,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: "#20283d",
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "bold",
   },
   itemBorderTop: {

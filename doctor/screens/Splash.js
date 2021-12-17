@@ -52,7 +52,7 @@ const Splash = ({ navigation }) => {
             source={images.logo_white}
             resizeMode="contain"
           />
-          <View style={{ height: 250, paddingTop: 40, paddingHorizontal: 20, }}>
+          <View style={{ height: 250, paddingTop: 40, paddingHorizontal: 20 }}>
             <Text
               style={{
                 fontSize: 30,

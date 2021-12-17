@@ -8,6 +8,8 @@ import Home from "./Home";
 // Content
 import Doctors from "./Main/Doctors";
 import Symthoms from "./Main/Symthoms.js";
+import DoctorsList from "./Main/DoctorScreens/DoctorsList.js";
+import Appointment from "./Main/DoctorScreens/Appointment.js";
 
 export {
   BeforeSplash,
@@ -18,4 +20,6 @@ export {
   Home,
   Doctors,
   Symthoms,
+  DoctorsList,
+  Appointment,
 };
