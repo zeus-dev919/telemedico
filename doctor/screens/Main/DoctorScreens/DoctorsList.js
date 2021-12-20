@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  SectionList,
   Text,
   TouchableOpacity,
   View,
@@ -11,7 +11,115 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import DoctorCardModel2 from "../../Models/DoctorCardModel2";
+const DATA = [
+  {
+    title: "Cardiologistic",
+    data: [
+      // {
+      //   name: "Christina Frazier",
+      //   desc: "Heart Surgeon, London",
+      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      // },
+      {
+        name: "Jane Andrews",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+    ],
+  },
+  {
+    title: "Oncologist",
+    data: [
+      {
+        name: "Alma Wallace",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+    ],
+  },
+  {
+    title: "Endocrinologist",
+    data: [
+      {
+        name: "Mayme Gomez",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      // {
+      //   name: "Iva Carpenter",
+      //   desc: "Heart Surgeon, London",
+      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      // },
+    ],
+  },
+  {
+    title: "Rheumatologist",
+    data: [
+      {
+        name: "Mayme Gomez",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      // {
+      //   name: "Iva Carpenter",
+      //   desc: "Heart Surgeon, London",
+      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      // },
+    ],
+  },
+  {
+    title: "Fertility Experts",
+    data: [
+      {
+        name: "Mayme Gomez",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      {
+        name: "Iva Carpenter",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      {
+        name: "Iva Carpenter",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+    ],
+  },
+  {
+    title: "Plastic Surgeons",
+    data: [
+      {
+        name: "Mayme Gomez",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      // {
+      //   name: "Iva Carpenter",
+      //   desc: "Heart Surgeon, London",
+      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      // },
+    ],
+  },
+  {
+    title: "Mental Health",
+    data: [
+      {
+        name: "Mayme Gomez",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
+      // {
+      //   name: "Iva Carpenter",
+      //   desc: "Heart Surgeon, London",
+      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      // },
+    ],
+  },
+];
 const DoctorsList = ({ navigation }) => {
+  console.log("AGAIN !!!!");
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -34,6 +142,42 @@ const DoctorsList = ({ navigation }) => {
           <View style={{ width: 30 }}></View>
         </View>
       </View>
+      {/* Flatlist */}
+      <SectionList
+        refreshing={true}
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => (
+          <DoctorCardModel2
+            name={item.name}
+            desc={item.desc}
+            img={item.img}
+            navigation={navigation}
+            type="2"
+          />
+        )}
+        // ItemSeparatorComponent={(props) => {
+        //   console.log("props =>", props.section.data);
+        //   return (
+        //     <View style={styles.doctorCards}>
+        //       {props.section.data.map((item, index) => (
+        //         <DoctorCardModel2
+        //           key={index}
+        //           name={item.name}
+        //           desc={item.desc}
+        //           img={item.img}
+        //           navigation={navigation}
+        //         />
+        //       ))}
+        //     </View>
+        //   );
+        // }}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={styles.specContainer}>
+            <Text style={styles.SpecTitle}>{title}</Text>
+          </View>
+        )}
+      />
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         <View style={styles.doctorCards}>
@@ -187,5 +331,15 @@ const styles = StyleSheet.create({
   doctorCards: {
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  specContainer: {
+    margin: 10,
+    marginTop: 20,
+    width: "100%",
+  },
+  SpecTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: COLORS.fontColor1,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,19 +15,14 @@ import { useDispatch } from "react-redux";
 import { ResetStates } from "../redux/User/user.actions";
 import Swiper from "react-native-swiper";
 
-var count = 0;
-
 const Splash = ({ navigation }) => {
   console.log("Splash Screen");
-  console.log("count =>", count);
+  const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (count == 0) {
-      dispatch(ResetStates());
-      count++;
-    }
-  }, [count]);
+    dispatch(ResetStates());
+  }, []);
 
   const RedirectRegister = () => {
     console.log("RedirectRegister Clicked !!");
@@ -42,6 +37,29 @@ const Splash = ({ navigation }) => {
   const handleForget = () => {
     navigation.navigate("Recovery");
   };
+  const renderBg = () => {
+    if (index === 0)
+      return (
+        <ImageBackground
+          style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
+          source={images.bg}
+        />
+      );
+    if (index === 1)
+      return (
+        <ImageBackground
+          style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
+          source={images.bg1}
+        />
+      );
+    if (index === 2)
+      return (
+        <ImageBackground
+          style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
+          source={images.bg2}
+        />
+      );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,18 +70,7 @@ const Splash = ({ navigation }) => {
             source={images.logo_white}
             resizeMode="contain"
           />
-          <View style={{ height: 250, paddingTop: 40, paddingHorizontal: 20 }}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: "bold",
-                color: "white",
-                textAlign: "center",
-                marginVertical: 20,
-              }}
-            >
-              Dr, AI
-            </Text>
+          <View style={{ height: 250, paddingTop: 10, paddingHorizontal: 0 }}>
             <Swiper
               style={styles.wrapper}
               activeDot={
@@ -81,33 +88,39 @@ const Splash = ({ navigation }) => {
                 />
               }
               showsButtons={false}
+              onIndexChanged={(i) => setIndex(i)}
             >
               <View style={styles.slide}>
+                <Text style={styles.slideTitle}>Telehealth</Text>
                 <Text style={styles.slideText}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry
+                  Affordable, Cross Border Care Access best qulity doctors cross
+                  border 24 x 7
                 </Text>
               </View>
               <View style={styles.slide}>
+                <Text style={styles.slideTitle}>Dr. AI</Text>
                 <Text style={styles.slideText}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry
+                  Personalized AI Powered Symptom Checker Check your symtoms on
+                  a medically designed engineering powered platform 24 x 7 for
+                  FREE
                 </Text>
               </View>
               <View style={styles.slide}>
+                <Text style={styles.slideTitle}>MyHealthPocket</Text>
                 <Text style={styles.slideText}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry
+                  Carry your health records in pocket Get in control of your
+                  health records by storing, accessing sharing whenever and
+                  however you want.
                 </Text>
               </View>
             </Swiper>
           </View>
-          <View style={{ marginBottom: 200 }}>
-            <TouchableOpacity onPress={RedirectRegister}>
-              <Text style={styles.u_btn}>Sign Up</Text>
-            </TouchableOpacity>
+          <View>
             <TouchableOpacity onPress={RedirectLogin}>
-              <Text style={styles.u_btn2}>Sign In</Text>
+              <Text style={styles.u_btn}>LOGIN</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={RedirectRegister}>
+              <Text style={styles.u_btn2}>SIGN UP</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.already} onPress={handleForget}>
               {/* <Text style={styles.label2}>Forget your Password?</Text> */}
@@ -115,10 +128,7 @@ const Splash = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <ImageBackground
-        style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-        source={images.bg}
-      />
+      {renderBg()}
     </SafeAreaView>
   );
 };
@@ -238,10 +248,24 @@ const styles = StyleSheet.create({
   // Slider
   slide: {
     // height: 200,
+    // maxWidth: "100%",
+    // alignItems: "center",
+    // paddingHorizontal: 5,
+  },
+  slideTitle: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "rgba(256,256,256,0.7)",
+    textAlign: "center",
+    marginVertical: 20,
   },
   slideText: {
-    color: "white",
-    fontSize: 18,
+    color: "rgba(256,256,256,0.5)",
+    fontSize: 13,
+    fontWeight: "600",
     textAlign: "center",
+    lineHeight: 18,
+    marginBottom: 5,
+    paddingHorizontal: 10,
   },
 });

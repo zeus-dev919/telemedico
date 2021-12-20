@@ -3,36 +3,66 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../../constants";
 
 const DoctorCardModel2 = (props) => {
-  const { name, desc, img, navigation } = props;
+  const { name, desc, img, navigation, type } = props;
+  var check = type === "2" ? true : false;
   const handleAppointment = () => {
     console.log("Appointment Clicked !!");
     navigation.navigate("appointment");
   };
   return (
-    <View style={styles.doctorCard}>
-      <View style={[styles.card, styles.shadow]}>
-        <View style={styles.ImgContainer}>
-          <View style={styles.doctorCardRight}>
-            <View style={styles.statusIndic}></View>
-            <Image
-              style={styles.doctorAvatar}
-              source={{
-                uri: img,
-              }}
-              resizeMode="cover"
-            />
+    <>
+      {check ? (
+        <View style={styles.doctorCard2}>
+          <View style={[styles.card, styles.shadow]}>
+            <View style={styles.ImgContainer}>
+              <View style={styles.doctorCardRight}>
+                <View style={styles.statusIndic}></View>
+                <Image
+                  style={styles.doctorAvatar}
+                  source={{
+                    uri: img,
+                  }}
+                  resizeMode="cover"
+                />
+              </View>
+            </View>
+            <Text style={styles.title1}>{name}</Text>
+            <Text style={styles.title2}>{desc}</Text>
+            <TouchableOpacity
+              onPress={handleAppointment}
+              style={[styles.doctorBtnStyle, styles.shadow1]}
+            >
+              <Text style={styles.doctorBtnStyleText}>Request Consult</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.title1}>{name}</Text>
-        <Text style={styles.title2}>{desc}</Text>
-        <TouchableOpacity
-          onPress={handleAppointment}
-          style={[styles.doctorBtnStyle, styles.shadow1]}
-        >
-          <Text style={styles.doctorBtnStyleText}>Appointment</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      ) : (
+        <View style={styles.doctorCard}>
+          <View style={[styles.card, styles.shadow]}>
+            <View style={styles.ImgContainer}>
+              <View style={styles.doctorCardRight}>
+                <View style={styles.statusIndic}></View>
+                <Image
+                  style={styles.doctorAvatar}
+                  source={{
+                    uri: img,
+                  }}
+                  resizeMode="cover"
+                />
+              </View>
+            </View>
+            <Text style={styles.title1}>{name}</Text>
+            <Text style={styles.title2}>{desc}</Text>
+            <TouchableOpacity
+              onPress={handleAppointment}
+              style={[styles.doctorBtnStyle, styles.shadow1]}
+            >
+              <Text style={styles.doctorBtnStyleText}>Appointment</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -43,6 +73,12 @@ const styles = StyleSheet.create({
   doctorCard: {
     position: "relative",
     marginTop: 40,
+    width:"50%",
+  },
+  doctorCard2: {
+    position: "relative",
+    marginTop: 40,
+    width:"100%",
   },
   card: {
     borderRadius: 25,

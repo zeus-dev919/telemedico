@@ -8,6 +8,7 @@ import {
   Register,
   Login,
   Recovery,
+  Conscent,
   Home,
   Doctors,
   Symthoms,
@@ -36,6 +37,7 @@ const AppMain = () => {
             {/* <Stack.Screen name="BeforeSplash" component={BeforeSplash} /> */}
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Conscent" component={Conscent} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Recovery" component={Recovery} />
           </>

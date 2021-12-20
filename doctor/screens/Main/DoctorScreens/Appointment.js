@@ -40,13 +40,21 @@ const Appointment = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         <DoctorCardModel
           name="Dr. Lida Gutierrez"
-          desc="Heart Surgeon, London, England"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
           img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
           bg="1"
+          navigation={navigation}
         />
         <DoctorAboutCard
           name="About Doctor"
-          desc="Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, egestas non"
+          desc="Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis 
+          a pellentesque nec, egestas non Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Praesent
+           sapîan massa, convallis a pellentesque nec, egestas non Mauris blandit aliquet elit, eget tincidunt
+            nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, egestas non Mauris blandit 
+            aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, 
+            egestas non"
         />
         <DoctorUpcomingCard
           day="WED"

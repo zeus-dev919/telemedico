@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     shadowRadius: 18,
 
-    elevation: 8,
+    elevation: 2,
     // Shadow End
   },
   // Doctor Card

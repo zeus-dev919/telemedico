@@ -25,6 +25,10 @@ const brain = require("../assets/icons/body/brain.png");
 const psychology = require("../assets/icons/body/psychology.png");
 const urology = require("../assets/icons/body/urology.png");
 const apple = require("../assets/icons/body/apple.png");
+const thyroid = require("../assets/icons/body/thyroid.png");
+const joints = require("../assets/icons/body/joints.png");
+const reproductive = require("../assets/icons/body/reproductive.png");
+const anatomy = require("../assets/icons/body/anatomy.png");
 
 export default {
   menu1,
@@ -53,4 +57,8 @@ export default {
   psychology,
   urology,
   apple,
+  thyroid,
+  joints,
+  reproductive,
+  anatomy,
 };

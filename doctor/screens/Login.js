@@ -259,13 +259,13 @@ const styles = StyleSheet.create({
   },
   fieldErrors: {
     marginVertical: 3,
-    color: COLORS.redColor,
-    fontSize: 12,
+    color: 'red',
+    fontSize: 10,
   },
   fieldErrors2: {
     marginVertical: 3,
-    color: COLORS.darkRedColor,
-    fontSize: 14,
+    color: 'red',
+    fontSize: 10,
     textAlign: "center",
   },
   input: {
@@ -291,13 +291,6 @@ const styles = StyleSheet.create({
     right: 20,
     fontSize: 25,
   },
-  terms: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  checkbox: {
-    marginRight: 10,
-  },
   signup: {
     backgroundColor: COLORS.blueBtn,
     color: "white",
@@ -310,14 +303,6 @@ const styles = StyleSheet.create({
   button1: {
     marginBottom: 20,
     padding: 5,
-  },
-  errors: {
-    paddingVertical: 10,
-  },
-  error: {
-    color: "red",
-    fontSize: 18,
-    fontWeight: "600",
   },
   already: {
     flexDirection: "row",

@@ -21,6 +21,7 @@ import {
   resetAllAuthForms,
   ResetErrorsState,
 } from "../redux/User/user.actions";
+import * as WebBrowser from "expo-web-browser";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
@@ -43,14 +44,17 @@ const Register = ({ navigation }) => {
   const [email, onChangeEmail] = useState("Alex@gmail.com");
   const [password, onChangepassword] = useState("hellodude");
   const [isSelected, setSelected] = useState(false);
+  const [isSelected1, setSelected1] = useState(false);
   const [isSecure, setIsSecure] = useState(true);
   const [iconPasswordName, setIconPasswordName] = useState("eye-with-line");
+  const [disableSubmit, setDisableSubmit] = useState(true);
   const [error, setError] = useState([]);
   // Hnadle Errors
   const [firstNameErrors, setFirstNameErrors] = useState("");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [termsErrors, setTermsErrors] = useState("");
+  const [terms2Errors, setTerms2Errors] = useState("");
 
   useEffect(() => {
     if (propertySignUpSuccess) {
@@ -73,6 +77,7 @@ const Register = ({ navigation }) => {
     setIsSecure(true);
     setIconPasswordName("eye");
     setSelected(false);
+    setSelected1(false);
     setError([]);
   };
 
@@ -85,7 +90,7 @@ const Register = ({ navigation }) => {
     }
   };
 
-  const handleRegister = async (e) => {
+  const handleRegister = (e) => {
     var checking_form = "true";
     if (firstName.length === 0) {
       setFirstNameErrors("* First Name Field Required");
@@ -111,12 +116,27 @@ const Register = ({ navigation }) => {
     } else {
       setTermsErrors("");
     }
+    if (isSelected1 !== true) {
+      setTerms2Errors("* Agree to the Conscent Form is required");
+      checking_form = "false";
+    } else {
+      setTerms2Errors("");
+    }
     if (checking_form === "true") {
       dispatch(signUpUser({ firstName, email, password }));
     }
   };
   const handleSignIn = () => {
     navigation.navigate("Login");
+  };
+  const _handlePressTerms = () => {
+    WebBrowser.openBrowserAsync("http://medipocket.world/privacy-policy/");
+  };
+  const _handlePressTerms1 = () => {
+    WebBrowser.openBrowserAsync("http://medipocket.world/terms-conditions/");
+  };
+  const _handlePressConscent = () => {
+    navigation.navigate("Conscent");
   };
 
   return (
@@ -138,15 +158,6 @@ const Register = ({ navigation }) => {
         <View style={styles.content}>
           {/* First Name */}
           <View style={styles.inputField}>
-            {/* {errors.length > 0 && (
-              <View style={styles.errors}>
-                {error.map((err, index) => (
-                  <Text style={styles.error} key={index}>
-                    {err}
-                  </Text>
-                ))}
-              </View>
-            )} */}
             <Text style={styles.label}>Full Name</Text>
             <TextInput
               style={styles.input}
@@ -198,15 +209,57 @@ const Register = ({ navigation }) => {
               value={isSelected}
               onValueChange={setSelected}
               style={styles.checkbox}
-              color={setSelected ? "#40e0d0" : undefined}
+              color={"#40e0d0"}
             />
-            <Text style={styles.privacy}>
-              I agree with the privacy policies.
+            {/* <View style={{ flexDirection: "row", alignItems: "center" }}> */}
+            <Text style={styles.privacy}>I agree with</Text>
+            <Text
+              onPress={_handlePressTerms}
+              style={[styles.privacy, { textDecorationLine: "underline" }]}
+            >
+              the privacy policies,
             </Text>
+            <Text
+              onPress={_handlePressTerms1}
+              style={[styles.privacy, { textDecorationLine: "underline" }]}
+            >
+              terms & conditions
+            </Text>
+            {/* </View> */}
           </View>
           <Text style={styles.fieldErrors}>{termsErrors}</Text>
-          <TouchableOpacity style={styles.button1} onPress={handleRegister}>
-            <Text style={styles.signup}>Submit</Text>
+          {/* Terms and Condition */}
+          <View style={styles.terms}>
+            <Checkbox
+              value={isSelected1}
+              onValueChange={setSelected1}
+              style={styles.checkbox}
+              color={"#40e0d0"}
+            />
+            {/* <View style={{ flexDirection: "row", alignItems: "center" }}> */}
+            <Text style={styles.privacy}>
+              Yes, I consent as user, patient and caregiver to avail
+              consultation via telemedicine with foreign specialists through
+              MediPocket platform
+              <Text
+                onPress={_handlePressConscent}
+                style={[styles.privacy, { textDecorationLine: "underline" }]}
+              >
+                Conscent Form
+              </Text>
+            </Text>
+            {/* </View> */}
+          </View>
+          <Text style={styles.fieldErrors}>{terms2Errors}</Text>
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={handleRegister}
+            // disabled={disableSubmit}
+          >
+            {/* <Text style={disableSubmit ? styles.signup2 : styles.signup}> */}
+            <Text style={styles.signup}>
+              Submit
+            </Text>
           </TouchableOpacity>
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>
@@ -268,7 +321,7 @@ const styles = StyleSheet.create({
   fieldErrors2: {
     color: "red",
     textAlign: "center",
-    fontSize: 14,
+    fontSize: 10,
     marginBottom: 10,
   },
   headerText1: {
@@ -295,8 +348,9 @@ const styles = StyleSheet.create({
   },
   privacy: {
     textAlign: "left",
-    fontSize: 12,
+    fontSize: 10,
     color: "black",
+    marginRight: 3,
     // marginBottom: 10,
   },
   label1: {
@@ -315,7 +369,7 @@ const styles = StyleSheet.create({
   },
   fieldErrors: {
     color: "red",
-    fontSize: 14,
+    fontSize: 10,
   },
   input: {
     borderRadius: 10,
@@ -342,8 +396,10 @@ const styles = StyleSheet.create({
   },
   terms: {
     flexDirection: "row",
-    alignItems: "center",
+    // justifyContent: "flex-start",
+    // alignItems: "center",
     padding: 5,
+    maxWidth: "100%",
   },
   checkbox: {
     marginRight: 10,
@@ -351,6 +407,15 @@ const styles = StyleSheet.create({
   },
   signup: {
     backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+    // marginVertical: 20,
+  },
+  signup2: {
+    backgroundColor: "grey",
     color: "white",
     fontSize: 22,
     textAlign: "center",

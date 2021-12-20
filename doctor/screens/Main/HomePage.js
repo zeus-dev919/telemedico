@@ -106,8 +106,8 @@ const HomePage = ({ navigation }) => {
   const handleUrology = () => {
     console.log("Urology Clicked !!");
   };
-  const handleNutritionist = () => {
-    console.log("Nutritionist Clicked !!");
+  const handleConsult = () => {
+    console.log("Video Consult Our Top USA Specialists !!");
   };
   const handleOthers = () => {
     console.log("Others Clicked !!");
@@ -146,20 +146,20 @@ const HomePage = ({ navigation }) => {
             >
               <Image
                 style={styles.cardImg}
-                source={images.mrAi}
-                resizeMode="cover"
+                source={images.right_img}
+                // resizeMode="cover"
               />
               <View style={[styles.headerCardContent, styles.shadow]}>
                 <Text style={styles.headerCardTitle}>DR. AI</Text>
                 <Text style={styles.headerCardDescription}>
-                  Free Symptoms checker
+                  Free Symptoms{"\n"} checker
                 </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Headercard} onPress={handleDoctors}>
               <Image
                 style={styles.cardImg}
-                source={images.mrAi}
+                source={images.left_img}
                 resizeMode="cover"
               />
               <View style={[styles.headerCardContent, styles.shadow]}>
@@ -169,83 +169,117 @@ const HomePage = ({ navigation }) => {
                 </Text>
               </View>
             </TouchableOpacity>
+            <ImageBackground
+              style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
+              source={images.homeBg}
+            />
           </View>
           {/* Specialities Title */}
           <View style={styles.specContainer}>
             <Text style={styles.SpecTitle}>Specialities</Text>
           </View>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.menuContent}>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleLungs}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.lungs} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Pulmonary</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleTooth}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.tooth} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Tooth</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleDermatologist}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.dermis} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Dermatologist</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleHeart}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.heart} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Heart</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleBrain}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.brain} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Brain</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handlePsychology}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.psychology} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Psychology</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleUrology}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.urology} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Urology</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleNutritionist}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.apple} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Nutritionist</Text>
-              </TouchableOpacity>
-              {/* Health Profile */}
-              <TouchableOpacity onPress={handleOthers}>
-                <View style={[styles.menuCard, styles.shadow]}>
-                  <Image source={icons.menu9} style={styles.icon} />
-                </View>
-                <Text style={styles.menuCardTitle}>Others</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-          <View style={styles.specContainer}>
+          {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+          <View style={styles.menuContent}>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleLungs}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.lungs} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Oncology</Text>
+              <Text style={styles.menuCardTitle1}>cancer</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleTooth}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.thyroid} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Endocrinology</Text>
+              <Text style={styles.menuCardTitle1}>Diabetes, Thyroid</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleDermatologist}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.heart} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Cardiology</Text>
+              <Text style={styles.menuCardTitle1}>Heart Problems</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleHeart}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.joints} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Rheumatology</Text>
+              <Text style={styles.menuCardTitle1}>Arthritis, Joints</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuContent}>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleBrain}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.reproductive} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Fertility</Text>
+              <Text style={styles.menuCardTitle1}>IVF, Treatments</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handlePsychology}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.anatomy} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Plastic Surgery</Text>
+              <Text style={styles.menuCardTitle1}>Nose, Body</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleUrology}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.psychology} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>Mental Health</Text>
+              <Text style={styles.menuCardTitle1}>Anxiety, Depression</Text>
+            </TouchableOpacity>
+            {/* Health Profile */}
+            <TouchableOpacity
+              style={styles.cardContainer99}
+              onPress={handleOthers}
+            >
+              <View style={[styles.menuCard, styles.shadow]}>
+                <Image source={icons.dermis} style={styles.icon} />
+              </View>
+              <Text style={styles.menuCardTitle}>More</Text>
+              <Text style={styles.menuCardTitle1}>Skin, Neuro</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.button1} onPress={handleConsult}>
+            <Text style={styles.signup}>
+              Video Consult Our Top USA Specialists
+            </Text>
+          </TouchableOpacity>
+          {/* <View style={styles.specContainer}>
             <Text style={styles.SpecTitle}>Packages</Text>
           </View>
           <View style={styles.packages}>
-            {/* Antigent Test */}
             <View style={styles.package}>
               <Image
                 style={styles.packageImg}
@@ -257,73 +291,9 @@ const HomePage = ({ navigation }) => {
               <Text style={styles.packageTitle1}>Antigent Test</Text>
               <Text style={styles.packageTitle2}>K-Klinic</Text>
             </View>
-            {/* Antigent Test */}
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-            {/* Antigent Test */}
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-            {/* Antigent Test */}
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-            {/* Antigent Test */}
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-            {/* Antigent Test */}
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
-      <ImageBackground
-        style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
-        source={images.homeBg}
-      />
     </SafeAreaView>
   );
 };
@@ -362,7 +332,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
   },
   card: {
     backgroundColor: "red",
@@ -381,7 +351,7 @@ const styles = StyleSheet.create({
   },
   fixed: {
     position: "absolute",
-    top: 20,
+    top: -30,
     left: 0,
     right: 0,
     bottom: 0,
@@ -392,25 +362,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 30,
+    width: "100%",
   },
   Headercard: {
     // position: "relative",
     borderRadius: 10,
-    marginHorizontal: 10,
-    maxHeight: 200,
+    width: "50%",
+    paddingHorizontal: 10,
+    // maxHeight: 200,
   },
   cardImg: {
-    width: 160,
-    height: 180,
+    width: "100%",
+    height: 100,
     overflow: "hidden",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    // marginBottom: 100,
   },
   headerCardContent: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    // position: "absolute",
+    // bottom: -75,
+    // left: 0,
+    // right: 0,
     backgroundColor: COLORS.primary,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -430,7 +403,8 @@ const styles = StyleSheet.create({
   },
   menuContent: {
     flexDirection: "row",
-    flexWrap: "wrap",
+    paddingHorizontal: 10,
+    // flexWrap: "wrap",
     // backgroundColor: "yellow",
   },
   // Specialities
@@ -445,8 +419,8 @@ const styles = StyleSheet.create({
   },
   // icon
   icon: {
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
     marginHorizontal: 15,
     marginVertical: 5,
   },
@@ -457,8 +431,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 10,
     marginHorizontal: 10,
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     borderColor: "#efefef",
     borderWidth: 1,
     borderRadius: 8,
@@ -466,24 +440,32 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginRight: 10,
   },
+  cardContainer99: {
+    width: "25%",
+    alignItems: "center",
+  },
   menuCardTitle: {
     fontSize: 10,
     color: COLORS.fontColor1,
     textAlign: "center",
+    marginBottom: 5,
+  },
+  menuCardTitle1: {
+    fontSize: 10,
+    color: "grey",
+    textAlign: "center",
     marginBottom: 10,
   },
   shadow: {
-    // Shadow Start
-    shadowColor: COLORS.fontColor3,
+    shadowColor: COLORS.primary,
     shadowOffset: {
       width: 0,
-      height: 8,
+      height: 4,
     },
     shadowOpacity: 0,
-    shadowRadius: 18,
+    shadowRadius: 2,
 
-    elevation: 8,
-    // Shadow End
+    elevation: 4,
   },
 
   // Packages
@@ -516,5 +498,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     paddingLeft: 10,
     color: COLORS.fontColor2,
+  },
+  button1: {
+    marginVertical: 20,
+    padding: 5,
+    alignItems: "center",
+  },
+  signup: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 14,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 6,
+    // marginVertical: 20,
   },
 });

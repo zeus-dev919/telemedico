@@ -10,25 +10,29 @@ const DoctorUpcomingCard = (props) => {
       <View style={styles.doctorCard}>
         <View style={styles.doctorCardLeft}>
           <Text style={styles.cardTitle1}>Upcoming Schedule</Text>
-          <View style={styles.box}>
-            <DayModel day={day} monthnb={nbDay} isSelected={false} bg="1" />
-            <View style={styles.textContainer}>
-              <Text style={styles.cardTitle3}>{spec}</Text>
-              <Text style={styles.cardTitle4}>{time}</Text>
-            </View>
-            <View style={styles.callIconBox}>
-              <Image
-                style={styles.icon}
-                source={icons.phone}
-                resizeMode="contain"
-              />
-            </View>
-            <View style={styles.callIconBox}>
-              <Image
-                style={styles.icon}
-                source={icons.video}
-                resizeMode="contain"
-              />
+          <View style={styles.containerBoxes}>
+            <View style={styles.box}>
+              <DayModel day={day} monthnb={nbDay} isSelected={false} bg="1" />
+              <View style={styles.textContainer}>
+                <Text style={styles.cardTitle3}>{spec}</Text>
+                <Text style={styles.cardTitle4}>{time}</Text>
+              </View>
+              <View style={styles.box2}>
+                <View style={styles.callIconBox}>
+                  <Image
+                    style={styles.icon}
+                    source={icons.phone}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.callIconBox}>
+                  <Image
+                    style={styles.icon}
+                    source={icons.video}
+                    resizeMode="contain"
+                  />
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -48,7 +52,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   shadow1: {
-    // Shadow Start
     shadowColor: "#cdcddd",
     shadowOffset: {
       width: 0,
@@ -57,17 +60,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     shadowRadius: 18,
 
-    elevation: 8,
-    // Shadow End
+    elevation: 2,
   },
   // Doctor Card
   doctorCard: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    width: "100%",
   },
   doctorCardLeft: {
     padding: 0,
+    width: "100%",
   },
   cardTitle1: {
     color: COLORS.fontColor4,
@@ -87,9 +91,9 @@ const styles = StyleSheet.create({
   },
   cardTitle3: {
     color: COLORS.fontColor4,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
-    marginLeft: 10,
+    paddingLeft: 10,
     margin: 0,
     lineHeight: 29,
   },
@@ -97,31 +101,41 @@ const styles = StyleSheet.create({
     color: COLORS.fontColor2,
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: 10,
+    paddingLeft: 10,
     margin: 0,
     lineHeight: 29,
     marginBottom: 5,
   },
+  containerBoxes: {
+    backgroundColor: "white",
+    width: "100%",
+    borderRadius: 30,
+  },
   box: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 30,
-    width: "100%",
+
     paddingHorizontal: 10,
     paddingVertical: 15,
+    width: "100%",
+  },
+  box2: {
+    flexDirection: "column",
+    alignItems: "center",
   },
   textContainer: {
-    marginRight: 20,
+    flex: 1,
+    paddingRight: 20,
+    width: "100%",
   },
   callIconBox: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
     borderRadius: 50,
     backgroundColor: COLORS.bgColor2,
     marginRight: 10,
-    padding: 8,
+    marginBottom: 5,
+    padding: 10,
   },
   icon: {
     width: 20,

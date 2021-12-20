@@ -2,6 +2,7 @@
 import BeforeSplash from "./BeforeSplash";
 import Splash from "./Splash";
 import Register from "./Register";
+import Conscent from "./Conscent";
 import Login from "./Login";
 import Recovery from "./Recovery";
 import Home from "./Home";
@@ -17,6 +18,7 @@ export {
   Register,
   Login,
   Recovery,
+  Conscent,
   Home,
   Doctors,
   Symthoms,
