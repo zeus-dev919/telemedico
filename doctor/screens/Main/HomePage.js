@@ -79,7 +79,7 @@ const HomePage = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     console.log("Sympptoms Checker !!");
-    navigation.navigate("symthoms");
+    navigation.navigate("age");
   };
   const handleDoctors = () => {
     console.log("Doctors !!");

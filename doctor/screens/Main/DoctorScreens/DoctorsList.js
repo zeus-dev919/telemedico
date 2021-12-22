@@ -179,44 +179,38 @@ const DoctorsList = ({ navigation }) => {
         )}
       />
       {/* ScrollView */}
-      <ScrollView style={styles.scrollView}>
+      {/* <ScrollView style={styles.scrollView}>
         <View style={styles.doctorCards}>
-          {/* Card */}
           <DoctorCardModel2
             name="Christina Frazier"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Jane Andrews"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Alma Wallace"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Mayme Gomez"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Iva Carpenter"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Chester Huff"
             desc="Heart Surgeon, London"
@@ -229,35 +223,30 @@ const DoctorsList = ({ navigation }) => {
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Jane Andrews"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Alma Wallace"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Mayme Gomez"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Iva Carpenter"
             desc="Heart Surgeon, London"
             img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
             navigation={navigation}
           />
-          {/* Card */}
           <DoctorCardModel2
             name="Chester Huff"
             desc="Heart Surgeon, London"
@@ -265,7 +254,7 @@ const DoctorsList = ({ navigation }) => {
             navigation={navigation}
           />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };

@@ -52,7 +52,8 @@ const DoctorCardModel = (props) => {
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
             <View style={styles.doctorCardRight}>
-              <View style={styles.statusIndic}></View>
+              <View style={styles.statusIndic1}></View>
+              <View style={styles.statusIndic2}></View>
               <Image
                 style={styles.doctorAvatar}
                 source={{
@@ -90,14 +91,14 @@ const DoctorCardModel = (props) => {
               </View>
             </View>
           </View>
-          <View style={styles.doctorBottomCard2}>
+          {/* <View style={styles.doctorBottomCard2}>
             <TouchableOpacity
               style={[styles.doctorBtnStyle2, styles.shadow2]}
               onPress={console.log("Book Appointemnt")}
             >
               <Text style={styles.doctorBtnStyleText2}>Book Appointment</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </>
       )}
     </View>
@@ -170,9 +171,29 @@ const styles = StyleSheet.create({
     zIndex: 2,
     borderRadius: 50,
   },
+  statusIndic1: {
+    position: "absolute",
+    width: 12,
+    height: 12,
+    backgroundColor: "#06babe",
+    top: 12,
+    right: 12,
+    zIndex: 3,
+    borderRadius: 50,
+  },
+  statusIndic2: {
+    position: "absolute",
+    width: 18,
+    height: 18,
+    backgroundColor: COLORS.bgColor1,
+    top: 10,
+    right: 10,
+    zIndex: 2,
+    borderRadius: 50,
+  },
   doctorAvatar: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     borderRadius: 50,
     zIndex: 1,
   },
@@ -217,7 +238,7 @@ const styles = StyleSheet.create({
   },
   cardTitle1: {
     color: COLORS.fontColor4,
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
     marginLeft: 10,
     margin: 0,

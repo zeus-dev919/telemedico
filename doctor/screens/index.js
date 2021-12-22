@@ -6,11 +6,20 @@ import Conscent from "./Conscent";
 import Login from "./Login";
 import Recovery from "./Recovery";
 import Home from "./Home";
-// Content
+// Doctor
 import Doctors from "./Main/Doctors";
-import Symthoms from "./Main/Symthoms.js";
 import DoctorsList from "./Main/DoctorScreens/DoctorsList.js";
 import Appointment from "./Main/DoctorScreens/Appointment.js";
+import Payments from "./Main/DoctorScreens/Payment.js";
+import IntakeForm from "./Main/DoctorScreens/IntakeForm.js";
+// Symthoms
+import Symthoms from "./Main/Symthoms.js";
+import Age from "./Main/SymthomScreens/Age.js";
+import Gender from "./Main/SymthomScreens/Gender";
+import Pregnant from "./Main/SymthomScreens/Pregnant.js";
+import Country from "./Main/SymthomScreens/Country.js";
+import Describe from "./Main/SymthomScreens/Describe.js";
+import Result from "./Main/SymthomScreens/Result.js";
 
 export {
   BeforeSplash,
@@ -24,4 +33,12 @@ export {
   Symthoms,
   DoctorsList,
   Appointment,
+  Payments,
+  IntakeForm,
+  Age,
+  Gender,
+  Pregnant,
+  Country,
+  Describe,
+  Result,
 };

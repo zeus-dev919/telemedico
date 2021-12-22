@@ -168,6 +168,26 @@ const Doctors = ({ navigation }) => {
           bg="0"
           navigation={navigation}
         />
+        {/* Card3 */}
+        <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        {/* Card3 */}
+        <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
         
       </ScrollView>
     </SafeAreaView>

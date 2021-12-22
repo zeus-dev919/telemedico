@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   SafeAreaView,
@@ -12,11 +12,14 @@ import {
 import IconFeather from "react-native-vector-icons/Feather";
 import { COLORS, icons, images } from "../../constants";
 import DropDownPicker from "react-native-dropdown-picker";
+import Checkbox from "expo-checkbox";
 
 const Symthoms = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const [open1, setOpen1] = useState(false);
+  const [value1, setValue1] = useState(null);
   const [items, setItems] = useState([
     { label: "Newborn 8-28d", value: "1" },
     { label: "Infant 29d-1yr", value: "2" },
@@ -29,6 +32,43 @@ const Symthoms = ({ navigation }) => {
     { label: "Adult 50-64yrs", value: "9" },
     { label: "Senior 65yrs over", value: "10" },
   ]);
+  const [items1, setItems1] = useState([
+    { label: "Don't know", value: "1" },
+    { label: "Not Pregnant", value: "2" },
+    { label: "Pregnant", value: "3" },
+  ]);
+  const [box1, setBox1] = useState(true);
+  const [box2, setBox2] = useState(false);
+  const handleBox1 = () => {
+    setBox1(true);
+    setBox2(false);
+  };
+  const handleBox2 = () => {
+    setBox1(false);
+    setBox2(true);
+  };
+  const getSymthom = async () => {
+    await fetch(
+      "https://apiscsandbox.isabelhealthcare.com/v2/age_groups?language=english&web_service=json",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: process.env.ISABELL_API_KEY,
+        },
+        body: JSON.stringify({
+          language: "english",
+          web_service: "json",
+        }),
+      }
+    )
+      .then((res) => console.log("Response =>", res.json()))
+      .catch((err) => console.log("Error => ", err));
+  };
+  useEffect(() => {
+    getSymthom();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -61,21 +101,6 @@ const Symthoms = ({ navigation }) => {
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle}>Tell us About your</Text>
           <Text style={styles.cardTitle}>Symthoms</Text>
-
-          {/* <View style={[styles.searchContainer, styles.shadow]}>
-            <Image
-              style={styles.search}
-              source={icons.search}
-              resizeMode="contain"
-            />
-            <TextInput
-              style={styles.searchInput}
-              value={search}
-              onChangeText={setSearch}
-              placeholder="Search Doctor"
-              placeholderTextColor="#b2b8cc"
-            />
-          </View> */}
           <DropDownPicker
             style={styles.dropDown1}
             open={open}
@@ -84,8 +109,43 @@ const Symthoms = ({ navigation }) => {
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
+            maxHeight={120}
           />
+          <View style={styles.personCard}>
+            <Text style={{ marginHorizontal: 5, marginRight: 10 }}>Female</Text>
+            <Checkbox
+              value={box1}
+              onValueChange={handleBox1}
+              style={styles.checkbox}
+              color={"#40e0d0"}
+            />
+            <Text style={{ marginHorizontal: 5, marginRight: 10 }}>Male</Text>
+            <Checkbox
+              value={box2}
+              onValueChange={handleBox2}
+              style={styles.checkbox}
+              color={"#40e0d0"}
+            />
+          </View>
+          {box1 ? (
+            <DropDownPicker
+              style={styles.dropDown1}
+              open={open1}
+              value={value1}
+              items={items1}
+              setOpen={setOpen1}
+              setValue={setValue1}
+              setItems={setItems1}
+              maxHeight={120}
+            />
+          ) : null}
         </View>
+        <TouchableOpacity
+          style={styles.button1}
+          onPress={() => navigation.navigate("gender")}
+        >
+          <Text style={styles.signup}>Submit</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -127,18 +187,18 @@ const styles = StyleSheet.create({
   //   ScrollView
   scrollView: {
     flex: 1,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     backgroundColor: COLORS.bgColor1,
   },
   // Card
   card: {
     borderRadius: 25,
     backgroundColor: COLORS.bgColor2,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 30,
     margin: 10,
     marginBottom: 40,
-    height: 300,
+    height: 600,
     // position: "relative",
   },
   cardTitle1: {
@@ -152,11 +212,11 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: COLORS.fontColor4,
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
     marginLeft: 10,
     marginBottom: 10,
-    lineHeight: 29,
+    lineHeight: 20,
   },
   //   Search Box
   searchContainer: {
@@ -202,8 +262,29 @@ const styles = StyleSheet.create({
     // Shadow End
   },
   dropDown1: {
-    // position: "absolute",
-    // bottom: -10,
-    // zIndex: 5,
+    borderColor: "grey",
+  },
+  //   PersonCard
+  personCard: {
+    flexDirection: "row",
+    paddingLeft: 5,
+    marginVertical: 10,
+  },
+  checkbox: {
+    marginRight: 10,
+    borderRadius: 6,
+  },
+  signup: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+    // marginVertical: 20,
+  },
+  button1: {
+    marginVertical: 15,
+    padding: 5,
   },
 });

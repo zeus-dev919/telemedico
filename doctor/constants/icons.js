@@ -29,6 +29,20 @@ const thyroid = require("../assets/icons/body/thyroid.png");
 const joints = require("../assets/icons/body/joints.png");
 const reproductive = require("../assets/icons/body/reproductive.png");
 const anatomy = require("../assets/icons/body/anatomy.png");
+// Payments
+const paypal1 = require("../assets/icons/payments/paypal1.png");
+const paypal = require("../assets/icons/payments/paypal.png");
+const maestro = require("../assets/icons/payments/maestro.png");
+const visa = require("../assets/icons/payments/visa.png");
+const accept = require("../assets/icons/payments/accept.png");
+// Symthom
+const gender = require("../assets/icons/symthom/equality.png");
+const male = require("../assets/icons/symthom/male.png");
+const female = require("../assets/icons/symthom/female.png");
+const pregnant = require("../assets/icons/symthom/woman.png");
+const notPregnant = require("../assets/icons/symthom/pregnant.png");
+const countries = require("../assets/icons/symthom/countries.png");
+const notes = require("../assets/icons/symthom/notes.png");
 
 export default {
   menu1,
@@ -61,4 +75,18 @@ export default {
   joints,
   reproductive,
   anatomy,
+  // payments
+  paypal1,
+  paypal,
+  maestro,
+  visa,
+  accept,
+  // symthom
+  gender,
+  male,
+  female,
+  notPregnant,
+  pregnant,
+  countries,
+  notes,
 };

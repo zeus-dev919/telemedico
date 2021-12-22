@@ -14,6 +14,14 @@ import {
   Symthoms,
   DoctorsList,
   Appointment,
+  Payments,
+  IntakeForm,
+  Age,
+  Gender,
+  Pregnant,
+  Country,
+  Describe,
+  Result,
 } from "./index.js";
 
 const Stack = createStackNavigator();
@@ -27,30 +35,43 @@ const AppMain = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialeRouteName="Splash"
+        initialeRouteName="home"
         screenOptions={{
           headerShown: false,
         }}
       >
-        {!currentProperty && (
+        {/* <Stack.Screen name="age" component={Age} />
+        <Stack.Screen name="gender" component={Gender} />
+        <Stack.Screen name="pregnant" component={Pregnant} />
+        <Stack.Screen name="country" component={Country} /> */}
+        <Stack.Screen name="describe" component={Describe} />
+        <Stack.Screen name="result" component={Result} />
+        {/* {!currentProperty && (
           <>
-            {/* <Stack.Screen name="BeforeSplash" component={BeforeSplash} /> */}
+            <Stack.Screen name="BeforeSplash" component={BeforeSplash} />
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Conscent" component={Conscent} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Recovery" component={Recovery} />
           </>
-        )}
-        {currentProperty && (
+        )} */}
+        {/* {currentProperty && (
           <>
             <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
-            <Stack.Screen name="symthoms" component={Symthoms} />
             <Stack.Screen name="doctorList" component={DoctorsList} />
             <Stack.Screen name="appointment" component={Appointment} />
+            <Stack.Screen name="payment" component={Payments} />
+            <Stack.Screen name="intakeForm" component={IntakeForm} />
+            <Stack.Screen name="symthoms" component={Symthoms} />
+            <Stack.Screen name="age" component={Age} />
+            <Stack.Screen name="gender" component={Gender} />
+            <Stack.Screen name="pregnant" component={Pregnant} />
+            <Stack.Screen name="country" component={Country} />
+            <Stack.Screen name="describe" component={Describe} />
           </>
-        )}
+        )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

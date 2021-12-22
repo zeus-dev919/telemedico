@@ -16,9 +16,10 @@ const DoctorCardModel2 = (props) => {
           <View style={[styles.card, styles.shadow]}>
             <View style={styles.ImgContainer}>
               <View style={styles.doctorCardRight}>
-                <View style={styles.statusIndic}></View>
+                <View style={styles.statusIndic2}></View>
+                <View style={styles.statusIndic3}></View>
                 <Image
-                  style={styles.doctorAvatar}
+                  style={styles.doctorAvatar2}
                   source={{
                     uri: img,
                   }}
@@ -26,8 +27,31 @@ const DoctorCardModel2 = (props) => {
                 />
               </View>
             </View>
-            <Text style={styles.title1}>{name}</Text>
-            <Text style={styles.title2}>{desc}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                width: "100%",
+              }}
+            >
+              <View>
+                <Text style={styles.title1}>{name}</Text>
+                <Text style={styles.title2}>{desc}</Text>
+              </View>
+              <View>
+                <Text style={styles.title2}>
+                  Patients:{" "}
+                  <Text style={[styles.boxNb, { color: "#f9b664" }]}>500+</Text>
+                </Text>
+                <Text style={styles.title2}>
+                  Experience:{" "}
+                  <Text style={[styles.boxNb, { color: "#f660be" }]}>
+                    10yrs
+                  </Text>
+                </Text>
+              </View>
+            </View>
             <TouchableOpacity
               onPress={handleAppointment}
               style={[styles.doctorBtnStyle, styles.shadow1]}
@@ -72,13 +96,13 @@ const styles = StyleSheet.create({
   //   Card
   doctorCard: {
     position: "relative",
-    marginTop: 40,
-    width:"50%",
+    marginTop: 20,
+    width: "50%",
   },
   doctorCard2: {
     position: "relative",
-    marginTop: 40,
-    width:"100%",
+    marginTop: 20,
+    width: "100%",
   },
   card: {
     borderRadius: 25,
@@ -132,9 +156,36 @@ const styles = StyleSheet.create({
     zIndex: 2,
     borderRadius: 50,
   },
+  statusIndic2: {
+    position: "absolute",
+    width: 10,
+    height: 10,
+    backgroundColor: "#06babe",
+    top: 9,
+    right: 9,
+    zIndex: 3,
+    borderRadius: 50,
+  },
+  statusIndic3: {
+    position: "absolute",
+    width: 14,
+    height: 14,
+    backgroundColor: COLORS.bgColor1,
+    // backgroundColor: 'red',
+    top: 7,
+    right: 7,
+    zIndex: 2,
+    borderRadius: 50,
+  },
   doctorAvatar: {
     width: 50,
     height: 50,
+    borderRadius: 50,
+    zIndex: 1,
+  },
+  doctorAvatar2: {
+    width: 70,
+    height: 70,
     borderRadius: 50,
     zIndex: 1,
   },
@@ -156,7 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 0,
     lineHeight: 29,
-    textAlign: "center",
+    textAlign: "left",
   },
   title2: {
     color: COLORS.fontColor2,
@@ -164,6 +215,11 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     lineHeight: 29,
-    textAlign: "center",
+    textAlign: "left",
+  },
+  boxNb: {
+    textAlign: "left",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });

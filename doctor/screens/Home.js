@@ -20,8 +20,9 @@ import {
 } from "@react-navigation/drawer";
 // Screen
 import HomePage from "./Main/HomePage";
-import Doctors from './Main/Doctors'
-import Symthoms from './Main/Symthoms'
+import Doctors from "./Main/Doctors";
+import Symthoms from "./Main/Symthoms";
+import IntakeForm from "./Main/DoctorScreens/IntakeForm";
 
 const CustomDrawerContent = ({ navigation }) => {
   const handleHome = () => {
@@ -159,6 +160,7 @@ const Home = () => {
       <Drawer.Screen name="home" component={HomePage} />
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="symthoms" component={Symthoms} />
+      <Drawer.Screen name="intakeForm" component={IntakeForm} />
     </Drawer.Navigator>
   );
 };

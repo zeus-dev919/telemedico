@@ -31,7 +31,7 @@ const Appointment = ({ navigation }) => {
             />
           </TouchableOpacity>
           <View style={styles.titleConatiner}>
-            <Text style={styles.title1}>Appointment</Text>
+            <Text style={styles.title1}>Doctor's Profile</Text>
           </View>
           <View style={{ width: 30 }}></View>
         </View>
@@ -56,7 +56,7 @@ const Appointment = ({ navigation }) => {
             aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, 
             egestas non"
         />
-        <DoctorUpcomingCard
+        {/* <DoctorUpcomingCard
           day="WED"
           nbDay="11"
           spec="Heart Surgeon"
@@ -67,7 +67,15 @@ const Appointment = ({ navigation }) => {
           nbDay="11"
           spec="Heart Surgeon"
           time="9:00 am"
-        />
+        /> */}
+        <View style={styles.doctorBottomCard2}>
+          <TouchableOpacity
+            style={[styles.doctorBtnStyle2, styles.shadow2]}
+            onPress={() => navigation.navigate('payment')}
+          >
+            <Text style={styles.doctorBtnStyleText2}>Book Appointment</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -130,5 +138,34 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     backgroundColor: COLORS.bgColor1,
+  },
+  // Book Appointment
+  doctorBottomCard2: {
+    marginTop: 15,
+    marginBottom: 40,
+  },
+  doctorBtnStyleText2: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center",
+    paddingVertical: 5,
+  },
+  shadow2: {
+    shadowColor: "#2758E4",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0,
+    shadowRadius: 8,
+
+    elevation: 2,
+  },
+  doctorBtnStyle2: {
+    backgroundColor: "#2758E4",
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 });
