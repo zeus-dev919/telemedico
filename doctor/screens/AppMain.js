@@ -44,10 +44,7 @@ const AppMain = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="consults" component={Consults} />
-        <Stack.Screen name="beforecall" component={BeforeCall} />
-        <Stack.Screen name="call" component={Call} />
-        {/* {!currentProperty && (
+        {!currentProperty && (
           <>
             <Stack.Screen name="BeforeSplash" component={BeforeSplash} />
             <Stack.Screen name="Splash" component={Splash} />
@@ -56,8 +53,8 @@ const AppMain = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Recovery" component={Recovery} />
           </>
-        )} */}
-        {/* {currentProperty && (
+        )}
+        {currentProperty && (
           <>
             <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
@@ -74,8 +71,10 @@ const AppMain = () => {
             <Stack.Screen name="selectProfile" component={SelectProfile} />
             <Stack.Screen name="profile" component={Profile} />
             <Stack.Screen name="consults" component={Consults} />
+            <Stack.Screen name="beforecall" component={BeforeCall} />
+            <Stack.Screen name="call" component={Call} />
           </>
-        )} */}
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
