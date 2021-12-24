@@ -62,10 +62,14 @@ const Country = ({ route, navigation }) => {
     const newCountryObj = apiCountries.find(item => item.country_name === country.name);
     console.log("Country =>", newCountryObj);
     if (check) {
+      let newpregnant = ''
+      if(pregnant !== undefined) {
+        newpregnant = pregnant
+      }
       navigation.navigate("describe", {
         age: age,
         gender: gender,
-        pregnant: pregnant,
+        pregnant: newpregnant,
         country_id: newCountryObj.country_id,
         region_id: newCountryObj.region_id,
       });

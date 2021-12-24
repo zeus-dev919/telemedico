@@ -13,13 +13,19 @@ import Appointment from "./Main/DoctorScreens/Appointment.js";
 import Payments from "./Main/DoctorScreens/Payment.js";
 import IntakeForm from "./Main/DoctorScreens/IntakeForm.js";
 // Symthoms
-import Symthoms from "./Main/Symthoms.js";
 import Age from "./Main/SymthomScreens/Age.js";
 import Gender from "./Main/SymthomScreens/Gender";
 import Pregnant from "./Main/SymthomScreens/Pregnant.js";
 import Country from "./Main/SymthomScreens/Country.js";
 import Describe from "./Main/SymthomScreens/Describe.js";
 import Result from "./Main/SymthomScreens/Result.js";
+
+// Profile
+import SelectProfile from "./Main/ProfileScreens/SelectProfile.js";
+import Profile from "./Main/ProfileScreens/Profile.js";
+import Consults from "./Main/ProfileScreens/Consults.js";
+import BeforeCall from "./Main/ProfileScreens/BeforeCall.js";
+import Call from "./Main/ProfileScreens/Call.js";
 
 export {
   BeforeSplash,
@@ -30,7 +36,6 @@ export {
   Conscent,
   Home,
   Doctors,
-  Symthoms,
   DoctorsList,
   Appointment,
   Payments,
@@ -41,4 +46,9 @@ export {
   Country,
   Describe,
   Result,
+  SelectProfile,
+  Profile,
+  Consults,
+  BeforeCall,
+  Call,
 };

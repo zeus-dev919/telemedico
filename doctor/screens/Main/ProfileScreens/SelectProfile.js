@@ -8,10 +8,9 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { COLORS, icons, images } from "../../../constants";
-const Gender = ({ route, navigation }) => {
-  const { age } = route.params;
+import { COLORS, icons } from "../../../constants";
+
+const SelectProfile = ({ navigation }) => {
   const [check, setCheck] = useState(false);
   const [male, setMale] = useState(false);
   const [female, setFemale] = useState(false);
@@ -31,16 +30,15 @@ const Gender = ({ route, navigation }) => {
   };
   const handleSubmit = () => {
     if (selected.length !== 0) {
-      if (
-        (age == 4 || age == 7 || age == 5 || age == 8 || age == 9) &&
-        selected === "f"
-      ) {
-        navigation.navigate("pregnant", { age: age, gender: selected });
+      let ch = "";
+      if (selected === "f") {
+        ch = "p";
       } else {
-        navigation.navigate("country", { age: age, gender: selected });
+        ch = "d";
       }
+      navigation.navigate("profile", { ch });
     } else {
-      setSelectError("* Select a gender is Required");
+      setSelectError("* Select your profile is Required");
     }
   };
   return (
@@ -48,37 +46,25 @@ const Gender = ({ route, navigation }) => {
       <View style={styles.subContainer}>
         {/* Red Header */}
         <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.headerSub}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons
-              name="ios-arrow-back-sharp"
-              size={24}
-              color="black"
-              style={styles.icon_style}
-            />
-          </TouchableOpacity>
           <View style={styles.titleConatiner}>
-            <Text style={styles.title1}>DR. AI</Text>
+            <Text style={styles.title1}>Profile</Text>
           </View>
-          <View style={{ width: 30 }}></View>
         </View>
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.cardTitle2}>Welcome to the DR. AI</Text>
+        <Text style={styles.cardTitle2}>Welcome to your profile</Text>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.gender}
+              source={icons.choosing}
               resizeMode="contain"
             />
           </View>
           <View>
-            <Text style={styles.title1}>Select Gender</Text>
-            <Text style={styles.title2}>Please select your gender</Text>
+            <Text style={styles.title1}>Select Your Profile</Text>
+            <Text style={styles.title2}>Please select your profile</Text>
           </View>
           <View
             style={{
@@ -93,10 +79,10 @@ const Gender = ({ route, navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.male}
+                source={icons.doctor}
                 resizeMode="contain"
               />
-              <Text style={male ? styles.title32 : styles.title3}>Male</Text>
+              <Text style={male ? styles.title32 : styles.title3}>Doctor</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[female ? styles.card2 : styles.card, styles.shadow1]}
@@ -104,11 +90,11 @@ const Gender = ({ route, navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.female}
+                source={icons.patient}
                 resizeMode="contain"
               />
               <Text style={female ? styles.title32 : styles.title3}>
-                Female
+                Patient
               </Text>
             </TouchableOpacity>
           </View>
@@ -122,14 +108,14 @@ const Gender = ({ route, navigation }) => {
           onPress={handleSubmit}
           disabled={!check}
         >
-          <Text style={styles.signupText}>Submit</Text>
+          <Text style={styles.signupText}>Next</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Gender;
+export default SelectProfile;
 
 const styles = StyleSheet.create({
   // Header
@@ -144,7 +130,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.bgColor1,
     height: 60,

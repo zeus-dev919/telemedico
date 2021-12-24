@@ -14,14 +14,14 @@ const Conscent = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.headerTitle}>
-          <Text style={styles.headerText1}>Conscent Form</Text>
+          <Text style={styles.headerText1}>Consent Form</Text>
         </View>
         <View style={styles.descContainer}>
           {/* 1 */}
           <View style={styles.descs}>
             <Text style={styles.desc2}>1.</Text>
             <Text style={styles.desc}>
-              I hereby authorize Health Care ervices to use the telehaealth
+              I hereby authorize Health Care services to use the telehealth
               practice platform for telecommunication for evaluating, texting
               and diagnosing my medical condition.
             </Text>

@@ -18,10 +18,10 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
+import * as WebBrowser from "expo-web-browser";
 // Screen
 import HomePage from "./Main/HomePage";
 import Doctors from "./Main/Doctors";
-import Symthoms from "./Main/Symthoms";
 import IntakeForm from "./Main/DoctorScreens/IntakeForm";
 
 const CustomDrawerContent = ({ navigation }) => {
@@ -29,19 +29,22 @@ const CustomDrawerContent = ({ navigation }) => {
     navigation.navigate("home");
   };
   const handleProfile = () => {
-    navigation.navigate("home");
+    navigation.navigate("profile");
   };
-  const handleChat = () => {
-    navigation.navigate("chat");
+  const handleDrai = () => {
+    navigation.navigate("age");
   };
-  const handleAbout = () => {
-    navigation.navigate("about");
+  const handledoctors = () => {
+    navigation.navigate("doctors");
   };
-  const handleServices = () => {
-    navigation.navigate("services");
+  const handleConsults = () => {
+    navigation.navigate("consults");
   };
-  const handleContact = () => {
-    navigation.navigate("contact");
+  const _handlePressTerms = () => {
+    WebBrowser.openBrowserAsync("http://medipocket.world/privacy-policy/");
+  };
+  const _handlePressTerms1 = () => {
+    WebBrowser.openBrowserAsync("http://medipocket.world/terms-conditions/");
   };
   const handleLogout = () => {
     console.log("LogOut");
@@ -78,7 +81,7 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>Profile</Text>
           </TouchableOpacity>
           {/* Chat */}
-          <TouchableOpacity onPress={handleChat} style={styles.item}>
+          <TouchableOpacity onPress={handleDrai} style={styles.item}>
             <Entypo
               style={styles.itemIcon}
               name="message"
@@ -88,7 +91,7 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>DR. AI</Text>
           </TouchableOpacity>
           {/* About Us */}
-          <TouchableOpacity onPress={handleAbout} style={styles.item}>
+          <TouchableOpacity onPress={handledoctors} style={styles.item}>
             <MaterialIcons
               style={styles.itemIcon}
               name="folder-special"
@@ -98,7 +101,7 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>USA Specialists</Text>
           </TouchableOpacity>
           {/* Services */}
-          <TouchableOpacity onPress={handleServices} style={styles.item}>
+          <TouchableOpacity onPress={handleConsults} style={styles.item}>
             <Entypo
               style={styles.itemIcon}
               name="clipboard"
@@ -108,7 +111,7 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>My consults</Text>
           </TouchableOpacity>
           {/* Contact */}
-          <TouchableOpacity onPress={handleContact} style={styles.item}>
+          <TouchableOpacity onPress={_handlePressTerms} style={styles.item}>
             <MaterialIcons
               style={styles.itemIcon}
               name="privacy-tip"
@@ -118,14 +121,14 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>Privacy Policy</Text>
           </TouchableOpacity>
           {/* Help */}
-          <TouchableOpacity onPress={handleContact} style={styles.item}>
+          <TouchableOpacity onPress={_handlePressTerms1} style={styles.item}>
             <Entypo
               style={styles.itemIcon}
               name="help-with-circle"
               size={20}
               color="#9ba8bb"
             />
-            <Text style={styles.itemText}>Help</Text>
+            <Text style={styles.itemText}>Terms of use</Text>
           </TouchableOpacity>
           {/* Horizontal Line */}
           {/* <View style={styles.itemBorderTop}></View> */}
@@ -159,7 +162,6 @@ const Home = () => {
     >
       <Drawer.Screen name="home" component={HomePage} />
       <Drawer.Screen name="doctors" component={Doctors} />
-      <Drawer.Screen name="symthoms" component={Symthoms} />
       <Drawer.Screen name="intakeForm" component={IntakeForm} />
     </Drawer.Navigator>
   );

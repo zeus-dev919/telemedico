@@ -60,7 +60,7 @@ const Register = ({ navigation }) => {
     if (propertySignUpSuccess) {
       ResetForm();
       dispatch(resetAllAuthForms());
-      navigation.navigate("Home");
+      navigation.navigate("home", { newAccount: true });
     }
   }, [propertySignUpSuccess]);
 
@@ -257,9 +257,7 @@ const Register = ({ navigation }) => {
             // disabled={disableSubmit}
           >
             {/* <Text style={disableSubmit ? styles.signup2 : styles.signup}> */}
-            <Text style={styles.signup}>
-              Submit
-            </Text>
+            <Text style={styles.signup}>Submit</Text>
           </TouchableOpacity>
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>

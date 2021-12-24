@@ -14,19 +14,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 
 const Describe = ({ route, navigation }) => {
-  //   const { age, gender, pregnant, country_id, region_id } = route.params;
-  //   console.log("From Describe => ", {
-  //     age,
-  //     gender,
-  //     pregnant,
-  //     country_id,
-  //     region_id,
-  //   });
+  const { age, gender, pregnant, country_id, region_id } = route.params;
+  console.log("From Describe => ", {
+    age,
+    gender,
+    pregnant,
+    country_id,
+    region_id,
+  });
   const [check, setCheck] = useState(false);
   const [search, setSearch] = useState("");
   const [predictive, setPredictive] = useState("");
   const [searchArray, setSearchArray] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState([]);
   const [selectError, setSelectError] = useState("");
   const getPredictive = async () => {
     await fetch("https://apiscsandbox.isabelhealthcare.com/predictive-text", {
@@ -49,39 +49,87 @@ const Describe = ({ route, navigation }) => {
     getPredictive();
   }, []);
   const checkWord = (item) => {
-    for (let i = 0; i < search.length; i++) {
-      let f1 = item[i].match(/[a-z]/i) ? item[i].toUpperCase() : item[i];
-      let f2 = search[i].match(/[a-z]/i) ? search[i].toUpperCase() : search[i];
-      if (f1 !== f2) {
-        return false;
-      }
+    let ch = item.substr(0, search.length).toUpperCase();
+    let ch2 = search.toUpperCase();
+    if (ch == ch2) return true;
+    return false;
+    // for (let i = 0; i < search.length; i++) {
+    // let f1 = item[i].match(/[a-z]/i) ? item[i].toUpperCase() : item[i];
+    // let f2 = search[i].match(/[a-z]/i) ? search[i].toUpperCase() : search[i];
+    // if (f1 !== f2) {
+    //   return false;
+    // }
+    // }
+    // return true;
+  };
+  const checkIfExist = (ch) => {
+    let i = 0;
+    while (i <= selected.length) {
+      if (selected[i] === ch) return true;
+      i++;
     }
-    return true;
+    return false;
   };
   const handleSearch = (e) => {
     setSearch(e);
-    if (e.length >= 3) {
-      console.log("Length =>", predictive.length);
+    let i = 0;
+    let j = 0;
+    if (search.length >= 1) {
       let after = predictive.filter(checkWord);
       let array2 = [];
       for (let i = 0; i < 10; i++) {
         array2.push(after[i]);
       }
+
+      // while (array2.length <= 10 && i <= after.length) {
+      //   if (!checkIfExist(after[i])) {
+      //     array2.push(after[i]);
+      //   }
+      //   i++;
+      // }
       setSearchArray(array2);
+      setCheck(true);
     }
+  };
+  const handleAddItem = (e, item) => {
+    console.log("Item Added => ", item);
+    let array = [];
+    // if (selected.length < 5) {
+    //   for (let i = 0; i < selected.length; i++) {
+    //     if (selected[i] !== item) {
+    //       array.push(item);
+    //     }
+    //   }
+    // }
+    if (selected.length < 5) {
+      array = selected;
+      array.push(item);
+    }
+    setSelected(array);
+  };
+  const handleRemoveItem = (e, item) => {
+    console.log("Item Removed => ", item);
+    let array = [];
+    for (let i = 0; i < selected.length; i++) {
+      if (selected[i] !== item) {
+        array.push(selected[i]);
+      }
+    }
+    setSelected(array);
   };
 
   const handleSubmit = () => {
     if (selected.length !== 0) {
+      let ch = selected.join(',')
       console.log("Success !!!");
-      //   navigation.navigate("result", {
-      //     age: age,
-      //     gender: gender,
-      //     pregnant: pregnant,
-      //     country_id: country_id,
-      //     region_id: region_id,
-      //     predictive_text: selected,
-      //   });
+        navigation.navigate("result", {
+          age: age,
+          gender: gender,
+          pregnant: pregnant,
+          country_id: country_id,
+          region_id: region_id,
+          predictive_text: ch,
+        });
     } else {
       setSelectError("* Entering atleast one word is Required");
     }
@@ -125,6 +173,27 @@ const Describe = ({ route, navigation }) => {
               Please describe in your own words or select symthoms from list
             </Text>
           </View>
+          {selected.length !== 0 ? (
+            <View>
+              <Text style={styles.title3}>Your Selected Key Words</Text>
+              <View style={styles.resultsContainer}>
+                {selected.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[styles.wordStyle2, styles.shadow]}
+                    onPress={(e) => handleRemoveItem(e, item)}
+                  >
+                    <Text style={styles.wordContentStyle2}>{item}</Text>
+                    <Image
+                      source={icons.close}
+                      style={styles.plusIcon}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          ) : null}
           <View style={styles.searchMain}>
             <View style={[styles.searchContainer, styles.shadow]}>
               <Image
@@ -144,8 +213,17 @@ const Describe = ({ route, navigation }) => {
           {searchArray && (
             <View style={styles.resultsContainer}>
               {searchArray.map((item, index) => (
-                <TouchableOpacity key={index}>
-                  <Text>{item}</Text>
+                <TouchableOpacity
+                  key={index}
+                  style={[styles.wordStyle, styles.shadow]}
+                  onPress={(e) => handleAddItem(e, item)}
+                >
+                  <Text style={styles.wordContentStyle}>{item}</Text>
+                  <Image
+                    source={icons.plus}
+                    style={styles.plusIcon}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               ))}
             </View>
@@ -229,9 +307,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title3: {
-    color: COLORS.fontColor2,
-    fontSize: 12,
+    color: COLORS.fontColor4,
+    fontSize: 16,
     textAlign: "center",
+    fontWeight: "bold",
+    marginTop: 20,
   },
   //   ScrollView
   scrollView: {
@@ -292,7 +372,7 @@ const styles = StyleSheet.create({
   searchMain: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginBottom: 100,
+    marginBottom: 20,
   },
   searchContainer: {
     backgroundColor: "white",
@@ -321,5 +401,42 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     shadowRadius: 2,
     elevation: 2,
+  },
+  // Words
+  resultsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  wordStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 50,
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    margin: 8,
+  },
+  wordContentStyle: {
+    color: COLORS.fontColor2,
+    fontSize: 12,
+  },
+  plusIcon: {
+    width: 13,
+    height: 13,
+    marginLeft: 10,
+  },
+  // 2
+  wordStyle2: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 50,
+    backgroundColor: COLORS.fontColor4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    margin: 5,
+  },
+  wordContentStyle2: {
+    color: COLORS.fontColor3,
+    fontSize: 10,
   },
 });

@@ -19,58 +19,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
 
-const cards = [
-  {
-    id: 0,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 1,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 0,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 1,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 0,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 1,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 0,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-  {
-    id: 1,
-    title: "We do Taxes. and we them very well.",
-    image: "source",
-  },
-];
-
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
   fetchUserD: user.fetchUserD,
   errors: user.errors,
 });
 
-const HomePage = ({ navigation }) => {
+const HomePage = ({ route, navigation }) => {
   console.log("Home Screen");
-
+  const { newAccount } = route.params || "empty";
+  if (newAccount !== "empty") {
+    navigation.navigate("selectProfile");
+  }
   const { currentProperty, fetchUserD, errors } = useSelector(mapState);
   console.log("maptate => ", { currentProperty, fetchUserD, errors });
   const dispatch = useDispatch();

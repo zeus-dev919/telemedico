@@ -43,6 +43,14 @@ const pregnant = require("../assets/icons/symthom/woman.png");
 const notPregnant = require("../assets/icons/symthom/pregnant.png");
 const countries = require("../assets/icons/symthom/countries.png");
 const notes = require("../assets/icons/symthom/notes.png");
+const plus = require("../assets/icons/symthom/plus.png");
+const close = require("../assets/icons/symthom/close.png");
+const light = require("../assets/icons/symthom/light.png");
+// Profile
+const patient = require("../assets/icons/profile/patient.png");
+const doctor = require("../assets/icons/profile/doctor.png");
+const choosing = require("../assets/icons/profile/choosing.png");
+const hourglass = require("../assets/icons/profile/hourglass.png");
 
 export default {
   menu1,
@@ -89,4 +97,12 @@ export default {
   pregnant,
   countries,
   notes,
+  plus,
+  close,
+  light,
+  // Profile
+  patient,
+  doctor,
+  choosing,
+  hourglass,
 };

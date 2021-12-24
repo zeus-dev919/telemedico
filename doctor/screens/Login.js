@@ -43,7 +43,7 @@ const Login = ({ navigation }) => {
     if (propertySignInSuccess && currentProperty) {
       ResetForm();
       dispatch(resetAllAuthForms());
-      navigation.navigate("Home");
+      navigation.navigate("home");
     }
   }, [propertySignInSuccess]);
 
