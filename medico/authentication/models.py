@@ -22,7 +22,7 @@ class Doctor(models.Model):
     bio = models.IntegerField(default='0000$')
     traige_score = models.IntegerField( null=False)
     def __str__(self):
-        return self.title
+        return self.first_name
 
 
 class Customer(models.Model):
@@ -34,7 +34,7 @@ class Customer(models.Model):
     #objects = CustomerManager()
 
     def __str__(self):
-        return self.title
+        return self.first_name
 
 
 class Appointment(models.Model):
@@ -51,14 +51,14 @@ class Appointment(models.Model):
 #    class Meta:
 #        ordering = ['start_time']
 
-#    def __str__(self):
-#        return str(self.start_time)
+    def __str__(self):
+        return str(self.start_time)
 
 #    def get_absolute_url(self):
 #        return f'/{self.doctor.id}/appoint/{self.id}'
+
+#    def has_not_customer(self):         # change method to opposite(has_customer instead has_not_customer)
 #
-#    def has_not_customer(self):         # TODO: change method to opposite(has_customer instead has_not_customer)
-#        """
 #            True if this appointment has not customer.
 #            False if appointment already has customer.
 
