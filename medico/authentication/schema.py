@@ -34,4 +34,12 @@ class Query(graphene.ObjectType):
         return Appointment.objects.all()
 
 
-schema = graphene.Schema(query=Query)
+class ModelMutation(graphene.ObjectType):
+    first_name  = mutations.Register.Field()
+    verify_account = mutations.VerifyAccount.Field()
+    token_auth = mutations.ObtainJSONWebToken.Field()
+    update_account = mutations.UpdateAccount.Field()
+    resend_activation_email = mutations.ResendActivationEmail.Field()
+
+
+schema = graphene.Schema(query=Query, mutations=Mutation)

@@ -16,10 +16,10 @@ class Doctor(models.Model):
     address = models.CharField(max_length=15 , null=True, blank=True)
     npi_number = models.CharField(max_length=12 , null=True, blank=False)
     state_license_number = models.CharField(max_length=12, null=True, blank=False)
-    #profile_Pic = models.ImageField(upload_to=path_and_rename,verbose_name="Profile Picture", blank=True)
+    profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
     #award_Pic = models.ImageField(upload_to=path_and_rename,verbose_name="Award_ Picture", blank=True)
-    #consultation_fees = models.ImageField(upload_to=path_and_rename, verbose_name="Consultation Fees", blank=True)
-    bio = models.IntegerField(default='0000$')
+    consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
+    bio = models.TextField('Information', max_length=1250, blank=True)
     traige_score = models.IntegerField( null=False)
     def __str__(self):
         return self.first_name
@@ -29,6 +29,11 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
     gender = models.CharField(max_length=10,  default='female')
+    traige_score = models.CharField(max_length=10, blank=True)
+
+
+
+
 
 
     #objects = CustomerManager()
