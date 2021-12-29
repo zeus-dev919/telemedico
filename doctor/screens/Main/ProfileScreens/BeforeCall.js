@@ -55,7 +55,7 @@ const BeforeCall = ({ navigation }) => {
             Timer
           </Text>
           {/* date = consultTime - currentTime then switch to seconds */}
-          <TimeLeft date="50" navigation={navigation} />
+          <TimeLeft date="10" navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

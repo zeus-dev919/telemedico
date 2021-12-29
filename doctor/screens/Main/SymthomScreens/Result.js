@@ -25,7 +25,7 @@ const Result = ({ route, navigation }) => {
     predictive_text,
   });
   const [result, setResult] = useState(null);
-  const [colorSys, setColorSys] = useState("");
+  const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
   const getResult = async () => {
     await fetch(
@@ -85,7 +85,17 @@ const Result = ({ route, navigation }) => {
           <View style={styles.titleConatiner}>
             <Text style={styles.title1}>DR. AI</Text>
           </View>
-          <View style={{ width: 30 }}></View>
+          <TouchableOpacity
+            style={styles.headerSub}
+            onPress={() => navigation.navigate("home")}
+          >
+            <Ionicons
+              name="md-home-sharp"
+              size={24}
+              color="black"
+              style={styles.icon_style}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {/* ScrollView */}
@@ -105,7 +115,6 @@ const Result = ({ route, navigation }) => {
         </View>
         <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
         <Text style={[styles.title2]}>{colorText}</Text>
-
       </ScrollView>
     </SafeAreaView>
   );

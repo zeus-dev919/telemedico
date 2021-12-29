@@ -51,6 +51,7 @@ const patient = require("../assets/icons/profile/patient.png");
 const doctor = require("../assets/icons/profile/doctor.png");
 const choosing = require("../assets/icons/profile/choosing.png");
 const hourglass = require("../assets/icons/profile/hourglass.png");
+const videoCall = require("../assets/icons/profile/videoCall.png");
 
 export default {
   menu1,
@@ -105,4 +106,5 @@ export default {
   doctor,
   choosing,
   hourglass,
+  videoCall,
 };

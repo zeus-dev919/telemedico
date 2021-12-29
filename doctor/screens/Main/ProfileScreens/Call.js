@@ -1,20 +1,64 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { COLORS } from "../../../constants";
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { COLORS, icons } from "../../../constants";
 import AgoraUIKit from "agora-rn-uikit";
 
 const Call = ({ navigation }) => {
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
-    appId: "84359a98a49a41038df9ab26e2959fa2",
-    channel: "test1",
+    appId: "ffbede8baae7488f862541f490cd3285",
+    channel: "test",
+    layout: 1,
+    mode: 0,
+  };
+  const callbacks = {
+    EndCall: () => setVideoCall(false),
   };
   return (
     <SafeAreaView style={styles.container}>
       {videoCall ? (
-        <AgoraUIKit rtcProps={rtcProps} callbacks={() => setVideoCall(false)} />
+        <View style={{ flex: 1, width: "100%", height: "100%" }}>
+          <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
+        </View>
       ) : (
-        <Text onPress={() => setVideoCall(true)}>Start Call</Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-around",
+            alignItems: "center",
+            padding: 50,
+          }}
+        >
+          <View style={{ marginBottom: 20 }}>
+            <Text style={styles.title1}>Waiting Room</Text>
+          </View>
+          <View style={{ marginBottom: 20 }}>
+            <Image
+              style={styles.icon}
+              source={icons.videoCall}
+              resizeMode="contain"
+            />
+          </View>
+          <TouchableOpacity
+            style={[styles.button1, styles.signup]}
+            onPress={() => setVideoCall(true)}
+          >
+            <Text style={styles.signupText}>Rejoin</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button1, styles.signup]}
+            onPress={() => navigation.navigate('home')}
+          >
+            <Text style={styles.signupText}>Back Home</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -27,5 +71,46 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.bgColor1,
     paddingTop: 20,
+  },
+  title1: {
+    color: COLORS.fontColor4,
+    fontSize: 22,
+    fontWeight: "bold",
+    margin: 0,
+    lineHeight: 29,
+    textAlign: "center",
+  },
+  title2: {
+    color: COLORS.fontColor2,
+    fontSize: 12,
+    margin: 0,
+    padding: 0,
+    lineHeight: 29,
+    textAlign: "center",
+  },
+  icon: {
+    width: 150,
+    height: 150,
+  },
+  // Btn
+  button1: {
+    width: "100%",
+    marginVertical: 15,
+    padding: 5,
+  },
+  signup: {
+    backgroundColor: COLORS.blueBtn,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 10,
+    paddingHorizontal: 20,
+  },
+  signupText: {
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 10,
   },
 });

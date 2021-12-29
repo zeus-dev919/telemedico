@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   icon_style: {
     flex: 0.45,
     padding: 20,
-    marginTop: 30,
+    // marginTop: 30,
   },
   headerTitle: {
     paddingVertical: 10,
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
     fontSize: 18,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   fieldErrors2: {
     color: "red",
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 40,
-    marginTop: 50,
+    marginTop: 20,
   },
   inputField: {
     paddingTop: 0,

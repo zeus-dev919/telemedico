@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    marginTop: 50,
+    marginTop: 20,
   },
   betweenLogin: {
     flexDirection: "row",

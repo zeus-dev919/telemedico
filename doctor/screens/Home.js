@@ -26,7 +26,7 @@ import IntakeForm from "./Main/DoctorScreens/IntakeForm";
 
 const CustomDrawerContent = ({ navigation }) => {
   const handleHome = () => {
-    navigation.navigate("home");
+    navigation.navigate("homePage");
   };
   const handleProfile = () => {
     navigation.navigate("profile");
@@ -157,10 +157,10 @@ const Home = () => {
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName="home"
+      initialRouteName="homePage"
       style={styles.drawerNavStyle}
     >
-      <Drawer.Screen name="home" component={HomePage} />
+      <Drawer.Screen name="homePage" component={HomePage} />
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="intakeForm" component={IntakeForm} />
     </Drawer.Navigator>

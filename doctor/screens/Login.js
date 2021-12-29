@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   icon_style: {
     flex: 0.45,
     padding: 20,
-    marginTop: 30,
+    // marginTop: 30,
   },
   headerTitle: {
     paddingVertical: 10,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 28,
     textTransform: "uppercase",
-    marginBottom: 25,
+    marginBottom: 20,
   },
   content: {
     paddingHorizontal: 40,
