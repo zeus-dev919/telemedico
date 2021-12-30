@@ -3,6 +3,14 @@
     "version": ">= 0.42.4"
   },
   "build": {
+    "com.rami404.doctor": {
+        "ios": {
+          "cache": {
+            "disabled": false,
+            "key": "12345678"
+          }
+        }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
