@@ -13,8 +13,10 @@ import AgoraUIKit from "agora-rn-uikit";
 const Call = ({ navigation }) => {
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
-    appId: "ffbede8baae7488f862541f490cd3285",
-    channel: "test",
+    appId: "11fa2349370545cf858c5f30651f171f",
+    channel: "testToken",
+    token:
+      "00611fa2349370545cf858c5f30651f171fIAAY7UKst3PAq28imqqiqiTY8Xe//5QcHZJncMGgF5UlVevUqsYAAAAAEADQ943gJfjOYQEAAQAk+M5h",
     layout: 1,
     mode: 0,
   };
@@ -54,7 +56,7 @@ const Call = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button1, styles.signup]}
-            onPress={() => navigation.navigate('home')}
+            onPress={() => navigation.navigate("home")}
           >
             <Text style={styles.signupText}>Back Home</Text>
           </TouchableOpacity>
