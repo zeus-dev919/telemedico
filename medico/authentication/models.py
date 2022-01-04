@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.models import UserManager
 import datetime
-
+from userauth.models import ExtendUser
 
 
 
@@ -20,7 +20,6 @@ class Doctor(models.Model):
     #award_Pic = models.ImageField(upload_to=path_and_rename,verbose_name="Award_ Picture", blank=True)
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
     bio = models.TextField('Information', max_length=1250, blank=True)
-    traige_score = models.IntegerField( null=True)
     def __str__(self):
         return self.first_name
 
@@ -29,8 +28,9 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
     gender = models.CharField(max_length=10,  default='female')
-    email_address = models.ForeignKey()
+    email_address = models.ForeignKey(ExtendUser, on_delete=models.CASCADE)
     traige_score = models.CharField(max_length=10, blank=True)
+    diagnosis_ref = models.CharField(max_length=12, blank=True)
 
 
 
@@ -52,7 +52,7 @@ class Appointment(models.Model):
 
 
     def __str__(self):
-        return self.title #username , doctor and consultation time confirmed 
+        return self.title #username , doctor and consultation time confirmed
 
 #    class Meta:
 #        ordering = ['start_time']
