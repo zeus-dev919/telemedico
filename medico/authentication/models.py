@@ -13,7 +13,12 @@ class Doctor(models.Model):
     gender = models.CharField(max_length=10, default='female')
     specialization = models.CharField('Specialization', max_length=50)
     info = models.TextField('Information', max_length=1250, blank=True)
-    address = models.CharField(max_length=15 , null=True, blank=True)#street, city, state, country , zip code ,
+    address = models.CharField(max_length=15 , null=True, blank=True)
+    street =  models.CharField(max_length=15 , null=True, blank=True)
+    city =    models.CharField(max_length=15 , null=True, blank=True)
+    state =   models.CharField(max_length=15 , null=True, blank=True)
+    country = models.CharField(max_length=15 , null=True, blank=True)
+    zip_code = models.CharField(max_length=15 , null=True, blank=True)
     npi_number = models.CharField(max_length=10, null=True, blank=False)#keep npi unique identifier
     state_license_number = models.CharField(max_length=12, null=True, blank=False)
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
@@ -25,10 +30,10 @@ class Doctor(models.Model):
 
 
 class Customer(models.Model):
+    email_address = models.EmailField()
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
     gender = models.CharField(max_length=10,  default='female')
-    email_address = models.ForeignKey(ExtendUser, on_delete=models.CASCADE)
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
 
