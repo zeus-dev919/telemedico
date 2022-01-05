@@ -1,4 +1,4 @@
-import { ISABELL_API_KEY } from "@env";
+// import { ISABELL_API_KEY } from "@env";
 import React, { useState, useEffect } from "react";
 import {
   Image,
@@ -36,7 +36,8 @@ const Result = ({ route, navigation }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `${ISABELL_API_KEY}`,
+          Authorization: `nIWd9Dad9cJ9PJnrML1B92N4jWu3C76n`,
+          // Authorization: `${ISABELL_API_KEY}`,
         },
       }
     )

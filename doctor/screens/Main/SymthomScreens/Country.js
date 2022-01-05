@@ -1,4 +1,4 @@
-import { ISABELL_API_KEY } from "@env";
+// import { ISABELL_API_KEY } from "@env";
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -36,7 +36,8 @@ const Country = ({ route, navigation }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `${ISABELL_API_KEY}`,
+          // Authorization: `${ISABELL_API_KEY}`,
+          Authorization: `nIWd9Dad9cJ9PJnrML1B92N4jWu3C76n`,
         },
       }
     )
@@ -55,12 +56,12 @@ const Country = ({ route, navigation }) => {
     setCountryCode(country.cca2);
     setCountry(country);
     setCheck(true);
-    console.log("Countries from API => ", apiCountries);
+    // console.log("Countries from API => ", apiCountries);
   };
   const handleSubmit = () => {
-      console.log("Country from State => ", country.name)
+      // console.log("Country from State => ", country.name)
     const newCountryObj = apiCountries.find(item => item.country_name === country.name);
-    console.log("Country =>", newCountryObj);
+    // console.log("Country =>", newCountryObj);
     if (check) {
       let newpregnant = ''
       if(pregnant !== undefined) {

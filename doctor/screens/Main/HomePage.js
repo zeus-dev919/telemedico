@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   Image,
@@ -27,15 +27,15 @@ const mapState = ({ user }) => ({
 
 const HomePage = ({ route, navigation }) => {
   console.log("Home Screen");
-  const { newAccount } = route.params || "empty";
-  if (newAccount !== "empty") {
-    navigation.navigate("selectProfile");
-  }
+  const dispatch = useDispatch();
   const { currentProperty, fetchUserD, errors } = useSelector(mapState);
   console.log("maptate => ", { currentProperty, fetchUserD, errors });
-  const dispatch = useDispatch();
-  // dispatch(ResetStates);
-  // dispatch(ResetAddMatterportForm());
+  const { newAccount } = route.params || "empty";
+  useEffect(() => {
+    if (newAccount !== "empty") {
+      navigation.navigate("selectProfile");
+    }
+  }, []);
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     console.log("Sympptoms Checker !!");
@@ -80,7 +80,7 @@ const HomePage = ({ route, navigation }) => {
           <View>
             <Image
               style={styles.logo}
-              source={images.logo}
+              source={icons.avatar}
               resizeMode="contain"
             />
           </View>

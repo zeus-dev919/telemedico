@@ -9,11 +9,11 @@ import * as Sentry from "sentry-expo";
 
 const App = () => {
   // LogBox.ignoreAllLogs();
-  Sentry.init({
-    dsn: "https://65e7a03b195d4fd1ba6d96bb3a477506@o1100035.ingest.sentry.io/6124925",
-    enableInExpoDevelopment: true,
-    debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  });
+  // Sentry.init({
+  //   dsn: "https://65e7a03b195d4fd1ba6d96bb3a477506@o1100035.ingest.sentry.io/6124925",
+  //   enableInExpoDevelopment: true,
+  //   debug: true,
+  // });
   return (
     <Provider store={store}>
       <AppMain />

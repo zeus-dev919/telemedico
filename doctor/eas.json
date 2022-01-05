@@ -4,19 +4,29 @@
   },
   "build": {
     "com.rami404.doctor": {
-        "ios": {
-          "cache": {
-            "disabled": false,
-            "key": "12345678"
-          }
+      "ios": {
+        "cache": {
+          "disabled": false,
+          "key": "12345678"
         }
+      }
     },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
     },
     "production": {}
   },

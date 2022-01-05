@@ -1,4 +1,4 @@
-import { ISABELL_API_KEY } from "@env";
+// import { ISABELL_API_KEY } from "@env";
 import React, { useState, useEffect } from "react";
 import {
   Image,
@@ -34,7 +34,8 @@ const Describe = ({ route, navigation }) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `${ISABELL_API_KEY}`,
+        Authorization: `nIWd9Dad9cJ9PJnrML1B92N4jWu3C76n`,
+        // Authorization: `${ISABELL_API_KEY}`,
       },
     })
       .then((response) => response.json())
@@ -48,6 +49,9 @@ const Describe = ({ route, navigation }) => {
   useEffect(() => {
     getPredictive();
   }, []);
+  useEffect(() => {
+    console.log("selected Changed !!");
+  }, [selected]);
   const checkWord = (item) => {
     let ch = item.substr(0, search.length).toUpperCase();
     let ch2 = search.toUpperCase();
@@ -117,19 +121,22 @@ const Describe = ({ route, navigation }) => {
     }
     setSelected(array);
   };
+  const handleAddCustom = () => {
+    console.log("Add Clicked !!");
+  };
 
   const handleSubmit = () => {
     if (selected.length !== 0) {
-      let ch = selected.join(',')
+      let ch = selected.join(",");
       console.log("Success !!!");
-        navigation.navigate("result", {
-          age: age,
-          gender: gender,
-          pregnant: pregnant,
-          country_id: country_id,
-          region_id: region_id,
-          predictive_text: ch,
-        });
+      navigation.navigate("result", {
+        age: age,
+        gender: gender,
+        pregnant: pregnant,
+        country_id: country_id,
+        region_id: region_id,
+        predictive_text: ch,
+      });
     } else {
       setSelectError("* Entering atleast one word is Required");
     }
@@ -208,6 +215,16 @@ const Describe = ({ route, navigation }) => {
                 placeholder="Search"
                 placeholderTextColor="#b2b8cc"
               />
+              <TouchableOpacity
+                style={styles.addBtnContainer}
+                onPres={handleAddCustom}
+              >
+                <Image
+                  style={styles.addBtn}
+                  source={icons.add}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
             </View>
           </View>
           {searchArray && (
@@ -391,6 +408,17 @@ const styles = StyleSheet.create({
   searchInput: {
     fontSize: 16,
     width: "100%",
+  },
+  addBtnContainer: {
+    position: "absolute",
+    right: 0,
+    backgroundColor: "white",
+    padding: 10,
+    marginRight: 5,
+  },
+  addBtn: {
+    width: 25,
+    height: 25,
   },
   shadow: {
     shadowColor: "#cdcddd",

@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
-import { COLORS, icons } from "../../constants";
+import { COLORS, icons, images } from "../../constants";
 import DoctorCardModel from "../Models/DoctorCardModel";
 
 const Doctors = ({ navigation }) => {
@@ -24,6 +24,13 @@ const Doctors = ({ navigation }) => {
       <View style={styles.subContainer}>
         {/* Red Header */}
         <View style={styles.header}>
+          <View>
+            <Image
+              style={styles.logo}
+              source={icons.avatar}
+              resizeMode="contain"
+            />
+          </View>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.openDrawer()}
@@ -35,13 +42,6 @@ const Doctors = ({ navigation }) => {
               style={styles.icon_style}
             />
           </TouchableOpacity>
-          <View>
-            <Image
-              style={styles.logo}
-              source={icons.avatar}
-              resizeMode="contain"
-            />
-          </View>
         </View>
       </View>
       {/* ScrollView */}
@@ -188,7 +188,6 @@ const Doctors = ({ navigation }) => {
           bg="0"
           navigation={navigation}
         />
-        
       </ScrollView>
     </SafeAreaView>
   );
@@ -216,8 +215,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   logo: {
-    width: 30,
-    height: 30,
+    width: 80,
+    height: 80,
+    marginTop: 5,
   },
   headerSub: {
     flexDirection: "row",
