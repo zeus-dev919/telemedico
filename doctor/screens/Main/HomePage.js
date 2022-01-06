@@ -79,7 +79,7 @@ const HomePage = ({ route, navigation }) => {
         <View style={styles.header}>
           <View>
             <Image
-              style={styles.logo}
+              style={styles.avatar}
               source={icons.avatar}
               resizeMode="contain"
             />
@@ -280,6 +280,11 @@ const styles = StyleSheet.create({
   logo: {
     width: 80,
     height: 80,
+    marginTop: 5,
+  },
+  avatar: {
+    width: 30,
+    height: 30,
     marginTop: 5,
   },
   headerSub: {

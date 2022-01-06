@@ -14,14 +14,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 
 const Describe = ({ route, navigation }) => {
-  const { age, gender, pregnant, country_id, region_id } = route.params;
-  console.log("From Describe => ", {
-    age,
-    gender,
-    pregnant,
-    country_id,
-    region_id,
-  });
+  // const { age, gender, pregnant, country_id, region_id } = route.params;
+  // console.log("From Describe => ", {
+  //   age,
+  //   gender,
+  //   pregnant,
+  //   country_id,
+  //   region_id,
+  // });
   const [check, setCheck] = useState(false);
   const [search, setSearch] = useState("");
   const [predictive, setPredictive] = useState("");
@@ -110,6 +110,8 @@ const Describe = ({ route, navigation }) => {
       array.push(item);
     }
     setSelected(array);
+    setSearch('')
+    setSearchArray([])
   };
   const handleRemoveItem = (e, item) => {
     console.log("Item Removed => ", item);
