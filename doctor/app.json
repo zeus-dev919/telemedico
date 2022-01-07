@@ -23,6 +23,7 @@
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
       },
+      "usesIcloudStorage": true,
       "bundleIdentifier": "com.rami404.doctor"
     },
     "android": {
@@ -42,7 +43,13 @@
     },
     "description": "",
     "plugins": [
-      "sentry-expo"
+      "sentry-expo",
+      [
+        "expo-document-picker",
+        {
+          "appleTeamId": "YOUR_TEAM_ID"
+        }
+      ]
     ],
     "hooks": {
       "postPublish": [
