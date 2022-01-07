@@ -3,15 +3,18 @@ from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.models import UserManager
 import datetime
 from userauth.models import ExtendUser
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Doctor(models.Model):
 
-    first_name = models.CharField(max_length=20, blank=True)#add phone number and email
+    GENDER = (("male", "Male"), ("female", "Female"))
+
+    first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
-    gender = models.CharField(max_length=10, default='female')
+    gender = models.CharField(max_length=10, default=GENDER)
     specialization = models.CharField('Specialization', max_length=50)
+    phone = PhoneNumberField(null=True)
     info = models.TextField('Information', max_length=1250, blank=True)
     address = models.CharField(max_length=15 , null=True, blank=True)
     street =  models.CharField(max_length=15 , null=True, blank=True)
@@ -19,23 +22,27 @@ class Doctor(models.Model):
     state =   models.CharField(max_length=15 , null=True, blank=True)
     country = models.CharField(max_length=15 , null=True, blank=True)
     zip_code = models.CharField(max_length=15 , null=True, blank=True)
-    npi_number = models.CharField(max_length=10, null=True, blank=False)#keep npi unique identifier
+    npi_number = models.CharField(max_length=10, null=True, blank=False)
     state_license_number = models.CharField(max_length=12, null=True, blank=False)
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
-    #award_Pic = models.ImageField(upload_to=path_and_rename,verbose_name="Award_ Picture", blank=True)
+    award_Pic = models.ImageField(upload_to=None,verbose_name="Award_ Picture", blank=True)
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
-    bio = models.TextField('Information', max_length=1250, blank=True)
+
     def __str__(self):
         return self.first_name
 
 
 class Customer(models.Model):
+
+    GENDER = (("male", "Male"), ("female", "Female"))
+
     email_address = models.EmailField()
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
-    gender = models.CharField(max_length=10,  default='female')
+    gender = models.CharField(max_length=10,  default=GENDER)
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
+    profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
 
 
 
