@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
+import DoctorCardModel from '../../Models/DoctorCardModel'
 
 const Result = ({ route, navigation }) => {
   const { age, gender, pregnant, country_id, region_id, predictive_text } =
@@ -25,6 +26,12 @@ const Result = ({ route, navigation }) => {
     predictive_text,
   });
   const [result, setResult] = useState(null);
+  const [diagnose1, setDiagnose1] = useState(null);
+  const [spec1, setSpec1] = useState(null);
+  const [diagnose2, setDiagnose2] = useState(null);
+  const [spec2, setSpec2] = useState(null);
+  const [diagnose3, setDiagnose3] = useState(null);
+  const [spec3, setSpec3] = useState(null);
   const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
   const getResult = async () => {
@@ -47,6 +54,12 @@ const Result = ({ route, navigation }) => {
         setResult(
           res.diagnoses_checklist.query_result_details.total_results_returned
         );
+        setDiagnose1(res.diagnoses_checklist.diagnoses[0].diagnosis_name);
+        setSpec1(res.diagnoses_checklist.diagnoses[0].specialty);
+        setDiagnose2(res.diagnoses_checklist.diagnoses[1].diagnosis_name);
+        setSpec2(res.diagnoses_checklist.diagnoses[1].specialty);
+        setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
+        setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
       })
       .catch((error) => {
         console.error(error);
@@ -114,8 +127,74 @@ const Result = ({ route, navigation }) => {
             <Text style={styles.title1}>Result</Text>
           </View>
         </View>
-        <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
-        <Text style={[styles.title2]}>{colorText}</Text>
+        {/* <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
+        <Text style={[styles.title2]}>{colorText}</Text> */}
+        <View style={styles.diagnoseContainer}>
+          <Text style={styles.title3}>{diagnose1}</Text>
+          {/* <Text style={styles.title4}>{spec1}</Text> */}
+          <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        </View>
+        <View style={styles.diagnoseContainer}>
+          <Text style={styles.title3}>{diagnose2}</Text>
+          {/* <Text style={styles.title4}>{spec2}</Text> */}
+          <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        </View>
+        <View style={styles.diagnoseContainer}>
+          <Text style={styles.title3}>{diagnose3}</Text>
+          {/* <Text style={styles.title4}>{spec3}</Text> */}
+          <DoctorCardModel
+          name="Dr. Lida Gutierrez"
+          location="Los Angeles, USA"
+          speciality="Heart Surgeon"
+          experience="10"
+          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          bg="0"
+          navigation={navigation}
+        />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -128,7 +207,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.bgColor1,
-    paddingTop: 20,
+    paddingTop: 0,
   },
   subContainer: {
     // flex: 1,
@@ -174,6 +253,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 20,
   },
+  title3: {
+    color: COLORS.fontColor4,
+    fontSize: 26,
+    fontWeight: "bold",
+    margin: 0,
+    textAlign: "left",
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  title4: {
+    color: COLORS.fontColor2,
+    fontSize: 12,
+    fontWeight: "bold",
+    margin: 0,
+    textAlign: "left",
+  },
   title9: {
     color: COLORS.fontColor2,
     fontSize: 80,
@@ -199,5 +294,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 80,
     height: 80,
+  },
+  diagnoseContainer: {
+    width: "100%",
+    paddingVertical: 20,
   },
 });

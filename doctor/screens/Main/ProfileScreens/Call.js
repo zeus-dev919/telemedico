@@ -13,10 +13,10 @@ import AgoraUIKit from "agora-rn-uikit";
 const Call = ({ navigation }) => {
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
-    appId: "11fa2349370545cf858c5f30651f171f",
-    channel: "testToken",
+    appId: "8f9d6440bbf147c290b2f29e7b6d74ec",
+    channel: "text7jan",
     token:
-      "00611fa2349370545cf858c5f30651f171fIAAY7UKst3PAq28imqqiqiTY8Xe//5QcHZJncMGgF5UlVevUqsYAAAAAEADQ943gJfjOYQEAAQAk+M5h",
+      "0068f9d6440bbf147c290b2f29e7b6d74ecIABy8FZFheINeOoeXMXBMGC/N3t2HZuL33IWAGB++RPIerVyxYEAAAAAEACjOAeRuaHZYQEAAQC5odlh",
     layout: 1,
     mode: 0,
   };
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.bgColor1,
-    paddingTop: 20,
+    paddingTop: 0,
   },
   title1: {
     color: COLORS.fontColor4,

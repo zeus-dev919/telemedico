@@ -14,14 +14,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 
 const Describe = ({ route, navigation }) => {
-  // const { age, gender, pregnant, country_id, region_id } = route.params;
-  // console.log("From Describe => ", {
-  //   age,
-  //   gender,
-  //   pregnant,
-  //   country_id,
-  //   region_id,
-  // });
+  const { age, gender, pregnant, country_id, region_id } = route.params;
+  console.log("From Describe => ", {
+    age,
+    gender,
+    pregnant,
+    country_id,
+    region_id,
+  });
   const [check, setCheck] = useState(false);
   const [search, setSearch] = useState("");
   const [predictive, setPredictive] = useState("");
@@ -140,7 +140,7 @@ const Describe = ({ route, navigation }) => {
         predictive_text: ch,
       });
     } else {
-      setSelectError("* Entering atleast one word is Required");
+      setSelectError("* Please enter atleast one word");
     }
   };
   return (
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.bgColor1,
-    paddingTop: 20,
+    paddingTop: 0,
   },
   subContainer: {
     // flex: 1,

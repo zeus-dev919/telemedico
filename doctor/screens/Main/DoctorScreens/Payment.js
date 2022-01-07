@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.bgColor1,
-    paddingTop: 20,
+    paddingTop: 0,
   },
   subContainer: {
     // flex: 1,
