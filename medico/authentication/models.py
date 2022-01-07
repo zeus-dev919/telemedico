@@ -12,7 +12,7 @@ class Doctor(models.Model):
 
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
-    gender = models.CharField(max_length=10, default=GENDER)
+    gender = models.CharField(max_length=10, choices=GENDER)
     specialization = models.CharField('Specialization', max_length=50)
     phone = PhoneNumberField(null=True)
     info = models.TextField('Information', max_length=1250, blank=True)
@@ -39,7 +39,7 @@ class Customer(models.Model):
     email_address = models.EmailField()
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
-    gender = models.CharField(max_length=10,  default=GENDER)
+    gender = models.CharField(max_length=10,  choices=GENDER)
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
