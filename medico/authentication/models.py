@@ -9,6 +9,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Doctor(models.Model):
 
     GENDER = (("male", "Male"), ("female", "Female"))
+    DAYS = (("monday", "Mon"),("tuesday", "Tues"),("wednesday","Wed" ),("thrusday", "Thrus"),("friday", "Fri"),("saturday", "Sat"),("sunday", "Sun"))
 
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
@@ -27,9 +28,10 @@ class Doctor(models.Model):
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
     award_Pic = models.ImageField(upload_to=None,verbose_name="Award_ Picture", blank=True)
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
-
+    available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
+    time_slots = models.CharField(max_length=20,null=False, blank=True)
     def __str__(self):
-        return self.first_name
+        return self.first_namefriday
 
 
 class Customer(models.Model):
