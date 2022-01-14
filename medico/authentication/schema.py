@@ -42,4 +42,4 @@ class ModelMutation(graphene.ObjectType):
     resend_activation_email = mutations.ResendActivationEmail.Field()
 
 
-schema = graphene.Schema(query=Query, mutations=Mutation)
+schema = graphene.Schema(query=Query, mutation=Mutation)
