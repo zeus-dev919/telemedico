@@ -1,6 +1,7 @@
 import graphene
 from graphql_auth import mutations
 from graphql_auth.schema import UserQuery, MeQuery
+import authentication.schema
 
 
 
@@ -15,6 +16,11 @@ class AuthMutation(graphene.ObjectType):
 class Query(UserQuery, MeQuery, graphene.ObjectType):
     pass
 
+class Query(authentication.schema.Query, graphene.ObjectType):
+    pass
+
+class Mutation(authentication.schema.Mutation, graphene.ObjectType):
+    pass
 
 class Mutation(AuthMutation, graphene.ObjectType):
     pass
