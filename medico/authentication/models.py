@@ -31,7 +31,7 @@ class Doctor(models.Model):
     available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
     time_slots = models.CharField(max_length=20,null=False, blank=True)
     def __str__(self):
-        return self.first_namefriday
+        return self.first_name
 
 
 class Customer(models.Model):
@@ -68,8 +68,8 @@ class Appointment(models.Model):
     def __str__(self):
         return self.title #username , doctor and consultation time confirmed
 
-#    class Meta:
-#        ordering = ['start_time']
+    #    class Meta:
+    #        ordering = ['start_time']
 
     def __str__(self):
         return str(self.start_time)

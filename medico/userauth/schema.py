@@ -2,7 +2,7 @@ import graphene
 from graphql_auth import mutations
 from graphql_auth.schema import UserQuery, MeQuery
 import authentication.schema
-
+from authentication.schema import DoctorCreateInput
 
 
 class AuthMutation(graphene.ObjectType):
@@ -13,16 +13,16 @@ class AuthMutation(graphene.ObjectType):
     resend_activation_email = mutations.ResendActivationEmail.Field()
 
 
-class Query(UserQuery, MeQuery, graphene.ObjectType):
-    pass
+# class Query(UserQuery, MeQuery, graphene.ObjectType):
+#     pass
 
 class Query(authentication.schema.Query, graphene.ObjectType):
     pass
 
-class Mutation(authentication.schema.Mutation, graphene.ObjectType):
-    pass
+# class Mutation(authentication.schema.Mutation, graphene.ObjectType):
+#     pass
 
-class Mutation(AuthMutation, graphene.ObjectType):
+class Mutation(AuthMutation,DoctorCreateInput, graphene.ObjectType):
     pass
 
 
