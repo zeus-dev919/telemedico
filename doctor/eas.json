@@ -25,7 +25,11 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "cache": {
+          "disabled": false,
+          "key": "12345678"
+        }
       }
     },
     "preview3": {

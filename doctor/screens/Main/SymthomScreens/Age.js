@@ -326,12 +326,7 @@ const Age = ({ navigation }) => {
             disabled={!check}
           >
             <Text style={styles.signupText}>Submit</Text>
-            {/* <Ionicons
-              name="ios-arrow-forward-sharp"
-              size={24}
-              color="white"
-              style={{ marginLeft: 20 }}
-            /> */}
+            
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -459,7 +454,7 @@ const styles = StyleSheet.create({
   optionContainer: {
     width: "100%",
     paddingHorizontal: 15,
-    paddingVertical: 8,
+    paddingVertical: 5,
   },
   button1: {
     width: "100%",

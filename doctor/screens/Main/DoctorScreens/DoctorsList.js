@@ -15,11 +15,11 @@ const DATA = [
   {
     title: "Cardiologistic",
     data: [
-      // {
-      //   name: "Christina Frazier",
-      //   desc: "Heart Surgeon, London",
-      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      // },
+      {
+        name: "Christina Frazier",
+        desc: "Heart Surgeon, London",
+        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
+      },
       {
         name: "Jane Andrews",
         desc: "Heart Surgeon, London",
@@ -118,8 +118,9 @@ const DATA = [
     ],
   },
 ];
-const DoctorsList = ({ navigation }) => {
-  console.log("AGAIN !!!!");
+const DoctorsList = ({ route, navigation }) => {
+  const { filter } = route.params;
+  console.log("filter => ", filter);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>

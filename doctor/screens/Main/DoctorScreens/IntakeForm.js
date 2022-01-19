@@ -386,12 +386,12 @@ const IntakeForm = ({ navigation }) => {
   };
   // Pick Images
   const handlePickImg1 = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response1 =>", result);
     setPick1(result.uri);
   };
   const handlePickImg2 = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
     setPick2(result.uri);
   };
@@ -498,9 +498,9 @@ const IntakeForm = ({ navigation }) => {
     if (f11_1_1) had_feeling_didnt_want_to_live = "yes";
     if (f11_1_2) had_feeling_didnt_want_to_live = "no";
     // currently_feeling_didnt_want_to_live
-    let currently_feeling_didnt_want_to_live = ""
-    if(f11_2_1) currently_feeling_didnt_want_to_live = "yes"
-    if(f11_2_2) currently_feeling_didnt_want_to_live = "no"
+    let currently_feeling_didnt_want_to_live = "";
+    if (f11_2_1) currently_feeling_didnt_want_to_live = "yes";
+    if (f11_2_2) currently_feeling_didnt_want_to_live = "no";
     // have_you_seen_a_mental_health_professional
     let have_you_seen_a_mental_health_professional = "";
     if (f11_5_1) have_you_seen_a_mental_health_professional = "yes";
@@ -554,21 +554,24 @@ const IntakeForm = ({ navigation }) => {
       img1: pick1,
       img2: pick2,
     };
-    console.log(data)
+    console.log(data);
     navigation.navigate("home");
+  };
+  const handleProfileRedirect = () => {
+    navigation.navigate("profile");
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <View style={styles.header}>
-          <View>
+          <TouchableOpacity onPress={handleProfileRedirect}>
             <Image
               style={styles.logo}
               source={icons.avatar}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.openDrawer()}

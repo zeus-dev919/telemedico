@@ -22,6 +22,7 @@ import {
   ResetErrorsState,
 } from "../redux/User/user.actions";
 import * as WebBrowser from "expo-web-browser";
+import { gql, useMutation } from "@apollo/client";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
@@ -29,7 +30,25 @@ const mapState = ({ user }) => ({
   errors: user.errors,
 });
 
+const REGISTER_QUERY = gql`
+  mutation SignUp($email: String!, $firstName: String!, $password: String!) {
+    register(
+      email: $email
+      username: $firstName
+      password1: $password
+      password2: $password
+    ) {
+      success
+      errors
+      refreshToken
+      token
+    }
+  }
+`;
+
 const Register = ({ navigation }) => {
+
+  const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
   console.log("Property Register Screen");
   const { currentProperty, propertySignUpSuccess, errors } =
     useSelector(mapState);
@@ -63,12 +82,6 @@ const Register = ({ navigation }) => {
       navigation.navigate("home", { newAccount: true });
     }
   }, [propertySignUpSuccess]);
-
-  // useEffect(() => {
-  //   if (Array.isArray(errors) && errors.length > 0) {
-  //     setError(errors);
-  //   }
-  // }, [propertySignUpSuccess]);
 
   const ResetForm = () => {
     onChangefirstName("");
@@ -123,7 +136,9 @@ const Register = ({ navigation }) => {
       setTerms2Errors("");
     }
     if (checking_form === "true") {
-      dispatch(signUpUser({ firstName, email, password }));
+      // dispatch(signUpUser({ firstName, email, password }));
+      SignUp({ variables: { email: email, firstName: firstName, password: password } })
+      console.log("DATA => ", { data, loading });
     }
   };
   const handleSignIn = () => {

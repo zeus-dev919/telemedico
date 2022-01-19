@@ -3,9 +3,18 @@ import "react-native-gesture-handler";
 import React from "react";
 import { LogBox } from "react-native";
 import { Provider } from "react-redux";
+import { StatusBar } from "expo-status-bar";
 import AppMain from "./screens/AppMain";
 import store from "./redux/createStore";
 import * as Sentry from "sentry-expo";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+const cache = new InMemoryCache()
+// Initialize Apollo Client
+const client = new ApolloClient({
+  uri: "http://164.52.218.166:8000/graphql/",
+  cache,
+  defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
+});
 
 const App = () => {
   // LogBox.ignoreAllLogs();
@@ -15,9 +24,12 @@ const App = () => {
   //   debug: true,
   // });
   return (
-    <Provider store={store}>
-      <AppMain />
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        {/* <StatusBar style="auto" /> */}
+        <AppMain />
+      </Provider>
+    </ApolloProvider>
   );
 };
 

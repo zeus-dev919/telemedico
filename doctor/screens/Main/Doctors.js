@@ -15,22 +15,53 @@ import DoctorCardModel from "../Models/DoctorCardModel";
 
 const Doctors = ({ navigation }) => {
   const [search, setSearch] = useState("");
-  const handleDoctorList = () => {
-    console.log("doctorList Clicked !!");
-    navigation.navigate("doctorList");
+  const handleProfileRedirect = () => {
+    navigation.navigate('profile')
+  }
+  const handleLungs = () => {
+    console.log("Lungs Clicked !!");
+    navigation.navigate("doctorList", {filter: '1'});
+  };
+  const handleTooth = () => {
+    console.log("Tooth Clicked !!");
+    navigation.navigate("doctorList", {filter: '2'});
+  };
+  const handleDermatologist = () => {
+    console.log("Dermatologist Clicked !!");
+    navigation.navigate("doctorList", {filter: '3'});
+  };
+  const handleHeart = () => {
+    console.log("Heart Clicked !!");
+    navigation.navigate("doctorList", {filter: '4'});
+  };
+  const handleBrain = () => {
+    console.log("Brain Clicked !!");
+    navigation.navigate("doctorList", {filter: '5'});
+  };
+  const handlePsychology = () => {
+    console.log("Psychology Clicked !!");
+    navigation.navigate("doctorList", {filter: '6'});
+  };
+  const handleUrology = () => {
+    console.log("Urology Clicked !!");
+    navigation.navigate("doctorList", {filter: '7'});
+  };
+  const handleOthers = () => {
+    console.log("Others Clicked !!");
+    navigation.navigate("doctorList", {filter: '8'});
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <View style={styles.header}>
-          <View>
+          <TouchableOpacity onPress={handleProfileRedirect}>
             <Image
               style={styles.avatar}
               source={icons.avatar}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.openDrawer()}
@@ -54,7 +85,7 @@ const Doctors = ({ navigation }) => {
             <View style={styles.icons}>
               {/* lungs */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleLungs}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -65,7 +96,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* thyroid */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleTooth}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -76,7 +107,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* heart */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleDermatologist}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -87,7 +118,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* joints */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleHeart}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -98,7 +129,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* reproductive */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleBrain}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -109,7 +140,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* anatomy */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handlePsychology}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -120,7 +151,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* psychology */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleUrology}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image
@@ -131,7 +162,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
               {/* dermis */}
               <TouchableOpacity
-                onPress={handleDoctorList}
+                onPress={handleOthers}
                 style={[styles.iconContainer, styles.shadow]}
               >
                 <Image

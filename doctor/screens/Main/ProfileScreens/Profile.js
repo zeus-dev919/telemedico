@@ -13,18 +13,22 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 
 const Profile = ({ route, navigation }) => {
-  const { ch } = route?.params || 'empty';
+  const { ch } = route?.params || "empty";
   console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("Alex");
   const [lastName, setLastName] = useState("jj");
   const [email, setEmail] = useState("alex@gmail.com");
   const [phone, setPhone] = useState("");
+  const [avatar, setAvatar] = useState("");
 
-  const handleChangePicture = () => {
-    console.log("Change Profile Picture !!");
+  const handleChangePicture = async () => {
+    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
+    console.log("Response2 =>", result);
+    setAvatar(result.uri);
   };
   const handleSubmit = () => {
     console.log("Saved !!");
+    navigation.navigate("home");
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +37,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate('home')}
+            onPress={() => navigation.navigate("home")}
           >
             <Ionicons
               name="ios-arrow-back-sharp"
@@ -57,11 +61,19 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={icons.avatar}
-              resizeMode="contain"
-            />
+            {avatar.length > 0 ? (
+              <Image
+                style={styles.avatar}
+                source={avatar}
+                resizeMode="contain"
+              />
+            ) : (
+              <Image
+                style={styles.avatar}
+                source={icons.avatar}
+                resizeMode="contain"
+              />
+            )}
             <TouchableOpacity onPress={handleChangePicture}>
               <Text style={styles.title3}>Change profile picture</Text>
             </TouchableOpacity>

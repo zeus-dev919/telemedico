@@ -61,6 +61,7 @@ const Splash = ({ navigation }) => {
       );
   };
 
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
