@@ -17,7 +17,7 @@ class ScheduleInfo(DjangoObjectType):
     class Meta:
         model = Appointment
 
-class Query(graphene.ObjectType):
+class ModelQuery(graphene.ObjectType):
     all_doctors = graphene.List(DoctorInfo)
     #all_locations = graphene.List(LocationType)
     all_customers = graphene.List(CustomerInfo)
@@ -26,13 +26,13 @@ class Query(graphene.ObjectType):
     def resolve_all_doctors(self, args):
         return Doctor.objects.all()
 
-    def resolve_all_locations(self, args, context, info):
+    def resolve_all_locations(self, args):
         return Location.objects.all()
 
-    def resolve_all_customers(self, args, context, info):
+    def resolve_all_customers(self, args):
         return Customer.objects.all()
 
-    def resolve_all_schedules(self, args, context, info):
+    def resolve_all_schedules(self, args):
         return Appointment.objects.all()
 
 class DoctorCreateInput(graphene.Mutation):
@@ -96,4 +96,4 @@ class DoctorCreateInput(graphene.Mutation):
 class Mutation(DoctorCreateInput, graphene.ObjectType):
     pass
 
-schema = graphene.Schema(query=Query, mutation=DoctorCreateInput)
+schema = graphene.Schema(query=ModelQuery, mutation=Mutation)

@@ -38,7 +38,7 @@ class Customer(models.Model):
 
     GENDER = (("male", "Male"), ("female", "Female"))
 
-    email_address = models.EmailField()
+    user = models.ForeignKey(ExtendUser, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
     gender = models.CharField(max_length=10,  choices=GENDER)
