@@ -91,6 +91,12 @@ class DoctorCreateInput(graphene.Mutation):
 
         return DoctorCreateInput(doctor=doctor)
 
+class CustomerInputCreate(graphene.Mutation):
+
+    class Arguements:
+        id = graphene.ID()
+        
+
 
 
 class Mutation(DoctorCreateInput, graphene.ObjectType):

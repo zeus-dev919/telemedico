@@ -6,15 +6,26 @@ from userauth.models import ExtendUser
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+
+
+class Specialization(models.Model):
+    specialization_name = models.CharField(max_length=1250, blank=True)
+    hospital_name = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.first_name
+
+
 class Doctor(models.Model):
 
     GENDER = (("male", "Male"), ("female", "Female"))
-    DAYS = (("monday", "Mon"),("tuesday", "Tues"),("wednesday","Wed" ),("thrusday", "Thrus"),("friday", "Fri"),("saturday", "Sat"),("sunday", "Sun"))
+    DAYS = (("monday", "Mon"),("tuesday", "Tues"),("wednesday","Wed" ),("thursday", "Thurs"),("friday", "Fri"),("saturday", "Sat"),("sunday", "Sun"))
 
+    username = models.ForeignKey(ExtendUser, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
     gender = models.CharField(max_length=10, choices=GENDER)
-    specialization = models.CharField('Specialization', max_length=50)
+    specialization = models.OneToOneField(Specialization,on_delete=models.CASCADE, primary_key=True)
     phone = PhoneNumberField(null=True)
     info = models.TextField('Information', max_length=1250, blank=True)
     address = models.CharField(max_length=15 , null=True, blank=True)
@@ -30,6 +41,7 @@ class Doctor(models.Model):
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
     available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
     time_slots = models.CharField(max_length=20,null=False, blank=True)
+
     def __str__(self):
         return self.first_name
 
@@ -47,10 +59,6 @@ class Customer(models.Model):
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
 
 
-
-
-
-
     #objects = CustomerManager()
 
     def __str__(self):
@@ -63,10 +71,11 @@ class Appointment(models.Model):
     date = models.DateField('Date')
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    specializations = models.ForeignKey(Specialization, on_delete=models.SET_NULL, null=True)
 
 
     def __str__(self):
-        return self.title #username , doctor and consultation time confirmed
+        return self.doctor#username , doctor and consultation time confirmed
 
     #    class Meta:
     #        ordering = ['start_time']

@@ -12,6 +12,7 @@ class AuthMutation(graphene.ObjectType):
     update_account = mutations.UpdateAccount.Field()
     resend_activation_email = mutations.ResendActivationEmail.Field()
 
+
 class Query(UserQuery, MeQuery,ModelQuery, graphene.ObjectType):
     pass
 
