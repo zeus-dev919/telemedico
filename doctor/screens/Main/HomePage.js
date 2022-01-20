@@ -45,45 +45,57 @@ const HomePage = ({ route, navigation }) => {
     console.log("Doctors !!");
     navigation.navigate("doctors");
   };
+  const handleProfileRedirect = () => {
+    navigation.navigate('profile')
+  }
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
+    navigation.navigate("doctorList", {filter: '1'});
   };
   const handleTooth = () => {
     console.log("Tooth Clicked !!");
+    navigation.navigate("doctorList", {filter: '2'});
   };
   const handleDermatologist = () => {
     console.log("Dermatologist Clicked !!");
+    navigation.navigate("doctorList", {filter: '3'});
   };
   const handleHeart = () => {
     console.log("Heart Clicked !!");
+    navigation.navigate("doctorList", {filter: '4'});
   };
   const handleBrain = () => {
     console.log("Brain Clicked !!");
+    navigation.navigate("doctorList", {filter: '5'});
   };
   const handlePsychology = () => {
     console.log("Psychology Clicked !!");
+    navigation.navigate("doctorList", {filter: '6'});
   };
   const handleUrology = () => {
     console.log("Urology Clicked !!");
+    navigation.navigate("doctorList", {filter: '7'});
   };
   const handleConsult = () => {
     console.log("Video Consult Our Top USA Specialists !!");
+    navigation.navigate("doctors");
   };
   const handleOthers = () => {
     console.log("Others Clicked !!");
+    navigation.navigate("doctorList", {filter: '8'});
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <View style={styles.header}>
-          <View>
+          <TouchableOpacity onPress={handleProfileRedirect}>
             <Image
               style={styles.avatar}
               source={icons.avatar}
               resizeMode="contain"
             />
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.openDrawer()}

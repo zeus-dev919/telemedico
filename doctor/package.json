@@ -9,6 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.7",
     "@react-native-community/checkbox": "^0.5.9",
     "@react-native-firebase/app": "^13.0.1",
     "@react-native-firebase/auth": "^13.0.1",
@@ -30,10 +31,11 @@
     "expo-document-picker": "~10.1.0",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
-    "expo-updates": "~0.11.3",
+    "expo-updates": "~0.11.4",
     "expo-web-browser": "~10.1.0",
     "firebase": "^9.5.0",
     "global": "^4.4.0",
+    "graphql": "^16.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",

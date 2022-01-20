@@ -6,13 +6,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
+  ActivityIndicator,
   TouchableOpacity,
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
-import DoctorCardModel from '../../Models/DoctorCardModel'
+import DoctorCardModel from "../../Models/DoctorCardModel";
 
 const Result = ({ route, navigation }) => {
   const { age, gender, pregnant, country_id, region_id, predictive_text } =
@@ -127,74 +127,78 @@ const Result = ({ route, navigation }) => {
             <Text style={styles.title1}>Result</Text>
           </View>
         </View>
-        {/* <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
-        <Text style={[styles.title2]}>{colorText}</Text> */}
-        <View style={styles.diagnoseContainer}>
-          <Text style={styles.title3}>{diagnose1}</Text>
-          {/* <Text style={styles.title4}>{spec1}</Text> */}
-          <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        </View>
-        <View style={styles.diagnoseContainer}>
-          <Text style={styles.title3}>{diagnose2}</Text>
-          {/* <Text style={styles.title4}>{spec2}</Text> */}
-          <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        </View>
-        <View style={styles.diagnoseContainer}>
-          <Text style={styles.title3}>{diagnose3}</Text>
-          {/* <Text style={styles.title4}>{spec3}</Text> */}
-          <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        </View>
+        {diagnose1 ? (
+          <>
+            <View style={styles.diagnoseContainer}>
+              <Text style={styles.title3}>{diagnose1}</Text>
+              <Text style={styles.title4}>{spec1}</Text>
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+            </View>
+            <View style={styles.diagnoseContainer}>
+              <Text style={styles.title3}>{diagnose2}</Text>
+              <Text style={styles.title4}>{spec2}</Text>
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+            </View>
+            <View style={styles.diagnoseContainer}>
+              <Text style={styles.title3}>{diagnose3}</Text>
+              <Text style={styles.title4}>{spec3}</Text>
+              <DoctorCardModel
+                name="Dr. Lida Gutierrez"
+                location="Los Angeles, USA"
+                speciality="Heart Surgeon"
+                experience="10"
+                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+                bg="0"
+                navigation={navigation}
+              />
+            </View>
+          </>
+        ) : (
+          <ActivityIndicator size="large" color={COLORS.blueBtn} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
