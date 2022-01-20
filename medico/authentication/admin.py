@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Appointment
 from .models import Doctor
 from .models import Customer
+from .models import Specialization
 
 
 
