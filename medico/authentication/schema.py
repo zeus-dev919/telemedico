@@ -8,10 +8,12 @@ from graphene import InputObjectType
 class DoctorInfo(DjangoObjectType):
     class Meta:
         model = Doctor
+        fields = "__all__"
 
 class CustomerInfo(DjangoObjectType):
     class Meta:
         model = Customer
+        fields = "__all__"
 
 class ScheduleInfo(DjangoObjectType):
     class Meta:
@@ -24,16 +26,16 @@ class ModelQuery(graphene.ObjectType):
     all_schedules = graphene.List(ScheduleInfo)
 
     def resolve_all_doctors(self, args):
-        return Doctor.objects.all()
+        return Doctor.objects.all(pk=id)
 
     def resolve_all_locations(self, args):
-        return Location.objects.all()
+        return Location.objects.all(pk=id)
 
     def resolve_all_customers(self, args):
         return Customer.objects.all()
 
     def resolve_all_schedules(self, args):
-        return Appointment.objects.all()
+        return Appointment.objects.all(pk=id)
 
 class DoctorCreateInput(graphene.Mutation):
 
@@ -47,27 +49,9 @@ class DoctorCreateInput(graphene.Mutation):
         state_license_number = graphene.String(required=False)
         available_days = graphene.String(required=False)
 
+    doctor = graphene.Field(DoctorInfo)
 
 
-    first_name = graphene.String(required=False)
-    last_name = graphene.String(required=False)
-    gender = graphene.String(required=False)
-    specialization = graphene.String(required=False)
-    phone = graphene.String(required=False)
-    info = graphene.String(required=False)
-    address = graphene.String(required=False)
-    street =  graphene.String(required=False)
-    city =    graphene.String(required=False)
-    state =   graphene.String(required=False)
-    country = graphene.String(required=False)
-    zip_code = graphene.String(required=False)
-    npi_number = graphene.String(required=False)
-    state_license_number = graphene.String(required=False)
-    profile_Pic = graphene.String(required=False)
-    award_Pic = graphene.String(required=False)
-    consultation_fees = graphene.String(required=False)
-    available_days = graphene.String(required=False)
-    time_slots = graphene.String(required=False)
 
     @classmethod
     def mutate(cls, root, info, first_name,last_name, gender, specialization,npi_number,state_license_number,available_days):
@@ -95,11 +79,32 @@ class CustomerInputCreate(graphene.Mutation):
 
     class Arguements:
         id = graphene.ID()
-        
+        first_name = graphene.String(required=False)
+        last_name  = graphene.String(required=False)
+        gender = graphene.String(required=False)
+
+    customer = graphene.Field(CustomerInfo)
+
+    @classmethod
+    def mutate(cls, root, info, first_name,last_name, gender,id):
+        customer = Customer.objects.get(pk=id)
+        customer.first_name = first_name
+        customer.last_name = last_name
+        customer.gender = gender
+        customer.save()
+
+        return CustomerInputCreate(customer=customer)
 
 
 
-class Mutation(DoctorCreateInput, graphene.ObjectType):
-    pass
+
+
+
+
+
+
+class Mutation(graphene.ObjectType):
+    update_doctor = DoctorCreateInput.Field()
+    update_customer = CustomerInputCreate.Field()
 
 schema = graphene.Schema(query=ModelQuery, mutation=Mutation)
