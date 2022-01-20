@@ -30,25 +30,25 @@ const mapState = ({ user }) => ({
   errors: user.errors,
 });
 
-const REGISTER_QUERY = gql`
-  mutation SignUp($email: String!, $firstName: String!, $password: String!) {
-    register(
-      email: $email
-      username: $firstName
-      password1: $password
-      password2: $password
-    ) {
-      success
-      errors
-      refreshToken
-      token
-    }
-  }
-`;
+// const REGISTER_QUERY = gql`
+//   mutation SignUp($email: String!, $firstName: String!, $password: String!) {
+//     register(
+//       email: $email
+//       username: $firstName
+//       password1: $password
+//       password2: $password
+//     ) {
+//       success
+//       errors
+//       refreshToken
+//       token
+//     }
+//   }
+// `;
 
 const Register = ({ navigation }) => {
 
-  const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
+  // const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
   console.log("Property Register Screen");
   const { currentProperty, propertySignUpSuccess, errors } =
     useSelector(mapState);
@@ -137,8 +137,9 @@ const Register = ({ navigation }) => {
     }
     if (checking_form === "true") {
       // dispatch(signUpUser({ firstName, email, password }));
-      SignUp({ variables: { email: email, firstName: firstName, password: password } })
-      console.log("DATA => ", { data, loading });
+      // SignUp({ variables: { email: email, firstName: firstName, password: password } })
+      // console.log("DATA => ", { data, loading });
+      console.log('DONE')
     }
   };
   const handleSignIn = () => {

@@ -7,13 +7,14 @@ import { StatusBar } from "expo-status-bar";
 import AppMain from "./screens/AppMain";
 import store from "./redux/createStore";
 import * as Sentry from "sentry-expo";
+import { StripeProvider, useStripe } from "@stripe/stripe-react-native";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: "http://164.52.218.166:8000/graphql/",
   cache,
-  defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
+  defaultOptions: { watchQuery: { fetchPolicy: "cache-and-network" } },
 });
 
 const App = () => {
@@ -24,12 +25,19 @@ const App = () => {
   //   debug: true,
   // });
   return (
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        {/* <StatusBar style="auto" /> */}
-        <AppMain />
-      </Provider>
-    </ApolloProvider>
+    <StripeProvider
+      publishableKey={"pk_test_2Fr70nsDAtUaKwlIx73qEw8p"}
+      // merchantIdentifier="merchant.com.stripe.react.native"
+      urlScheme={Linking.createURL("") + "/--/"}
+      setUrlSchemeOnAndroid={true}
+    >
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          {/* <StatusBar style="auto" /> */}
+          <AppMain />
+        </Provider>
+      </ApolloProvider>
+    </StripeProvider>
   );
 };
 
