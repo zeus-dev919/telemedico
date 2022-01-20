@@ -11,5 +11,6 @@ from .models import Customer
 admin.site.register(Doctor)
 admin.site.register(Customer)
 admin.site.register(Appointment)
+admin.site.register(Specialization)
 # admin.site.register(User, UserAdmin)
 # Register your models here.
