@@ -1,7 +1,7 @@
 import "expo-dev-client";
 import "react-native-gesture-handler";
 import React from "react";
-import { LogBox } from "react-native";
+import { Linking, LogBox } from "react-native";
 import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import AppMain from "./screens/AppMain";
@@ -27,8 +27,6 @@ const App = () => {
   return (
     <StripeProvider
       publishableKey={"pk_test_2Fr70nsDAtUaKwlIx73qEw8p"}
-      // merchantIdentifier="merchant.com.stripe.react.native"
-      urlScheme={Linking.createURL("") + "/--/"}
       setUrlSchemeOnAndroid={true}
     >
       <ApolloProvider client={client}>

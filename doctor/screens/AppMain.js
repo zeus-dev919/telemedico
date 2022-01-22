@@ -31,11 +31,11 @@ import {
 const Stack = createStackNavigator();
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
+  currentUser: user.currentUser,
 });
 
 const AppMain = () => {
-  const { currentProperty } = useSelector(mapState);
+  const { currentUser } = useSelector(mapState);
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -46,7 +46,7 @@ const AppMain = () => {
       >
         {/* <Stack.Screen name="intakeForm" component={IntakeForm} /> */}
         {/* <Stack.Screen name="describe" component={Describe} /> */}
-        {!currentProperty && (
+        {!currentUser && (
           <>
             <Stack.Screen name="BeforeSplash" component={BeforeSplash} />
             <Stack.Screen name="Splash" component={Splash} />
@@ -56,7 +56,7 @@ const AppMain = () => {
             <Stack.Screen name="Recovery" component={Recovery} />
           </>
         )}
-        {currentProperty && (
+        {currentUser && (
           <>
             <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />

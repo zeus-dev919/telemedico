@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import {
   FontAwesome5,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { COLORS, images } from "../constants";
+import { images } from "../constants";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -23,8 +23,24 @@ import * as WebBrowser from "expo-web-browser";
 import HomePage from "./Main/HomePage";
 import Doctors from "./Main/Doctors";
 import IntakeForm from "./Main/DoctorScreens/IntakeForm";
+import { signOutUser } from "../redux/User/user.actions";
+import { useDispatch, useSelector } from "react-redux";
+
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+  errors: user.errors,
+});
 
 const CustomDrawerContent = ({ navigation }) => {
+  const { currentUser, errors } = useSelector(mapState);
+  console.log("mapState =>", currentUser, errors);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!currentUser) {
+      navigation.navigate("BeforeSplash");
+    }
+  }, [currentUser]);
+
   const handleHome = () => {
     navigation.navigate("homePage");
   };
@@ -47,6 +63,7 @@ const CustomDrawerContent = ({ navigation }) => {
     WebBrowser.openBrowserAsync("http://medipocket.world/terms-conditions/");
   };
   const handleLogout = () => {
+    dispatch(signOutUser());
     console.log("LogOut");
   };
   return (

@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconEntypo from "react-native-vector-icons/Entypo";
@@ -17,41 +18,50 @@ import {
   resetAllAuthForms,
   ResetErrorsState,
 } from "../redux/User/user.actions.js";
+import { gql, useMutation } from "@apollo/client";
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
-  propertySignInSuccess: user.propertySignInSuccess,
+  currentUser: user.currentUser,
+  signInSuccess: user.signInSuccess,
+  token: user.token,
   errors: user.errors,
 });
 
+const REGISTER_QUERY = gql`
+  mutation SignIn($email: String!, $password: String!) {
+    tokenAuth(email: $email, password: $password) {
+      success
+      errors
+      refreshToken
+      token
+    }
+  }
+`;
+
 const Login = ({ navigation }) => {
   console.log("Property Loign Screen");
-  const { currentProperty, propertySignInSuccess, errors } =
-    useSelector(mapState);
+  const { currentUser, signInSuccess, token, errors } = useSelector(mapState);
+  console.log("mapState =>", currentUser, signInSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
+  const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [email, onChangeEmail] = useState("Alex@gmail.com");
+  const [email, onChangeEmail] = useState("user218@gmail.com");
   const [password, onChangepassword] = useState("hellodude");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
   const [iconPasswordName, setIconPasswordName] = useState("eye-with-line");
   const [error, setError] = useState("");
+  const [indicatorLoad, setIndicatorLoad] = useState(false);
 
   useEffect(() => {
-    if (propertySignInSuccess && currentProperty) {
-      ResetForm();
-      dispatch(resetAllAuthForms());
+    if (signInSuccess) {
       navigation.navigate("home");
+      dispatch(resetAllAuthForms());
+      ResetForm();
     }
-  }, [propertySignInSuccess]);
-
-  useEffect(() => {
-    if (Array.isArray(errors) && errors.length > 0) {
-      setError(errors);
-    }
-  }, [propertySignInSuccess]);
+  }, [signInSuccess]);
 
   const ResetForm = () => {
     onChangeEmail("");
@@ -70,10 +80,6 @@ const Login = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("From Login ===>", { email, password });
-  }, [email, password]);
-
   const handleRegister = async (e) => {
     var checking_form = "true";
     console.log("From Login ===>", { email, password });
@@ -90,7 +96,30 @@ const Login = ({ navigation }) => {
       setPasswordErrors("");
     }
     if (checking_form === "true") {
-      dispatch(signInUser({ email, password }));
+      setIndicatorLoad(true);
+      await SignIn({
+        variables: { email: email, password: password },
+      })
+        .then((res) => {
+          let user = {
+            email: email,
+            password: password,
+          };
+          console.log("current Token => ", token);
+          console.log("User + Token => ", user, res.data.tokenAuth.token);
+          if (res.data.tokenAuth.token) {
+            dispatch(signInUser(user));
+            setIndicatorLoad(false);
+          } else {
+            setError(
+              "we do not have any account with this email. try to signed up first"
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("error line 156", err);
+        });
+      console.log("DONE");
     }
   };
   const handleForget = () => {
@@ -114,15 +143,6 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.headerTitle}>
           <Text style={styles.headerText1}>Login</Text>
-          {/* <Text  
-            style={styles.headerText}
-          >Lorem ipsum dolor sit amet, consectuteur</Text>
-          <Text  
-            style={styles.headerText}
-          >adipiscing elit, sed do eiusmod tempor</Text>
-          <Text  
-            style={styles.headerText}
-          >incoididunt ut labore</Text> */}
         </View>
         <Text style={styles.fieldErrors2}>{errors}</Text>
         <View style={styles.content}>
@@ -162,7 +182,13 @@ const Login = ({ navigation }) => {
             <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
           <TouchableOpacity style={styles.button1} onPress={handleRegister}>
-            <Text style={styles.signup}>Sign In</Text>
+            {indicatorLoad ? (
+              <Text style={styles.signup}>
+                <ActivityIndicator size="large" color="#ffffff" />
+              </Text>
+            ) : (
+              <Text style={styles.signup}>Sign In</Text>
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.already} onPress={handleForget}>
@@ -259,12 +285,12 @@ const styles = StyleSheet.create({
   },
   fieldErrors: {
     marginVertical: 3,
-    color: 'red',
+    color: "red",
     fontSize: 10,
   },
   fieldErrors2: {
     marginVertical: 3,
-    color: 'red',
+    color: "red",
     fontSize: 10,
     textAlign: "center",
   },

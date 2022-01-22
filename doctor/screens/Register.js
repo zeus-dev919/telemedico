@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
@@ -10,11 +9,12 @@ import {
   ScrollView,
   ImageBackground,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import Checkbox from "expo-checkbox";
-import { COLORS, images } from "../constants";
+import { COLORS } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signUpUser,
@@ -25,49 +25,47 @@ import * as WebBrowser from "expo-web-browser";
 import { gql, useMutation } from "@apollo/client";
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
-  propertySignUpSuccess: user.propertySignUpSuccess,
+  currentUser: user.currentUser,
+  signUpSuccess: user.signUpSuccess,
+  token: user.token,
   errors: user.errors,
 });
 
-// const REGISTER_QUERY = gql`
-//   mutation SignUp($email: String!, $firstName: String!, $password: String!) {
-//     register(
-//       email: $email
-//       username: $firstName
-//       password1: $password
-//       password2: $password
-//     ) {
-//       success
-//       errors
-//       refreshToken
-//       token
-//     }
-//   }
-// `;
+const REGISTER_QUERY = gql`
+  mutation SignUp($email: String!, $firstName: String!, $password: String!) {
+    register(
+      email: $email
+      username: $firstName
+      password1: $password
+      password2: $password
+    ) {
+      success
+      errors
+      refreshToken
+      token
+    }
+  }
+`;
 
 const Register = ({ navigation }) => {
-
-  // const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
   console.log("Property Register Screen");
-  const { currentProperty, propertySignUpSuccess, errors } =
+  const { currentUser, signUpSuccess, token, errors } =
     useSelector(mapState);
+  console.log("mapState =>", currentUser, signUpSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
+  const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  console.log("propertySignUpSuccess =>", propertySignUpSuccess);
-  console.log("currentProperty =>", currentProperty);
-  console.log("errors =>", errors);
-
-  const [firstName, onChangefirstName] = useState("Alex jj");
-  const [email, onChangeEmail] = useState("Alex@gmail.com");
+  const [firstName, onChangefirstName] = useState("user218");
+  const [email, onChangeEmail] = useState("user218@gmail.com");
   const [password, onChangepassword] = useState("hellodude");
-  const [isSelected, setSelected] = useState(false);
-  const [isSelected1, setSelected1] = useState(false);
+  const [isSelected, setSelected] = useState(true);
+  const [isSelected1, setSelected1] = useState(true);
   const [isSecure, setIsSecure] = useState(true);
   const [iconPasswordName, setIconPasswordName] = useState("eye-with-line");
-  const [disableSubmit, setDisableSubmit] = useState(true);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(null);
+  const [indicatorLoad, setIndicatorLoad] = useState(false);
+  // const [_token, setToken] = useState(false);
   // Hnadle Errors
   const [firstNameErrors, setFirstNameErrors] = useState("");
   const [emailErrors, setEmailErrors] = useState("");
@@ -76,12 +74,12 @@ const Register = ({ navigation }) => {
   const [terms2Errors, setTerms2Errors] = useState("");
 
   useEffect(() => {
-    if (propertySignUpSuccess) {
+    if (signUpSuccess) {
       ResetForm();
-      dispatch(resetAllAuthForms());
-      navigation.navigate("home", { newAccount: true });
+      navigation.navigate("Login");
+      dispatch(resetAllAuthForms);
     }
-  }, [propertySignUpSuccess]);
+  }, [signUpSuccess]);
 
   const ResetForm = () => {
     onChangefirstName("");
@@ -103,7 +101,7 @@ const Register = ({ navigation }) => {
     }
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     var checking_form = "true";
     if (firstName.length === 0) {
       setFirstNameErrors("* First Name Field Required");
@@ -136,10 +134,24 @@ const Register = ({ navigation }) => {
       setTerms2Errors("");
     }
     if (checking_form === "true") {
-      // dispatch(signUpUser({ firstName, email, password }));
-      // SignUp({ variables: { email: email, firstName: firstName, password: password } })
-      // console.log("DATA => ", { data, loading });
-      console.log('DONE')
+      setIndicatorLoad(true);
+      await SignUp({
+        variables: { email: email, firstName: firstName, password: password },
+      })
+        .then((res) => {
+          let user = {
+            email: email,
+            firstName: firstName,
+            password: password,
+          };
+          console.log("User + Token => ", user, res.data.register.token);
+          dispatch(signUpUser(user, res.data.register.token));
+          setIndicatorLoad(false);
+        })
+        .catch((err) => {
+          console.log("error line 156", err);
+        });
+      console.log("DONE");
     }
   };
   const handleSignIn = () => {
@@ -170,6 +182,7 @@ const Register = ({ navigation }) => {
         <View style={styles.headerTitle}>
           <Text style={styles.headerText1}>Register</Text>
           <Text style={styles.headerText}>Create Account</Text>
+          <Text style={styles.fieldErrors3}>{error}</Text>
         </View>
         <View style={styles.content}>
           {/* First Name */}
@@ -267,13 +280,14 @@ const Register = ({ navigation }) => {
             {/* </View> */}
           </View>
           <Text style={styles.fieldErrors}>{terms2Errors}</Text>
-          <TouchableOpacity
-            style={styles.button1}
-            onPress={handleRegister}
-            // disabled={disableSubmit}
-          >
-            {/* <Text style={disableSubmit ? styles.signup2 : styles.signup}> */}
-            <Text style={styles.signup}>Submit</Text>
+          <TouchableOpacity style={styles.button1} onPress={handleRegister}>
+            {indicatorLoad ? (
+              <Text style={styles.signup}>
+                <ActivityIndicator size="large" color="#ffffff" />
+              </Text>
+            ) : (
+              <Text style={styles.signup}>Submit</Text>
+            )}
           </TouchableOpacity>
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>
@@ -282,10 +296,6 @@ const Register = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      {/* <ImageBackground
-        style={[styles.fixed, styles.bgcontainter, { zIndex: -1 }]}
-        source={images.bg}
-      /> */}
     </SafeAreaView>
   );
 };
@@ -337,6 +347,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 10,
     marginBottom: 10,
+  },
+  fieldErrors3: {
+    color: "red",
+    textAlign: "center",
+    fontSize: 12,
+    marginBottom: 10,
+    marginTop: 20,
   },
   headerText1: {
     color: "black",

@@ -1,46 +1,57 @@
 import userTypes from "./user.types";
 
 const INITIAL_STATE = {
-  currentProperty: null,
-  propertySignInSuccess: false,
-  propertySignUpSuccess: false,
-  propertyRecoverySuccess: false,
-  // Fetch
-  fetchUserD: null,
-  // Errors
+  currentUser: false,
+  signInSuccess: false,
+  signUpSuccess: false,
+  resetPasswordSuccess: false,
+  userD: null,
+  token: null,
   errors: [],
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // AUTH
-    case userTypes.USER_SIGN_IN_SUCCESS:
+    case userTypes.SET_CURRENT_USER_IN:
       return {
         ...state,
-        propertySignInSuccess: action.payload,
-        currentProperty: true,
+        currentUser: true,
       };
-    case userTypes.USER_SIGN_UP_SUCCESS:
+    case userTypes.SET_CURRENT_USER_OUT:
       return {
         ...state,
-        propertySignUpSuccess: action.payload,
-        currentProperty: true,
+        currentUser: false,
       };
-    case userTypes.USER_RECOVERY_SUCCESS:
+    // SIGN
+    case userTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
-        propertyRecoverySuccess: action.payload,
+        signInSuccess: true,
+        currentUser: true,
+        userD: action.payload,
       };
-
-    // PROPERTY
-    case userTypes.OUT_CURRENT_USER:
-      return {
-        ...INITIAL_STATE,
-      };
-    case userTypes.FETCH_USER:
+    case userTypes.SIGN_UP_SUCCESS:
       return {
         ...state,
-        fetchUserD: action.payload,
+        signUpSuccess: true,
+        userD: action.payload,
+      };
+    case userTypes.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetPasswordSuccess: action.payload,
+      };
+    // TOKEN
+    case userTypes.SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case userTypes.RESET_TOKEN:
+      return {
+        ...state,
+        token: null,
       };
 
     // ERRORS
@@ -56,13 +67,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     case userTypes.RESET_STATES:
       return {
-        currentProperty: null,
-        propertySignInSuccess: false,
-        propertySignUpSuccess: false,
-        propertyRecoverySuccess: false,
-        // Fetch
-        fetchUserD: null,
-        // Errors
+        currentUser: false,
+        signInSuccess: false,
+        signUpSuccess: false,
+        resetPasswordSuccess: false,
+        userD: null,
         errors: [],
       };
     // DEFAULT
