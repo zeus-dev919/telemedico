@@ -1,6 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
-from .models import Doctor,Customer, Appointment
+from .models import Doctor,Customer, Appointment, Specialization
 from graphene import InputObjectType
 #from graphql_auth import mutations
 
