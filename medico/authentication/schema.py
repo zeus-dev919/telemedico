@@ -8,12 +8,12 @@ from graphene import InputObjectType
 class DoctorInfo(DjangoObjectType):
     class Meta:
         model = Doctor
-        fields = "__all__"
+        # fields = "__all__"
 
 class CustomerInfo(DjangoObjectType):
     class Meta:
         model = Customer
-        fields = "__all__"
+        # fields = "__all__"
 
 class ScheduleInfo(DjangoObjectType):
     class Meta:
