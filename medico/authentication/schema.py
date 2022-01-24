@@ -19,23 +19,33 @@ class ScheduleInfo(DjangoObjectType):
     class Meta:
         model = Appointment
 
+class SpecializationInfo(DjangoObjectType):
+    class Meta:
+        model = Specialization
+
 class ModelQuery(graphene.ObjectType):
     all_doctors = graphene.List(DoctorInfo)
     #all_locations = graphene.List(LocationType)
     all_customers = graphene.List(CustomerInfo)
     all_schedules = graphene.List(ScheduleInfo)
+    all_specialization = graphene.List(SpecializationInfo)
 
     def resolve_all_doctors(self, args):
-        return Doctor.objects.all(pk=id)
+        return Doctor.objects.all()
 
     def resolve_all_locations(self, args):
-        return Location.objects.all(pk=id)
+        return Location.objects.all()
 
     def resolve_all_customers(self, args):
         return Customer.objects.all()
 
     def resolve_all_schedules(self, args):
-        return Appointment.objects.all(pk=id)
+        return Appointment.objects.all()
+
+    def resolve_all_specialization(self, args):
+        return Specialization.objects.all()
+
+
 
 class DoctorCreateInput(graphene.Mutation):
 
@@ -94,6 +104,8 @@ class CustomerInputCreate(graphene.Mutation):
         customer.save()
 
         return CustomerInputCreate(customer=customer)
+
+
 
 
 
