@@ -13,7 +13,19 @@ import DoctorCardModel from "../../Models/DoctorCardModel";
 import DoctorAboutCard from "../../Models/DoctorAboutCard";
 import DoctorUpcomingCard from "../../Models/DoctorUpcomingCard";
 
-const Appointment = ({ navigation }) => {
+const Appointment = ({ route, navigation }) => {
+  const { name, desc, img, patients, experience, speciality, info, fees } =
+    route.params;
+  console.log("LOOK =>", {
+    name,
+    desc,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -39,23 +51,16 @@ const Appointment = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
+          name={name}
+          location={desc}
+          speciality={speciality}
+          experience={experience}
+          patients={patients}
+          img={img}
           bg="1"
           navigation={navigation}
         />
-        <DoctorAboutCard
-          name="About Doctor"
-          desc="Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis 
-          a pellentesque nec, egestas non Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Praesent
-           sapîan massa, convallis a pellentesque nec, egestas non Mauris blandit aliquet elit, eget tincidunt
-            nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, egestas non Mauris blandit 
-            aliquet elit, eget tincidunt nibh pulvinar a. Praesent sapîan massa, convallis a pellentesque nec, 
-            egestas non"
-        />
+        <DoctorAboutCard name="About Doctor" desc={info} />
         {/* <DoctorUpcomingCard
           day="WED"
           nbDay="11"
@@ -71,7 +76,7 @@ const Appointment = ({ navigation }) => {
         <View style={styles.doctorBottomCard2}>
           <TouchableOpacity
             style={[styles.doctorBtnStyle2, styles.shadow2]}
-            onPress={() => navigation.navigate('payment')}
+            onPress={() => navigation.navigate("payment")}
           >
             <Text style={styles.doctorBtnStyleText2}>Book Appointment</Text>
           </TouchableOpacity>

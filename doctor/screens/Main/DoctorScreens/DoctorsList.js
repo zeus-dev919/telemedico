@@ -111,96 +111,89 @@ const DOCTOR_QUERY = gql`
       specialization {
         specializationName
       }
+      consultationFees
+      info
     }
   }
 `;
-
+var res = [];
 const DoctorsList = ({ route, navigation }) => {
+  const [doctors, setDoctors] = useState(null);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const { filter } = route.params;
   console.log("filter => ", filter);
-  const [doctors, setDoctors] = useState(null);
-  var res = [];
-  const getspecs = (_d) => {
+
+  const getspecs = (ch) => {
     console.log("getspecs()");
     let tab = [];
-    for (let i = 0; i < _d.allDoctors.length; i++) {
-      if (!tab.includes(_d.allDoctors[i].specialization.specializationName)) {
-        tab.push(_d.allDoctors[i].specialization.specializationName);
+    for (let i = 0; i < ch.allDoctors.length; i++) {
+      if (!tab.includes(ch.allDoctors[i].specialization.specializationName)) {
+        tab.push(ch.allDoctors[i].specialization.specializationName);
       }
     }
     return tab;
   };
 
-  const getDoctors = (d) => {
-    console.log("D ===================", d);
+  const getDoctors = () => {
     console.log("getDoctors()");
-    let specs = getspecs(d);
-    console.log("Specialities =>", specs);
+    let specs = getspecs(data);
     let tab = [];
     let final = [];
-    for (let j = 0; j < specs.length; j++) {
-      for (let i = 0; i < d.allDoctors.length; i++) {
-        if (d.allDoctors[i].specialization.specializationName === specs[j]) {
-          let name = d.allDoctors[i].firstName
-            ? d.allDoctors[i].firstName
-            : "--" + d.allDoctors[i].lastName
-            ? d.allDoctors[i].lastName
-            : "--";
-          let spec = d.allDoctors[i].specialization.specializationName
-            ? d.allDoctors[i].specialization.specializationName
-            : "--";
-          let state = d.allDoctors[i].state ? d.allDoctors[i].state : "--";
-          let country = d.allDoctors[i].country
-            ? d.allDoctors[i].country
-            : "--";
-          let desc = spec + ", " + state + " ," + country;
-          let img = d.allDoctors[i].avatar ? d.allDoctors[i].avatar : "";
-          let patients = d.allDoctors[i].patients
-            ? d.allDoctors[i].patients
-            : "--";
-          let experience = d.allDoctors[i].experience
-            ? d.allDoctors[i].experience
-            : "--";
-          tab.push({
-            name: name,
-            desc: desc,
-            img: img,
-            patients: patients,
-            experience: experience,
-          });
-          console.log("CORRECT", i, j);
+    if (specs.length > 0 && data) {
+      for (let j = 0; j < specs.length; j++) {
+        for (let i = 0; i < data.allDoctors.length; i++) {
+          if (
+            data.allDoctors[i].specialization.specializationName === specs[j]
+          ) {
+            tab.push({
+              name:
+                data.allDoctors[i].firstName +
+                " " +
+                data.allDoctors[i].lastName,
+              desc:
+                (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
+                " ," +
+                (data.allDoctors[i].country
+                  ? data.allDoctors[i].country
+                  : "--"),
+              img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+              patients: data.allDoctors[i].patients
+                ? data.allDoctors[i].patients
+                : "--",
+              experience: data.allDoctors[i].experience
+                ? data.allDoctors[i].experience
+                : "--",
+              speciality: data.allDoctors[i].specialization.specializationName,
+              info: data.allDoctors[i].info ? data.allDoctors[i].info : "--",
+              fees: data.allDoctors[i].consultationFees
+                ? data.allDoctors[i].consultationFees
+                : "--",
+            });
+          }
         }
+        res.push({ title: specs[j], data: tab });
+        tab = [];
       }
-      // final.push({ title: specs[j], data: tab });
-      res.push({ title: specs[j], data: tab });
-      tab = [];
+    } else {
+      console.log(">>>>>>>>>>>>>>>>>>>");
     }
     console.log("Finale =>", final);
-    console.log("Here Line 178", doctors);
+    // setDoctors(final);
+    // res = final;
+    // return final;
   };
   useEffect(() => {
     if (data) {
-      console.log("Data NEWWWW1 => ", res);
-      getDoctors(data);
-      console.log("after =============================");
+      console.log("Data NEWWWW1 => ");
+      getDoctors();
       setDoctors(res);
     } else {
-      console.log("Data NEWWWW2 => ", res);
+      console.log("Data NEWWWW2 => ");
     }
+    // if (res) {
+    //   console.log("res >>>>>>>>>> =>", res);
+    // }
   }, [data, doctors]);
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log("Line 182", data);
-  //     getDoctors(data);
-  //   } else {
-  //     console.log("lINE 185", data);
-  //     console.log("lINE 186", loading);
-  //   }
-  //   if (doctors) {
-  //     console.log("Doctors =>", doctors);
-  //   }
-  // }, [data, doctors]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -234,6 +227,11 @@ const DoctorsList = ({ route, navigation }) => {
               name={item.name}
               desc={item.desc}
               img={item.img}
+              patients={item.patients}
+              experience={item.experience}
+              speciality={item.speciality}
+              info={item.info}
+              fees={item.fees}
               navigation={navigation}
               type="2"
             />
@@ -249,25 +247,6 @@ const DoctorsList = ({ route, navigation }) => {
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
         </Text>
       )}
-      {/* <SectionList
-        refreshing={true}
-        sections={DATA}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => (
-          <DoctorCardModel2
-            name={item.name}
-            desc={item.desc}
-            img={item.img}
-            navigation={navigation}
-            type="2"
-          />
-        )}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.specContainer}>
-            <Text style={styles.SpecTitle}>{title}</Text>
-          </View>
-        )}
-      /> */}
     </SafeAreaView>
   );
 };
@@ -343,6 +322,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: COLORS.fontColor1,
+    maxWidth: "80%",
   },
   signup: {
     color: "white",

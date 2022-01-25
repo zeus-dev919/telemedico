@@ -3,7 +3,16 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, icons } from "../../constants";
 
 const DoctorCardModel = (props) => {
-  const { name, location, experience, speciality, img, bg, navigation } = props;
+  const {
+    name,
+    location,
+    experience,
+    patients,
+    speciality,
+    img,
+    bg,
+    navigation,
+  } = props;
   var check = false;
   if (bg === "0") check = true;
   return (
@@ -62,13 +71,21 @@ const DoctorCardModel = (props) => {
             <View style={styles.doctorCardRight}>
               <View style={styles.statusIndic1}></View>
               <View style={styles.statusIndic2}></View>
-              <Image
-                style={styles.doctorAvatar}
-                source={{
-                  uri: img,
-                }}
-                resizeMode="cover"
-              />
+              {img.length > 0 ? (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={{
+                    uri: img,
+                  }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={icons.placeholder}
+                  resizeMode="cover"
+                />
+              )}
             </View>
           </View>
           <View style={styles.boxes}>
@@ -82,7 +99,9 @@ const DoctorCardModel = (props) => {
                 >
                   Patients
                 </Text>
-                <Text style={[styles.boxNb, { color: "#f9b664" }]}>500+</Text>
+                <Text style={[styles.boxNb, { color: "#f9b664" }]}>
+                  {patients}+
+                </Text>
               </View>
             </View>
             <View style={styles.boxContainer}>
@@ -95,7 +114,9 @@ const DoctorCardModel = (props) => {
                 >
                   Experience
                 </Text>
-                <Text style={[styles.boxNb, { color: "#f660be" }]}>10yrs+</Text>
+                <Text style={[styles.boxNb, { color: "#f660be" }]}>
+                  {experience}yrs+
+                </Text>
               </View>
             </View>
           </View>
