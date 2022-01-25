@@ -54,6 +54,9 @@ const choosing = require("../assets/icons/profile/choosing.png");
 const hourglass = require("../assets/icons/profile/hourglass.png");
 const videoCall = require("../assets/icons/profile/videoCall.png");
 
+// placeholder
+const placeholder = require("../assets/icons/placeholder.png");
+
 export default {
   menu1,
   menu2,
@@ -109,4 +112,6 @@ export default {
   choosing,
   hourglass,
   videoCall,
+  // placeholder
+  placeholder,
 };

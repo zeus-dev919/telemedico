@@ -11,13 +11,10 @@ import {
   View,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
-import {
-  signOutProperty,
-  fetchUser,
-  ResetErrorsState,
-} from "../../redux/User/user.actions";
+import { ResetErrorsState } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
+import { gql, useQuery } from "@apollo/client";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
@@ -25,11 +22,22 @@ const mapState = ({ user }) => ({
   errors: user.errors,
 });
 
+const USER_QUERY = gql`
+  query {
+    me {
+      firstName
+      lastName
+    }
+  }
+`;
+
 const HomePage = ({ route, navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
   const { currentProperty, fetchUserD, errors } = useSelector(mapState);
   console.log("maptate => ", { currentProperty, fetchUserD, errors });
+  const { data, loading } = useQuery(USER_QUERY);
+  console.log("Data =>", data, loading);
   // const { newAccount, token, user } = route?.params;
   // console.log(" Details => ", newAccount, token, user);
   useEffect(() => {
@@ -93,7 +101,7 @@ const HomePage = ({ route, navigation }) => {
           <TouchableOpacity onPress={handleProfileRedirect}>
             <Image
               style={styles.avatar}
-              source={icons.avatar}
+              source={icons.placeholder}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -294,11 +302,13 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginTop: 5,
+    // borderRadius: 50,
   },
   avatar: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     marginTop: 5,
+    borderRadius: 200,
   },
   headerSub: {
     flexDirection: "row",

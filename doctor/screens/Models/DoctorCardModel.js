@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../constants";
+import { COLORS, icons } from "../../constants";
 
 const DoctorCardModel = (props) => {
   const { name, location, experience, speciality, img, bg, navigation } = props;
@@ -22,13 +22,21 @@ const DoctorCardModel = (props) => {
             </View>
             <View style={styles.doctorCardRight}>
               <View style={styles.statusIndic}></View>
-              <Image
-                style={styles.doctorAvatar}
-                source={{
-                  uri: img,
-                }}
-                resizeMode="cover"
-              />
+              {img.length > 0 ? (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={{
+                    uri: img,
+                  }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={icons.placeholder}
+                  resizeMode="cover"
+                />
+              )}
             </View>
           </View>
           <View style={styles.doctorBottomCard}>
@@ -163,11 +171,11 @@ const styles = StyleSheet.create({
   },
   statusIndic: {
     position: "absolute",
-    width: 10,
-    height: 10,
+    width: 12,
+    height: 12,
     backgroundColor: "#06babe",
-    top: 7,
-    right: 7,
+    top: 13,
+    right: 13,
     zIndex: 2,
     borderRadius: 50,
   },

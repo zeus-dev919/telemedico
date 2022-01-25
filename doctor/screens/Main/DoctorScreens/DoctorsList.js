@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   SectionList,
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import DoctorCardModel2 from "../../Models/DoctorCardModel2";
+import { gql, useQuery } from "@apollo/client";
+
 const DATA = [
   {
     title: "Cardiologistic",
@@ -45,11 +47,6 @@ const DATA = [
         desc: "Heart Surgeon, London",
         img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
       },
-      // {
-      //   name: "Iva Carpenter",
-      //   desc: "Heart Surgeon, London",
-      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      // },
     ],
   },
   {
@@ -60,11 +57,6 @@ const DATA = [
         desc: "Heart Surgeon, London",
         img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
       },
-      // {
-      //   name: "Iva Carpenter",
-      //   desc: "Heart Surgeon, London",
-      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      // },
     ],
   },
   {
@@ -95,11 +87,6 @@ const DATA = [
         desc: "Heart Surgeon, London",
         img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
       },
-      // {
-      //   name: "Iva Carpenter",
-      //   desc: "Heart Surgeon, London",
-      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      // },
     ],
   },
   {
@@ -110,17 +97,110 @@ const DATA = [
         desc: "Heart Surgeon, London",
         img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
       },
-      // {
-      //   name: "Iva Carpenter",
-      //   desc: "Heart Surgeon, London",
-      //   img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      // },
     ],
   },
 ];
+
+const DOCTOR_QUERY = gql`
+  query {
+    allDoctors {
+      firstName
+      lastName
+      country
+      state
+      specialization {
+        specializationName
+      }
+    }
+  }
+`;
+
 const DoctorsList = ({ route, navigation }) => {
+  const { data, loading } = useQuery(DOCTOR_QUERY);
   const { filter } = route.params;
   console.log("filter => ", filter);
+  const [doctors, setDoctors] = useState(null);
+  var res = [];
+  const getspecs = (_d) => {
+    console.log("getspecs()");
+    let tab = [];
+    for (let i = 0; i < _d.allDoctors.length; i++) {
+      if (!tab.includes(_d.allDoctors[i].specialization.specializationName)) {
+        tab.push(_d.allDoctors[i].specialization.specializationName);
+      }
+    }
+    return tab;
+  };
+
+  const getDoctors = (d) => {
+    console.log("D ===================", d);
+    console.log("getDoctors()");
+    let specs = getspecs(d);
+    console.log("Specialities =>", specs);
+    let tab = [];
+    let final = [];
+    for (let j = 0; j < specs.length; j++) {
+      for (let i = 0; i < d.allDoctors.length; i++) {
+        if (d.allDoctors[i].specialization.specializationName === specs[j]) {
+          let name = d.allDoctors[i].firstName
+            ? d.allDoctors[i].firstName
+            : "--" + d.allDoctors[i].lastName
+            ? d.allDoctors[i].lastName
+            : "--";
+          let spec = d.allDoctors[i].specialization.specializationName
+            ? d.allDoctors[i].specialization.specializationName
+            : "--";
+          let state = d.allDoctors[i].state ? d.allDoctors[i].state : "--";
+          let country = d.allDoctors[i].country
+            ? d.allDoctors[i].country
+            : "--";
+          let desc = spec + ", " + state + " ," + country;
+          let img = d.allDoctors[i].avatar ? d.allDoctors[i].avatar : "";
+          let patients = d.allDoctors[i].patients
+            ? d.allDoctors[i].patients
+            : "--";
+          let experience = d.allDoctors[i].experience
+            ? d.allDoctors[i].experience
+            : "--";
+          tab.push({
+            name: name,
+            desc: desc,
+            img: img,
+            patients: patients,
+            experience: experience,
+          });
+          console.log("CORRECT", i, j);
+        }
+      }
+      // final.push({ title: specs[j], data: tab });
+      res.push({ title: specs[j], data: tab });
+      tab = [];
+    }
+    console.log("Finale =>", final);
+    console.log("Here Line 178", doctors);
+  };
+  useEffect(() => {
+    if (data) {
+      console.log("Data NEWWWW1 => ", res);
+      getDoctors(data);
+      console.log("after =============================");
+      setDoctors(res);
+    } else {
+      console.log("Data NEWWWW2 => ", res);
+    }
+  }, [data, doctors]);
+  // useEffect(() => {
+  //   if (data) {
+  //     console.log("Line 182", data);
+  //     getDoctors(data);
+  //   } else {
+  //     console.log("lINE 185", data);
+  //     console.log("lINE 186", loading);
+  //   }
+  //   if (doctors) {
+  //     console.log("Doctors =>", doctors);
+  //   }
+  // }, [data, doctors]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -144,7 +224,32 @@ const DoctorsList = ({ route, navigation }) => {
         </View>
       </View>
       {/* Flatlist */}
-      <SectionList
+      {doctors ? (
+        <SectionList
+          refreshing={true}
+          sections={doctors}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => (
+            <DoctorCardModel2
+              name={item.name}
+              desc={item.desc}
+              img={item.img}
+              navigation={navigation}
+              type="2"
+            />
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.specContainer}>
+              <Text style={styles.SpecTitle}>{title}</Text>
+            </View>
+          )}
+        />
+      ) : (
+        <Text style={styles.signup}>
+          <ActivityIndicator size="large" color={COLORS.blueBtn} />
+        </Text>
+      )}
+      {/* <SectionList
         refreshing={true}
         sections={DATA}
         keyExtractor={(item, index) => item + index}
@@ -157,105 +262,12 @@ const DoctorsList = ({ route, navigation }) => {
             type="2"
           />
         )}
-        // ItemSeparatorComponent={(props) => {
-        //   console.log("props =>", props.section.data);
-        //   return (
-        //     <View style={styles.doctorCards}>
-        //       {props.section.data.map((item, index) => (
-        //         <DoctorCardModel2
-        //           key={index}
-        //           name={item.name}
-        //           desc={item.desc}
-        //           img={item.img}
-        //           navigation={navigation}
-        //         />
-        //       ))}
-        //     </View>
-        //   );
-        // }}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.specContainer}>
             <Text style={styles.SpecTitle}>{title}</Text>
           </View>
         )}
-      />
-      {/* ScrollView */}
-      {/* <ScrollView style={styles.scrollView}>
-        <View style={styles.doctorCards}>
-          <DoctorCardModel2
-            name="Christina Frazier"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Jane Andrews"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Alma Wallace"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Mayme Gomez"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Iva Carpenter"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Chester Huff"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Christina Frazier"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Jane Andrews"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Alma Wallace"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Mayme Gomez"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Iva Carpenter"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-          <DoctorCardModel2
-            name="Chester Huff"
-            desc="Heart Surgeon, London"
-            img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-            navigation={navigation}
-          />
-        </View>
-      </ScrollView> */}
+      /> */}
     </SafeAreaView>
   );
 };
@@ -331,5 +343,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: COLORS.fontColor1,
+  },
+  signup: {
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginVertical: 20,
   },
 });
