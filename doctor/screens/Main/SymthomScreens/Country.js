@@ -56,12 +56,9 @@ const Country = ({ route, navigation }) => {
     setCountryCode(country.cca2);
     setCountry(country);
     setCheck(true);
-    // console.log("Countries from API => ", apiCountries);
   };
   const handleSubmit = () => {
-      // console.log("Country from State => ", country.name)
     const newCountryObj = apiCountries.find(item => item.country_name === country.name);
-    // console.log("Country =>", newCountryObj);
     if (check) {
       let newpregnant = ''
       if(pregnant !== undefined) {

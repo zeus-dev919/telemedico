@@ -1,13 +1,33 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../constants";
+import { COLORS, icons } from "../../constants";
 
 const DoctorCardModel2 = (props) => {
-  const { name, desc, img, navigation, type } = props;
+  const {
+    name,
+    desc,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    navigation,
+    type,
+  } = props;
   var check = type === "2" ? true : false;
   const handleAppointment = () => {
     console.log("Appointment Clicked !!");
-    navigation.navigate("appointment");
+    navigation.navigate("appointment", {
+      name: name,
+      desc: desc,
+      img: img,
+      patients: patients,
+      experience: experience,
+      speciality: speciality,
+      info: info,
+      fees: fees,
+    });
   };
   return (
     <>
@@ -18,13 +38,21 @@ const DoctorCardModel2 = (props) => {
               <View style={styles.doctorCardRight}>
                 <View style={styles.statusIndic2}></View>
                 <View style={styles.statusIndic3}></View>
-                <Image
-                  style={styles.doctorAvatar2}
-                  source={{
-                    uri: img,
-                  }}
-                  resizeMode="cover"
-                />
+                {img.length > 0 ? (
+                  <Image
+                    style={styles.doctorAvatar2}
+                    source={{
+                      uri: img,
+                    }}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <Image
+                    style={styles.doctorAvatar2}
+                    source={icons.placeholder}
+                    resizeMode="cover"
+                  />
+                )}
               </View>
             </View>
             <View
@@ -37,17 +65,23 @@ const DoctorCardModel2 = (props) => {
             >
               <View>
                 <Text style={styles.title1}>{name}</Text>
-                <Text style={styles.title2}>{desc}</Text>
+                <Text
+                  style={[styles.title2, { maxWidth: "100%", lineHeight: 14 }]}
+                >
+                  {desc}
+                </Text>
               </View>
               <View>
                 <Text style={styles.title2}>
                   Patients:{" "}
-                  <Text style={[styles.boxNb, { color: "#f9b664" }]}>500+</Text>
+                  <Text style={[styles.boxNb, { color: "#f9b664" }]}>
+                    {patients}
+                  </Text>
                 </Text>
                 <Text style={styles.title2}>
                   Experience:{" "}
                   <Text style={[styles.boxNb, { color: "#f660be" }]}>
-                    10yrs
+                    {experience}
                   </Text>
                 </Text>
               </View>
@@ -208,6 +242,7 @@ const styles = StyleSheet.create({
     margin: 0,
     lineHeight: 29,
     textAlign: "left",
+    marginBottom: 8,
   },
   title2: {
     color: COLORS.fontColor2,

@@ -50,68 +50,44 @@ const Describe = ({ route, navigation }) => {
     getPredictive();
   }, []);
   useEffect(() => {
-    console.log("selected Changed !!");
-  }, [selected]);
+    if (search.length > 0) {
+      let after = predictive.filter(checkWord);
+      let array2 = [];
+      console.log("after => ", after)
+      if (after.length > 0) {
+        for (let i = 0; i < 10; i++) {
+          if (after[i]) {
+            array2.push(after[i]);
+          }
+        }
+        setSearchArray(array2);
+        setCheck(true);
+      } else {
+        setSearchArray([]);
+      }
+    }
+    if (search.length === 0) {
+      setSearchArray([]);
+    }
+  }, [search]);
+
   const checkWord = (item) => {
     let ch = item.substr(0, search.length).toUpperCase();
     let ch2 = search.toUpperCase();
     if (ch == ch2) return true;
     return false;
-    // for (let i = 0; i < search.length; i++) {
-    // let f1 = item[i].match(/[a-z]/i) ? item[i].toUpperCase() : item[i];
-    // let f2 = search[i].match(/[a-z]/i) ? search[i].toUpperCase() : search[i];
-    // if (f1 !== f2) {
-    //   return false;
-    // }
-    // }
-    // return true;
-  };
-  const checkIfExist = (ch) => {
-    let i = 0;
-    while (i <= selected.length) {
-      if (selected[i] === ch) return true;
-      i++;
-    }
-    return false;
-  };
-  const handleSearch = (e) => {
-    setSearch(e);
-    let i = 0;
-    let j = 0;
-    if (search.length >= 1) {
-      let after = predictive.filter(checkWord);
-      let array2 = [];
-      for (let i = 0; i < 10; i++) {
-        array2.push(after[i]);
-      }
-
-      // while (array2.length <= 10 && i <= after.length) {
-      //   if (!checkIfExist(after[i])) {
-      //     array2.push(after[i]);
-      //   }
-      //   i++;
-      // }
-      setSearchArray(array2);
-      setCheck(true);
-    }
   };
   const handleAddItem = (e, item) => {
     console.log("Item Added => ", item);
     let array = [];
-    // if (selected.length < 5) {
-    //   for (let i = 0; i < selected.length; i++) {
-    //     if (selected[i] !== item) {
-    //       array.push(item);
-    //     }
-    //   }
-    // }
+
     if (selected.length < 5) {
       array = selected;
       array.push(item);
     }
     setSelected(array);
-    setSearch('')
-    setSearchArray([])
+    setSearch("");
+    setSearchArray([]);
   };
   const handleRemoveItem = (e, item) => {
     console.log("Item Removed => ", item);
@@ -213,7 +189,7 @@ const Describe = ({ route, navigation }) => {
               <TextInput
                 style={styles.searchInput}
                 value={search}
-                onChangeText={(e) => handleSearch(e)}
+                onChangeText={setSearch}
                 placeholder="Search"
                 placeholderTextColor="#b2b8cc"
               />

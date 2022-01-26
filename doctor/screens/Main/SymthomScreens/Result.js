@@ -13,8 +13,26 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import DoctorCardModel from "../../Models/DoctorCardModel";
+import { gql, useQuery } from "@apollo/client";
+
+const DOCTOR_QUERY = gql`
+  query {
+    allDoctors {
+      firstName
+      lastName
+      country
+      state
+      specialization {
+        specializationName
+      }
+    }
+  }
+`;
 
 const Result = ({ route, navigation }) => {
+  const { data, loading } = useQuery(DOCTOR_QUERY);
+  console.log("Data =>", data, loading);
+
   const { age, gender, pregnant, country_id, region_id, predictive_text } =
     route.params;
   console.log("From Result => ", {
@@ -26,12 +44,19 @@ const Result = ({ route, navigation }) => {
     predictive_text,
   });
   const [result, setResult] = useState(null);
+  // 1
   const [diagnose1, setDiagnose1] = useState(null);
   const [spec1, setSpec1] = useState(null);
+  const [doctors1, setDoctors1] = useState(null);
+  // 2
   const [diagnose2, setDiagnose2] = useState(null);
   const [spec2, setSpec2] = useState(null);
+  const [doctors2, setDoctors2] = useState(null);
+  // 3
   const [diagnose3, setDiagnose3] = useState(null);
   const [spec3, setSpec3] = useState(null);
+  const [doctors3, setDoctors3] = useState(null);
+
   const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
   const getResult = async () => {
@@ -56,15 +81,51 @@ const Result = ({ route, navigation }) => {
         );
         setDiagnose1(res.diagnoses_checklist.diagnoses[0].diagnosis_name);
         setSpec1(res.diagnoses_checklist.diagnoses[0].specialty);
+        //
         setDiagnose2(res.diagnoses_checklist.diagnoses[1].diagnosis_name);
         setSpec2(res.diagnoses_checklist.diagnoses[1].specialty);
+        //
         setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
         setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
+        //
       })
       .catch((error) => {
         console.error(error);
       });
   };
+  const getDoctors = (data, ch) => {
+    console.log("Data from getDoctors =>", data.allDoctors[0]);
+    let tab = [];
+    for (let i = 0; i < data.allDoctors.length; i++) {
+      if (data.allDoctors[i].specialization.specializationName === ch) {
+        tab.push({
+          name: data.allDoctors[i].firstName + data.allDoctors[i].lastName,
+          location:
+            data.allDoctors[i].state + " ," + data.allDoctors[i].country,
+          speciality: data.allDoctors[i].specialization.specializationName,
+          experience: data.allDoctors[i].experience
+            ? data.allDoctors[i].experience
+            : "--",
+          img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+        });
+      }
+    }
+    return tab;
+  };
+  const handleMoreDoctors = () => {
+    navigation.navigate("doctorList", { filter: "8" });
+  };
+  useEffect(() => {
+    if (data && spec1) {
+      setDoctors1(getDoctors(data, spec1));
+    }
+    if (data && spec2) {
+      setDoctors2(getDoctors(data, spec1));
+    }
+    if (data && spec3) {
+      setDoctors3(getDoctors(data, spec1));
+    }
+  }, [data]);
   useEffect(() => {
     getResult();
     if (result >= 0 && result <= 39) {
@@ -127,73 +188,82 @@ const Result = ({ route, navigation }) => {
             <Text style={styles.title1}>Result</Text>
           </View>
         </View>
-        {diagnose1 ? (
+        {diagnose1 && data ? (
           <>
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose1}</Text>
               <Text style={styles.title4}>{spec1}</Text>
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
+              {doctors1?.length > 0 ? (
+                doctors1.map((item, index) => (
+                  <DoctorCardModel
+                    key={index}
+                    name={item.name}
+                    location={item.location}
+                    speciality={item.speciality}
+                    experience={item.experience}
+                    img={item.img}
+                    bg="0"
+                    navigation={navigation}
+                  />
+                ))
+              ) : (
+                <TouchableOpacity
+                  onPress={handleMoreDoctors}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose2}</Text>
               <Text style={styles.title4}>{spec2}</Text>
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
+              {doctors2?.length > 0 ? (
+                doctors2.map((item, index) => (
+                  <DoctorCardModel
+                    key={index}
+                    name={item.name}
+                    location={item.location}
+                    speciality={item.speciality}
+                    experience={item.experience}
+                    img={item.img}
+                    bg="0"
+                    navigation={navigation}
+                  />
+                ))
+              ) : (
+                <TouchableOpacity
+                  onPress={handleMoreDoctors}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose3}</Text>
               <Text style={styles.title4}>{spec3}</Text>
-              <DoctorCardModel
-                name="Dr. Lida Gutierrez"
-                location="Los Angeles, USA"
-                speciality="Heart Surgeon"
-                experience="10"
-                img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-                bg="0"
-                navigation={navigation}
-              />
+              {doctors3?.length > 0 ? (
+                doctors3.map((item, index) => (
+                  <DoctorCardModel
+                    key={index}
+                    name={item.name}
+                    location={item.location}
+                    speciality={item.speciality}
+                    experience={item.experience}
+                    img={item.img}
+                    bg="0"
+                    navigation={navigation}
+                  />
+                ))
+              ) : (
+                <TouchableOpacity
+                  onPress={handleMoreDoctors}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </>
         ) : (
@@ -302,5 +372,19 @@ const styles = StyleSheet.create({
   diagnoseContainer: {
     width: "100%",
     paddingVertical: 20,
+  },
+  relevant: {
+    backgroundColor: COLORS.blueBtn,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  relevantTitle: {
+    fontSize: 20,
+    color: "white",
   },
 });
