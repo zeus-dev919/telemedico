@@ -1,3 +1,51 @@
 from django.db import models
-
+from authentication.models import Customer
 # Create your models here.
+
+class PatientIntakemodel(models.Model):
+
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    first_name = models.CharField(max_length = 200)
+    last_name =  models.CharField(max_length=200)
+    gender = models.CharField(max_length=50)
+    birth = models.DateField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
+    email = models.EmailField(max_length=50)
+    reason_for_consultation = models.CharField(max_length=50)
+    patient_medical_hostory = models.CharField(max_length=50)
+    list_operation =  models.CharField(max_length=50)
+    current_medication = models.CharField(max_length=50)
+    list_allergies = models.CharField(max_length=200)
+    health_unhealth = models.CharField(max_length=300)
+    exercises = models.CharField(max_length=200)
+    diet = models.CharField(max_length=200)
+    alcohol = models.BooleanField(default="False")
+    caffiene = models.BooleanField(default="False")
+    smoke = models.BooleanField(default="False")
+    father = models.CharField(max_length=30)
+    mother = models.CharField(max_length=30)
+    grandfather = models.CharField(max_length=50)
+    grandmother = models.CharField(max_length=50)
+    brother = models.CharField(max_length=50)
+    sister = models.CharField(max_length=50)
+    uncle =  models.CharField(max_length=50)
+    aunts = models.CharField(max_length=50)
+    mental_health_symptoms = models.BooleanField(default="False")
+    had_feeling_didnt_want_to_live = models.BooleanField(default="False")
+    currently_feeling_didnt_live = models.BooleanField(default="False")
+    how_often_negative_feeling = models.CharField(max_length=24)
+    recent_negative_thoughts = models.CharField(max_length=100)
+    mental_health_expert_recent = models.BooleanField(default="False")
+    seek_any_help = models.BooleanField(default="False")
+    question1 = models.CharField(max_length=50)
+    question2 = models.CharField(max_length=50)
+    question3 = models.CharField(max_length=50)
+    question4 = models.CharField(max_length=50)
+    question5 = models.CharField(max_length=50)
+    comments = models.CharField(max_length=50)
+    img1 = models.ImageField(upload_to = "media/")
+    img2 = models.ImageField(upload_to = "media/")
+
+    def __str__(self):
+        return self.customer

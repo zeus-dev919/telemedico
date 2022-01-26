@@ -41,6 +41,7 @@ class Doctor(models.Model):
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
     available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
     time_slots = models.CharField(max_length=20,null=False, blank=True)
+    consultation_time = models.IntegerField()
 
     def __str__(self):
         return self.first_name
