@@ -44,8 +44,8 @@ class PatientIntakemodel(models.Model):
     question4 = models.CharField(max_length=50)
     question5 = models.CharField(max_length=50)
     comments = models.CharField(max_length=50)
-    img1 = models.ImageField(upload_to = "media/")
-    img2 = models.ImageField(upload_to = "media/")
+    # img1 = models.ImageField(upload_to = "media/", null =True)
+    # img2 = models.ImageField(upload_to = "media/", null=True)
 
     def __str__(self):
-        return self.customer
+        return str(self.customer)
