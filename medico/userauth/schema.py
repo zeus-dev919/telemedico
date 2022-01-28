@@ -17,7 +17,7 @@ class AuthMutation(graphene.ObjectType):
 class Query(UserQuery, MeQuery,ModelQuery, graphene.ObjectType):
     pass
 
-class Mutation(AuthMutation,DoctorCreateInput, graphene.ObjectType):
+class Mutation(AuthMutation,DoctorCreateInput,CustomerInputCreate, graphene.ObjectType):
     pass
 
 
