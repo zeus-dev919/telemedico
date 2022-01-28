@@ -2,7 +2,7 @@ import graphene
 from graphql_auth import mutations
 from graphql_auth.schema import UserQuery, MeQuery
 import authentication.schema
-from authentication.schema import DoctorCreateInput,ModelQuery
+from authentication.schema import DoctorCreateInput,ModelQuery, CustomerInputCreate
 from patients.schema import IntakeMutation
 
 
