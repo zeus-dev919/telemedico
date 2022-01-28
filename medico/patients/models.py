@@ -4,7 +4,7 @@ from authentication.models import Customer
 
 class PatientIntakemodel(models.Model):
 
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    
     first_name = models.CharField(max_length = 200)
     last_name =  models.CharField(max_length=200)
     gender = models.CharField(max_length=50)
