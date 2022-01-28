@@ -46,8 +46,8 @@ const Login = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [email, onChangeEmail] = useState("user218@gmail.com");
-  const [password, onChangepassword] = useState("hellodude");
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangepassword] = useState("");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -104,11 +104,12 @@ const Login = ({ navigation }) => {
           let user = {
             email: email,
             password: password,
+        
           };
           console.log("current Token => ", token);
           console.log("User + Token => ", user, res.data.tokenAuth.token);
           if (res.data.tokenAuth.token) {
-            dispatch(signInUser(user));
+            dispatch(signInUser(user, res.data.tokenAuth.token));
             setIndicatorLoad(false);
           } else {
             setError(

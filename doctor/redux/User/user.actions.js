@@ -15,11 +15,15 @@ export const signUpUser = (user, token) => async (dispatch) => {
     console.log(err);
   }
 };
-export const signInUser = (user) => async (dispatch) => {
+export const signInUser = (user, token) => async (dispatch) => {
   try {
     dispatch({
       type: userTypes.SIGN_IN_SUCCESS,
       payload: user,
+    });
+    dispatch({
+      type: userTypes.SET_TOKEN,
+      payload: token,
     });
   } catch (err) {
     console.log(err);
@@ -35,6 +39,17 @@ export const signOutUser = () => (dispatch) => {
   }
 };
 
+export const setUser = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userTypes.SIGN_IN_SUCCESS,
+      payload: user,
+    });
+  } catch (err) {
+    console.log("error from fetchPrperty catch !!");
+    console.log(err);
+  }
+};
 export const getUser = (email) => async (dispatch) => {
   try {
     console.log("Get User");

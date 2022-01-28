@@ -14,18 +14,8 @@ import DoctorAboutCard from "../../Models/DoctorAboutCard";
 import DoctorUpcomingCard from "../../Models/DoctorUpcomingCard";
 
 const Appointment = ({ route, navigation }) => {
-  const { name, desc, img, patients, experience, speciality, info, fees } =
+  const { name, desc, img, patients, experience, speciality, info, fees, duration } =
     route.params;
-  console.log("LOOK =>", {
-    name,
-    desc,
-    img,
-    patients,
-    experience,
-    speciality,
-    info,
-    fees,
-  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -76,7 +66,19 @@ const Appointment = ({ route, navigation }) => {
         <View style={styles.doctorBottomCard2}>
           <TouchableOpacity
             style={[styles.doctorBtnStyle2, styles.shadow2]}
-            onPress={() => navigation.navigate("payment")}
+            onPress={() =>
+              navigation.navigate("payment", {
+                name: name,
+                desc: desc,
+                img: img,
+                patients: patients,
+                experience: experience,
+                speciality: speciality,
+                info: info,
+                fees: fees,
+                duration: duration,
+              })
+            }
           >
             <Text style={styles.doctorBtnStyleText2}>Book Appointment</Text>
           </TouchableOpacity>

@@ -26,12 +26,12 @@ const App = () => {
   // });
   return (
     <StripeProvider
-      publishableKey={"pk_test_2Fr70nsDAtUaKwlIx73qEw8p"}
-      setUrlSchemeOnAndroid={true}
+      publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
+      merchantIdentifier="merchant.identifier"
     >
       <ApolloProvider client={client}>
         <Provider store={store}>
-          {/* <StatusBar style="auto" /> */}
+          <StatusBar style="light" />
           <AppMain />
         </Provider>
       </ApolloProvider>

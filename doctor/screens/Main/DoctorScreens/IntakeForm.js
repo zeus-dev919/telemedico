@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -8,13 +8,32 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
-import { COLORS, icons } from "../../../constants";
+import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 import * as DocumentPicker from "expo-document-picker";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../firebase/utils";
+import uuid from "react-native-uuid";
+import { gql, useQuery } from "@apollo/client";
+import Header from "../../Models/Header";
+
+const USER_QUERY = gql`
+  query {
+    me {
+      firstName
+      lastName
+    }
+  }
+`;
 
 const IntakeForm = ({ navigation }) => {
+  const { data, loading } = useQuery(USER_QUERY);
+  console.log("Data =>", data, loading);
+  const [indicatorLoad, setIndicatorLoad] = useState(false);
+  const [successRes, setSuccessRes] = useState("");
   // f1
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,7 +49,7 @@ const IntakeForm = ({ navigation }) => {
   // f3
   const [f3, setF3] = useState("");
   // f4
-  const [f4, setF4] = useState([]);
+  // const [f4, setF4] = useState([]);
   const [f4_1, setF4_1] = useState(false);
   const [f4_2, setF4_2] = useState(false);
   const [f4_3, setF4_3] = useState(false);
@@ -156,7 +175,9 @@ const IntakeForm = ({ navigation }) => {
   const [comment, setComment] = useState("");
   // Pick Docs
   const [pick1, setPick1] = useState("");
+  const [pick1Name, setPick1Name] = useState("");
   const [pick2, setPick2] = useState("");
+  const [pick2Name, setPick2Name] = useState("");
 
   //   Error
   const [firstNameError, setFirstNameError] = useState("");
@@ -169,6 +190,30 @@ const IntakeForm = ({ navigation }) => {
   const [emailError, setEmailError] = useState("");
   const [fileError, setFileError] = useState("");
 
+  useEffect(() => {
+    if (indicatorLoad) {
+      if (pick1.length === 0 && pick2.length === 0) handleSubmit();
+      if (
+        pick1.length > 0 &&
+        pick1.startsWith("https://firebasestorage.googleapis.com/") &&
+        pick2.length === 0
+      )
+        handleSubmit();
+      if (
+        pick2.length > 0 &&
+        pick2.startsWith("https://firebasestorage.googleapis.com/") &&
+        pick1.length === 0
+      )
+        handleSubmit();
+      if (
+        pick1.length > 0 &&
+        pick1.startsWith("https://firebasestorage.googleapis.com/") &&
+        pick2.length > 0 &&
+        pick2.startsWith("https://firebasestorage.googleapis.com/")
+      )
+        handleSubmit();
+    }
+  }, [pick1, pick2, indicatorLoad]);
   // f2
   const handleBox1 = () => {
     setBox1(true);
@@ -384,20 +429,115 @@ const IntakeForm = ({ navigation }) => {
     setF11_6_1(false);
     setF11_6_2(true);
   };
+  const handleUpload = async () => {
+    setIndicatorLoad(true);
+    if (pick1.length > 0) {
+      const url_uuid = uuid.v4();
+      const storageRef = ref(storage, `images_report/${url_uuid}_${pick1Name}`);
+      const uploadTask = uploadBytesResumable(storageRef, pick1);
+      // Listen for state changes, errors, and completion of the upload.
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setPick1(downloadURL);
+          });
+        }
+      );
+    }
+    if (pick2.length > 0) {
+      const url_uuid2 = uuid.v4();
+      const storageRef2 = ref(
+        storage,
+        `images_report/${url_uuid2}_${pick2Name}`
+      );
+      const uploadTask2 = uploadBytesResumable(storageRef2, pick2);
+      uploadTask2.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+            setPick2(downloadURL);
+          });
+        }
+      );
+    }
+  };
   // Pick Images
   const handlePickImg1 = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-    console.log("Response1 =>", result);
+    console.log("result => ", result);
     setPick1(result.uri);
+    setPick1Name(result.name);
   };
   const handlePickImg2 = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-    console.log("Response2 =>", result);
+    console.log("result => ", result);
     setPick2(result.uri);
+    setPick2Name(result.name);
   };
 
   // Submit
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let gender = "";
     if (box1) {
       gender = "male";
@@ -509,53 +649,74 @@ const IntakeForm = ({ navigation }) => {
     let seek_any_help = "";
     if (f11_6_1) seek_any_help = "yes";
     if (f11_6_2) seek_any_help = "no";
-    let data = {
-      firstName: firstName,
-      lastName: lastName,
-      gender: gender,
-      birth: birth,
-      height: height,
-      weight: weight,
-      email: email,
-      reason_for_consultation: f3,
-      patient_medical_history: f4,
-      list_opeartion: operation,
-      current_medication: medication,
-      list_allergies: allergies,
-      health_unhealth: health,
-      exercices: exercices,
-      diet: diet,
-      alcohol: alcohol,
-      caffeine: caffeine,
-      smoke: smoke,
-      father: father,
-      mother: mother,
-      gfather: gfather,
-      gmother: gmother,
-      brother: brother,
-      sister: sister,
-      uncle: uncle,
-      aunts: aunts,
-      mental_health_symthoms: f7,
-      had_feeling_didnt_want_to_live: had_feeling_didnt_want_to_live,
-      currently_feeling_didnt_want_to_live:
-        currently_feeling_didnt_want_to_live,
-      how_often_do_you_have_these_thoughts: f11_3,
-      when_was_the_last_time_you_have_these_thoughts: f11_4,
-      have_you_seen_a_mental_health_professional:
-        have_you_seen_a_mental_health_professional,
-      seek_any_help: seek_any_help,
-      question1: q1,
-      question2: q2,
-      question3: q3,
-      question4: q4,
-      question5: q5,
-      comments: comment,
-      img1: pick1,
-      img2: pick2,
-    };
-    console.log(data);
-    navigation.navigate("home");
+    await fetch("http://164.52.218.166:8000/intake/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: {
+        customer: "beta_testing",
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        birth: birth,
+        height: height,
+        weight: weight,
+        email: email,
+        reason_for_consultation: f3,
+        patient_medical_history: f4,
+        list_opeartion: operation,
+        current_medication: medication,
+        list_allergies: allergies,
+        health_unhealth: health,
+        exercices: exercices,
+        diet: diet,
+        alcohol: alcohol,
+        caffeine: caffeine,
+        smoke: smoke,
+        father: father,
+        mother: mother,
+        gfather: gfather,
+        gmother: gmother,
+        brother: brother,
+        sister: sister,
+        uncle: uncle,
+        aunts: aunts,
+        mental_health_symthoms: f7,
+        had_feeling_didnt_want_to_live: had_feeling_didnt_want_to_live,
+        currently_feeling_didnt_want_to_live:
+          currently_feeling_didnt_want_to_live,
+        how_often_do_you_have_these_thoughts: f11_3,
+        when_was_the_last_time_you_have_these_thoughts: f11_4,
+        have_you_seen_a_mental_health_professional:
+          have_you_seen_a_mental_health_professional,
+        seek_any_help: seek_any_help,
+        question1: q1,
+        question2: q2,
+        question3: q3,
+        question4: q4,
+        question5: q5,
+        comments: comment,
+        img1: pick1,
+        img2: pick2,
+      },
+    })
+      .then((response) => response.text())
+      .then((res) => {
+        setIndicatorLoad(false);
+        setSuccessRes("SUCCESS");
+        navigation.navigate("home");
+        console.log("==============================================");
+        console.log("Response Fecth =>", res);
+      })
+      .catch((err) => {
+        setIndicatorLoad(false);
+        setSuccessRes("FAILED");
+        console.log("==============================================");
+        console.log("Error =>", err);
+      });
+    console.log("DONE");
   };
   const handleProfileRedirect = () => {
     navigation.navigate("profile");
@@ -564,14 +725,7 @@ const IntakeForm = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleProfileRedirect}>
-            <Image
-              style={styles.logo}
-              source={icons.avatar}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+        {/* <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.openDrawer()}
@@ -583,7 +737,7 @@ const IntakeForm = ({ navigation }) => {
               style={styles.icon_style}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
@@ -2631,9 +2785,16 @@ const IntakeForm = ({ navigation }) => {
             <Text style={styles.cardTitle4}>Image 2</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button1} onPress={handleSubmit}>
-          <Text style={styles.signup}>Submit</Text>
+        <TouchableOpacity style={styles.button1} onPress={handleUpload}>
+          {indicatorLoad ? (
+            <Text style={styles.signup}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </Text>
+          ) : (
+            <Text style={styles.signup}>Submit</Text>
+          )}
         </TouchableOpacity>
+        {/* <Text style={} >{successRes}</Text> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -2654,15 +2815,17 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: COLORS.bgColor1,
     height: 60,
     paddingHorizontal: 30,
   },
   logo: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
+    marginTop: 5,
+    borderRadius: 200,
   },
   headerSub: {
     flexDirection: "row",

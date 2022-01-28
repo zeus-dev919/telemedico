@@ -12,9 +12,10 @@ import {
 } from "react-native";
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
+import { CardField, useStripe } from "@stripe/stripe-react-native";
 
 const PayCardsModel = (props) => {
-  const { navigation } = props;
+  const { pay, navigation } = props;
   // data
   const [name, setName] = useState("test User");
   const [number, setNumber] = useState("1234123412341234");
@@ -87,7 +88,7 @@ const PayCardsModel = (props) => {
   };
   return (
     <>
-      <View style={styles.payIcons}>
+      {/* <View style={styles.payIcons}>
         <TouchableOpacity
           onPress={handlePaypal}
           style={styles.payIconContainer}
@@ -127,9 +128,9 @@ const PayCardsModel = (props) => {
           />
           <Text style={styles.underPayIcon}>Visa Card</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* Form */}
-      <View style={styles.inputsContainer}>
+      {/* <View style={styles.inputsContainer}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -184,7 +185,30 @@ const PayCardsModel = (props) => {
             )}
           </View>
         </View>
-      </View>
+      </View> */}
+      {/* Stripe */}
+      <CardField
+        postalCodeEnabled={true}
+        placeholder={{
+          number: "4242 4242 4242 4242",
+        }}
+        cardStyle={{
+          backgroundColor: "#FFFFFF",
+          textColor: "#000000",
+        }}
+        style={{
+          width: "100%",
+          height: 50,
+          marginVertical: 30,
+          borderRadius: 8,
+        }}
+        onCardChange={(cardDetails) => {
+          console.log("cardDetails", cardDetails);
+        }}
+        onFocus={(focusedField) => {
+          console.log("focusField", focusedField);
+        }}
+      />
       {/* Terms and Condition */}
       <View style={styles.terms}>
         <Checkbox
@@ -200,7 +224,7 @@ const PayCardsModel = (props) => {
       )}
       {/* Pay */}
       <TouchableOpacity style={styles.button1} onPress={handleRegister}>
-        <Text style={styles.signup}>Pay 100$</Text>
+        <Text style={styles.signup}>Pay {pay}$</Text>
       </TouchableOpacity>
       {!success ? (
         <Modal

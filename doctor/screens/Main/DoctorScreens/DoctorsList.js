@@ -113,6 +113,7 @@ const DOCTOR_QUERY = gql`
       }
       consultationFees
       info
+      consultationTime
     }
   }
 `;
@@ -168,6 +169,9 @@ const DoctorsList = ({ route, navigation }) => {
               fees: data.allDoctors[i].consultationFees
                 ? data.allDoctors[i].consultationFees
                 : "--",
+              duration: data.allDoctors[i].consultationTime
+              ? data.allDoctors[i].consultationTime
+              : "--",
             });
           }
         }
@@ -232,6 +236,7 @@ const DoctorsList = ({ route, navigation }) => {
               speciality={item.speciality}
               info={item.info}
               fees={item.fees}
+              duration={item.duration}
               navigation={navigation}
               type="2"
             />

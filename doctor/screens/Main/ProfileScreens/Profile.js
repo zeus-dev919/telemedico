@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,24 +11,81 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import * as DocumentPicker from "expo-document-picker";
+import { gql, useMutation } from "@apollo/client";
+
+const mapState = ({ user }) => ({
+  currentProperty: user.currentProperty,
+  userD: user.userD,
+  errors: user.errors,
+});
+
+const MUTATE_QUERY = gql`
+  mutation MutateUser(
+    $email: String!
+    $firstName: String!
+    $lastName: String!
+    $profilePic: String!
+    $phoneNumber: String!
+  ) {
+    customerInput(
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      profilePic: $profilePic
+      phoneNumber: $phoneNumber
+    ) {
+      success
+      errors
+      refreshToken
+      token
+    }
+  }
+`;
 
 const Profile = ({ route, navigation }) => {
+  const dispatch = useDispatch();
+  const { currentProperty, userD, errors } = useSelector(mapState);
+  console.log("maptate => ", { currentProperty, userD, errors });
+  const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
   const { ch } = route?.params || "empty";
   console.log("Profile Type =>", ch);
-  const [firstName, setFirstName] = useState("Alex");
-  const [lastName, setLastName] = useState("jj");
-  const [email, setEmail] = useState("alex@gmail.com");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
+  useEffect(() => {
+    if (userD) {
+      setFirstName(userD.firstName);
+      setLastName(userD.lastName);
+      setEmail(userD.email);
+      setAvatar(userD.profilePic);
+      setPhone("");
+    }
+  }, [userD]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
     setAvatar(result.uri);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Saved !!");
-    navigation.navigate("home");
+    await MutateUser({
+      variables: {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: profilePic,
+        phoneNumber: phoneNumber,
+      },
+    }).then((res) => {
+      console.log(" ===================== ");
+      console.log("DONE", res);
+      navigation.navigate("home");
+    });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +108,7 @@ const Profile = ({ route, navigation }) => {
           </View>
           <View style={styles.titleConatiner}>
             <TouchableOpacity onPress={handleSubmit}>
-              <Text style={styles.title2}>Done</Text>
+              {/* <Text style={styles.title2}>Done</Text> */}
             </TouchableOpacity>
           </View>
         </View>
@@ -64,14 +121,14 @@ const Profile = ({ route, navigation }) => {
             {avatar.length > 0 ? (
               <Image
                 style={styles.avatar}
-                source={avatar}
-                resizeMode="contain"
+                source={{ uri: avatar }}
+                resizeMode="cover"
               />
             ) : (
               <Image
                 style={styles.avatar}
-                source={icons.avatar}
-                resizeMode="contain"
+                source={icons.placeholder}
+                resizeMode="cover"
               />
             )}
             <TouchableOpacity onPress={handleChangePicture}>
@@ -101,11 +158,7 @@ const Profile = ({ route, navigation }) => {
             {/* E mail */}
             <View style={[styles.searchContainer, styles.shadow]}>
               <Text style={styles.title4}>E mail</Text>
-              <TextInput
-                style={styles.searchInput}
-                value={email}
-                onChangeText={setEmail}
-              />
+              <TextInput style={styles.searchInput} value={email} />
             </View>
             {/* Phone Number */}
             <View style={[styles.searchContainer, styles.shadow]}>
@@ -196,9 +249,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   avatar: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     marginBottom: 10,
+    borderRadius: 50,
   },
   //   Details
   searchContainer: {

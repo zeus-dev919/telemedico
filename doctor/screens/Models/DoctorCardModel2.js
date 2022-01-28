@@ -12,6 +12,7 @@ const DoctorCardModel2 = (props) => {
     speciality,
     info,
     fees,
+    duration,
     navigation,
     type,
   } = props;
@@ -27,6 +28,7 @@ const DoctorCardModel2 = (props) => {
       speciality: speciality,
       info: info,
       fees: fees,
+      duration: duration,
     });
   };
   return (

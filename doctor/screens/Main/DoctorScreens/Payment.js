@@ -12,7 +12,29 @@ import { COLORS } from "../../../constants";
 import PayTimeModel from "../../Models/PayTimeModel";
 import PayCardsModel from "../../Models/PayCardsModel";
 
-const Payments = ({ navigation }) => {
+const Payments = ({ route, navigation }) => {
+  const {
+    name,
+    desc,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    duration,
+  } = route.params;
+  console.log("LOOK1 =>", {
+    name,
+    desc,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    duration,
+  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -38,9 +60,9 @@ const Payments = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {/* Payment Details */}
-        <PayTimeModel pay="100" duration="20" />
+        <PayTimeModel pay={fees} duration={duration} />
         {/* Payment Form */}
-        <PayCardsModel navigation={navigation} />
+        <PayCardsModel pay={fees} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

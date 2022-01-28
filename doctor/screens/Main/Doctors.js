@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   ScrollView,
@@ -12,68 +13,106 @@ import {
 import IconFeather from "react-native-vector-icons/Feather";
 import { COLORS, icons, images } from "../../constants";
 import DoctorCardModel from "../Models/DoctorCardModel";
+import Header from "../Models/Header";
+import { gql, useQuery } from "@apollo/client";
 
-const Doctors = ({ navigation }) => {
-  const [search, setSearch] = useState("");
-  const handleProfileRedirect = () => {
-    navigation.navigate('profile')
+const DOCTOR_QUERY = gql`
+  query {
+    allDoctors {
+      firstName
+      lastName
+      country
+      state
+      specialization {
+        specializationName
+      }
+      consultationFees
+      info
+      consultationTime
+    }
   }
+`;
+var tab = [];
+const Doctors = ({ navigation }) => {
+  const [doctors, setDoctors] = useState(null);
+  const [search, setSearch] = useState("");
+  const { data, loading } = useQuery(DOCTOR_QUERY);
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
-    navigation.navigate("doctorList", {filter: '1'});
+    navigation.navigate("doctorList", { filter: "1" });
   };
   const handleTooth = () => {
     console.log("Tooth Clicked !!");
-    navigation.navigate("doctorList", {filter: '2'});
+    navigation.navigate("doctorList", { filter: "2" });
   };
   const handleDermatologist = () => {
     console.log("Dermatologist Clicked !!");
-    navigation.navigate("doctorList", {filter: '3'});
+    navigation.navigate("doctorList", { filter: "3" });
   };
   const handleHeart = () => {
     console.log("Heart Clicked !!");
-    navigation.navigate("doctorList", {filter: '4'});
+    navigation.navigate("doctorList", { filter: "4" });
   };
   const handleBrain = () => {
     console.log("Brain Clicked !!");
-    navigation.navigate("doctorList", {filter: '5'});
+    navigation.navigate("doctorList", { filter: "5" });
   };
   const handlePsychology = () => {
     console.log("Psychology Clicked !!");
-    navigation.navigate("doctorList", {filter: '6'});
+    navigation.navigate("doctorList", { filter: "6" });
   };
   const handleUrology = () => {
     console.log("Urology Clicked !!");
-    navigation.navigate("doctorList", {filter: '7'});
+    navigation.navigate("doctorList", { filter: "7" });
   };
   const handleOthers = () => {
     console.log("Others Clicked !!");
-    navigation.navigate("doctorList", {filter: '8'});
+    navigation.navigate("doctorList", { filter: "8" });
   };
+
+  const getDoctors = () => {
+    if (data) {
+      for (let i = 0; i < 3; i++) {
+        tab.push({
+          name:
+            data.allDoctors[i].firstName + " " + data.allDoctors[i].lastName,
+          desc:
+            (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
+            " ," +
+            (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
+          img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+          patients: data.allDoctors[i].patients
+            ? data.allDoctors[i].patients
+            : "--",
+          experience: data.allDoctors[i].experience
+            ? data.allDoctors[i].experience
+            : "--",
+          speciality: data.allDoctors[i].specialization.specializationName,
+          info: data.allDoctors[i].info ? data.allDoctors[i].info : "--",
+          fees: data.allDoctors[i].consultationFees
+            ? data.allDoctors[i].consultationFees
+            : "--",
+            duration: data.allDoctors[i].consultationTime
+              ? data.allDoctors[i].consultationTime
+              : "--",
+        });
+      }
+    }
+  };
+  useEffect(() => {
+    if (data) {
+      console.log("Data NEWWWW1 => ");
+      getDoctors();
+      setDoctors(tab);
+    } else {
+      console.log("Data NEWWWW2 => ");
+    }
+  }, [data]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleProfileRedirect}>
-            <Image
-              style={styles.avatar}
-              source={icons.avatar}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.headerSub}
-            onPress={() => navigation.openDrawer()}
-          >
-            <IconFeather
-              name="menu"
-              size={20}
-              color="black"
-              style={styles.icon_style}
-            />
-          </TouchableOpacity>
-        </View>
+        <Header avatar="" navigation={navigation} bg={COLORS.bgColor1} />
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
@@ -173,7 +212,6 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-
           <View style={[styles.searchContainer, styles.shadow]}>
             <Image
               style={styles.search}
@@ -190,35 +228,28 @@ const Doctors = ({ navigation }) => {
           </View>
         </View>
         {/* Card3 */}
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        {/* Card3 */}
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
-        {/* Card3 */}
-        <DoctorCardModel
-          name="Dr. Lida Gutierrez"
-          location="Los Angeles, USA"
-          speciality="Heart Surgeon"
-          experience="10"
-          img="https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg"
-          bg="0"
-          navigation={navigation}
-        />
+        {tab.length > 0 ? (
+          tab.map((item, index) => (
+            <DoctorCardModel
+              key={index}
+              name={item.name}
+              desc={item.desc}
+              img={item.img}
+              patients={item.patients}
+              experience={item.experience}
+              speciality={item.speciality}
+              info={item.info}
+              fees={item.fees}
+              duration={item.duration}
+              bg="0"
+              navigation={navigation}
+            />
+          ))
+        ) : (
+          <Text style={styles.signup}>
+            <ActivityIndicator size="large" color={COLORS.blueBtn} />
+          </Text>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -356,5 +387,13 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     // Shadow End
+  },
+  signup: {
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginVertical: 20,
   },
 });

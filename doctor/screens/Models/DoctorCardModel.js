@@ -5,13 +5,16 @@ import { COLORS, icons } from "../../constants";
 const DoctorCardModel = (props) => {
   const {
     name,
-    location,
-    experience,
-    patients,
-    speciality,
+    desc,
     img,
-    bg,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    duration,
     navigation,
+    bg,
   } = props;
   var check = false;
   if (bg === "0") check = true;
@@ -26,7 +29,7 @@ const DoctorCardModel = (props) => {
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
               <Text style={styles.cardTitle1}>{name}</Text>
-              <Text style={styles.cardTitle2}>{location}</Text>
+              <Text style={styles.cardTitle2}>{desc}</Text>
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
             <View style={styles.doctorCardRight}>
@@ -54,7 +57,19 @@ const DoctorCardModel = (props) => {
             </Text>
             <TouchableOpacity
               style={[styles.doctorBtnStyle, styles.shadow1]}
-              onPress={() => navigation.navigate("appointment")}
+              onPress={() =>
+                navigation.navigate("appointment", {
+                  name: name,
+                  desc: desc,
+                  img: img,
+                  patients: patients,
+                  experience: experience,
+                  speciality: speciality,
+                  info: info,
+                  fees: fees,
+                  duration: duration,
+                })
+              }
             >
               <Text style={styles.doctorBtnStyleText}>Request Consult</Text>
             </TouchableOpacity>
@@ -65,7 +80,7 @@ const DoctorCardModel = (props) => {
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
               <Text style={styles.cardTitle1}>{name}</Text>
-              <Text style={styles.cardTitle2}>{location}</Text>
+              <Text style={styles.cardTitle2}>{desc}</Text>
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
             <View style={styles.doctorCardRight}>
@@ -94,13 +109,13 @@ const DoctorCardModel = (props) => {
                 <Text
                   style={[
                     styles.cardTitle2,
-                    { marginLeft: 0, textAlign: "center" },
+                    { marginLeft: 0, textAlign: "center", fontSize: 14 },
                   ]}
                 >
                   Patients
                 </Text>
                 <Text style={[styles.boxNb, { color: "#f9b664" }]}>
-                  {patients}+
+                  {patients !== "--" ? `${patients}+` : patients}
                 </Text>
               </View>
             </View>
@@ -109,25 +124,17 @@ const DoctorCardModel = (props) => {
                 <Text
                   style={[
                     styles.cardTitle2,
-                    { marginLeft: 0, textAlign: "center" },
+                    { marginLeft: 0, textAlign: "center", fontSize: 14 },
                   ]}
                 >
                   Experience
                 </Text>
                 <Text style={[styles.boxNb, { color: "#f660be" }]}>
-                  {experience}yrs+
+                  {experience !== "--" ? `${experience}yrs+` : experience}
                 </Text>
               </View>
             </View>
           </View>
-          {/* <View style={styles.doctorBottomCard2}>
-            <TouchableOpacity
-              style={[styles.doctorBtnStyle2, styles.shadow2]}
-              onPress={console.log("Book Appointemnt")}
-            >
-              <Text style={styles.doctorBtnStyleText2}>Book Appointment</Text>
-            </TouchableOpacity>
-          </View> */}
         </>
       )}
     </View>
@@ -185,6 +192,7 @@ const styles = StyleSheet.create({
   },
   doctorCardLeft: {
     padding: 0,
+    maxWidth: "60%",
   },
   doctorCardRight: {
     padding: 5,
@@ -267,18 +275,18 @@ const styles = StyleSheet.create({
   },
   cardTitle1: {
     color: COLORS.fontColor4,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginLeft: 10,
     margin: 0,
-    lineHeight: 29,
+    lineHeight: 20,
   },
   cardTitle2: {
     color: COLORS.fontColor2,
-    fontSize: 14,
+    fontSize: 12,
     marginLeft: 10,
     margin: 0,
-    lineHeight: 25,
+    lineHeight: 18,
   },
   // BOXES
   boxes: {

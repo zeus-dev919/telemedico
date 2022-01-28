@@ -13,11 +13,6 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // AUTH
-    case userTypes.SET_CURRENT_USER_IN:
-      return {
-        ...state,
-        currentUser: true,
-      };
     case userTypes.SET_CURRENT_USER_OUT:
       return {
         ...state,

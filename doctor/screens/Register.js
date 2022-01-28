@@ -56,9 +56,9 @@ const Register = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [firstName, onChangefirstName] = useState("user218");
-  const [email, onChangeEmail] = useState("user218@gmail.com");
-  const [password, onChangepassword] = useState("hellodude");
+  const [firstName, onChangefirstName] = useState("");
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangepassword] = useState("");
   const [isSelected, setSelected] = useState(true);
   const [isSelected1, setSelected1] = useState(true);
   const [isSecure, setIsSecure] = useState(true);

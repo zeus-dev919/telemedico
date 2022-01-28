@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -10,23 +10,29 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import IconFeather from "react-native-vector-icons/Feather";
-import { ResetErrorsState } from "../../redux/User/user.actions";
+import { ResetErrorsState, setUser } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
+import Header from "../Models/Header";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
-  fetchUserD: user.fetchUserD,
+  userD: user.userD,
   errors: user.errors,
 });
 
 const USER_QUERY = gql`
   query {
-    me {
+    allCustomers {
+      id
       firstName
       lastName
+      profilePic
+      user {
+        id
+        email
+      }
     }
   }
 `;
@@ -34,17 +40,42 @@ const USER_QUERY = gql`
 const HomePage = ({ route, navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
-  const { currentProperty, fetchUserD, errors } = useSelector(mapState);
-  console.log("maptate => ", { currentProperty, fetchUserD, errors });
+  const { currentProperty, userD, errors } = useSelector(mapState);
+  console.log("maptate => ", { currentProperty, userD, errors });
   const { data, loading } = useQuery(USER_QUERY);
   console.log("Data =>", data, loading);
+  const [complet, setComplet] = useState(false);
   // const { newAccount, token, user } = route?.params;
   // console.log(" Details => ", newAccount, token, user);
+  const getCurrentUser = () => {
+    let i = 0;
+    while (
+      data.allCustomers[i].user.email !== userD.email &&
+      i < data.allCustomers.length
+    ) {
+      i++;
+    }
+    if (data.allCustomers[i].user.email === userD.email)
+      return {
+        email: data.allCustomers[i].user.email,
+        firstName: data.allCustomers[i].firstName,
+        lastName: data.allCustomers[i].lastName,
+        profilePic: data.allCustomers[i].profilePic,
+      };
+    return null;
+  };
   useEffect(() => {
+    if (data && !complet) {
+      console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEE");
+      let user = getCurrentUser();
+      console.log("currentUser => ", user);
+      dispatch(setUser(user));
+      setComplet(true);
+    }
     // if (newAccount) {
     //   navigation.navigate("selectProfile");
     // }
-  }, []);
+  }, [data]);
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     console.log("Sympptoms Checker !!");
@@ -54,9 +85,7 @@ const HomePage = ({ route, navigation }) => {
     console.log("Doctors !!");
     navigation.navigate("doctors");
   };
-  const handleProfileRedirect = () => {
-    navigation.navigate("profile");
-  };
+
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
     navigation.navigate("doctorList", { filter: "1" });
@@ -97,26 +126,7 @@ const HomePage = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleProfileRedirect}>
-            <Image
-              style={styles.avatar}
-              source={icons.placeholder}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.headerSub}
-            onPress={() => navigation.openDrawer()}
-          >
-            <IconFeather
-              name="menu"
-              size={20}
-              color="black"
-              style={styles.icon_style}
-            />
-          </TouchableOpacity>
-        </View>
+        <Header navigation={navigation} bg="" />
         {/* Fixed Image */}
         <ScrollView style={styles.scrollView}>
           {/* <Text style={{ fontSize: 25 }}>Welcome Page</Text> */}
@@ -290,33 +300,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "white",
-    height: 60,
-    paddingHorizontal: 20,
-  },
+
   logo: {
     width: 80,
     height: 80,
     marginTop: 5,
     // borderRadius: 50,
-  },
-  avatar: {
-    width: 35,
-    height: 35,
-    marginTop: 5,
-    borderRadius: 200,
-  },
-  headerSub: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  icon_style: {
-    marginRight: 10,
   },
   scrollView: {
     flex: 1,
