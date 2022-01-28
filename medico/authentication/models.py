@@ -58,6 +58,7 @@ class Customer(models.Model):
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
     profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
+    phone_number = PhoneNumberField(null=True)
 
 
     #objects = CustomerManager()

@@ -99,15 +99,17 @@ class CustomerInputCreate(graphene.Mutation):
         first_name = graphene.String(required=False)
         last_name  = graphene.String(required=False)
         gender = graphene.String(required=False)
+        phone  = graphene.String(required=False)
 
     customer = graphene.Field(CustomerInfo)
 
     @classmethod
-    def mutate(cls, root, info, first_name,last_name, gender,id):
+    def mutate(cls, root, info, first_name,last_name, gender,id,phone):
         customer = Customer.objects.get(pk=id)
         customer.first_name = first_name
         customer.last_name = last_name
         customer.gender = gender
+        customer.phone = phone
         customer.save()
 
         return CustomerInputCreate(customer=customer)
