@@ -3,7 +3,7 @@ import graphene
 from .models import Doctor,Customer, Appointment, Specialization
 from graphene import InputObjectType
 #from graphql_auth import mutations
-
+from authentication.models import ExtendUser
 
 class DoctorInfo(DjangoObjectType):
     class Meta:
@@ -14,6 +14,10 @@ class CustomerInfo(DjangoObjectType):
     class Meta:
         model = Customer
         # fields = "__all__"
+
+class UserType(DjangoObjectType):
+    class Meta:
+        model = ExtendUser
 
 class ScheduleInfo(DjangoObjectType):
     class Meta:
@@ -44,6 +48,9 @@ class ModelQuery(graphene.ObjectType):
 
     def resolve_all_specialization(self, args):
         return Specialization.objects.all()
+
+    def resolve_all_users(self, args):
+        return ExtendUser.objects.all(pk=email)
 
 
 
