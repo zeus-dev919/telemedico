@@ -50,23 +50,32 @@ const HomePage = ({ route, navigation }) => {
   const getCurrentUser = () => {
     let i = 0;
     while (
-      data.allCustomers[i].user.email !== userD.email &&
+      data.allCustomers[i]?.user.email !== userD.email &&
       i < data.allCustomers.length
     ) {
+      console.log("i =================>", i);
+      console.log(
+        data.allCustomers[i]?.user.email,
+        " ================= ",
+        userD.email
+      );
       i++;
     }
-    if (data.allCustomers[i].user.email === userD.email)
+    console.log("hre", i);
+    console.log("userD.email =>", userD.email);
+    console.log("second =>", data.allCustomers[i]?.user.email);
+    if (data.allCustomers[i]?.user.email === userD.email) {
       return {
-        email: data.allCustomers[i].user.email,
-        firstName: data.allCustomers[i].firstName,
-        lastName: data.allCustomers[i].lastName,
-        profilePic: data.allCustomers[i].profilePic,
+        email: data.allCustomers[i].user.email || "",
+        firstName: data.allCustomers[i].firstName || "",
+        lastName: data.allCustomers[i].lastName || "",
+        profilePic: data.allCustomers[i].profilePic || "",
       };
+    }
     return null;
   };
   useEffect(() => {
-    if (data && !complet) {
-      console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEE");
+    if (!loading && !complet) {
       let user = getCurrentUser();
       console.log("currentUser => ", user);
       dispatch(setUser(user));
@@ -75,7 +84,7 @@ const HomePage = ({ route, navigation }) => {
     // if (newAccount) {
     //   navigation.navigate("selectProfile");
     // }
-  }, [data]);
+  }, [loading]);
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     console.log("Sympptoms Checker !!");

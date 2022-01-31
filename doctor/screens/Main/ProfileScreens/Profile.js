@@ -108,7 +108,7 @@ const Profile = ({ route, navigation }) => {
           </View>
           <View style={styles.titleConatiner}>
             <TouchableOpacity onPress={handleSubmit}>
-              {/* <Text style={styles.title2}>Done</Text> */}
+              <Text style={styles.title2}></Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -202,12 +202,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 5,
+    width: 50,
   },
   icon_style: {
-    marginRight: 10,
+    marginRight: 0,
   },
   titleConatiner: {
-    padding: 5,
+    padding: 0,
   },
   title1: {
     color: COLORS.fontColor4,
@@ -224,6 +225,7 @@ const styles = StyleSheet.create({
     padding: 0,
     lineHeight: 29,
     textAlign: "center",
+    width: 50,
   },
   title3: {
     color: COLORS.fontColor4,

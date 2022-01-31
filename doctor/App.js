@@ -31,7 +31,7 @@ const App = () => {
     >
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <StatusBar style="light" />
+          {/* <StatusBar style="dark" /> */}
           <AppMain />
         </Provider>
       </ApolloProvider>
