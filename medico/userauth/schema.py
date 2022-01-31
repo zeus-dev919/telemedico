@@ -21,7 +21,4 @@ class Mutation(AuthMutation, DoctorCreateInput, CustomerInputCreate, MutationAut
     pass
 
 
-
-
-
 schema = graphene.Schema(query=Query , mutation=Mutation)
