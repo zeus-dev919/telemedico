@@ -179,6 +179,7 @@ class AppointmentModelTests(TestCase):
         en_t = (datetime.datetime.today() + datetime.timedelta(minutes=29, seconds=59)).time()
         da = datetime.datetime.today().date()
         app = Appointment(start_time=st_t, end_time=en_t, date=da, doctor=doc)
-        self.assertIs(app.is_outdated(), True)from django.test import TestCase
+        #self.assertIs(app.is_outdated(), True)from django.test import TestCase -????
+        self.assertIs(app.is_outdated(), True)
 
 # Create your tests here.
