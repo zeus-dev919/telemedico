@@ -1,10 +1,8 @@
 from django.db import models
-from authentication.models import Customer
+#from authentication.models import Customer
 # Create your models here.
 
 class PatientIntakemodel(models.Model):
-
-    
     first_name = models.CharField(max_length = 200)
     last_name =  models.CharField(max_length=200)
     gender = models.CharField(max_length=50)
@@ -48,4 +46,4 @@ class PatientIntakemodel(models.Model):
     # img2 = models.ImageField(upload_to = "media/", null=True)
 
     def __str__(self):
-        return str(self.customer)
+        return str(self.first_name)

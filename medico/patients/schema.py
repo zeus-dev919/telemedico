@@ -5,17 +5,17 @@ from graphene_django.forms.mutation import DjangoModelFormMutation
 from .forms import PatientIntakeForm
 from .models import PatientIntakemodel
 
-class  IntakeType(DjangoObjectType):
+class PatientType(DjangoObjectType):
     class Meta:
         model = PatientIntakemodel
 
-class IntakeMutation(DjangoModelFormMutation):
-    intake = graphene.Field(IntakeType)
+class PatientMutation(DjangoModelFormMutation):
+    patient = graphene.Field(PatientType)
 
     class Meta:
-        form_class =  PatientIntakeForm
+        form_class = PatientIntakeForm
 
 class Mutation(graphene.ObjectType):
-    create_intake = IntakeMutation.Field()
+    create_patient = PatientMutation.Field()
 
 schema = graphene.Schema(mutation=Mutation)
