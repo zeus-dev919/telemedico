@@ -10,42 +10,28 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import IconFeather from "react-native-vector-icons/Feather";
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
-import * as DocumentPicker from "expo-document-picker";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../../firebase/utils";
-import uuid from "react-native-uuid";
-import { gql, useQuery } from "@apollo/client";
-import Header from "../../Models/Header";
 
-const USER_QUERY = gql`
-  query {
-    me {
-      firstName
-      lastName
-    }
-  }
-`;
+// const USER_QUERY = gql`
+//   query {
+//     me {
+//       id
+//       firstName
+//       lastName
+//     }
+//   }
+// `;
 
 const IntakeForm = ({ navigation }) => {
-  const { data, loading } = useQuery(USER_QUERY);
-  console.log("Data =>", data, loading);
+  // const { data, loading } = useQuery(USER_QUERY);
+  // console.log("Data =>", data, loading);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
-  const [successRes, setSuccessRes] = useState("");
-  // f1
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   // f2
-  const [box1, setBox1] = useState(false);
-  const [box2, setBox2] = useState(false);
+  const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [gender, setGender] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [email, setEmail] = useState("");
-  // const [file, setFile] = useState("");
+  const [phone, setPhone] = useState("");
   // f3
   const [f3, setF3] = useState("");
   // f4
@@ -75,19 +61,10 @@ const IntakeForm = ({ navigation }) => {
   const [f4_23, setF4_23] = useState(false);
   const [f4_24, setF4_24] = useState(false);
   const [f4_other, setF4_other] = useState("");
-  // Operation
-  const [operation, setOperation] = useState("");
   // Medication
   const [medication, setMedication] = useState("");
   // Allergies
   const [allergies, setAllergies] = useState("");
-  // Health
-  const [h1_1, setH1_1] = useState(false);
-  const [h1_2, setH1_2] = useState(false);
-  const [h1_3, setH1_3] = useState(false);
-  const [h1_4, setH1_4] = useState(false);
-  const [h1_5, setH1_5] = useState(false);
-  const [h1_6, setH1_6] = useState(false);
 
   // f5
   // f5_1
@@ -95,20 +72,12 @@ const IntakeForm = ({ navigation }) => {
   const [f5_1_2, setF5_1_2] = useState(false);
   const [f5_1_3, setF5_1_3] = useState(false);
   const [f5_1_4, setF5_1_4] = useState(false);
-  // f5_2
-  const [f5_2_1, setF5_2_1] = useState(false);
-  const [f5_2_2, setF5_2_2] = useState(false);
-  const [f5_2_3, setF5_2_3] = useState(false);
   // f5_3
   const [f5_3_1, setF5_3_1] = useState(false);
   const [f5_3_2, setF5_3_2] = useState(false);
   const [f5_3_3, setF5_3_3] = useState(false);
   const [f5_3_4, setF5_3_4] = useState(false);
-  // f5_4
-  const [f5_4_1, setF5_4_1] = useState(false);
-  const [f5_4_2, setF5_4_2] = useState(false);
-  const [f5_4_3, setF5_4_3] = useState(false);
-  const [f5_4_4, setF5_4_4] = useState(false);
+  
   // f5_5
   const [f5_5_1, setF5_5_1] = useState(false);
   const [f5_5_2, setF5_5_2] = useState(false);
@@ -117,112 +86,22 @@ const IntakeForm = ({ navigation }) => {
   // f6
   const [father, setFather] = useState("");
   const [mother, setMother] = useState("");
-  const [gfather, setGfather] = useState("");
-  const [gmother, setGmother] = useState("");
   const [brother, setBrother] = useState("");
   const [sister, setSister] = useState("");
-  const [uncle, setUncle] = useState("");
-  const [aunts, setAunts] = useState("");
-  // f7
-  const [f7_1, setF7_1] = useState(false);
-  const [f7_2, setF7_2] = useState(false);
-  const [f7_3, setF7_3] = useState(false);
-  const [f7_4, setF7_4] = useState(false);
-  const [f7_5, setF7_5] = useState(false);
-  const [f7_6, setF7_6] = useState(false);
-  const [f7_7, setF7_7] = useState(false);
-  const [f7_8, setF7_8] = useState(false);
-  const [f7_9, setF7_9] = useState(false);
-  const [f7_10, setF7_10] = useState(false);
-  const [f7_11, setF7_11] = useState(false);
-  const [f7_12, setF7_12] = useState(false);
-  const [f7_13, setF7_13] = useState(false);
-  const [f7_14, setF7_14] = useState(false);
-  const [f7_15, setF7_15] = useState(false);
-  const [f7_16, setF7_16] = useState(false);
-  const [f7_17, setF7_17] = useState(false);
-  const [f7_18, setF7_18] = useState(false);
-  const [f7_19, setF7_19] = useState(false);
-  const [f7_20, setF7_20] = useState(false);
-  const [f7_21, setF7_21] = useState(false);
-  const [f7_22, setF7_22] = useState(false);
-  const [f7_23, setF7_23] = useState(false);
-  const [f7_other, setF7_other] = useState("");
-  // f11
-  // f11_1
-  const [f11_1_1, setF11_1_1] = useState(false);
-  const [f11_1_2, setF11_1_2] = useState(false);
-  // f11_2
-  const [f11_2_1, setF11_2_1] = useState(false);
-  const [f11_2_2, setF11_2_2] = useState(false);
-  // f11_3
-  const [f11_3, setF11_3] = useState("");
-  // f11_4
-  const [f11_4, setF11_4] = useState("");
-  // f11_5
-  const [f11_5_1, setF11_5_1] = useState(false);
-  const [f11_5_2, setF11_5_2] = useState(false);
-  // f11_6
-  const [f11_6_1, setF11_6_1] = useState(false);
-  const [f11_6_2, setF11_6_2] = useState(false);
   // Top 5 Questions
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");
   const [q3, setQ3] = useState("");
-  const [q4, setQ4] = useState("");
-  const [q5, setQ5] = useState("");
-  // Comment
-  const [comment, setComment] = useState("");
-  // Pick Docs
-  const [pick1, setPick1] = useState("");
-  const [pick1Name, setPick1Name] = useState("");
-  const [pick2, setPick2] = useState("");
-  const [pick2Name, setPick2Name] = useState("");
-
+  // Appointment
+  const [appointment1, setAppointment1] = useState(false);
+  const [appointment2, setAppointment2] = useState(false);
+  const [appointment3, setAppointment3] = useState(false);
+  const [appointment4, setAppointment4] = useState(false);
   //   Error
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [boxError, setBoxError] = useState("");
+  const [nameError, setNameError] = useState("");
   const [birthError, setBirthError] = useState("");
   const [genderError, setGenderError] = useState("");
-  const [heightError, setHeightError] = useState("");
-  const [weightError, setWeightError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [fileError, setFileError] = useState("");
-
-  useEffect(() => {
-    if (indicatorLoad) {
-      if (pick1.length === 0 && pick2.length === 0) handleSubmit();
-      if (
-        pick1.length > 0 &&
-        pick1.startsWith("https://firebasestorage.googleapis.com/") &&
-        pick2.length === 0
-      )
-        handleSubmit();
-      if (
-        pick2.length > 0 &&
-        pick2.startsWith("https://firebasestorage.googleapis.com/") &&
-        pick1.length === 0
-      )
-        handleSubmit();
-      if (
-        pick1.length > 0 &&
-        pick1.startsWith("https://firebasestorage.googleapis.com/") &&
-        pick2.length > 0 &&
-        pick2.startsWith("https://firebasestorage.googleapis.com/")
-      )
-        handleSubmit();
-    }
-  }, [pick1, pick2, indicatorLoad]);
-  // f2
-  const handleBox1 = () => {
-    setBox1(true);
-    setBox2(false);
-  };
-  const handleBox2 = () => {
-    setBox1(false);
-    setBox2(true);
-  };
+  const [phoneError, setPhoneError] = useState("");
   // f4
   const handleOtherf4 = () => {
     setF4_1(false);
@@ -264,34 +143,6 @@ const IntakeForm = ({ navigation }) => {
     setF5_1_3(false);
     setF5_1_4(false);
   };
-  const handlef5_1_3 = () => {
-    setF5_1_1(false);
-    setF5_1_2(false);
-    setF5_1_3(true);
-    setF5_1_4(false);
-  };
-  const handlef5_1_4 = () => {
-    setF5_1_1(false);
-    setF5_1_2(false);
-    setF5_1_3(false);
-    setF5_1_4(true);
-  };
-  // f5_2
-  const handlef5_2_1 = () => {
-    setF5_2_1(true);
-    setF5_2_2(false);
-    setF5_2_3(false);
-  };
-  const handlef5_2_2 = () => {
-    setF5_2_1(false);
-    setF5_2_2(true);
-    setF5_2_3(false);
-  };
-  const handlef5_2_3 = () => {
-    setF5_2_1(false);
-    setF5_2_2(false);
-    setF5_2_3(true);
-  };
   // f5_3
   const handlef5_3_1 = () => {
     setF5_3_1(true);
@@ -310,37 +161,6 @@ const IntakeForm = ({ navigation }) => {
     setF5_3_2(false);
     setF5_3_3(true);
     setF5_3_4(false);
-  };
-  const handlef5_3_4 = () => {
-    setF5_3_1(false);
-    setF5_3_2(false);
-    setF5_3_3(false);
-    setF5_3_4(true);
-  };
-  // f5_4
-  const handlef5_4_1 = () => {
-    setF5_4_1(true);
-    setF5_4_2(false);
-    setF5_4_3(false);
-    setF5_4_4(false);
-  };
-  const handlef5_4_2 = () => {
-    setF5_4_1(false);
-    setF5_4_2(true);
-    setF5_4_3(false);
-    setF5_4_4(false);
-  };
-  const handlef5_4_3 = () => {
-    setF5_4_1(false);
-    setF5_4_2(false);
-    setF5_4_3(true);
-    setF5_4_4(false);
-  };
-  const handlef5_4_4 = () => {
-    setF5_4_1(false);
-    setF5_4_2(false);
-    setF5_4_3(false);
-    setF5_4_4(true);
   };
   // f5_5
   const handlef5_5_1 = () => {
@@ -361,190 +181,33 @@ const IntakeForm = ({ navigation }) => {
     setF5_5_3(true);
     setF5_5_4(false);
   };
-  const handlef5_5_4 = () => {
-    setF5_5_1(false);
-    setF5_5_2(false);
-    setF5_5_3(false);
-    setF5_5_4(true);
-  };
-  // f7
-  const handleOtherf7 = () => {
-    setF7_1(false);
-    setF7_2(false);
-    setF7_3(false);
-    setF7_4(false);
-    setF7_5(false);
-    setF7_6(false);
-    setF7_7(false);
-    setF7_8(false);
-    setF7_9(false);
-    setF7_10(false);
-    setF7_12(false);
-    setF7_13(false);
-    setF7_14(false);
-    setF7_15(false);
-    setF7_16(false);
-    setF7_17(false);
-    setF7_18(false);
-    setF7_19(false);
-    setF7_20(false);
-    setF7_21(false);
-    setF7_22(false);
-    setF7_23(!f7_23);
-  };
-  // f11
-  // f11_1
-  const handlef11_1_1 = () => {
-    setF11_1_1(true);
-    setF11_1_2(false);
-  };
-  const handlef11_1_2 = () => {
-    setF11_1_1(false);
-    setF11_1_2(true);
-  };
-  // f11_2
-  const handlef11_2_1 = () => {
-    setF11_2_1(true);
-    setF11_2_2(false);
-  };
-  const handlef11_2_2 = () => {
-    setF11_2_1(false);
-    setF11_2_2(true);
-  };
-  // f11_5
-  const handlef11_5_1 = () => {
-    setF11_5_1(true);
-    setF11_5_2(false);
-  };
-  const handlef11_5_2 = () => {
-    setF11_5_1(false);
-    setF11_5_2(true);
-  };
-  // f11_6
-  const handlef11_6_1 = () => {
-    setF11_6_1(true);
-    setF11_6_2(false);
-  };
-  const handlef11_6_2 = () => {
-    setF11_6_1(false);
-    setF11_6_2(true);
-  };
-  const handleUpload = async () => {
-    setIndicatorLoad(true);
-    if (pick1.length > 0) {
-      const url_uuid = uuid.v4();
-      const storageRef = ref(storage, `images_report/${url_uuid}_${pick1Name}`);
-      const uploadTask = uploadBytesResumable(storageRef, pick1);
-      // Listen for state changes, errors, and completion of the upload.
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setPick1(downloadURL);
-          });
-        }
-      );
-    }
-    if (pick2.length > 0) {
-      const url_uuid2 = uuid.v4();
-      const storageRef2 = ref(
-        storage,
-        `images_report/${url_uuid2}_${pick2Name}`
-      );
-      const uploadTask2 = uploadBytesResumable(storageRef2, pick2);
-      uploadTask2.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
-            setPick2(downloadURL);
-          });
-        }
-      );
-    }
-  };
-  // Pick Images
-  const handlePickImg1 = async () => {
-    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-    console.log("result => ", result);
-    setPick1(result.uri);
-    setPick1Name(result.name);
-  };
-  const handlePickImg2 = async () => {
-    let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-    console.log("result => ", result);
-    setPick2(result.uri);
-    setPick2Name(result.name);
-  };
-
+  // Appoitment
+  const handleAppointment1 = () => {
+    setAppointment1(true)
+    setAppointment2(false)
+    setAppointment3(false)
+    setAppointment4(false)
+  }
+  const handleAppointment2 = () => {
+    setAppointment1(false)
+    setAppointment2(true)
+    setAppointment3(false)
+    setAppointment4(false)
+  }
+  const handleAppointment3 = () => {
+    setAppointment1(false)
+    setAppointment2(false)
+    setAppointment3(true)
+    setAppointment4(false)
+  }
+  const handleAppointment4 = () => {
+    setAppointment1(false)
+    setAppointment2(false)
+    setAppointment3(false)
+    setAppointment4(true)
+  }
   // Submit
   const handleSubmit = async () => {
-    let gender = "";
-    if (box1) {
-      gender = "male";
-    }
-    if (box2) {
-      gender = "female";
-    }
     // f4
     let f4 = "";
     if (f4_1) f4.contact("Anemia, ");
@@ -559,96 +222,33 @@ const IntakeForm = ({ navigation }) => {
     if (f4_10) f4.contact("Gallstones, ");
     if (f4_11) f4.contact("Heart Disease, ");
     if (f4_12) f4.contact("Heart Attack, ");
-    if (f4_13) f4.contact("Rheumatic Fever, ");
-    if (f4_14) f4.contact("High Blood Pressure, ");
-    if (f4_15) f4.contact("Sleep Apnea, ");
-    if (f4_16) f4.contact("Use a C-PAP machine, ");
+
     if (f4_17) f4.contact("Thyroid Problems, ");
     if (f4_18) f4.contact("Tuberculosis, ");
     if (f4_19) f4.contact("Venereal Disease, ");
     if (f4_20) f4.contact("Neurological Disorders, ");
-    if (f4_21) f4.contact("Bleeding Disorders, ");
+    if (f4_21) f4.contact("Disorders, ");
     if (f4_22) f4.contact("Lung Disease, ");
-    if (f4_23) f4.contact("Emphysema, ");
     if (f4_24) f4.contact(f4_other);
-    // health
-    let health = "";
-    if (h1_1) health.contact("Digestive Problems, ");
-    if (h1_2) health.contact("Ulcerative Colitis, ");
-    if (h1_3) health.contact("Ulcer Disease, ");
-    if (h1_4) health.contact("Hepatitis, ");
-    if (h1_5) health.contact("Kidney Disease, ");
-    if (h1_6) health.contact("Liver Disease, ");
     // exercices
     let exercices = "";
     if (f5_1_1) exercices = "Never";
-    if (f5_1_2) exercices = "1-2 days";
-    if (f5_1_3) exercices = "3-4 days";
-    if (f5_1_4) exercices = "5+ days";
-    // diet
-    let diet = "";
-    if (f5_2_1) diet = "I have a loose diet";
-    if (f5_2_2) diet = "I have a strict diet";
-    if (f5_2_3) diet = "I don’t have a diet plan";
+    if (f5_1_2) exercices = "Regularly";
     // alcohol
     let alcohol = "";
-    if (f5_3_1) alcohol = "I don’t drink";
-    if (f5_3_2) alcohol = "1-2 glasses/day";
-    if (f5_3_3) alcohol = "3-4 glasses/day";
-    if (f5_3_4) alcohol = "5+ glasses/day";
-    // caffeine
-    let caffeine = "";
-    if (f5_4_1) caffeine = "I don’t use caffeine";
-    if (f5_4_2) caffeine = "1-2 cups/day";
-    if (f5_4_3) caffeine = "3-4 cups/day";
-    if (f5_4_4) caffeine = "5+ cups/day";
+    if (f5_3_1) alcohol = "Don’t drink";
+    if (f5_3_2) alcohol = "Occasional";
+    if (f5_3_3) alcohol = "Daily";
     // smoke
     let smoke = "";
-    if (f5_5_1) smoke = "No";
-    if (f5_5_2) smoke = "0-1 pack/day";
-    if (f5_5_3) smoke = "1-2 packs/day";
-    if (f5_5_4) smoke = "2+ packs/day";
-    // f7
-    let f7 = "";
-    if (f7_1) f7.contact("Depressed Mood, ");
-    if (f7_2) f7.contact("Racing Thoughts, ");
-    if (f7_3) f7.contact("Excessive Worry, ");
-    if (f7_4) f7.contact("Unable to Enjoy Activities, ");
-    if (f7_5) f7.contact("Impulsivity, ");
-    if (f7_6) f7.contact("Anxiety Attacks, ");
-    if (f7_7) f7.contact("Sleep Pattern Disturbance, ");
-    if (f7_8) f7.contact("Increase Risky Behavior, ");
-    if (f7_9) f7.contact("Avoidance, ");
-    if (f7_10) f7.contact("Loss of Interest, ");
-    if (f7_11) f7.contact("Increased Libido, ");
-    if (f7_12) f7.contact("Hallucinations, ");
-    if (f7_13) f7.contact("Concentration/Forgetfulness, ");
-    if (f7_14) f7.contact("Decrease need for Sleep, ");
-    if (f7_15) f7.contact("Suspiciousness, ");
-    if (f7_16) f7.contact("Change in Appetite, ");
-    if (f7_17) f7.contact("Excessive Energy, ");
-    if (f7_18) f7.contact("Excessive Guilt, ");
-    if (f7_19) f7.contact("Increased Irritability, ");
-    if (f7_20) f7.contact("Fatigue, ");
-    if (f7_21) f7.contact("Crying Spells, ");
-    if (f7_22) f7.contact("Decreased Libido, ");
-    if (f7_23) f7.contact(f7_other);
-    // had_feeling_didnt_want_to_live
-    let had_feeling_didnt_want_to_live = "";
-    if (f11_1_1) had_feeling_didnt_want_to_live = "yes";
-    if (f11_1_2) had_feeling_didnt_want_to_live = "no";
-    // currently_feeling_didnt_want_to_live
-    let currently_feeling_didnt_want_to_live = "";
-    if (f11_2_1) currently_feeling_didnt_want_to_live = "yes";
-    if (f11_2_2) currently_feeling_didnt_want_to_live = "no";
-    // have_you_seen_a_mental_health_professional
-    let have_you_seen_a_mental_health_professional = "";
-    if (f11_5_1) have_you_seen_a_mental_health_professional = "yes";
-    if (f11_5_2) have_you_seen_a_mental_health_professional = "no";
-    // ssek_ny_help
-    let seek_any_help = "";
-    if (f11_6_1) seek_any_help = "yes";
-    if (f11_6_2) seek_any_help = "no";
+    if (f5_5_1) smoke = "Never";
+    if (f5_5_2) smoke = "Stopped";
+    if (f5_5_3) smoke = "Daily";
+    let appointment = "";
+    if (appointment1) appointment = "ASAP";
+    if (appointment2) appointment = "4-7 Days";
+    if (appointment3) appointment = "Morning India time: 5.30am - 10am";
+    if (appointment4) appointment = "Evening India time: 5.30pm - 12am";
     await fetch("http://164.52.218.166:8000/intake/", {
       method: "POST",
       headers: {
@@ -657,166 +257,76 @@ const IntakeForm = ({ navigation }) => {
       },
       body: {
         customer: "beta_testing",
-        firstName: firstName,
-        lastName: lastName,
-        gender: gender,
+        name: name,
         birth: birth,
-        height: height,
-        weight: weight,
-        email: email,
-        reason_for_consultation: f3,
+        gender: gender,
+        phone: phone,
         patient_medical_history: f4,
-        list_opeartion: operation,
-        current_medication: medication,
-        list_allergies: allergies,
-        health_unhealth: health,
-        exercices: exercices,
-        diet: diet,
-        alcohol: alcohol,
-        caffeine: caffeine,
-        smoke: smoke,
         father: father,
         mother: mother,
-        gfather: gfather,
-        gmother: gmother,
         brother: brother,
         sister: sister,
-        uncle: uncle,
-        aunts: aunts,
-        mental_health_symthoms: f7,
-        had_feeling_didnt_want_to_live: had_feeling_didnt_want_to_live,
-        currently_feeling_didnt_want_to_live:
-          currently_feeling_didnt_want_to_live,
-        how_often_do_you_have_these_thoughts: f11_3,
-        when_was_the_last_time_you_have_these_thoughts: f11_4,
-        have_you_seen_a_mental_health_professional:
-          have_you_seen_a_mental_health_professional,
-        seek_any_help: seek_any_help,
+        current_medication: medication,
+        list_allergies: allergies,
+        exercices: exercices,
+        alcohol: alcohol,
+        smoke: smoke,
+        reason_for_consultation: f3,
         question1: q1,
         question2: q2,
         question3: q3,
-        question4: q4,
-        question5: q5,
-        comments: comment,
-        img1: pick1,
-        img2: pick2,
+        appointment: appointment,
       },
     })
       .then((response) => response.text())
       .then((res) => {
         setIndicatorLoad(false);
-        setSuccessRes("SUCCESS");
         navigation.navigate("home");
-        console.log("==============================================");
         console.log("Response Fecth =>", res);
       })
       .catch((err) => {
         setIndicatorLoad(false);
-        setSuccessRes("FAILED");
         console.log("==============================================");
         console.log("Error =>", err);
       });
     console.log("DONE");
   };
-  const handleProfileRedirect = () => {
-    navigation.navigate("profile");
-  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.subContainer}>
-        {/* Red Header */}
-        {/* <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.headerSub}
-            onPress={() => navigation.openDrawer()}
-          >
-            <IconFeather
-              name="menu"
-              size={20}
-              color="black"
-              style={styles.icon_style}
-            />
-          </TouchableOpacity>
-        </View> */}
-      </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {/* Card1 */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle}>Telemedicine Patient</Text>
           <Text style={styles.cardTitle}>Intake Form</Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            <View style={styles.inputContainer2}>
-              <View style={styles.codeContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={firstName}
-                  onChangeText={setFirstName}
-                  placeholder="First Name"
-                  placeholderTextColor={"grey"}
-                  keyboardType="default"
-                />
-                {firstNameError.length === 0 ? null : (
-                  <Text style={styles.error}>{firstNameError}</Text>
-                )}
-              </View>
-              <View style={styles.codeContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={lastName}
-                  onChangeText={setLastName}
-                  placeholder="Last Name"
-                  placeholderTextColor={"grey"}
-                  keyboardType="default"
-                  maxLength={3}
-                />
-                {lastNameError.length === 0 ? null : (
-                  <Text style={styles.error}>{lastNameError}</Text>
-                )}
-              </View>
-            </View>
-          </View>
         </View>
-        {/* Card2 */}
+        {/* Consultation for */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Consultation for</Text>
-          <View style={styles.personCard}>
-            <Text
-              style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-            >
-              Self
-            </Text>
-            <Checkbox
-              value={box1}
-              onValueChange={handleBox1}
-              style={styles.checkbox}
-              color={"#40e0d0"}
-            />
-            <Text
-              style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-            >
-              Others
-            </Text>
-            <Checkbox
-              value={box2}
-              onValueChange={handleBox2}
-              style={styles.checkbox}
-              color={"#40e0d0"}
-            />
-          </View>
-          {boxError.length === 0 ? null : (
-            <Text style={styles.error}>{boxError}</Text>
-          )}
           {/* Form */}
           <View style={styles.inputsContainer}>
+            {/* Name */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                value={name}
+                onChangeText={setName}
+                placeholder="Name (Autofill if Consultation for self))"
+                placeholderTextColor={"grey"}
+                keyboardType="default"
+              />
+              {nameError.length === 0 ? null : (
+                <Text style={styles.error}>{nameError}</Text>
+              )}
+            </View>
             {/* Birth */}
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 value={birth}
                 onChangeText={setBirth}
-                placeholder="Birth Date (Autofill if Consultation for self))"
+                placeholder="Age (Autofill if Consultation for self))"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -838,88 +348,23 @@ const IntakeForm = ({ navigation }) => {
                 <Text style={styles.error}>{genderError}</Text>
               )}
             </View>
-            {/* Height */}
+            {/* Phone Number */}
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                value={height}
-                onChangeText={setHeight}
-                placeholder="Height (Autofill if Consultation for self))"
+                value={phone}
+                onChangeText={setPhone}
+                placeholder="PhoneNumber (Autofill if Consultation for self))"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
-              {heightError.length === 0 ? null : (
-                <Text style={styles.error}>{heightError}</Text>
-              )}
-            </View>
-            {/* Weight */}
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={weight}
-                onChangeText={setWeight}
-                placeholder="Weight (Autofill if Consultation for self))"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-              {weightError.length === 0 ? null : (
-                <Text style={styles.error}>{weightError}</Text>
-              )}
-            </View>
-            {/* Email */}
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Email (Autofill if Consultation for self))"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-              {emailError.length === 0 ? null : (
-                <Text style={styles.error}>{emailError}</Text>
-              )}
-            </View>
-            {/* File */}
-            {/* <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={file}
-                onChangeText={setFile}
-                placeholder="Upload document file"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
-              )}
-            </View> */}
-          </View>
-        </View>
-        {/* Card3 */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>
-            Reason For Consulting The Doctor
-          </Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={f3}
-                onChangeText={setF3}
-                placeholder="Reason for consulting the doctor"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-                // multiline="true"
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
+              {phoneError.length === 0 ? null : (
+                <Text style={styles.error}>{phoneError}</Text>
               )}
             </View>
           </View>
         </View>
-        {/* Card4 */}
+        {/* Patient Medical History */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Patient Medical History</Text>
           <Text style={styles.cardTitle3}>
@@ -1101,64 +546,6 @@ const IntakeForm = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-            {/* Line 7 */}
-            <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={f4_13}
-                  onValueChange={() => setF4_13(!f4_13)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Rheumatic Fever
-                </Text>
-              </View>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={f4_14}
-                  onValueChange={() => setF4_14(!f4_14)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  High Blood Pressure
-                </Text>
-              </View>
-            </View>
-            {/* Line 8 */}
-            <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={f4_15}
-                  onValueChange={() => setF4_15(!f4_15)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Sleep Apnea
-                </Text>
-              </View>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={f4_16}
-                  onValueChange={() => setF4_16(!f4_16)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Use a C-PAP machine
-                </Text>
-              </View>
-            </View>
             {/* Line 9 */}
             <View style={styles.inputContainer22}>
               <View style={styles.checkbox_container}>
@@ -1229,7 +616,7 @@ const IntakeForm = ({ navigation }) => {
                 <Text
                   style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
                 >
-                  Bleeding Disorders
+                  Disorders
                 </Text>
               </View>
               <View style={styles.checkbox_container}>
@@ -1248,19 +635,6 @@ const IntakeForm = ({ navigation }) => {
             </View>
             {/* Line 12 */}
             <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={f4_23}
-                  onValueChange={() => setF4_23(!f4_23)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Emphysema
-                </Text>
-              </View>
               <View style={styles.checkbox_container}>
                 <Checkbox
                   value={f4_24}
@@ -1289,576 +663,17 @@ const IntakeForm = ({ navigation }) => {
             )}
           </View>
         </View>
-        {/* Card5 */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>
-            Please List any Operations and Dates of each
-          </Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={operation}
-                onChangeText={setOperation}
-                placeholder="Operations and Dates of each"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-                // multiline={true}
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
-              )}
-            </View>
-          </View>
-        </View>
-        {/* Card6 */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>
-            Please list your Current Medications
-          </Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={medication}
-                onChangeText={setMedication}
-                placeholder="Current Medications"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-                // multiline={true}
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
-              )}
-            </View>
-          </View>
-        </View>
-        {/* Card7 */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>
-            Please list any Allergies [ Medicine / Food / Seasonal ]
-          </Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={allergies}
-                onChangeText={setAllergies}
-                placeholder="Allergies [ Medicine / Food / Seasonal ]"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-                // multiline={true}
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
-              )}
-            </View>
-          </View>
-        </View>
-        {/* Card8 */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>Healthy & Unhealthy Habits</Text>
-          {/* Form */}
-          <View style={styles.inputsContainer}>
-            {/* Line 1 */}
-            <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_1}
-                  onValueChange={() => setH1_1(!h1_1)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Digestive Problems
-                </Text>
-              </View>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_2}
-                  onValueChange={() => setH1_2(!h1_2)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Ulcerative Colitis
-                </Text>
-              </View>
-            </View>
-            {/* Line 2 */}
-            <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_3}
-                  onValueChange={() => setH1_3(!h1_3)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Ulcer Disease
-                </Text>
-              </View>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_4}
-                  onValueChange={() => setH1_4(!h1_4)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Hepatitis
-                </Text>
-              </View>
-            </View>
-            {/* Line 2 */}
-            <View style={styles.inputContainer22}>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_5}
-                  onValueChange={() => setH1_5(!h1_5)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Ulcer Disease
-                </Text>
-              </View>
-              <View style={styles.checkbox_container}>
-                <Checkbox
-                  value={h1_6}
-                  onValueChange={() => setH1_6(!h1_6)}
-                  style={styles.checkbox}
-                  color={"#40e0d0"}
-                />
-                <Text
-                  style={{ marginHorizontal: 5, marginRight: 10, fontSize: 10 }}
-                >
-                  Hepatitis
-                </Text>
-              </View>
-            </View>
-            {/* Exercise */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Exercise</Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_1_1}
-                    onValueChange={handlef5_1_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    Never
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_1_2}
-                    onValueChange={handlef5_1_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    1-2 days
-                  </Text>
-                </View>
-              </View>
-              {/* Line 3 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_1_3}
-                    onValueChange={handlef5_1_3}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    3-4 days
-                  </Text>
-                </View>
-              </View>
-              {/* Line 4 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_1_4}
-                    onValueChange={handlef5_1_4}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    5+ days
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* Eating following a diet */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Eating following a diet</Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_2_1}
-                    onValueChange={handlef5_2_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    I have a loose diet
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_2_2}
-                    onValueChange={handlef5_2_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    I have a strict diet
-                  </Text>
-                </View>
-              </View>
-              {/* Line 3 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_2_3}
-                    onValueChange={handlef5_2_3}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    I don’t have a diet plan
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* Alcohol Consumption */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Alcohol Consumption</Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_3_1}
-                    onValueChange={handlef5_3_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    I don’t drink
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_3_2}
-                    onValueChange={handlef5_3_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    1-2 glasses/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 3 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_3_3}
-                    onValueChange={handlef5_3_3}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    3-4 glasses/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 4 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_3_4}
-                    onValueChange={handlef5_3_4}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    5+ glasses/day
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* Caffeine Consumption */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Caffeine Consumption</Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_4_1}
-                    onValueChange={handlef5_4_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    I don’t use caffeine
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_4_2}
-                    onValueChange={handlef5_4_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    1-2 cups/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 3 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_4_3}
-                    onValueChange={handlef5_4_3}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    3-4 cups/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 4 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_4_4}
-                    onValueChange={handlef5_4_4}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    5+ cups/day
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* Do you smoke? */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Do you smoke?</Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_5_1}
-                    onValueChange={handlef5_5_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    No
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_5_2}
-                    onValueChange={handlef5_5_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    0-1 pack/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 3 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_5_3}
-                    onValueChange={handlef5_5_3}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    1-2 packs/day
-                  </Text>
-                </View>
-              </View>
-              {/* Line 4 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f5_5_4}
-                    onValueChange={handlef5_5_4}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    2+ packs/day
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        {/* Card9 */}
+        {/* Patient Family History */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>Patient Family History</Text>
           {/* Form */}
           <View style={styles.inputsContainer}>
             {/* Father */}
             <View style={styles.inputContainer}>
+              <Text style={styles.cardTitle4}>
+                Please tell if your family member suffer(ed) from any health
+                conditions
+              </Text>
               <Text style={styles.cardTitle4}>Father</Text>
               <TextInput
                 style={styles.input}
@@ -1877,30 +692,6 @@ const IntakeForm = ({ navigation }) => {
                 value={mother}
                 onChangeText={setMother}
                 placeholder="Mother"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-            </View>
-            {/* Grandfather */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Grandfather</Text>
-              <TextInput
-                style={styles.input}
-                value={gfather}
-                onChangeText={setGfather}
-                placeholder="Grandfather"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-            </View>
-            {/* Grandmother */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Grandmother</Text>
-              <TextInput
-                style={styles.input}
-                value={gmother}
-                onChangeText={setGmother}
-                placeholder="Grandmother"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -1929,733 +720,244 @@ const IntakeForm = ({ navigation }) => {
                 keyboardType="default"
               />
             </View>
-            {/* Uncle (s) */}
+          </View>
+        </View>
+        {/* Current Medications */}
+        <View style={[styles.card, styles.shadow1]}>
+          <Text style={styles.cardTitle2}>Current Medications</Text>
+          {/* Form */}
+          <View style={styles.inputsContainer}>
             <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Uncle (s)</Text>
               <TextInput
                 style={styles.input}
-                value={uncle}
-                onChangeText={setUncle}
-                placeholder="Uncle (s)"
+                value={medication}
+                onChangeText={setMedication}
+                placeholder="Please list all medications currently taking"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-              />
-            </View>
-            {/* Aunts (s) */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Aunts (s)</Text>
-              <TextInput
-                style={styles.input}
-                value={aunts}
-                onChangeText={setAunts}
-                placeholder="Aunts (s)"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
+                // multiline={true}
               />
             </View>
           </View>
         </View>
-        {/* Card10 */}
+        {/* Allergies */}
         <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>
-            {" "}
-            Patient Mental Health History: (optional / mandatory for Mental
-            Health related consultations)
-          </Text>
+          <Text style={styles.cardTitle2}>Allergies</Text>
+          {/* Form */}
+          <View style={styles.inputsContainer}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                value={allergies}
+                onChangeText={setAllergies}
+                placeholder="Any Food, Medicine, Seasonal allergies"
+                placeholderTextColor={"grey"}
+                keyboardType="default"
+                // multiline={true}
+              />
+            </View>
+          </View>
+        </View>
+        {/* Healthy & Unhealthy Habits */}
+        <View style={[styles.card, styles.shadow1]}>
+          <Text style={styles.cardTitle2}>Healthy & Unhealthy Habits</Text>
           {/* Form */}
           <View style={styles.inputsContainer}>
             {/* Exercise */}
             <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>
-                Do you have any below Current Symptoms
-              </Text>
-              {/* Options Mental */}
-              <View style={styles.inputsContainer}>
-                {/* Line 1 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_1}
-                      onValueChange={() => setF7_1(!f7_1)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Depressed Mood
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_2}
-                      onValueChange={() => setF7_2(!f7_2)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Racing Thoughts
-                    </Text>
-                  </View>
+              <Text style={styles.cardTitle4}>Exercise</Text>
+              {/* Line 2 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_1_2}
+                    onValueChange={handlef5_1_2}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Regularly
+                  </Text>
                 </View>
-                {/* Line 2 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_3}
-                      onValueChange={() => setF7_3(!f7_3)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Excessive Worry
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_4}
-                      onValueChange={() => setF7_4(!f7_4)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Unable to Enjoy Activities
-                    </Text>
-                  </View>
+              </View>
+              {/* Line 1 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_1_1}
+                    onValueChange={handlef5_1_1}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Never
+                  </Text>
                 </View>
-                {/* Line 3 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_5}
-                      onValueChange={() => setF7_5(!f7_5)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Impulsivity
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_6}
-                      onValueChange={() => setF7_6(!f7_6)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Anxiety Attacks
-                    </Text>
-                  </View>
+              </View>
+            </View>
+            {/* Alcohol Consumption */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.cardTitle4}>Alcohol Consumption</Text>
+              {/* Line 1 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_3_1}
+                    onValueChange={handlef5_3_1}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Don’t drink
+                  </Text>
                 </View>
-                {/* Line 4 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_7}
-                      onValueChange={() => setF7_7(!f7_7)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Sleep Pattern Disturbance
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_8}
-                      onValueChange={() => setF7_8(!f7_8)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Increase Risky Behavior
-                    </Text>
-                  </View>
+              </View>
+              {/* Line 2 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_3_2}
+                    onValueChange={handlef5_3_2}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Occasional
+                  </Text>
                 </View>
-                {/* Line 5 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_9}
-                      onValueChange={() => setF7_9(!f7_9)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Avoidance
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_10}
-                      onValueChange={() => setF7_10(!f7_10)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Loss of Interest
-                    </Text>
-                  </View>
+              </View>
+              {/* Line 3 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_3_3}
+                    onValueChange={handlef5_3_3}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Daily
+                  </Text>
                 </View>
-                {/* Line 6 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_11}
-                      onValueChange={() => setF7_11(!f7_11)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Increased Libido
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_12}
-                      onValueChange={() => setF7_12(!f7_12)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Hallucinations
-                    </Text>
-                  </View>
+              </View>
+            </View>
+            {/* Do you smoke? */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.cardTitle4}>Smoke</Text>
+              {/* Line 1 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_5_1}
+                    onValueChange={handlef5_5_1}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Never
+                  </Text>
                 </View>
-                {/* Line 7 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_13}
-                      onValueChange={() => setF7_13(!f7_13)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Concentration/Forgetfulness
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_14}
-                      onValueChange={() => setF7_14(!f7_14)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Decrease need for Sleep
-                    </Text>
-                  </View>
+              </View>
+              {/* Line 2 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_5_2}
+                    onValueChange={handlef5_5_2}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Stopped
+                  </Text>
                 </View>
-                {/* Line 8 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_15}
-                      onValueChange={() => setF7_15(!f7_15)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Suspiciousness
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_16}
-                      onValueChange={() => setF7_16(!f7_16)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Change in Appetite
-                    </Text>
-                  </View>
+              </View>
+              {/* Line 3 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={f5_5_3}
+                    onValueChange={handlef5_5_3}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Daily
+                  </Text>
                 </View>
-                {/* Line 9 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_17}
-                      onValueChange={() => setF7_17(!f7_17)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Excessive Energy
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_18}
-                      onValueChange={() => setF7_18(!f7_18)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Excessive Guilt
-                    </Text>
-                  </View>
-                </View>
-                {/* Line 10 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_19}
-                      onValueChange={() => setF7_19(!f7_19)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Increased Irritability
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_20}
-                      onValueChange={() => setF7_20(!f7_20)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Fatigue
-                    </Text>
-                  </View>
-                </View>
-                {/* Line 11 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_21}
-                      onValueChange={() => setF7_21(!f7_21)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Crying Spells
-                    </Text>
-                  </View>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_22}
-                      onValueChange={() => setF7_22(!f7_22)}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Decreased Libido
-                    </Text>
-                  </View>
-                </View>
-                {/* Line 12 */}
-                <View style={styles.inputContainer22}>
-                  <View style={styles.checkbox_container}>
-                    <Checkbox
-                      value={f7_23}
-                      onValueChange={handleOtherf7}
-                      style={styles.checkbox}
-                      color={"#40e0d0"}
-                    />
-                    <Text
-                      style={{
-                        marginHorizontal: 5,
-                        marginRight: 10,
-                        fontSize: 10,
-                        maxWidth: 80,
-                      }}
-                    >
-                      Other
-                    </Text>
-                  </View>
-                </View>
-                {/* Custom */}
-                {f7_23 && (
-                  <>
-                    <TextInput
-                      style={styles.input}
-                      value={f7_other}
-                      onChangeText={setF7_other}
-                      placeholder="Please type your current Symthoms here"
-                      placeholderTextColor={"grey"}
-                      keyboardType="default"
-                      // multiline={true}
-                    />
-                  </>
-                )}
               </View>
             </View>
           </View>
         </View>
-        {/* Card11 */}
+        {/* Reason for Consultation */}
         <View style={[styles.card, styles.shadow1]}>
+          <Text style={styles.cardTitle2}>
+            Reason For Consulting The Doctor
+          </Text>
+          {/* Form */}
           <View style={styles.inputsContainer}>
-            {/* ever had feelings */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>
-                Have you ever had feelings or thoughts that you didn’t want to
-                live?
-              </Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_1_1}
-                    onValueChange={handlef11_1_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    Yes
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_1_2}
-                    onValueChange={handlef11_1_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    No
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* currently feelings */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>
-                Do you currently feel that you don’t want to live?
-              </Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_2_1}
-                    onValueChange={handlef11_2_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    Yes
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_2_2}
-                    onValueChange={handlef11_2_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    No
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/*  How often do you have these thoughts? */}
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                value={f11_3}
-                onChangeText={setF11_3}
-                placeholder=" How often do you have these thoughts?"
+                value={f3}
+                onChangeText={setF3}
+                placeholder="Reason for consulting the doctor"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-                // multiline={true}
+                // multiline="true"
               />
-            </View>
-            {/* When was the last time you had thoughts of dying? */}
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={f11_4}
-                onChangeText={setF11_4}
-                placeholder="When was the last time you had thoughts of dying?"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-                // multiline={true}
-              />
-            </View>
-            {/* Have you seen a counselor, psychologist */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>
-                Have you seen a counselor, psychologist, psychiatrist or other
-                mental health professional before?
-              </Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_5_1}
-                    onValueChange={handlef11_5_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    Yes
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_5_2}
-                    onValueChange={handlef11_5_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    No
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* Would you like to seek any help */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>
-                Would you like to seek any help? (We take our users privacy very
-                seriously)
-              </Text>
-              {/* Line 1 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_6_1}
-                    onValueChange={handlef11_6_1}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    Yes
-                  </Text>
-                </View>
-              </View>
-              {/* Line 2 */}
-              <View style={styles.inputContainer22}>
-                <View style={styles.checkbox_container}>
-                  <Checkbox
-                    value={f11_6_2}
-                    onValueChange={handlef11_6_2}
-                    style={styles.checkbox}
-                    color={"#40e0d0"}
-                  />
-                  <Text
-                    style={{
-                      marginHorizontal: 5,
-                      marginRight: 10,
-                      fontSize: 10,
-                    }}
-                  >
-                    No
-                  </Text>
-                </View>
-              </View>
             </View>
           </View>
         </View>
-        {/* Top 5 questions */}
+        {/* Top 3 questions */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>
             Top 5 questions for your specialists?{" "}
@@ -2698,94 +1000,101 @@ const IntakeForm = ({ navigation }) => {
                 keyboardType="default"
               />
             </View>
-            {/* Question 4 */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Question 4</Text>
-              <TextInput
-                style={styles.input}
-                value={q4}
-                onChangeText={setQ4}
-                placeholder="Question 4"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-            </View>
-            {/* Question 5 */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.cardTitle4}>Question 5</Text>
-              <TextInput
-                style={styles.input}
-                value={q5}
-                onChangeText={setQ5}
-                placeholder="Question 5"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-            </View>
           </View>
         </View>
-        {/* Comments */}
+        {/* Healthy & Unhealthy Habits */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>
-            Include other comments regarding your Medical History
+            Appointment time slot preference
           </Text>
           {/* Form */}
           <View style={styles.inputsContainer}>
-            {/* Coments */}
+            {/* Exercise */}
             <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={comment}
-                onChangeText={setComment}
-                placeholder="Include other comments regarding your Medical History"
-                placeholderTextColor={"grey"}
-                keyboardType="default"
-              />
-              {fileError.length === 0 ? null : (
-                <Text style={styles.error}>{fileError}</Text>
-              )}
+              {/* Line 1 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={appointment1}
+                    onValueChange={handleAppointment1}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    ASAP
+                  </Text>
+                </View>
+              </View>
+              {/* Line 2 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={appointment2}
+                    onValueChange={handleAppointment2}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    4-7 Days
+                  </Text>
+                </View>
+              </View>
+              {/* Line 3 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={appointment3}
+                    onValueChange={handleAppointment3}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Morning India time: 5.30am - 10am
+                  </Text>
+                </View>
+              </View>
+              {/* Line 4 */}
+              <View style={styles.inputContainer22}>
+                <View style={styles.checkbox_container}>
+                  <Checkbox
+                    value={appointment4}
+                    onValueChange={handleAppointment4}
+                    style={styles.checkbox}
+                    color={"#40e0d0"}
+                  />
+                  <Text
+                    style={{
+                      marginHorizontal: 5,
+                      marginRight: 10,
+                      fontSize: 10,
+                    }}
+                  >
+                    Evening India time: 5.30pm - 12am
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         </View>
-        {/* Reports */}
-        <View style={[styles.card, styles.shadow1]}>
-          <Text style={styles.cardTitle2}>Upload Images / Reports</Text>
-          <View style={styles.inputsContainer}>
-            {/* Photo1 */}
-            <View style={styles.inputContainer}>
-              {pick1.length > 0 ? (
-                <Image
-                  source={{ uri: pick1 }}
-                  style={styles.reportImg_container}
-                  // resizeMode="contain"
-                />
-              ) : (
-                <TouchableOpacity
-                  style={styles.reportImg_container}
-                  onPress={handlePickImg1}
-                ></TouchableOpacity>
-              )}
-            </View>
-            <Text style={styles.cardTitle4}>Image 1</Text>
-            {/* Photo2 */}
-            <View style={styles.inputContainer}>
-              {pick2.length > 0 ? (
-                <Image
-                  source={{ uri: pick2 }}
-                  style={styles.reportImg_container}
-                  // resizeMode="contain"
-                />
-              ) : (
-                <TouchableOpacity
-                  style={styles.reportImg_container}
-                  onPress={handlePickImg2}
-                ></TouchableOpacity>
-              )}
-            </View>
-            <Text style={styles.cardTitle4}>Image 2</Text>
-          </View>
-        </View>
-        <TouchableOpacity style={styles.button1} onPress={handleUpload}>
+        <TouchableOpacity style={styles.button1} onPress={handleSubmit}>
           {indicatorLoad ? (
             <Text style={styles.signup}>
               <ActivityIndicator size="large" color="#ffffff" />
@@ -2794,7 +1103,6 @@ const IntakeForm = ({ navigation }) => {
             <Text style={styles.signup}>Submit</Text>
           )}
         </TouchableOpacity>
-        {/* <Text style={} >{successRes}</Text> */}
       </ScrollView>
     </SafeAreaView>
   );

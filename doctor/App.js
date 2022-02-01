@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { Linking, LogBox } from "react-native";
 import { Provider } from "react-redux";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import AppMain from "./screens/AppMain";
 import store from "./redux/createStore";
 import * as Sentry from "sentry-expo";
