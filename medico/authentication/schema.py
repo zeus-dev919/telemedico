@@ -4,6 +4,9 @@ from .models import Doctor,Customer, Appointment, Specialization
 from graphene import InputObjectType
 #from graphql_auth import mutations
 from authentication.models import ExtendUser
+from .forms import *
+
+from graphene_django.forms.mutation import DjangoModelFormMutation
 
 class DoctorInfo(DjangoObjectType):
     class Meta:
@@ -69,7 +72,6 @@ class DoctorCreateInput(graphene.Mutation):
     doctor = graphene.Field(DoctorInfo)
 
 
-
     @classmethod
     def mutate(cls, root, info, first_name,last_name, gender, specialization,npi_number,state_license_number,available_days):
         doctor = Doctor()
@@ -115,17 +117,31 @@ class CustomerInputCreate(graphene.Mutation):
         return CustomerInputCreate(customer=customer)
 
 
+class CustomerType(DjangoObjectType):
+    class Meta:
+        model = Customer
 
+class CustomerMutation(DjangoModelFormMutation):
+    customer = graphene.Field(CustomerType)
 
+    class Meta:
+        form_class =  CustomerForm
 
+class DoctorType(DjangoObjectType):
+    class Meta:
+        model = Doctor
 
+class DoctorMutation(DjangoModelFormMutation):
+    doctor = graphene.Field(DoctorType)
 
-
-
-
+    class Meta:
+        form_class =  DoctorForm
+# schema = graphene.Schema(mutation=Mutation)
 
 class Mutation(graphene.ObjectType):
     update_doctor = DoctorCreateInput.Field()
     update_customer = CustomerInputCreate.Field()
+    create_customer = CustomerMutation.Field()
+    create_doctor = DoctorMutation.Field()
 
 schema = graphene.Schema(query=ModelQuery, mutation=Mutation)

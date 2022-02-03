@@ -2,8 +2,8 @@ import graphene
 from graphql_auth import mutations
 from graphql_auth.schema import UserQuery, MeQuery
 import authentication.schema
-from authentication.schema import DoctorCreateInput,ModelQuery, CustomerInputCreate
-from patients.schema import IntakeMutation
+from authentication.schema import DoctorCreateInput,ModelQuery, CustomerInputCreate, Mutation as MutationAuthentication
+from patients.schema import Mutation as MutationPatient
 
 
 class AuthMutation(graphene.ObjectType):
@@ -17,11 +17,8 @@ class AuthMutation(graphene.ObjectType):
 class Query(UserQuery, MeQuery,ModelQuery, graphene.ObjectType):
     pass
 
-class Mutation(AuthMutation,DoctorCreateInput,CustomerInputCreate, graphene.ObjectType):
+class Mutation(AuthMutation, DoctorCreateInput, CustomerInputCreate, MutationAuthentication, MutationPatient, graphene.ObjectType):
     pass
-
-
-
 
 
 schema = graphene.Schema(query=Query , mutation=Mutation)
