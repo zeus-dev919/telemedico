@@ -7,7 +7,7 @@ import phonenumber_field.modelfields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0004_auto_20220127_1723'),
+        ('authentication', '0004_doctor_consultation_time'),
     ]
 
     operations = [
