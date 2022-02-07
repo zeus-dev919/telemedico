@@ -9,6 +9,7 @@ const menu8 = require("../assets/icons/menu8.png");
 const menu9 = require("../assets/icons/menu9.png");
 const avatar = require("../assets/icons/avatar.png");
 const search = require("../assets/icons/search.png");
+const filter = require("../assets/icons/filter.png");
 const add = require("../assets/icons/add.png");
 const tooth2 = require("../assets/icons/tooth.png");
 const heart2 = require("../assets/icons/heart-attack.png");
@@ -69,6 +70,7 @@ export default {
   menu9,
   avatar,
   search,
+  filter,
   add,
   tooth2,
   heart2,

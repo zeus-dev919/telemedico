@@ -153,9 +153,9 @@ const Describe = ({ route, navigation }) => {
             />
           </View>
           <View>
-            <Text style={styles.title1}>Select symthoms</Text>
+            <Text style={styles.title1}>Select symptoms</Text>
             <Text style={styles.title2}>
-              Please describe in your own words or select symthoms from list
+              Please describe in your own words or select symptoms from list
             </Text>
           </View>
           {selected.length !== 0 ? (

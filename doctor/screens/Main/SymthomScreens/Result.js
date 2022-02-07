@@ -61,7 +61,9 @@ const Result = ({ route, navigation }) => {
   const [colorText, setColorText] = useState("");
   const getResult = async () => {
     await fetch(
-      `https://apiscsandbox.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${pregnant}&region=${region_id}&country_id=${country_id}&querytext=${predictive_text}&suggest=Suggest+Differe
+      `https://apiscsandbox.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${
+        pregnant === "_" ? "" : pregnant
+      }&region=${region_id}&country_id=${country_id}&querytext=${predictive_text}&suggest=Suggest+Differe
     ntial+Diagnosis&flag=sortbyRW_advanced&searchType=0&web_service=json`,
       {
         method: "GET",
@@ -148,13 +150,12 @@ const Result = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate("home")}
           >
-            <Ionicons
-              name="ios-arrow-back-sharp"
-              size={24}
-              color="black"
-              style={styles.icon_style}
+            <Image
+              style={styles.imgStyle}
+              source={images.logo}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <View style={styles.titleConatiner}>
@@ -184,7 +185,7 @@ const Result = ({ route, navigation }) => {
               resizeMode="contain"
             />
           </View>
-          <View>
+          <View style={{ marginBottom: 20 }}>
             <Text style={styles.title1}>Result</Text>
           </View>
         </View>
@@ -265,6 +266,39 @@ const Result = ({ route, navigation }) => {
                 </TouchableOpacity>
               )}
             </View>
+            <View style={{ marginVertical: 20 }}>
+              <Text style={styles.title5}>
+                Consult Our Top USA Specialists
+              </Text>
+            </View>
+            <Text style={styles.title3}>Cardiologist</Text>
+            <DoctorCardModel
+              name="Robert Rose"
+              desc="-- ,--"
+              img=""
+              patients="--"
+              experience="--"
+              speciality="Cardiology"
+              info="--"
+              fees="--"
+              duration="20"
+              bg="0"
+              navigation={navigation}
+            />
+            <Text style={styles.title3}>Oncologist</Text>
+            <DoctorCardModel
+              name="Ari Gabayan"
+              desc="-- ,--"
+              img=""
+              patients="--"
+              experience="--"
+              speciality="Radiation Oncology"
+              info="--"
+              fees="--"
+              duration="20"
+              bg="0"
+              navigation={navigation}
+            />
           </>
         ) : (
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
@@ -293,11 +327,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLORS.bgColor1,
     height: 60,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
   logo: {
     width: 30,
     height: 30,
+  },
+  imgStyle: {
+    width: 60,
   },
   headerSub: {
     flexDirection: "row",
@@ -305,7 +342,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon_style: {
-    marginRight: 10,
+    marginLeft: 40,
   },
   titleConatiner: {
     padding: 5,
@@ -329,19 +366,28 @@ const styles = StyleSheet.create({
   },
   title3: {
     color: COLORS.fontColor4,
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
     margin: 0,
     textAlign: "left",
-    marginBottom: 20,
+    marginBottom: 0,
     marginTop: 10,
   },
   title4: {
     color: COLORS.fontColor2,
-    fontSize: 12,
+    fontSize: 11,
+    fontWeight: "700",
+    marginTop: 3,
+    marginBottom: 10,
+    textAlign: "left",
+  },
+  title5: {
+    color: COLORS.fontColor4,
+    fontSize: 18,
     fontWeight: "bold",
     margin: 0,
-    textAlign: "left",
+    lineHeight: 20,
+    textAlign: "center",
   },
   title9: {
     color: COLORS.fontColor2,
@@ -371,7 +417,7 @@ const styles = StyleSheet.create({
   },
   diagnoseContainer: {
     width: "100%",
-    paddingVertical: 20,
+    paddingBottom: 0,
   },
   relevant: {
     backgroundColor: COLORS.blueBtn,
@@ -379,12 +425,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     borderRadius: 10,
-    marginVertical: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    marginVertical: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
   },
   relevantTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: "white",
   },
 });

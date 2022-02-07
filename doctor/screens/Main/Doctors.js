@@ -39,35 +39,35 @@ const Doctors = ({ navigation }) => {
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
-    navigation.navigate("doctorList", { filter: "1" });
+    navigation.navigate("doctorList", { filter: "Oncology" });
   };
   const handleTooth = () => {
     console.log("Tooth Clicked !!");
-    navigation.navigate("doctorList", { filter: "2" });
+    navigation.navigate("doctorList", { filter: "Endocrinology" });
   };
   const handleDermatologist = () => {
     console.log("Dermatologist Clicked !!");
-    navigation.navigate("doctorList", { filter: "3" });
+    navigation.navigate("doctorList", { filter: "Cardiology" });
   };
   const handleHeart = () => {
     console.log("Heart Clicked !!");
-    navigation.navigate("doctorList", { filter: "4" });
+    navigation.navigate("doctorList", { filter: "Rheumatology" });
   };
   const handleBrain = () => {
     console.log("Brain Clicked !!");
-    navigation.navigate("doctorList", { filter: "5" });
+    navigation.navigate("doctorList", { filter: "Fertility" });
   };
   const handlePsychology = () => {
     console.log("Psychology Clicked !!");
-    navigation.navigate("doctorList", { filter: "6" });
+    navigation.navigate("doctorList", { filter: "Surgery" });
   };
   const handleUrology = () => {
     console.log("Urology Clicked !!");
-    navigation.navigate("doctorList", { filter: "7" });
+    navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleOthers = () => {
     console.log("Others Clicked !!");
-    navigation.navigate("doctorList", { filter: "8" });
+    navigation.navigate("doctorList", { filter: "*" });
   };
 
   const getDoctors = () => {

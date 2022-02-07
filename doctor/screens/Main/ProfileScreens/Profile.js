@@ -8,12 +8,16 @@ import {
   ScrollView,
   Image,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 import { gql, useMutation } from "@apollo/client";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../firebase/utils";
+import uuid from "react-native-uuid";
 
 const mapState = ({ user }) => ({
   currentProperty: user.currentProperty,
@@ -56,13 +60,62 @@ const Profile = ({ route, navigation }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [pick, setPick] = useState("");
+
+  const handleUpload = async () => {
+    setIndicatorLoad(true);
+    if (pick.length > 0) {
+      const url_uuid = uuid.v4();
+      const storageRef = ref(storage, `images_report/${url_uuid}_${pick1Name}`);
+      const uploadTask = uploadBytesResumable(storageRef, pick1);
+      // Listen for state changes, errors, and completion of the upload.
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setPick(downloadURL);
+          });
+        }
+      );
+    }
+  };
   useEffect(() => {
     if (userD) {
       setFirstName(userD.firstName);
       setLastName(userD.lastName);
       setEmail(userD.email);
       setAvatar(userD.profilePic);
-      setPhone("");
+      setPhone(userD.phoneNumber);
     }
   }, [userD]);
 
@@ -107,8 +160,8 @@ const Profile = ({ route, navigation }) => {
             <Text style={styles.title1}>Profile</Text>
           </View>
           <View style={styles.titleConatiner}>
-            <TouchableOpacity onPress={handleSubmit}>
-              <Text style={styles.title2}></Text>
+            <TouchableOpacity onPress={() => handleSubmit()}>
+              <Text style={styles.title2}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
