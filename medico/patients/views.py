@@ -1,31 +1,25 @@
 from django.shortcuts import render
+from django import forms
 from medico.settings import EMAIL_HOST_USER
-from .forms import *
+from .forms import PatientIntakeForm
 from .models import *
 from django.http  import HttpResponse
 import json
 from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def intake_form(request):
-    intake = forms.PatientIntakeForm()
-    if request.method == 'POST':
-        intake = forms.PatientIntakeForm(request.POST)
-        if intake is valid():
-            intake.save()
-            (send_mail('MediPocket',
-            "Hello , You have a new patient for consultation.)Kindly contact the admin to book a schedule a meeting time with the concerned patient")
-
-            return HttpResponse("saved")
-        else:
-            return  HttpResponse(str(form.errors))
-
-
-    form=PatientIntakeForm()
-    html= f'''<form action="" method="post">
-
-    {form}
-    <input type="submit" value="Submit">
-</form>'''
-
-    return HttpResponse(html)
+    intake = PatientIntakeForm(request.POST)
+    if intake.is_valid():
+        data=intake.save()
+        subject = "MediPocket Consultation"
+        message = f'A new intake form has been added.Kindly check payment gateway to confirm timings to doctor.'.data
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ["priyanka@mymedipocket.com",]
+        try:
+            send_mail(subject, message, from_email, recipient_list,fail_silently=False )
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return HttpResponse('success')
+    return HttpResponse('200')
