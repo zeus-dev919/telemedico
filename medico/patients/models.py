@@ -6,7 +6,7 @@ class PatientIntakemodel(models.Model):
     first_name = models.CharField(max_length = 200)
     last_name =  models.CharField(max_length=200)
     gender = models.CharField(max_length=50)
-    birth = models.DateField()
+    # birth = models.DateField()
     # height = models.IntegerField()
     # weight = models.IntegerField()
     email = models.EmailField(max_length=50)
