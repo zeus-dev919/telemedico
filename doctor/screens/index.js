@@ -12,6 +12,7 @@ import DoctorsList from "./Main/DoctorScreens/DoctorsList.js";
 import Appointment from "./Main/DoctorScreens/Appointment.js";
 import Payments from "./Main/DoctorScreens/Payment.js";
 import IntakeForm from "./Main/DoctorScreens/IntakeForm.js";
+import Help from "./Main/DoctorScreens/Help.js";
 // Symthoms
 import Age from "./Main/SymthomScreens/Age.js";
 import Gender from "./Main/SymthomScreens/Gender";
@@ -40,6 +41,7 @@ export {
   Appointment,
   Payments,
   IntakeForm,
+  Help,
   Age,
   Gender,
   Pregnant,

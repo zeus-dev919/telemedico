@@ -14,7 +14,7 @@ import { COLORS, icons, images } from "../../../constants";
 import CountryPicker from "react-native-country-picker-modal";
 
 const Country = ({ route, navigation }) => {
-  const [countryCode, setCountryCode] = useState("FR");
+  const [countryCode, setCountryCode] = useState("IN");
   const [country, setCountry] = useState(null);
   const [withCountryNameButton, setWithCountryNameButton] = useState(false);
   const [withFlag, setWithFlag] = useState(true);

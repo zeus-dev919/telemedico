@@ -29,6 +29,7 @@ const USER_QUERY = gql`
       firstName
       lastName
       profilePic
+      phoneNumber
       user {
         id
         email
@@ -53,23 +54,15 @@ const HomePage = ({ route, navigation }) => {
       data.allCustomers[i]?.user.email !== userD.email &&
       i < data.allCustomers.length
     ) {
-      console.log("i =================>", i);
-      console.log(
-        data.allCustomers[i]?.user.email,
-        " ================= ",
-        userD.email
-      );
       i++;
     }
-    console.log("hre", i);
-    console.log("userD.email =>", userD.email);
-    console.log("second =>", data.allCustomers[i]?.user.email);
     if (data.allCustomers[i]?.user.email === userD.email) {
       return {
         email: data.allCustomers[i].user.email || "",
         firstName: data.allCustomers[i].firstName || "",
         lastName: data.allCustomers[i].lastName || "",
         profilePic: data.allCustomers[i].profilePic || "",
+        phoneNumber: data.allCustomers[i].phoneNumber || "",
       };
     }
     return null;
@@ -97,31 +90,31 @@ const HomePage = ({ route, navigation }) => {
 
   const handleLungs = () => {
     console.log("Lungs Clicked !!");
-    navigation.navigate("doctorList", { filter: "1" });
+    navigation.navigate("doctorList", { filter: "Oncology" });
   };
   const handleTooth = () => {
     console.log("Tooth Clicked !!");
-    navigation.navigate("doctorList", { filter: "2" });
+    navigation.navigate("doctorList", { filter: "Endocrinology" });
   };
   const handleDermatologist = () => {
     console.log("Dermatologist Clicked !!");
-    navigation.navigate("doctorList", { filter: "3" });
+    navigation.navigate("doctorList", { filter: "Cardiology" });
   };
   const handleHeart = () => {
     console.log("Heart Clicked !!");
-    navigation.navigate("doctorList", { filter: "4" });
+    navigation.navigate("doctorList", { filter: "Rheumatology" });
   };
   const handleBrain = () => {
     console.log("Brain Clicked !!");
-    navigation.navigate("doctorList", { filter: "5" });
+    navigation.navigate("doctorList", { filter: "Fertility" });
   };
   const handlePsychology = () => {
     console.log("Psychology Clicked !!");
-    navigation.navigate("doctorList", { filter: "6" });
+    navigation.navigate("doctorList", { filter: "Surgery" });
   };
   const handleUrology = () => {
     console.log("Urology Clicked !!");
-    navigation.navigate("doctorList", { filter: "7" });
+    navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleConsult = () => {
     console.log("Video Consult Our Top USA Specialists !!");
@@ -129,10 +122,10 @@ const HomePage = ({ route, navigation }) => {
   };
   const handleOthers = () => {
     console.log("Others Clicked !!");
-    navigation.navigate("doctorList", { filter: "8" });
+    navigation.navigate("doctorList", { filter: "*" });
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <Header navigation={navigation} bg="" />
@@ -294,7 +287,7 @@ const HomePage = ({ route, navigation }) => {
           </View> */}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 export default HomePage;

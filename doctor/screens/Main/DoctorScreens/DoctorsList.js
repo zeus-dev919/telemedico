@@ -6,7 +6,12 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
   ActivityIndicator,
+  Image,
+  Alert,
+  TextInput,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
@@ -100,7 +105,6 @@ const DATA = [
     ],
   },
 ];
-
 const DOCTOR_QUERY = gql`
   query {
     allDoctors {
@@ -119,11 +123,13 @@ const DOCTOR_QUERY = gql`
 `;
 var res = [];
 const DoctorsList = ({ route, navigation }) => {
-  const [doctors, setDoctors] = useState(null);
-  const { data, loading } = useQuery(DOCTOR_QUERY);
   const { filter } = route.params;
-  console.log("filter => ", filter);
-
+  const [doctors, setDoctors] = useState(null);
+  const [newDoctors, setNewDoctors] = useState(null);
+  const [help, setHelp] = useState(false);
+  const [filterModal, setFilterModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const { data, loading } = useQuery(DOCTOR_QUERY);
   const getspecs = (ch) => {
     console.log("getspecs()");
     let tab = [];
@@ -138,9 +144,10 @@ const DoctorsList = ({ route, navigation }) => {
   const getDoctors = () => {
     console.log("getDoctors()");
     let specs = getspecs(data);
+    console.log("Specs => ", specs);
     let tab = [];
-    let final = [];
-    if (specs.length > 0 && data) {
+    if (specs.length > 0) {
+      // res = [];
       for (let j = 0; j < specs.length; j++) {
         for (let i = 0; i < data.allDoctors.length; i++) {
           if (
@@ -170,8 +177,8 @@ const DoctorsList = ({ route, navigation }) => {
                 ? data.allDoctors[i].consultationFees
                 : "--",
               duration: data.allDoctors[i].consultationTime
-              ? data.allDoctors[i].consultationTime
-              : "--",
+                ? data.allDoctors[i].consultationTime
+                : "--",
             });
           }
         }
@@ -179,25 +186,55 @@ const DoctorsList = ({ route, navigation }) => {
         tab = [];
       }
     } else {
-      console.log(">>>>>>>>>>>>>>>>>>>");
+      console.log("Specs Table is Empty !!");
     }
-    console.log("Finale =>", final);
-    // setDoctors(final);
-    // res = final;
-    // return final;
+  };
+  const handleSlected = (title) => {
+    console.log("Title =>", title);
+    setFilterModal(false);
+    setSearch(title);
+    // for (let i = 0; i < doctors.length; i++) {
+    //   console.log("This Dr. ", i, " spec =>");
+    // }
+  };
+  const filterList = (filtername) => {
+    let tab = [];
+    for (let i = 0; i < doctors.length; i++) {
+      if (doctors[i].title.toUpperCase().includes(filtername.toUpperCase())) {
+        tab.push(doctors[i]);
+      }
+    }
+    setNewDoctors(
+      tab.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
+    );
   };
   useEffect(() => {
-    if (data) {
-      console.log("Data NEWWWW1 => ");
-      getDoctors();
-      setDoctors(res);
-    } else {
-      console.log("Data NEWWWW2 => ");
+    if (filter.length > 0) {
+      if (filter === "*") setSearch("All specialization");
+      if (filter === "Oncology") setSearch("Oncology");
+      if (filter === "Endocrinology") setSearch("Endocrinology");
+      if (filter === "Cardiology") setSearch("Cardiology");
+      if (filter === "Rheumatology") setSearch("Rheumatology");
+      if (filter === "Fertility") setSearch("Fertility");
+      if (filter === "Surgery") setSearch("Surgery");
+      if (filter === "Mental") setSearch("Mental");
     }
-    // if (res) {
-    //   console.log("res >>>>>>>>>> =>", res);
-    // }
-  }, [data, doctors]);
+    if (!loading && data) {
+      console.log(
+        "Data here ================================================="
+      );
+      getDoctors();
+      setDoctors(
+        res.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
+      );
+    }
+    if (doctors) console.log("Loading Completed =>", doctors);
+  }, [data, loading, doctors, newDoctors]);
+  useEffect(() => {
+    console.log("Search =>", search);
+    console.log("New Doctors => ", newDoctors);
+    if (filter !== "*" && doctors) filterList(search);
+  }, [search, newDoctors]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -217,14 +254,43 @@ const DoctorsList = ({ route, navigation }) => {
           <View style={styles.titleConatiner}>
             <Text style={styles.title1}>Doctor List</Text>
           </View>
-          <View style={{ width: 30 }}></View>
+          <TouchableOpacity onPress={() => setHelp(true)}>
+            <Ionicons
+              name="help-circle-outline"
+              size={24}
+              color="black"
+              style={styles.icon_style}
+            />
+          </TouchableOpacity>
         </View>
       </View>
+      {/* filter */}
+      <View style={styles.searchMain}>
+        <TouchableOpacity
+          style={[styles.searchContainer, styles.shadow]}
+          onPress={() => setFilterModal(true)}
+        >
+          <Image
+            style={styles.search}
+            source={icons.filter}
+            resizeMode="contain"
+          />
+          <Text
+            style={[
+              styles.searchInput,
+              { color: COLORS.fontColor2, marginRight: 5 },
+            ]}
+          >
+            Filter by
+          </Text>
+        </TouchableOpacity>
+          <Text style={styles.searchInput}>{search}</Text>
+      </View>
       {/* Flatlist */}
-      {doctors ? (
+      {newDoctors ? (
         <SectionList
           refreshing={true}
-          sections={doctors}
+          sections={search === "All specialization" ? doctors : newDoctors}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => (
             <DoctorCardModel2
@@ -252,6 +318,88 @@ const DoctorsList = ({ route, navigation }) => {
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
         </Text>
       )}
+      {newDoctors && newDoctors.length === 0 && (
+        <View style={styles.specContainer2}>
+          <Text style={styles.SpecTitle2}>
+            No Doctors with this filter yet.
+          </Text>
+        </View>
+      )}
+      {/* Help */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={help}
+        onRequestClose={() => {
+          setHelp(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.ModelTitleView}>
+              <Text style={styles.titleModal}>
+                Don’t Find The Doctor you looking?
+              </Text>
+            </View>
+            <Text style={styles.titleModal}>It’s Ok</Text>
+            <TouchableOpacity
+              style={styles.signup2}
+              onPress={() => {
+                setHelp(false);
+                navigation.navigate("help");
+              }}
+            >
+              <Text style={styles.textStyle}>Place Special Request</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      {/* filter */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={filterModal}
+        onRequestClose={() => {
+          setFilterModal(false);
+        }}
+      >
+        <View style={styles.centeredView1}>
+          <ScrollView>
+            <View style={styles.modalView1}>
+              <TouchableOpacity
+                onPress={() => {
+                  setFilterModal(false);
+                }}
+                style={styles.ModelTitleView}
+              >
+                <Text style={styles.titleModal2}>
+                  <Ionicons
+                    name="close-circle-outline"
+                    size={30}
+                    color="black"
+                  />
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.ModelTitleView}>
+                <Text style={styles.titleModal1}>Specializations</Text>
+              </View>
+              {doctors &&
+                doctors.map((item, index) => (
+                  <View style={styles.optionContent} key={index}>
+                    <View style={styles.optionContainer}>
+                      <TouchableOpacity
+                        style={[styles.card, styles.shadow1]}
+                        onPress={() => handleSlected(item.title)}
+                      >
+                        <Text style={styles.title3}>{item.title}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -313,6 +461,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     backgroundColor: COLORS.bgColor1,
+    width: 300,
   },
   doctorCards: {
     flexDirection: "row",
@@ -323,11 +472,24 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "100%",
   },
+  specContainer2: {
+    flex: 1,
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 10,
+  },
   SpecTitle: {
     fontSize: 22,
     fontWeight: "bold",
     color: COLORS.fontColor1,
     maxWidth: "80%",
+  },
+  SpecTitle2: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: COLORS.fontColor1,
+    maxWidth: "80%",
+    textAlign: "center",
   },
   signup: {
     color: "white",
@@ -336,5 +498,188 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     marginVertical: 20,
+  },
+  signup2: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  signup3: {
+    backgroundColor: COLORS.blueBtn,
+    color: "black",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  centeredView1: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: COLORS.bgColor1,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalView1: {
+    margin: 20,
+    backgroundColor: COLORS.bgColor1,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    // alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+  },
+  titleModal: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  titleModal1: {
+    width: "100%",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  titleModal2: {
+    width: "100%",
+    marginBottom: 10,
+    paddingRight: 10,
+    textAlign: "right",
+  },
+  ModelIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 10,
+    marginTop: 2,
+  },
+  //   Search Box
+  searchMain: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  searchContainer: {
+    maxWidth: "90%",
+    backgroundColor: "white",
+    color: COLORS.primary,
+    // flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 8,
+  },
+  search: {
+    width: 15,
+    height: 15,
+    marginRight: 10,
+  },
+  searchInput: {
+    fontSize: 16,
+  },
+  shadow: {
+    shadowColor: "#cdcddd",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  // Item
+  itemContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
+  },
+  itemTitle: {
+    fontSize: 14,
+    color: "black",
+    textAlign: "left",
+  },
+  // Card
+  optionContent: {
+    width: "100%",
+  },
+  optionContainer: {
+    width: "100%",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  card: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+  },
+  shadow1: {
+    shadowColor: "#cdcddd",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  icon2: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  title3: {
+    color: COLORS.fontColor2,
+    fontSize: 14,
+    margin: 0,
+    padding: 0,
+    lineHeight: 20,
+    textAlign: "left",
   },
 });

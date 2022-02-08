@@ -18,6 +18,19 @@ const DoctorCardModel = (props) => {
   } = props;
   var check = false;
   if (bg === "0") check = true;
+  const handleRedirect = () => {
+    navigation.navigate("appointment", {
+      name: name,
+      desc: desc,
+      img: img,
+      patients: patients,
+      experience: experience,
+      speciality: speciality,
+      info: info,
+      fees: fees,
+      duration: duration,
+    });
+  };
   return (
     <View
       style={
@@ -28,11 +41,16 @@ const DoctorCardModel = (props) => {
         <>
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
-              <Text style={styles.cardTitle1}>{name}</Text>
+              <TouchableOpacity onPress={() => handleRedirect()}>
+                <Text style={styles.cardTitle1}>{name}</Text>
+              </TouchableOpacity>
               <Text style={styles.cardTitle2}>{desc}</Text>
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
-            <View style={styles.doctorCardRight}>
+            <TouchableOpacity
+              onPress={() => handleRedirect()}
+              style={styles.doctorCardRight}
+            >
               <View style={styles.statusIndic}></View>
               {img.length > 0 ? (
                 <Image
@@ -49,7 +67,7 @@ const DoctorCardModel = (props) => {
                   resizeMode="cover"
                 />
               )}
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.doctorBottomCard}>
             <Text style={styles.doctorBottomCardLeftText}>
@@ -57,19 +75,7 @@ const DoctorCardModel = (props) => {
             </Text>
             <TouchableOpacity
               style={[styles.doctorBtnStyle, styles.shadow1]}
-              onPress={() =>
-                navigation.navigate("appointment", {
-                  name: name,
-                  desc: desc,
-                  img: img,
-                  patients: patients,
-                  experience: experience,
-                  speciality: speciality,
-                  info: info,
-                  fees: fees,
-                  duration: duration,
-                })
-              }
+              onPress={() => handleRedirect()}
             >
               <Text style={styles.doctorBtnStyleText}>Request Consult</Text>
             </TouchableOpacity>

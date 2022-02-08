@@ -15,6 +15,7 @@ import {
   Appointment,
   Payments,
   IntakeForm,
+  Help,
   Age,
   Gender,
   Pregnant,
@@ -68,6 +69,7 @@ const AppMain = () => {
             <Stack.Screen name="appointment" component={Appointment} />
             <Stack.Screen name="payment" component={Payments} />
             <Stack.Screen name="intakeForm" component={IntakeForm} />
+            <Stack.Screen name="help" component={Help} />
             <Stack.Screen name="age" component={Age} />
             <Stack.Screen name="gender" component={Gender} />
             <Stack.Screen name="pregnant" component={Pregnant} />

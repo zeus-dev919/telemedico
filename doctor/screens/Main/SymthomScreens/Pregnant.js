@@ -30,7 +30,7 @@ const Pregnant = ({ route, navigation }) => {
     setPregnant(false);
     setDontKnowPregnant(true);
     setNotPregnant(false);
-    setSelected("");
+    setSelected("_");
     setCheck(true);
   };
   const handleNotPregnant = () => {
@@ -158,9 +158,9 @@ const Pregnant = ({ route, navigation }) => {
             </View>
           </View>
         </View>
-        {selectError.length !== 0 ? (
+        {/* {selectError.length !== 0 ? (
           <Text style={styles.error}>{selectError}</Text>
-        ) : null}
+        ) : null} */}
         {/* Submit */}
         <TouchableOpacity
           style={[styles.button1, !check ? styles.signup1 : styles.signup]}
