@@ -22,7 +22,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from payments import urls
-from patients.views import intake_form
+from intake.views import intake_form
 
 
 
