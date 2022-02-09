@@ -9,19 +9,17 @@ const PayTimeModel = (props) => {
       <View style={styles.boxContainer}>
         <View style={[styles.box, styles.shadow1]}>
           <Text
-            style={[styles.cardTitle2, { marginLeft: 0, textAlign: "center" }]}
+            style={[
+              styles.cardTitle2,
+              { marginLeft: 0, textAlign: "center", marginBottom: 10 },
+            ]}
           >
-            Total
-          </Text>
-          <Text
-            style={[styles.cardTitle2, { marginLeft: 0, textAlign: "center" }]}
-          >
-            Payable
+            Total Payable
           </Text>
           <Text style={[styles.boxNb, { color: "#f9b664" }]}>{pay}$</Text>
         </View>
       </View>
-      <View style={styles.boxContainer}>
+      {/* <View style={styles.boxContainer}>
         <View style={[styles.box, styles.shadow1]}>
           <Text
             style={[styles.cardTitle2, { marginLeft: 0, textAlign: "center" }]}
@@ -37,7 +35,7 @@ const PayTimeModel = (props) => {
             {duration} min
           </Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   boxContainer: {
-    width: "50%",
+    width: "100%",
   },
   box: {
     backgroundColor: "white",

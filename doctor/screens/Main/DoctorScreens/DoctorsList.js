@@ -122,16 +122,18 @@ const DOCTOR_QUERY = gql`
   }
 `;
 var res = [];
+var test = 0;
 const DoctorsList = ({ route, navigation }) => {
-  const { filter } = route.params;
+  const { filter } = route?.params;
   const [doctors, setDoctors] = useState(null);
   const [newDoctors, setNewDoctors] = useState(null);
+  const [specList, setSpecList] = useState(null);
   const [help, setHelp] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
   const [search, setSearch] = useState("");
   const { data, loading } = useQuery(DOCTOR_QUERY);
+  // done
   const getspecs = (ch) => {
-    console.log("getspecs()");
     let tab = [];
     for (let i = 0; i < ch.allDoctors.length; i++) {
       if (!tab.includes(ch.allDoctors[i].specialization.specializationName)) {
@@ -140,14 +142,11 @@ const DoctorsList = ({ route, navigation }) => {
     }
     return tab;
   };
-
+  // done
   const getDoctors = () => {
-    console.log("getDoctors()");
     let specs = getspecs(data);
-    console.log("Specs => ", specs);
     let tab = [];
     if (specs.length > 0) {
-      // res = [];
       for (let j = 0; j < specs.length; j++) {
         for (let i = 0; i < data.allDoctors.length; i++) {
           if (
@@ -185,19 +184,30 @@ const DoctorsList = ({ route, navigation }) => {
         res.push({ title: specs[j], data: tab });
         tab = [];
       }
+      console.log("Res1 +++++++++++++++++++++++++++++");
+      console.log("Res1 +++++++++++++++++++++++++++++");
+      console.log(res[0]);
+      console.log("Res2 +++++++++++++++++++++++++++++");
+      console.log("Res2 +++++++++++++++++++++++++++++");
+      console.log(res[1]);
+      console.log("Res +++++++++++++++++++++++++++++");
+      console.log("Res +++++++++++++++++++++++++++++");
     } else {
       console.log("Specs Table is Empty !!");
     }
   };
+  // done
   const handleSlected = (title) => {
-    console.log("Title =>", title);
+    setNewDoctors(null);
     setFilterModal(false);
     setSearch(title);
-    // for (let i = 0; i < doctors.length; i++) {
-    //   console.log("This Dr. ", i, " spec =>");
-    // }
   };
+  // done
   const filterList = (filtername) => {
+    if (filtername === "All specialization") {
+      setNewDoctors(doctors);
+      return;
+    }
     let tab = [];
     for (let i = 0; i < doctors.length; i++) {
       if (doctors[i].title.toUpperCase().includes(filtername.toUpperCase())) {
@@ -209,6 +219,7 @@ const DoctorsList = ({ route, navigation }) => {
     );
   };
   useEffect(() => {
+    setSearch("All specialization");
     if (filter.length > 0) {
       if (filter === "*") setSearch("All specialization");
       if (filter === "Oncology") setSearch("Oncology");
@@ -219,7 +230,7 @@ const DoctorsList = ({ route, navigation }) => {
       if (filter === "Surgery") setSearch("Surgery");
       if (filter === "Mental") setSearch("Mental");
     }
-    if (!loading && data) {
+    if (!loading && data && test === 0) {
       console.log(
         "Data here ================================================="
       );
@@ -227,14 +238,19 @@ const DoctorsList = ({ route, navigation }) => {
       setDoctors(
         res.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
       );
+      let specs = getspecs(data);
+      setSpecList(specs);
+      test = 1;
     }
-    if (doctors) console.log("Loading Completed =>", doctors);
-  }, [data, loading, doctors, newDoctors]);
+  }, [data, loading, doctors]);
+
   useEffect(() => {
     console.log("Search =>", search);
-    console.log("New Doctors => ", newDoctors);
-    if (filter !== "*" && doctors) filterList(search);
-  }, [search, newDoctors]);
+    if (doctors) filterList(search);
+  }, [search]);
+  useEffect(() => {
+    console.log("LINE 247 =>", newDoctors);
+  }, [newDoctors]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -270,27 +286,29 @@ const DoctorsList = ({ route, navigation }) => {
           style={[styles.searchContainer, styles.shadow]}
           onPress={() => setFilterModal(true)}
         >
-          <Image
-            style={styles.search}
-            source={icons.filter}
-            resizeMode="contain"
-          />
-          <Text
-            style={[
-              styles.searchInput,
-              { color: COLORS.fontColor2, marginRight: 5 },
-            ]}
-          >
-            Filter by
-          </Text>
+          <View style={styles.searchContainer1}>
+            <Image
+              style={styles.search}
+              source={icons.filter}
+              resizeMode="contain"
+            />
+            <Text
+              style={[
+                styles.searchInput,
+                { color: COLORS.fontColor2, marginRight: 10 },
+              ]}
+            >
+              Filter by
+            </Text>
+          </View>
+          <Text style={styles.searchInput1}>{search}</Text>
         </TouchableOpacity>
-          <Text style={styles.searchInput}>{search}</Text>
       </View>
       {/* Flatlist */}
       {newDoctors ? (
         <SectionList
           refreshing={true}
-          sections={search === "All specialization" ? doctors : newDoctors}
+          sections={newDoctors}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => (
             <DoctorCardModel2
@@ -318,13 +336,13 @@ const DoctorsList = ({ route, navigation }) => {
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
         </Text>
       )}
-      {newDoctors && newDoctors.length === 0 && (
+      {(newDoctors && newDoctors.length === 0) || !newDoctors ? (
         <View style={styles.specContainer2}>
           <Text style={styles.SpecTitle2}>
             No Doctors with this filter yet.
           </Text>
         </View>
-      )}
+      ) : null}
       {/* Help */}
       <Modal
         animationType="slide"
@@ -336,6 +354,16 @@ const DoctorsList = ({ route, navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={() => {
+                setHelp(false);
+              }}
+              style={styles.ModelTitleView}
+            >
+              <Text style={styles.titleModal2}>
+                <Ionicons name="close-circle-outline" size={30} color="black" />
+              </Text>
+            </TouchableOpacity>
             <View style={styles.ModelTitleView}>
               <Text style={styles.titleModal}>
                 Don’t Find The Doctor you looking?
@@ -383,15 +411,15 @@ const DoctorsList = ({ route, navigation }) => {
               <View style={styles.ModelTitleView}>
                 <Text style={styles.titleModal1}>Specializations</Text>
               </View>
-              {doctors &&
-                doctors.map((item, index) => (
+              {specList &&
+                specList.map((item, index) => (
                   <View style={styles.optionContent} key={index}>
                     <View style={styles.optionContainer}>
                       <TouchableOpacity
                         style={[styles.card, styles.shadow1]}
-                        onPress={() => handleSlected(item.title)}
+                        onPress={() => handleSlected(item)}
                       >
-                        <Text style={styles.title3}>{item.title}</Text>
+                        <Text style={styles.title3}>{item}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -535,7 +563,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -604,13 +632,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   searchContainer: {
-    maxWidth: "90%",
+    maxWidth: "100%",
     backgroundColor: "white",
     color: COLORS.primary,
-    // flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "row",
+    alignItems: "flex-start",
     padding: 10,
     borderRadius: 8,
+  },
+  searchContainer1: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   search: {
     width: 15,
@@ -619,6 +651,10 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     fontSize: 16,
+  },
+  searchInput1: {
+    fontSize: 16,
+    maxWidth: "75%",
   },
   shadow: {
     shadowColor: "#cdcddd",
