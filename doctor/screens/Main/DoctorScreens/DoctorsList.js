@@ -123,15 +123,16 @@ const DOCTOR_QUERY = gql`
 `;
 var res = [];
 const DoctorsList = ({ route, navigation }) => {
-  const { filter } = route.params;
+  // const { filter } = route?.params;
   const [doctors, setDoctors] = useState(null);
   const [newDoctors, setNewDoctors] = useState(null);
+  const [specList, setSpecList] = useState(null);
   const [help, setHelp] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
   const [search, setSearch] = useState("");
   const { data, loading } = useQuery(DOCTOR_QUERY);
+  // done
   const getspecs = (ch) => {
-    console.log("getspecs()");
     let tab = [];
     for (let i = 0; i < ch.allDoctors.length; i++) {
       if (!tab.includes(ch.allDoctors[i].specialization.specializationName)) {
@@ -140,14 +141,11 @@ const DoctorsList = ({ route, navigation }) => {
     }
     return tab;
   };
-
+  // done
   const getDoctors = () => {
-    console.log("getDoctors()");
     let specs = getspecs(data);
-    console.log("Specs => ", specs);
     let tab = [];
     if (specs.length > 0) {
-      // res = [];
       for (let j = 0; j < specs.length; j++) {
         for (let i = 0; i < data.allDoctors.length; i++) {
           if (
@@ -185,18 +183,19 @@ const DoctorsList = ({ route, navigation }) => {
         res.push({ title: specs[j], data: tab });
         tab = [];
       }
+      console.log("Res +++++++++++++++++++++++++++++");
+      console.log(res);
     } else {
       console.log("Specs Table is Empty !!");
     }
   };
+  // done
   const handleSlected = (title) => {
     console.log("Title =>", title);
     setFilterModal(false);
     setSearch(title);
-    // for (let i = 0; i < doctors.length; i++) {
-    //   console.log("This Dr. ", i, " spec =>");
-    // }
   };
+  // done
   const filterList = (filtername) => {
     let tab = [];
     for (let i = 0; i < doctors.length; i++) {
@@ -208,32 +207,36 @@ const DoctorsList = ({ route, navigation }) => {
       tab.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
     );
   };
+
   useEffect(() => {
-    if (filter.length > 0) {
-      if (filter === "*") setSearch("All specialization");
-      if (filter === "Oncology") setSearch("Oncology");
-      if (filter === "Endocrinology") setSearch("Endocrinology");
-      if (filter === "Cardiology") setSearch("Cardiology");
-      if (filter === "Rheumatology") setSearch("Rheumatology");
-      if (filter === "Fertility") setSearch("Fertility");
-      if (filter === "Surgery") setSearch("Surgery");
-      if (filter === "Mental") setSearch("Mental");
-    }
+    console.log(" LINE 213 =>", data, loading, doctors, newDoctors);
+    setSearch("All specialization");
+    // if (filter.length > 0) {
+    //   if (filter === "*") setSearch("All specialization");
+    //   if (filter === "Oncology") setSearch("Oncology");
+    //   if (filter === "Endocrinology") setSearch("Endocrinology");
+    //   if (filter === "Cardiology") setSearch("Cardiology");
+    //   if (filter === "Rheumatology") setSearch("Rheumatology");
+    //   if (filter === "Fertility") setSearch("Fertility");
+    //   if (filter === "Surgery") setSearch("Surgery");
+    //   if (filter === "Mental") setSearch("Mental");
+    // }
     if (!loading && data) {
-      console.log(
-        "Data here ================================================="
-      );
+      console.log("Data here =================================================");
       getDoctors();
       setDoctors(
         res.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
       );
+      let specs = getspecs(data);
+      setSpecList(specs);
     }
-    if (doctors) console.log("Loading Completed =>", doctors);
   }, [data, loading, doctors, newDoctors]);
+
   useEffect(() => {
     console.log("Search =>", search);
     console.log("New Doctors => ", newDoctors);
-    if (filter !== "*" && doctors) filterList(search);
+    if (search.length > 0 && doctors) filterList(search);
+    // if (filter !== "*" && doctors) filterList(search);
   }, [search, newDoctors]);
   return (
     <SafeAreaView style={styles.container}>
@@ -283,11 +286,11 @@ const DoctorsList = ({ route, navigation }) => {
           >
             Filter by
           </Text>
-        </TouchableOpacity>
           <Text style={styles.searchInput}>{search}</Text>
+        </TouchableOpacity>
       </View>
       {/* Flatlist */}
-      {newDoctors ? (
+      {/* {newDoctors ? (
         <SectionList
           refreshing={true}
           sections={search === "All specialization" ? doctors : newDoctors}
@@ -317,7 +320,7 @@ const DoctorsList = ({ route, navigation }) => {
         <Text style={styles.signup}>
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
         </Text>
-      )}
+      )} */}
       {newDoctors && newDoctors.length === 0 && (
         <View style={styles.specContainer2}>
           <Text style={styles.SpecTitle2}>
@@ -383,8 +386,8 @@ const DoctorsList = ({ route, navigation }) => {
               <View style={styles.ModelTitleView}>
                 <Text style={styles.titleModal1}>Specializations</Text>
               </View>
-              {doctors &&
-                doctors.map((item, index) => (
+              {specList &&
+                specList.map((item, index) => (
                   <View style={styles.optionContent} key={index}>
                     <View style={styles.optionContainer}>
                       <TouchableOpacity
@@ -604,10 +607,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   searchContainer: {
-    maxWidth: "90%",
+    maxWidth: "100%",
     backgroundColor: "white",
     color: COLORS.primary,
-    // flexDirection: "row",
+    flexDirection: "row",
     alignItems: "center",
     padding: 10,
     borderRadius: 8,
