@@ -86,6 +86,10 @@ const PayCardsModel = (props) => {
     setPay2(false);
     setPay3(true);
   };
+  const handlePayment = () => {
+    setModalVisible(true);
+    setSuccess(true);
+  };
   return (
     <>
       {/* <View style={styles.payIcons}>
@@ -223,7 +227,7 @@ const PayCardsModel = (props) => {
         <Text style={styles.error}>{isSelectedError}</Text>
       )}
       {/* Pay */}
-      <TouchableOpacity style={styles.button1} onPress={handleRegister}>
+      <TouchableOpacity style={styles.button1} onPress={handlePayment}>
         <Text style={styles.signup}>Pay {pay}$</Text>
       </TouchableOpacity>
       {!success ? (

@@ -45,14 +45,13 @@ const AppMain = () => {
           headerShown: false,
         }}
       >
-        {/* <Stack.Screen name="home" component={Home} /> */}
-        {/* <Stack.Screen name="doctors" component={Doctors} /> */}
+        {/* <Stack.Screen name="home" component={Home} />
+        <Stack.Screen name="doctors" component={Doctors} />
         <Stack.Screen name="doctorList" component={DoctorsList} />
-        {/* 
         <Stack.Screen name="appointment" component={Appointment} />
-        <Stack.Screen name="payment" component={Payments} /> */}
-        {/* <Stack.Screen name="intakeForm" component={IntakeForm} /> */}
-        {/* {!currentUser && (
+        <Stack.Screen name="payment" component={Payments} />
+        <Stack.Screen name="intakeForm" component={IntakeForm} /> */}
+        {!currentUser && (
           <>
             <Stack.Screen name="BeforeSplash" component={BeforeSplash} />
             <Stack.Screen name="Splash" component={Splash} />
@@ -61,8 +60,8 @@ const AppMain = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Recovery" component={Recovery} />
           </>
-        )} */}
-        {/* {currentUser && (
+        )}
+        {currentUser && (
           <>
             <Stack.Screen name="home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
@@ -83,7 +82,7 @@ const AppMain = () => {
             <Stack.Screen name="beforecall" component={BeforeCall} />
             <Stack.Screen name="call" component={Call} />
           </>
-        )} */}
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
