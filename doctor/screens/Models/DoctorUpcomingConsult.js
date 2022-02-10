@@ -5,6 +5,7 @@ import DayModel from "./DayModel";
 
 const DoctorUpcomingConsult = (props) => {
   const { day, nbDay, time, spec, doctorImg, navigation } = props;
+  console.log("Consult => ", day, nbDay, time, spec, doctorImg, navigation);
   const handleJoin = () => {
     navigation.navigate("beforecall");
   };
@@ -20,11 +21,11 @@ const DoctorUpcomingConsult = (props) => {
                 <Text style={styles.cardTitle3}>{spec}</Text>
                 <Text style={styles.cardTitle4}>{time}</Text>
               </View>
-              {doctorImg ? (
+              {doctorImg.length > 0 && doctorImg.startsWith('http') ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{
-                    uri: "https://9to5mac.com/wp-content/uploads/sites/6/2021/09/Apple-TV.png?w=1600",
+                    uri: doctorImg,
                   }}
                   resizeMode="cover"
                 />

@@ -13,20 +13,25 @@ import {
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
 import { CardField, useStripe } from "@stripe/stripe-react-native";
-import { gql, useQuery } from "@apollo/client";
+// import { gql, useQuery } from "@apollo/client";
 
-const ME_QUERY = gql`
-  query {
-    me {
-      email
-    }
-  }
-`;
+// const ME_QUERY = gql`
+//   query {
+//     me {
+//       email
+//     }
+//   }
+// `;
+
+const mapState = ({ user }) => ({
+  userD: user.userD,
+});
 
 const PayCardsModel = (props) => {
   const { pay, navigation } = props;
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  const { data, loading } = useQuery(ME_QUERY);
+  const { userD } = useSelector(mapState);
+  // const { data, loading } = useQuery(ME_QUERY);
   // data
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -135,7 +140,7 @@ const PayCardsModel = (props) => {
       let amount = 100;
       if (pay !== "--") amount = pay;
       fetchPaymentSheetParams({
-        email: data.me.email,
+        email: userD.email,
         paymentMethod: "card",
         currency: 'pln',
         amount: amount,

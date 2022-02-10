@@ -224,8 +224,8 @@ const DoctorsList = ({ route, navigation }) => {
     }
   }, []);
   useEffect(() => {
-    console.log('<><><><><<<><><><<<<><<<<<<<<<<<<<<><><<<><<<<<<')
-    console.log(data)
+    console.log("<><><><><<<><><><<<<><<<<<<<<<<<<<<><><<<><<<<<<");
+    console.log(data);
     if (data) {
       console.log(
         "Data here ================================================="
@@ -237,7 +237,10 @@ const DoctorsList = ({ route, navigation }) => {
       let specs = getspecs(data);
       setSpecList(specs);
     }
-  }, [data]);
+    if (doctors) {
+      filterList(search);
+    }
+  }, [data, doctors]);
 
   useEffect(() => {
     console.log("Search =>", search);
