@@ -8,14 +8,6 @@ from django.http  import HttpResponse
 stripe.api_key = 'sk_test_NabZ97T2L9XSSUZapustQMXj'
 
 
-import stripe
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
-stripe.api_key = 'sk_test_...'
-
-
 @api_view(['POST'])
 def test_payment(request):
     test_payment_intent = stripe.PaymentIntent.create(
