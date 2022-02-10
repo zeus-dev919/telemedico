@@ -12,7 +12,8 @@ import {
 } from "react-native";
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
-import { CardField, useStripe } from "@stripe/stripe-react-native";
+import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
+import { useSelector } from "react-redux";
 // import { gql, useQuery } from "@apollo/client";
 
 // const ME_QUERY = gql`
@@ -29,7 +30,7 @@ const mapState = ({ user }) => ({
 
 const PayCardsModel = (props) => {
   const { pay, navigation } = props;
-  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const { confirmPayment, loading } = useConfirmPayment();
   const { userD } = useSelector(mapState);
   // const { data, loading } = useQuery(ME_QUERY);
   // data
@@ -39,56 +40,48 @@ const PayCardsModel = (props) => {
   //   Error data
   const [isSelectedError, setSelectedError] = useState(false);
 
-  const fetchPaymentSheetParams = async (data = {}) => {
+  const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(
-      `http://164.52.218.166:8000/payments/save-stripe-info/`,
+      `http://164.52.218.166:8000/payments/test-payment/`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          currency: "usd",
+          amount: 1000,
+          currency: "pln",
+          payment_method_types: "card",
+          receipt_email: "test@example.com",
+        }),
       }
     );
-    const { paymentIntent, ephemeralKey, customer } = await response.json();
+    const { clientSecret } = await response.json();
 
-    return {
-      paymentIntent,
-      ephemeralKey,
-      customer,
+    return clientSecret;
+  };
+  const handlePayPress = async () => {
+    // Gather the customer's billing information (for example, email)
+    const billingDetails = {
+      email: "stripeFeb@gmail.com",
     };
-  };
 
-  const initializePaymentSheet = async () => {
-    const { paymentIntent, ephemeralKey, customer, publishableKey } =
-      await fetchPaymentSheetParams();
+    // Fetch the intent client secret from the backend
+    const clientSecret = await fetchPaymentIntentClientSecret();
 
-    const { error } = await initPaymentSheet({
-      customerId: customer,
-      customerEphemeralKeySecret: ephemeralKey,
-      paymentIntentClientSecret: paymentIntent,
-      // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-      //methods that complete payment after a delay, like SEPA Debit and Sofort.
-      allowsDelayedPaymentMethods: true,
+    // Confirm the payment with the card details
+    const { paymentIntent, error } = await confirmPayment(clientSecret, {
+      paymentMethodId: "Card",
+      billingDetails,
     });
-    if (!error) {
-      setLoading(true);
-    }
-  };
-
-  const openPaymentSheet = async () => {
-    const { error } = await presentPaymentSheet();
 
     if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
-    } else {
-      Alert.alert("Success", "Your order is confirmed!");
+      console.log("Payment confirmation error", error);
+    } else if (paymentIntent) {
+      console.log("Success from promise", paymentIntent);
     }
   };
-
-  useEffect(() => {
-    initializePaymentSheet();
-  }, []);
 
   const handleRegister = () => {
     let check = true;
@@ -137,16 +130,9 @@ const PayCardsModel = (props) => {
       setSelectedError("");
     }
     if (check) {
-      let amount = 100;
+      let amount = 1500;
       if (pay !== "--") amount = pay;
-      fetchPaymentSheetParams({
-        email: userD.email,
-        paymentMethod: "card",
-        currency: 'pln',
-        amount: amount,
-      }).then((data) => {
-        console.log("data", data);
-      });
+      handlePayPress();
       setModalVisible(true);
       setSuccess(true);
     }
