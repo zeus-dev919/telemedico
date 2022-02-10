@@ -55,7 +55,7 @@ class Customer(models.Model):
     user = models.ForeignKey(ExtendUser, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20,blank=True)
-    gender = models.CharField(max_length=10,  choices=GENDER)
+    gender = models.CharField(max_length=10,  choices=GENDER, blank=True)
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
     avatar_pic = models.CharField(max_length=50, null=True)
