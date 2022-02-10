@@ -143,6 +143,7 @@ const DoctorsList = ({ route, navigation }) => {
   };
   // done
   const getDoctors = () => {
+    // res = [];
     let specs = getspecs(data);
     let tab = [];
     if (specs.length > 0) {
@@ -183,16 +184,7 @@ const DoctorsList = ({ route, navigation }) => {
         res.push({ title: specs[j], data: tab });
         tab = [];
       }
-      console.log("Res1 +++++++++++++++++++++++++++++");
-      console.log("Res1 +++++++++++++++++++++++++++++");
-      console.log(res[0]);
-      console.log("Res2 +++++++++++++++++++++++++++++");
-      console.log("Res2 +++++++++++++++++++++++++++++");
-      console.log(res[1]);
-      console.log("Res +++++++++++++++++++++++++++++");
-      console.log("Res +++++++++++++++++++++++++++++");
-    } else {
-      console.log("Specs Table is Empty !!");
+      setNewDoctors(res);
     }
   };
   // done
@@ -209,6 +201,7 @@ const DoctorsList = ({ route, navigation }) => {
     }
     let tab = [];
     for (let i = 0; i < doctors.length; i++) {
+      console.log("Line 212 =>", doctors[i]);
       if (doctors[i].title.toUpperCase().includes(filtername.toUpperCase())) {
         tab.push(doctors[i]);
       }
@@ -231,7 +224,9 @@ const DoctorsList = ({ route, navigation }) => {
     }
   }, []);
   useEffect(() => {
-    if (!loading && data) {
+    console.log('<><><><><<<><><><<<<><<<<<<<<<<<<<<><><<<><<<<<<')
+    console.log(data)
+    if (data) {
       console.log(
         "Data here ================================================="
       );
@@ -242,7 +237,7 @@ const DoctorsList = ({ route, navigation }) => {
       let specs = getspecs(data);
       setSpecList(specs);
     }
-  }, [data, loading, doctors]);
+  }, [data]);
 
   useEffect(() => {
     console.log("Search =>", search);
@@ -309,6 +304,7 @@ const DoctorsList = ({ route, navigation }) => {
       {newDoctors ? (
         <SectionList
           refreshing={true}
+          // sections={filter === "All specialization" ? res : newDoctors}
           sections={newDoctors}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => (

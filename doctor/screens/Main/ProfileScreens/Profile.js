@@ -18,11 +18,10 @@ import { gql, useMutation } from "@apollo/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
+import { setUser } from "../../../redux/User/user.actions";
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
   userD: user.userD,
-  errors: user.errors,
 });
 
 const MUTATE_QUERY = gql`
@@ -51,8 +50,8 @@ const MUTATE_QUERY = gql`
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
-  console.log("maptate => ", { userD });
-  const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
+  // console.log("maptate => ", { userD });
+  // const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
@@ -60,80 +59,31 @@ const Profile = ({ route, navigation }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [url, setUrl] = useState(null);
 
   const handleUpload = async () => {
     // setIndicatorLoad(true);
     if (avatar.length > 0) {
       const url_uuid = uuid.v4();
       const storageRef = ref(storage, `${userD.email}/${url_uuid}.png`);
-      // const uploadTask = uploadBytes(storageRef, avatar);
-      // Listen for state changes, errors, and completion of the upload.
       try {
-        console.log("Here Line 73");
-        uploadBytes(storageRef, avatar)
+        const r = await fetch(avatar);
+        const b = await r.blob();
+        uploadBytes(storageRef, b)
           .then((snapshot) => {
-            console.log("Upload done", snapshot);
-            getDownloadURL(storageRef)
-              .then((downloadURL) => {
-                console.log("URL =>", downloadURL);
-                setAvatar(downloadURL);
-              })
-              .catch((error) => {
-                console.log("Error LINE 85 =>", error);
-              });
+            getDownloadURL(storageRef).then((downloadURL) => {
+              setUrl(downloadURL);
+            });
           })
           .catch((error) => {
             console.log("Error LINE 89 =>", error);
           });
-        // uploadTask.on(
-        //   "state_changed",
-        //   (snapshot) => {
-        //     console.log("Here Line 76");
-        //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        //     const progress =
-        //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        //     console.log("Upload is " + progress + "% done");
-        //     switch (snapshot.state) {
-        //       case "paused":
-        //         console.log("Upload is paused");
-        //         break;
-        //       case "running":
-        //         console.log("Upload is running");
-        //         break;
-        //     }
-        //   },
-        //   (error) => {
-        //     // A full list of error codes is available at
-        //     // https://firebase.google.com/docs/storage/web/handle-errors
-        //     switch (error.code) {
-        //       case "storage/unauthorized":
-        //         // User doesn't have permission to access the object
-        //         break;
-        //       case "storage/canceled":
-        //         // User canceled the upload
-        //         break;
-        //       case "storage/unknown":
-        //         // Unknown error occurred, inspect error.serverResponse
-        //         break;
-        //     }
-        //   },
-        //   () => {
-        //     // Upload completed successfully, now we can get the download URL
-        //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        //       setAvatar(downloadURL);
-        //     });
-        //   }
-        // );
-        console.log("Try =================");
       } catch (error) {
         console.log("Catch ===============");
       }
     }
   };
   useEffect(() => {
-    setAvatar(
-      "https://9to5mac.com/wp-content/uploads/sites/6/2021/09/Apple-TV.png?w=1600"
-    );
     if (userD) {
       setAvatar(userD.profilePic);
       setFirstName(userD.firstName);
@@ -141,7 +91,20 @@ const Profile = ({ route, navigation }) => {
       setEmail(userD.email);
       setPhone(userD.phoneNumber);
     }
-  }, [userD]);
+    if (url) {
+      if (url.length > 0) {
+        let user = {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          profilePic: url,
+          phoneNumber: phone,
+        };
+        dispatch(setUser(user));
+        navigation.navigate("home");
+      }
+    }
+  }, [userD, url]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
@@ -149,16 +112,7 @@ const Profile = ({ route, navigation }) => {
     setAvatar(result.uri);
   };
   const handleSubmit = async () => {
-    if (
-      avatar &&
-      !avatar.startsWith("https://firebasestorage.googleapis.com")
-    ) {
-      handleUpload();
-      console.log("Saved !!");
-    } else {
-      console.log(avatar);
-      console.log("Error Submit ");
-    }
+    handleUpload();
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -191,10 +145,12 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            {avatar ? (
+            {avatar.length > 0 ? (
               <Image
                 style={styles.avatar}
-                source={{ uri: avatar }}
+                source={{
+                  uri: avatar,
+                }}
                 resizeMode="cover"
               />
             ) : (
