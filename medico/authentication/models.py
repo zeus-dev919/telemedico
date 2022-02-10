@@ -36,8 +36,9 @@ class Doctor(models.Model):
     zip_code = models.CharField(max_length=15 , null=True, blank=True)
     npi_number = models.CharField(max_length=10, null=True, blank=False)
     state_license_number = models.CharField(max_length=12, null=True, blank=False)
-    profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
-    award_Pic = models.ImageField(upload_to=None,verbose_name="Award_ Picture", blank=True)
+    profile_picture = models.CharField(max_length=50,null=True)
+    #profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
+    #award_Pic = models.ImageField(upload_to=None,verbose_name="Award_ Picture", blank=True)
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)
     available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
     time_slots = models.CharField(max_length=20,null=False, blank=True)
@@ -57,7 +58,8 @@ class Customer(models.Model):
     gender = models.CharField(max_length=10,  choices=GENDER)
     traige_score = models.CharField(max_length=10, blank=True)
     diagnosis_ref = models.CharField(max_length=12, blank=True)
-    profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
+    avatar_pic = models.CharField(max_length=50, null=True)
+    #profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
     phone_number = PhoneNumberField(null=True)
 
 

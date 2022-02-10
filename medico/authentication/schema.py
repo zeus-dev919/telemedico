@@ -97,7 +97,7 @@ class DoctorCreateInput(graphene.Mutation):
 class CustomerInputCreate(graphene.Mutation):
 
     class Arguements:
-        id = graphene.ID()
+        id = graphene.Int()
         first_name = graphene.String(required=False)
         last_name  = graphene.String(required=False)
         gender = graphene.String(required=False)
