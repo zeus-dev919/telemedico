@@ -60,7 +60,6 @@ const Profile = ({ route, navigation }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [avatarName, setAvatarName] = useState("");
 
   const handleUpload = async () => {
     // setIndicatorLoad(true);
@@ -70,6 +69,7 @@ const Profile = ({ route, navigation }) => {
       // const uploadTask = uploadBytes(storageRef, avatar);
       // Listen for state changes, errors, and completion of the upload.
       try {
+        console.log("Here Line 73");
         uploadBytes(storageRef, avatar)
           .then((snapshot) => {
             console.log("Upload done", snapshot);
@@ -131,6 +131,9 @@ const Profile = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
+    setAvatar(
+      "https://9to5mac.com/wp-content/uploads/sites/6/2021/09/Apple-TV.png?w=1600"
+    );
     if (userD) {
       setAvatar(userD.profilePic);
       setFirstName(userD.firstName);
@@ -138,13 +141,12 @@ const Profile = ({ route, navigation }) => {
       setEmail(userD.email);
       setPhone(userD.phoneNumber);
     }
-  }, [userD, avatar]);
+  }, [userD]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
     setAvatar(result.uri);
-    setAvatarName(result.name);
   };
   const handleSubmit = async () => {
     if (
@@ -154,21 +156,9 @@ const Profile = ({ route, navigation }) => {
       handleUpload();
       console.log("Saved !!");
     } else {
+      console.log(avatar);
       console.log("Error Submit ");
     }
-    // await MutateUser({
-    //   variables: {
-    //     email: email,
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     profilePic: profilePic,
-    //     phoneNumber: phoneNumber,
-    //   },
-    // }).then((res) => {
-    //   console.log(" ===================== ");
-    //   console.log("DONE", res);
-    //   navigation.navigate("home");
-    // });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -201,7 +191,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            {avatar && avatar.length > 0 ? (
+            {avatar ? (
               <Image
                 style={styles.avatar}
                 source={{ uri: avatar }}
@@ -214,7 +204,7 @@ const Profile = ({ route, navigation }) => {
                 resizeMode="cover"
               />
             )}
-            <TouchableOpacity onPress={handleChangePicture}>
+            <TouchableOpacity onPress={() => handleChangePicture()}>
               <Text style={styles.title3}>Change profile picture</Text>
             </TouchableOpacity>
           </View>
