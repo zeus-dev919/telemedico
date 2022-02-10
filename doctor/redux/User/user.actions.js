@@ -42,7 +42,7 @@ export const signOutUser = () => (dispatch) => {
 export const setUser = (user) => async (dispatch) => {
   try {
     dispatch({
-      type: userTypes.SIGN_IN_SUCCESS,
+      type: userTypes.SET_USER,
       payload: user,
     });
   } catch (err) {

@@ -44,7 +44,6 @@ const HomePage = ({ route, navigation }) => {
   const { currentProperty, userD, errors } = useSelector(mapState);
   console.log("maptate => ", { currentProperty, userD, errors });
   const { data, loading } = useQuery(USER_QUERY);
-  console.log("Data =>", data, loading);
   const [complet, setComplet] = useState(false);
   // const { newAccount, token, user } = route?.params;
   // console.log(" Details => ", newAccount, token, user);
@@ -80,48 +79,36 @@ const HomePage = ({ route, navigation }) => {
   }, [loading]);
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
-    console.log("Sympptoms Checker !!");
     navigation.navigate("age");
   };
   const handleDoctors = () => {
-    console.log("Doctors !!");
     navigation.navigate("doctors");
   };
-
   const handleLungs = () => {
-    console.log("Lungs Clicked !!");
     navigation.navigate("doctorList", { filter: "Oncology" });
   };
   const handleTooth = () => {
-    console.log("Tooth Clicked !!");
     navigation.navigate("doctorList", { filter: "Endocrinology" });
   };
   const handleDermatologist = () => {
-    console.log("Dermatologist Clicked !!");
     navigation.navigate("doctorList", { filter: "Cardiology" });
   };
   const handleHeart = () => {
-    console.log("Heart Clicked !!");
     navigation.navigate("doctorList", { filter: "Rheumatology" });
   };
   const handleBrain = () => {
-    console.log("Brain Clicked !!");
     navigation.navigate("doctorList", { filter: "Fertility" });
   };
   const handlePsychology = () => {
-    console.log("Psychology Clicked !!");
     navigation.navigate("doctorList", { filter: "Surgery" });
   };
   const handleUrology = () => {
-    console.log("Urology Clicked !!");
     navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleConsult = () => {
-    console.log("Video Consult Our Top USA Specialists !!");
     navigation.navigate("doctors");
   };
   const handleOthers = () => {
-    console.log("Others Clicked !!");
     navigation.navigate("doctorList", { filter: "*" });
   };
   return (

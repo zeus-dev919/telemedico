@@ -15,14 +15,13 @@ import { COLORS, icons, images } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 import { gql, useMutation } from "@apollo/client";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
+import { setUser } from "../../../redux/User/user.actions";
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
   userD: user.userD,
-  errors: user.errors,
 });
 
 const MUTATE_QUERY = gql`
@@ -50,74 +49,62 @@ const MUTATE_QUERY = gql`
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { currentProperty, userD, errors } = useSelector(mapState);
-  console.log("maptate => ", { currentProperty, userD, errors });
-  const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
-  const { ch } = route?.params || "empty";
-  console.log("Profile Type =>", ch);
+  const { userD } = useSelector(mapState);
+  // console.log("maptate => ", { userD });
+  // const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
+  // const { ch } = route?.params || "empty";
+  // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [pick, setPick] = useState("");
+  const [url, setUrl] = useState(null);
 
   const handleUpload = async () => {
-    setIndicatorLoad(true);
-    if (pick.length > 0) {
+    // setIndicatorLoad(true);
+    if (avatar.length > 0) {
       const url_uuid = uuid.v4();
-      const storageRef = ref(storage, `images_report/${url_uuid}_${pick1Name}`);
-      const uploadTask = uploadBytesResumable(storageRef, pick1);
-      // Listen for state changes, errors, and completion of the upload.
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setPick(downloadURL);
+      const storageRef = ref(storage, `${userD.email}/${url_uuid}.png`);
+      try {
+        const r = await fetch(avatar);
+        const b = await r.blob();
+        uploadBytes(storageRef, b)
+          .then((snapshot) => {
+            getDownloadURL(storageRef).then((downloadURL) => {
+              setUrl(downloadURL);
+            });
+          })
+          .catch((error) => {
+            console.log("Error LINE 89 =>", error);
           });
-        }
-      );
+      } catch (error) {
+        console.log("Catch ===============");
+      }
     }
   };
   useEffect(() => {
     if (userD) {
+      setAvatar(userD.profilePic);
       setFirstName(userD.firstName);
       setLastName(userD.lastName);
       setEmail(userD.email);
-      setAvatar(userD.profilePic);
       setPhone(userD.phoneNumber);
     }
-  }, [userD]);
+    if (url) {
+      if (url.length > 0) {
+        let user = {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          profilePic: url,
+          phoneNumber: phone,
+        };
+        dispatch(setUser(user));
+        navigation.navigate("home");
+      }
+    }
+  }, [userD, url]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
@@ -125,20 +112,7 @@ const Profile = ({ route, navigation }) => {
     setAvatar(result.uri);
   };
   const handleSubmit = async () => {
-    console.log("Saved !!");
-    await MutateUser({
-      variables: {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        profilePic: profilePic,
-        phoneNumber: phoneNumber,
-      },
-    }).then((res) => {
-      console.log(" ===================== ");
-      console.log("DONE", res);
-      navigation.navigate("home");
-    });
+    handleUpload();
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -174,7 +148,9 @@ const Profile = ({ route, navigation }) => {
             {avatar.length > 0 ? (
               <Image
                 style={styles.avatar}
-                source={{ uri: avatar }}
+                source={{
+                  uri: avatar,
+                }}
                 resizeMode="cover"
               />
             ) : (
@@ -184,7 +160,7 @@ const Profile = ({ route, navigation }) => {
                 resizeMode="cover"
               />
             )}
-            <TouchableOpacity onPress={handleChangePicture}>
+            <TouchableOpacity onPress={() => handleChangePicture()}>
               <Text style={styles.title3}>Change profile picture</Text>
             </TouchableOpacity>
           </View>

@@ -4,7 +4,7 @@ import { COLORS, icons } from "../../constants";
 import DayModel from "./DayModel";
 
 const DoctorUpcomingConsult = (props) => {
-  const { day, nbDay, time, spec, navigation } = props;
+  const { day, nbDay, time, spec, doctorImg, navigation } = props;
   const handleJoin = () => {
     navigation.navigate("beforecall");
   };
@@ -20,13 +20,21 @@ const DoctorUpcomingConsult = (props) => {
                 <Text style={styles.cardTitle3}>{spec}</Text>
                 <Text style={styles.cardTitle4}>{time}</Text>
               </View>
-              <Image
-                style={styles.doctorAvatar}
-                source={{
-                  uri: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-                }}
-                resizeMode="cover"
-              />
+              {doctorImg ? (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={{
+                    uri: "https://9to5mac.com/wp-content/uploads/sites/6/2021/09/Apple-TV.png?w=1600",
+                  }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  style={styles.doctorAvatar}
+                  source={icons.placeholder}
+                  resizeMode="cover"
+                />
+              )}
             </View>
             <View style={styles.joinContainer}>
               <TouchableOpacity
