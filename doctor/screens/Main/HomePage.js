@@ -28,7 +28,7 @@ const USER_QUERY = gql`
       id
       firstName
       lastName
-      profilePic
+      avatarPic
       phoneNumber
       user {
         id
@@ -60,7 +60,7 @@ const HomePage = ({ route, navigation }) => {
         email: data.allCustomers[i].user.email || "",
         firstName: data.allCustomers[i].firstName || "",
         lastName: data.allCustomers[i].lastName || "",
-        profilePic: data.allCustomers[i].profilePic || "",
+        profilePic: data.allCustomers[i].avatarPic || "",
         phoneNumber: data.allCustomers[i].phoneNumber || "",
       };
     }

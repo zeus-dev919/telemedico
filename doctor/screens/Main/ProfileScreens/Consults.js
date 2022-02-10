@@ -83,18 +83,22 @@ const Consults = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {sum && sum?.length > 0 ? (
-          sum.map((item, index) => (
-            <DoctorUpcomingConsult
-              key={index}
-              day="WED"
-              nbDay="11"
-              spec={item.specializations.specializationName}
-              time={item.date}
-              // time="9:00 am"
-              doctorImg={item.doctor.profilePic}
-              navigation={navigation}
-            />
-          ))
+          sum.map((item, index) => {
+            const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            // let day = weekday[item.date.getDay()];
+            return (
+              <DoctorUpcomingConsult
+                key={index}
+                day="Wed"
+                nbDay={item.date.substr(item.date.length - 2, 2)}
+                spec={item.specializations.specializationName}
+                time={item.date}
+                // time="9:00 am"
+                doctorImg={item.doctor.profilePic}
+                navigation={navigation}
+              />
+            );
+          })
         ) : (
           <View>
             <Text>No Consultation yet.</Text>

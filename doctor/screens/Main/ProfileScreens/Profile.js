@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
@@ -24,25 +24,54 @@ const mapState = ({ user }) => ({
   userD: user.userD,
 });
 
-const MUTATE_QUERY = gql`
-  mutation MutateUser(
-    $email: String!
-    $firstName: String!
-    $lastName: String!
-    $profilePic: String!
-    $phoneNumber: String!
-  ) {
-    customerInput(
-      email: $email
-      firstName: $firstName
-      lastName: $lastName
-      profilePic: $profilePic
-      phoneNumber: $phoneNumber
-    ) {
-      success
-      errors
-      refreshToken
-      token
+// mutation MutateUser(
+//   $email: String!
+//   $firstName: String!
+//   $lastName: String!
+//   $profilePic: String!
+//   $phoneNumber: String!
+// ) {
+//   customerInput(
+//     email: $email
+//     firstName: $firstName
+//     lastName: $lastName
+//     profilePic: $profilePic
+//     phoneNumber: $phoneNumber
+//   ) {
+//     success
+//     errors
+//     refreshToken
+//     token
+//   }
+// }
+// mutation MutateUser(
+//   $email: String!
+//   $firstName: String!
+//   $lastName: String!
+//   $profilePic: String!
+//   $phoneNumber: String!
+// ) {
+//   createCustomer(
+//     input: {
+//       email: $email
+//       firstName: $firstName
+//       lastName: $lastName
+//       avatarPic: $profilePic
+//       phoneNumber: $phoneNumber
+//     }
+//   ) {
+//     customer {
+//       firstName
+//     }
+//     errors {
+//       messages
+//     }
+//   }
+// }
+const ME_QUERY = gql`
+  query {
+    me {
+      id
     }
   }
 `;
@@ -51,7 +80,7 @@ const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
-  // const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
+  const [data, loading] = useQuery(MUTATE_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
@@ -60,6 +89,7 @@ const Profile = ({ route, navigation }) => {
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
   const [url, setUrl] = useState(null);
+  const [mutateResponse, setMutateResponse] = useState(null);
 
   const handleUpload = async () => {
     // setIndicatorLoad(true);
@@ -91,20 +121,18 @@ const Profile = ({ route, navigation }) => {
       setEmail(userD.email);
       setPhone(userD.phoneNumber);
     }
-    if (url) {
-      if (url.length > 0) {
-        let user = {
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          profilePic: url,
-          phoneNumber: phone,
-        };
-        dispatch(setUser(user));
-        navigation.navigate("home");
-      }
+    if (mutateResponse) {
+      let user = {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: url,
+        phoneNumber: phone,
+      };
+      dispatch(setUser(user));
+      navigation.navigate("home");
     }
-  }, [userD, url]);
+  }, [userD, url, mutateResponse]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
@@ -112,7 +140,30 @@ const Profile = ({ route, navigation }) => {
     setAvatar(result.uri);
   };
   const handleSubmit = async () => {
-    handleUpload();
+    await handleUpload();
+    console.log("Line 131");
+    const MUTATE_QUERY = gql`
+      mutation a {
+        createCustomer(
+          input: {
+            user: ${data.me.id}
+            firstName: ${firstName}
+            lastName: ${lastName}
+            phoneNumber: ${phone}
+            avatarPic: ${url}
+          }
+        ) {
+          customer {
+            firstName
+          }
+          errors {
+            messages
+          }
+        }
+      }
+    `;
+    const [data1, loading1] = useMutation(MUTATE_QUERY);
+    setMutateResponse(data1)
   };
   return (
     <SafeAreaView style={styles.container}>
