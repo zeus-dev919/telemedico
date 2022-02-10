@@ -122,7 +122,6 @@ const DOCTOR_QUERY = gql`
   }
 `;
 var res = [];
-var test = 0;
 const DoctorsList = ({ route, navigation }) => {
   const { filter } = route?.params;
   const [doctors, setDoctors] = useState(null);
@@ -230,7 +229,9 @@ const DoctorsList = ({ route, navigation }) => {
       if (filter === "Surgery") setSearch("Surgery");
       if (filter === "Mental") setSearch("Mental");
     }
-    if (!loading && data && test === 0) {
+  }, []);
+  useEffect(() => {
+    if (!loading && data) {
       console.log(
         "Data here ================================================="
       );
@@ -240,17 +241,17 @@ const DoctorsList = ({ route, navigation }) => {
       );
       let specs = getspecs(data);
       setSpecList(specs);
-      test = 1;
     }
   }, [data, loading, doctors]);
 
   useEffect(() => {
     console.log("Search =>", search);
-    if (doctors) filterList(search);
+    if (doctors) {
+      console.log("Here Line 252");
+      filterList(search);
+    }
   }, [search]);
-  useEffect(() => {
-    console.log("LINE 247 =>", newDoctors);
-  }, [newDoctors]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>

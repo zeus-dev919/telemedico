@@ -15,7 +15,7 @@ import { COLORS, icons, images } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 import { gql, useMutation } from "@apollo/client";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
 
@@ -50,95 +50,125 @@ const MUTATE_QUERY = gql`
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { currentProperty, userD, errors } = useSelector(mapState);
-  console.log("maptate => ", { currentProperty, userD, errors });
+  const { userD } = useSelector(mapState);
+  console.log("maptate => ", { userD });
   const [MutateUser, { data, loading }] = useMutation(MUTATE_QUERY);
-  const { ch } = route?.params || "empty";
-  console.log("Profile Type =>", ch);
+  // const { ch } = route?.params || "empty";
+  // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [pick, setPick] = useState("");
+  const [avatarName, setAvatarName] = useState("");
 
   const handleUpload = async () => {
-    setIndicatorLoad(true);
-    if (pick.length > 0) {
+    // setIndicatorLoad(true);
+    if (avatar.length > 0) {
       const url_uuid = uuid.v4();
-      const storageRef = ref(storage, `images_report/${url_uuid}_${pick1Name}`);
-      const uploadTask = uploadBytesResumable(storageRef, pick1);
+      const storageRef = ref(storage, `${userD.email}/${url_uuid}.png`);
+      // const uploadTask = uploadBytes(storageRef, avatar);
       // Listen for state changes, errors, and completion of the upload.
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setPick(downloadURL);
+      try {
+        uploadBytes(storageRef, avatar)
+          .then((snapshot) => {
+            console.log("Upload done", snapshot);
+            getDownloadURL(storageRef)
+              .then((downloadURL) => {
+                console.log("URL =>", downloadURL);
+                setAvatar(downloadURL);
+              })
+              .catch((error) => {
+                console.log("Error LINE 85 =>", error);
+              });
+          })
+          .catch((error) => {
+            console.log("Error LINE 89 =>", error);
           });
-        }
-      );
+        // uploadTask.on(
+        //   "state_changed",
+        //   (snapshot) => {
+        //     console.log("Here Line 76");
+        //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        //     const progress =
+        //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //     console.log("Upload is " + progress + "% done");
+        //     switch (snapshot.state) {
+        //       case "paused":
+        //         console.log("Upload is paused");
+        //         break;
+        //       case "running":
+        //         console.log("Upload is running");
+        //         break;
+        //     }
+        //   },
+        //   (error) => {
+        //     // A full list of error codes is available at
+        //     // https://firebase.google.com/docs/storage/web/handle-errors
+        //     switch (error.code) {
+        //       case "storage/unauthorized":
+        //         // User doesn't have permission to access the object
+        //         break;
+        //       case "storage/canceled":
+        //         // User canceled the upload
+        //         break;
+        //       case "storage/unknown":
+        //         // Unknown error occurred, inspect error.serverResponse
+        //         break;
+        //     }
+        //   },
+        //   () => {
+        //     // Upload completed successfully, now we can get the download URL
+        //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        //       setAvatar(downloadURL);
+        //     });
+        //   }
+        // );
+        console.log("Try =================");
+      } catch (error) {
+        console.log("Catch ===============");
+      }
     }
   };
   useEffect(() => {
     if (userD) {
+      setAvatar(userD.profilePic);
       setFirstName(userD.firstName);
       setLastName(userD.lastName);
       setEmail(userD.email);
-      setAvatar(userD.profilePic);
       setPhone(userD.phoneNumber);
     }
-  }, [userD]);
+  }, [userD, avatar]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
     setAvatar(result.uri);
+    setAvatarName(result.name);
   };
   const handleSubmit = async () => {
-    console.log("Saved !!");
-    await MutateUser({
-      variables: {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        profilePic: profilePic,
-        phoneNumber: phoneNumber,
-      },
-    }).then((res) => {
-      console.log(" ===================== ");
-      console.log("DONE", res);
-      navigation.navigate("home");
-    });
+    if (
+      avatar &&
+      !avatar.startsWith("https://firebasestorage.googleapis.com")
+    ) {
+      handleUpload();
+      console.log("Saved !!");
+    } else {
+      console.log("Error Submit ");
+    }
+    // await MutateUser({
+    //   variables: {
+    //     email: email,
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     profilePic: profilePic,
+    //     phoneNumber: phoneNumber,
+    //   },
+    // }).then((res) => {
+    //   console.log(" ===================== ");
+    //   console.log("DONE", res);
+    //   navigation.navigate("home");
+    // });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -171,7 +201,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            {avatar.length > 0 ? (
+            {avatar && avatar.length > 0 ? (
               <Image
                 style={styles.avatar}
                 source={{ uri: avatar }}

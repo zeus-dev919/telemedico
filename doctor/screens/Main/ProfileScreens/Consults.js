@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -10,8 +10,54 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
 import DoctorUpcomingConsult from "../../Models/DoctorUpcomingConsult";
+import { gql, useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+
+const mapState = ({ user }) => ({
+  userD: user.userD,
+});
+
+const CONSULT_QUERY = gql`
+  query {
+    allSchedules {
+      startTime
+      endTime
+      date
+      specializations {
+        specializationName
+      }
+      customer {
+        user {
+          email
+        }
+      }
+      doctor {
+        profilePic
+      }
+    }
+  }
+`;
 
 const Consults = ({ navigation }) => {
+  const { userD } = useSelector(mapState);
+  const { data, loading } = useQuery(CONSULT_QUERY);
+  const [sum, setSum] = useState(null);
+
+  const getConsult = () => {
+    let tab = [];
+    for (let i = 0; i < data.allSchedules.length; i++) {
+      if (data.allSchedules[i].customer.user.email === userD.email) {
+        tab.push(data.allSchedules[i]);
+      }
+    }
+    setSum(tab);
+  };
+
+  useEffect(() => {
+    if (data && !loading && userD) {
+      getConsult();
+    }
+  }, [data]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -36,13 +82,24 @@ const Consults = ({ navigation }) => {
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
-        <DoctorUpcomingConsult
-          day="WED"
-          nbDay="11"
-          spec="Heart Surgeon"
-          time="9:00 am"
-          navigation={navigation}
-        />
+        {sum && sum?.length > 0 ? (
+          sum.map((item, index) => (
+            <DoctorUpcomingConsult
+              key={index}
+              day="WED"
+              nbDay="11"
+              spec={item.specializations.specializationName}
+              time={item.date}
+              // time="9:00 am"
+              doctorImg={item.doctor.profilePic}
+              navigation={navigation}
+            />
+          ))
+        ) : (
+          <View>
+            <Text>No Consultation yet.</Text>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

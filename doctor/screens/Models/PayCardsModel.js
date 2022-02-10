@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   Modal,
@@ -13,26 +13,78 @@ import {
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
 import { CardField, useStripe } from "@stripe/stripe-react-native";
+import { gql, useQuery } from "@apollo/client";
+
+const ME_QUERY = gql`
+  query {
+    me {
+      email
+    }
+  }
+`;
 
 const PayCardsModel = (props) => {
   const { pay, navigation } = props;
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const { data, loading } = useQuery(ME_QUERY);
   // data
-  const [name, setName] = useState("test User");
-  const [number, setNumber] = useState("1234123412341234");
-  const [date, setDate] = useState("12/12");
-  const [cvc, setCvc] = useState("123");
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [success, setSuccess] = useState(false);
   //   Error data
-  const [nameError, setNameError] = useState("");
-  const [numberError, setNumberError] = useState("");
-  const [dateError, setDateError] = useState("");
-  const [cvcError, setCvcError] = useState("");
   const [isSelectedError, setSelectedError] = useState(false);
-  const [pay1, setPay1] = useState(false);
-  const [pay2, setPay2] = useState(true);
-  const [pay3, setPay3] = useState(false);
+
+  const fetchPaymentSheetParams = async (data = {}) => {
+    const response = await fetch(
+      `http://164.52.218.166:8000/payments/save-stripe-info/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const { paymentIntent, ephemeralKey, customer } = await response.json();
+
+    return {
+      paymentIntent,
+      ephemeralKey,
+      customer,
+    };
+  };
+
+  const initializePaymentSheet = async () => {
+    const { paymentIntent, ephemeralKey, customer, publishableKey } =
+      await fetchPaymentSheetParams();
+
+    const { error } = await initPaymentSheet({
+      customerId: customer,
+      customerEphemeralKeySecret: ephemeralKey,
+      paymentIntentClientSecret: paymentIntent,
+      // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+      //methods that complete payment after a delay, like SEPA Debit and Sofort.
+      allowsDelayedPaymentMethods: true,
+    });
+    if (!error) {
+      setLoading(true);
+    }
+  };
+
+  const openPaymentSheet = async () => {
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Alert.alert("Success", "Your order is confirmed!");
+    }
+  };
+
+  useEffect(() => {
+    initializePaymentSheet();
+  }, []);
+
   const handleRegister = () => {
     let check = true;
     if (name.length === 0) {
@@ -71,125 +123,31 @@ const PayCardsModel = (props) => {
       setSuccess(true);
     }
   };
-  const handlePaypal = () => {
-    setPay1(true);
-    setPay2(false);
-    setPay3(false);
-  };
-  const handleMaestro = () => {
-    setPay1(false);
-    setPay2(true);
-    setPay3(false);
-  };
-  const handleVisa = () => {
-    setPay1(false);
-    setPay2(false);
-    setPay3(true);
-  };
   const handlePayment = () => {
-    setModalVisible(true);
-    setSuccess(true);
+    let check = true;
+    if (!isSelected) {
+      setSelectedError("* Agree to the Terms & Conditions is required");
+      check = false;
+    } else {
+      setSelectedError("");
+    }
+    if (check) {
+      let amount = 100;
+      if (pay !== "--") amount = pay;
+      fetchPaymentSheetParams({
+        email: data.me.email,
+        paymentMethod: "card",
+        currency: 'pln',
+        amount: amount,
+      }).then((data) => {
+        console.log("data", data);
+      });
+      setModalVisible(true);
+      setSuccess(true);
+    }
   };
   return (
     <>
-      {/* <View style={styles.payIcons}>
-        <TouchableOpacity
-          onPress={handlePaypal}
-          style={styles.payIconContainer}
-        >
-          {pay1 ? (
-            <Image style={styles.clickedCard} source={icons.accept} />
-          ) : null}
-          <Image
-            style={styles.payIcon}
-            source={icons.paypal}
-            resizeMode="contain"
-          />
-          <Text style={styles.underPayIcon}>Paypal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleMaestro}
-          style={styles.payIconContainer}
-        >
-          {pay2 ? (
-            <Image style={styles.clickedCard} source={icons.accept} />
-          ) : null}
-          <Image
-            style={styles.payIcon}
-            source={icons.maestro}
-            resizeMode="contain"
-          />
-          <Text style={styles.underPayIcon}>Master Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleVisa} style={styles.payIconContainer}>
-          {pay3 ? (
-            <Image style={styles.clickedCard} source={icons.accept} />
-          ) : null}
-          <Image
-            style={styles.payIcon}
-            source={icons.visa}
-            resizeMode="contain"
-          />
-          <Text style={styles.underPayIcon}>Visa Card</Text>
-        </TouchableOpacity>
-      </View> */}
-      {/* Form */}
-      {/* <View style={styles.inputsContainer}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder="Enter Card Name"
-            placeholderTextColor={"grey"}
-          />
-          {nameError.length === 0 ? null : (
-            <Text style={styles.error}>{nameError}</Text>
-          )}
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            value={number}
-            onChangeText={setNumber}
-            placeholder="Enter Card Number"
-            placeholderTextColor={"grey"}
-            keyboardType="number-pad"
-          />
-          {numberError.length === 0 ? null : (
-            <Text style={styles.error}>{numberError}</Text>
-          )}
-        </View>
-        <View style={styles.inputContainer2}>
-          <View style={styles.codeContainer}>
-            <TextInput
-              style={styles.input}
-              value={date}
-              onChangeText={setDate}
-              placeholder="Expiration Date"
-              placeholderTextColor={"grey"}
-              keyboardType="number-pad"
-            />
-            {dateError.length === 0 ? null : (
-              <Text style={styles.error}>{dateError}</Text>
-            )}
-          </View>
-          <View style={styles.codeContainer}>
-            <TextInput
-              style={styles.input}
-              value={cvc}
-              onChangeText={setCvc}
-              placeholder="CV Code"
-              placeholderTextColor={"grey"}
-              keyboardType="number-pad"
-              maxLength={3}
-            />
-            {cvcError.length === 0 ? null : (
-              <Text style={styles.error}>{cvcError}</Text>
-            )}
-          </View>
-        </View>
-      </View> */}
       {/* Stripe */}
       <CardField
         postalCodeEnabled={true}
