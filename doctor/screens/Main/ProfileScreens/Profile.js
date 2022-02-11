@@ -76,20 +76,46 @@ const ME_QUERY = gql`
   }
 `;
 
+const MUTATE_QUERY = gql`
+  mutation a(
+    $firstName: String!
+    $lastName: String!
+    $phone: String!
+    $profilePic: String!
+  ) {
+    createCustomer(
+      input: {
+        id: 1
+        firstName: $firstName
+        lastName: $lastName
+        phoneNumber: $phone
+        avatarPic: $profilePic
+      }
+    ) {
+      customer {
+        firstName
+      }
+      errors {
+        messages
+      }
+    }
+  }
+`;
+
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
-  const { data, loading } = useQuery(ME_QUERY);
+  // const { data, loading } = useQuery(ME_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
+  const [a, { data, loading }] = useMutation(MUTATE_QUERY);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
   const [url, setUrl] = useState(null);
-  const [mutateResponse, setMutateResponse] = useState(null);
 
   const handleUpload = async () => {
     // setIndicatorLoad(true);
@@ -121,18 +147,18 @@ const Profile = ({ route, navigation }) => {
       setEmail(userD.email);
       setPhone(userD.phoneNumber);
     }
-    if (mutateResponse) {
-      let user = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        profilePic: url,
-        phoneNumber: phone,
-      };
-      dispatch(setUser(user));
-      navigation.navigate("home");
-    }
-  }, [userD, url, mutateResponse]);
+    // if (data) {
+    //   let user = {
+    //     email: email,
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     profilePic: url,
+    //     phoneNumber: phone,
+    //   };
+    //   dispatch(setUser(user));
+    //   navigation.navigate("home");
+    // }
+  }, [userD]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
@@ -140,30 +166,38 @@ const Profile = ({ route, navigation }) => {
     setAvatar(result.uri);
   };
   const handleSubmit = async () => {
+    console.log("Here Line 169");
     await handleUpload();
-    console.log("Line 131");
-    const MUTATE_QUERY = gql`
-      mutation a {
-        createCustomer(
-          input: {
-            user: ${data.me.id}
-            firstName: ${firstName}
-            lastName: ${lastName}
-            phoneNumber: ${phone}
-            avatarPic: ${url}
-          }
-        ) {
-          customer {
-            firstName
-          }
-          errors {
-            messages
-          }
-        }
-      }
-    `;
-    const [data1, loading1] = useMutation(MUTATE_QUERY);
-    setMutateResponse(data1);
+    console.log("Here Line 171");
+    let user = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      profilePic: url,
+      phoneNumber: phone,
+    };
+    dispatch(setUser(user));
+    navigation.navigate("home");
+    // await a({
+    //   variables: {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     profilePic: url,
+    //     phoneNumber: phone,
+    //   },
+    // }).then((res) => {
+    //   console.log(" ===========DONE========== ");
+    //   let user = {
+    //     email: email,
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     profilePic: url,
+    //     phoneNumber: phone,
+    //   };
+    //   dispatch(setUser(user));
+    //   navigation.navigate("home");
+    // });
+    console.log("Here Line 192");
   };
   return (
     <SafeAreaView style={styles.container}>

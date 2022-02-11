@@ -12,17 +12,21 @@ import {
 } from "react-native";
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
-import { CardField, useConfirmPayment,useStripe } from "@stripe/stripe-react-native";
+import {
+  CardField,
+  useConfirmPayment,
+  useStripe,
+} from "@stripe/stripe-react-native";
 import { useSelector } from "react-redux";
-// import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-// const ME_QUERY = gql`
-//   query {
-//     me {
-//       email
-//     }
-//   }
-// `;
+const ME_QUERY = gql`
+  query {
+    me {
+      email
+    }
+  }
+`;
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -33,7 +37,7 @@ const PayCardsModel = (props) => {
   // const { confirmPayment, loading } = useConfirmPayment();
   const { confirmPayment } = useStripe();
   const { userD } = useSelector(mapState);
-  // const { data, loading } = useQuery(ME_QUERY);
+  const { data, loading } = useQuery(ME_QUERY);
   // data
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -121,34 +125,33 @@ const PayCardsModel = (props) => {
       setSuccess(true);
     }
   };
-  const [key, setKey] = useState('');
+  const [key, setKey] = useState("");
   useEffect(() => {
-    fetch('http://192.168.1.12:3000/create-payment-intent', {
-      method: 'POST'
+    fetch("http://164.52.218.166:3000/create-payment-intent/", {
+      method: "POST",
     })
-    .then(res => res.json())
-    .then(res => {
-      const intent = res;
-      setKey(intent.clientSecret);
-    });
-  
+      .then((res) => res.json())
+      .then((res) => {
+        const intent = res;
+        setKey(intent.clientSecret);
+      });
+  }, []);
 
-  }, [])
-  
   const handlePayment = async () => {
-    const {error} = await confirmPayment(key, {
-      type: 'Card',
+    const { error } = await confirmPayment(key, {
+      type: "Card",
       billingDetails: {
-        email: 'oussama.abdallah.1998@gmail.com'
+        email: userD.email,
       },
     });
 
-    if (error){
-      Alert.alert('Error : ', error);
-    }else{
-      Alert.alert('Payment successful ');
+    if (error) {
+      Alert.alert("Error : ", error);
+    } else {
+      setModalVisible(true);
+      setSuccess(true);
     }
-  }
+  };
   const handlePa = () => {
     let check = true;
     if (!isSelected) {

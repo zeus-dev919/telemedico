@@ -13,10 +13,10 @@ import AgoraUIKit from "agora-rn-uikit";
 const Call = ({ navigation }) => {
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
-    appId: "a724d5c0cd234dd5a639904931b0b667",
-    channel: "testv2.0",
+    appId: "bd08af716cc44039a1d69c7b912974c6",
+    channel: "beta_testing",
     token:
-      "006a724d5c0cd234dd5a639904931b0b667IAC4RVbkOFhOyfPXV7UYhR3H6LoryV/XzbeKD5G0de28Lh/tN1EAAAAAEAD1z9KPV2L5YQEAAQBWYvlh",
+      "006bd08af716cc44039a1d69c7b912974c6IAAgbic1m/7YKXcXu9w7l/rKIECywDsCflllaEaDRqKXMpXaHNMAAAAAEAAxc9bWtO8HYgEAAQC07wdi",
     layout: 1,
     mode: 0,
   };
