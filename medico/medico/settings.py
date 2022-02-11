@@ -178,7 +178,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER ='sentinelhz344@gmail.com'
-EMAIL_HOST_PASSWORD = 'Aarushi@95'
+EMAIL_HOST_PASSWORD = 'Aarushimalik@95'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
