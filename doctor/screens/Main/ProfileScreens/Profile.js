@@ -80,7 +80,7 @@ const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
-  const [data, loading] = useQuery(ME_QUERY);
+  const { data, loading } = useQuery(ME_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
@@ -163,7 +163,7 @@ const Profile = ({ route, navigation }) => {
       }
     `;
     const [data1, loading1] = useMutation(MUTATE_QUERY);
-    setMutateResponse(data1)
+    setMutateResponse(data1);
   };
   return (
     <SafeAreaView style={styles.container}>
