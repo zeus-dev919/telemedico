@@ -112,6 +112,7 @@ const DOCTOR_QUERY = gql`
       lastName
       country
       state
+      profilePicture
       specialization {
         specializationName
       }
@@ -143,7 +144,6 @@ const DoctorsList = ({ route, navigation }) => {
   };
   // done
   const getDoctors = () => {
-    // res = [];
     let specs = getspecs(data);
     let tab = [];
     if (specs.length > 0) {
@@ -163,7 +163,9 @@ const DoctorsList = ({ route, navigation }) => {
                 (data.allDoctors[i].country
                   ? data.allDoctors[i].country
                   : "--"),
-              img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+              img: data.allDoctors[i].profilePicture
+                ? data.allDoctors[i].profilePicture
+                : "",
               patients: data.allDoctors[i].patients
                 ? data.allDoctors[i].patients
                 : "--",
@@ -201,7 +203,6 @@ const DoctorsList = ({ route, navigation }) => {
     }
     let tab = [];
     for (let i = 0; i < doctors.length; i++) {
-      console.log("Line 212 =>", doctors[i]);
       if (doctors[i].title.toUpperCase().includes(filtername.toUpperCase())) {
         tab.push(doctors[i]);
       }
@@ -222,14 +223,17 @@ const DoctorsList = ({ route, navigation }) => {
       if (filter === "Surgery") setSearch("Surgery");
       if (filter === "Mental") setSearch("Mental");
     }
+    return () => {
+      res = [];
+      setDoctors(null);
+      setNewDoctors(null);
+      setSearch("");
+      setFilterModal(false);
+      setHelp(false);
+    };
   }, []);
   useEffect(() => {
-    console.log("<><><><><<<><><><<<<><<<<<<<<<<<<<<><><<<><<<<<<");
-    console.log(data);
-    if (data) {
-      console.log(
-        "Data here ================================================="
-      );
+    if (data && !newDoctors) {
       getDoctors();
       setDoctors(
         res.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0))
@@ -241,11 +245,8 @@ const DoctorsList = ({ route, navigation }) => {
       filterList(search);
     }
   }, [data, doctors]);
-
   useEffect(() => {
-    console.log("Search =>", search);
     if (doctors) {
-      console.log("Here Line 252");
       filterList(search);
     }
   }, [search]);
@@ -307,7 +308,6 @@ const DoctorsList = ({ route, navigation }) => {
       {newDoctors ? (
         <SectionList
           refreshing={true}
-          // sections={filter === "All specialization" ? res : newDoctors}
           sections={newDoctors}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => (

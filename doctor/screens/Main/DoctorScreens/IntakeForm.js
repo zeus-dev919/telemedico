@@ -210,26 +210,26 @@ const IntakeForm = ({ navigation }) => {
   const handleSubmit = async () => {
     // f4
     let f4 = "";
-    if (f4_1) f4.contact("Anemia, ");
-    if (f4_2) f4.contact("Asthma, ");
-    if (f4_3) f4.contact("Arthritis, ");
-    if (f4_4) f4.contact("Cancer, ");
-    if (f4_5) f4.contact("Gout , ");
-    if (f4_6) f4.contact("Diabetes, ");
-    if (f4_7) f4.contact("Emotional Disorder, ");
-    if (f4_8) f4.contact("Epilepsy Seizures, ");
-    if (f4_9) f4.contact("Fainting Spells, ");
-    if (f4_10) f4.contact("Gallstones, ");
-    if (f4_11) f4.contact("Heart Disease, ");
-    if (f4_12) f4.contact("Heart Attack, ");
+    if (f4_1) f4.concat("Anemia, ");
+    if (f4_2) f4.concat("Asthma, ");
+    if (f4_3) f4.concat("Arthritis, ");
+    if (f4_4) f4.concat("Cancer, ");
+    if (f4_5) f4.concat("Gout , ");
+    if (f4_6) f4.concat("Diabetes, ");
+    if (f4_7) f4.concat("Emotional Disorder, ");
+    if (f4_8) f4.concat("Epilepsy Seizures, ");
+    if (f4_9) f4.concat("Fainting Spells, ");
+    if (f4_10) f4.concat("Gallstones, ");
+    if (f4_11) f4.concat("Heart Disease, ");
+    if (f4_12) f4.concat("Heart Attack, ");
 
-    if (f4_17) f4.contact("Thyroid Problems, ");
-    if (f4_18) f4.contact("Tuberculosis, ");
-    if (f4_19) f4.contact("Venereal Disease, ");
-    if (f4_20) f4.contact("Neurological Disorders, ");
-    if (f4_21) f4.contact("Disorders, ");
-    if (f4_22) f4.contact("Lung Disease, ");
-    if (f4_24) f4.contact(f4_other);
+    if (f4_17) f4.concat("Thyroid Problems, ");
+    if (f4_18) f4.concat("Tuberculosis, ");
+    if (f4_19) f4.concat("Venereal Disease, ");
+    if (f4_20) f4.concat("Neurological Disorders, ");
+    if (f4_21) f4.concat("Disorders, ");
+    if (f4_22) f4.concat("Lung Disease, ");
+    if (f4_24) f4.concat(f4_other);
     // exercices
     let exercices = "";
     if (f5_1_1) exercices = "Never";
@@ -256,7 +256,6 @@ const IntakeForm = ({ navigation }) => {
         "Content-Type": "application/json",
       },
       body: {
-        customer: "beta_testing",
         name: name,
         birth: birth,
         gender: gender,

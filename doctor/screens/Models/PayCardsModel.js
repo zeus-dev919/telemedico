@@ -12,17 +12,21 @@ import {
 } from "react-native";
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
-import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
+import {
+  CardField,
+  useConfirmPayment,
+  useStripe,
+} from "@stripe/stripe-react-native";
 import { useSelector } from "react-redux";
-// import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-// const ME_QUERY = gql`
-//   query {
-//     me {
-//       email
-//     }
-//   }
-// `;
+const ME_QUERY = gql`
+  query {
+    me {
+      email
+    }
+  }
+`;
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -30,9 +34,10 @@ const mapState = ({ user }) => ({
 
 const PayCardsModel = (props) => {
   const { pay, navigation } = props;
-  const { confirmPayment, loading } = useConfirmPayment();
+  // const { confirmPayment, loading } = useConfirmPayment();
+  const { confirmPayment } = useStripe();
   const { userD } = useSelector(mapState);
-  // const { data, loading } = useQuery(ME_QUERY);
+  const { data, loading } = useQuery(ME_QUERY);
   // data
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -120,7 +125,34 @@ const PayCardsModel = (props) => {
       setSuccess(true);
     }
   };
-  const handlePayment = () => {
+  const [key, setKey] = useState("");
+  useEffect(() => {
+    fetch("http://164.52.218.166:3000/create-payment-intent/", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const intent = res;
+        setKey(intent.clientSecret);
+      });
+  }, []);
+
+  const handlePayment = async () => {
+    const { error } = await confirmPayment(key, {
+      type: "Card",
+      billingDetails: {
+        email: userD.email,
+      },
+    });
+
+    if (error) {
+      Alert.alert("Error : ", error);
+    } else {
+      setModalVisible(true);
+      setSuccess(true);
+    }
+  };
+  const handlePa = () => {
     let check = true;
     if (!isSelected) {
       setSelectedError("* Agree to the Terms & Conditions is required");
@@ -140,7 +172,7 @@ const PayCardsModel = (props) => {
     <>
       {/* Stripe */}
       <CardField
-        postalCodeEnabled={true}
+        postalCodeEnabled={false}
         placeholder={{
           number: "4242 4242 4242 4242",
         }}
