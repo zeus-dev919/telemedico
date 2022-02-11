@@ -43,18 +43,17 @@ const PayCardsModel = (props) => {
 
   const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(
-      `http://164.52.218.166:8000/payments/test-payment/`,
+      `http://164.52.218.166:8000/payments/save-stripe-info/`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          currency: "usd",
-          amount: 1000,
+          amount: 2000,
           currency: "pln",
-          payment_method_types: "card",
-          receipt_email: "test@example.com",
+          payment_method_id: "card",
+          email: "test2022@example.com",
         }),
       }
     );
@@ -73,7 +72,7 @@ const PayCardsModel = (props) => {
 
     // Confirm the payment with the card details
     const { paymentIntent, error } = await confirmPayment(clientSecret, {
-      paymentMethodId: "Card",
+      paymentMethodId: "pm_1KRlaEB4dG8o0LochuEVhWjA",
       billingDetails,
     });
 

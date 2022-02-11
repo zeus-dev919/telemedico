@@ -36,7 +36,7 @@ class Doctor(models.Model):
     zip_code = models.CharField(max_length=15 , null=True, blank=True)
     npi_number = models.CharField(max_length=10, null=True, blank=False)
     state_license_number = models.CharField(max_length=12, null=True, blank=False)
-    profile_picture = models.CharField(max_length=50,null=True)
+    profile_picture = models.CharField(max_length=1250,null=True)
     #profile_Pic = models.ImageField(upload_to=None,verbose_name="Profile Picture", blank=True)
     #award_Pic = models.ImageField(upload_to=None,verbose_name="Award_ Picture", blank=True)
     consultation_fees = models.CharField(max_length=10, verbose_name="Consultation Fees", blank=True)

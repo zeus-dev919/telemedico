@@ -80,7 +80,7 @@ const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
-  const [data, loading] = useQuery(MUTATE_QUERY);
+  const [data, loading] = useQuery(ME_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
   const [firstName, setFirstName] = useState("");
