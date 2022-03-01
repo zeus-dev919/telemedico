@@ -25,7 +25,7 @@ const Country = ({ route, navigation }) => {
 
   //   Start
   const { age, gender, pregnant } = route.params;
-  const [check, setCheck] = useState(false);
+  const [check, setCheck] = useState(true);
   const [apiCountries, setApiCountries] = useState(null);
   const [selectError, setSelectError] = useState("");
   const fetchCountries = async () => {

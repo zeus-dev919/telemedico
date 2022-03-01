@@ -158,10 +158,10 @@ const Register = ({ navigation }) => {
     navigation.navigate("Login");
   };
   const _handlePressTerms = () => {
-    WebBrowser.openBrowserAsync("http://medipocket.world/privacy-policy/");
+    WebBrowser.openBrowserAsync("https://medipocket.world/privacy-policy/");
   };
   const _handlePressTerms1 = () => {
-    WebBrowser.openBrowserAsync("http://medipocket.world/terms-conditions/");
+    WebBrowser.openBrowserAsync("https://medipocket.world/terms-conditions/");
   };
   const _handlePressConscent = () => {
     navigation.navigate("Conscent");

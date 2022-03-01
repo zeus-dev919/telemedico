@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import { useSelector } from "react-redux";
-import { icons } from "../../constants";
+import { icons, images } from "../../constants";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -32,6 +32,16 @@ const Header = (props) => {
             resizeMode="cover"
           />
         )}
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.headerSub}
+        onPress={() => navigation.navigate("home")}
+      >
+        <Image
+          style={styles.imgStyle}
+          source={images.logo}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.headerSub}
@@ -71,5 +81,8 @@ const styles = StyleSheet.create({
   },
   icon_style: {
     marginRight: 10,
+  },
+  imgStyle: {
+    width: 100,
   },
 });

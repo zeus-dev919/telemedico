@@ -47,7 +47,7 @@ const PayCardsModel = (props) => {
 
   const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(
-      `http://164.52.218.166:8000/payments/save-stripe-info/`,
+      `https://pay.medipocket.world/payments/save-stripe-info/`,
       {
         method: "POST",
         headers: {
@@ -127,7 +127,7 @@ const PayCardsModel = (props) => {
   };
   const [key, setKey] = useState("");
   useEffect(() => {
-    fetch("http://164.52.218.166:3000/create-payment-intent/", {
+    fetch("https://pay.medipocket.world/create-payment-intent/", {
       method: "POST",
     })
       .then((res) => res.json())

@@ -92,9 +92,9 @@ const Doctors = ({ navigation }) => {
           fees: data.allDoctors[i].consultationFees
             ? data.allDoctors[i].consultationFees
             : "--",
-            duration: data.allDoctors[i].consultationTime
-              ? data.allDoctors[i].consultationTime
-              : "--",
+          duration: data.allDoctors[i].consultationTime
+            ? data.allDoctors[i].consultationTime
+            : "--",
         });
       }
     }
@@ -108,8 +108,11 @@ const Doctors = ({ navigation }) => {
       console.log("Data NEWWWW2 => ");
     }
   }, [data]);
+  const handleMoreDoctors = () => {
+    navigation.navigate("doctorList", { filter: "8" });
+  };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <Header avatar="" navigation={navigation} bg={COLORS.bgColor1} />
@@ -212,7 +215,7 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <View style={[styles.searchContainer, styles.shadow]}>
+          {/* <View style={[styles.searchContainer, styles.shadow]}>
             <Image
               style={styles.search}
               source={icons.search}
@@ -225,7 +228,7 @@ const Doctors = ({ navigation }) => {
               placeholder="Search by specialization"
               placeholderTextColor="#b2b8cc"
             />
-          </View>
+          </View> */}
         </View>
         {/* Card3 */}
         {tab.length > 0 ? (
@@ -250,8 +253,11 @@ const Doctors = ({ navigation }) => {
             <ActivityIndicator size="large" color={COLORS.blueBtn} />
           </Text>
         )}
+        <TouchableOpacity onPress={handleMoreDoctors} style={styles.relevant}>
+          <Text style={styles.relevantTitle}>See more doctors</Text>
+        </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -395,5 +401,19 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     marginVertical: 20,
+  },
+  relevant: {
+    backgroundColor: COLORS.blueBtn,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+  },
+  relevantTitle: {
+    fontSize: 18,
+    color: "white",
   },
 });

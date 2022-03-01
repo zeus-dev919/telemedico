@@ -270,13 +270,23 @@ const DoctorsList = ({ route, navigation }) => {
           <View style={styles.titleConatiner}>
             <Text style={styles.title1}>Doctor List</Text>
           </View>
-          <TouchableOpacity onPress={() => setHelp(true)}>
-            <Ionicons
+          <TouchableOpacity
+            onPress={() => setHelp(true)}
+            style={{
+              backgroundColor: COLORS.blueBtn,
+              padding: 5,
+              borderRadius: 8,
+            }}
+          >
+            {/* <Ionicons
               name="help-circle-outline"
               size={24}
               color="black"
               style={styles.icon_style}
-            />
+            /> */}
+            <Text style={{ fontSize: 10, color: "white", textAlign: "center" }}>
+              Special{"\n"}Request
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -461,6 +471,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    width: 50,
   },
   icon_style: {
     marginRight: 10,

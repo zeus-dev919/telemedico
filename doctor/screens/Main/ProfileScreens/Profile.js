@@ -165,6 +165,9 @@ const Profile = ({ route, navigation }) => {
     console.log("Response2 =>", result);
     setAvatar(result.uri);
   };
+  const handleMoreDoctors = () => {
+    navigation.navigate("doctorList", { filter: "8" });
+  };
   const handleSubmit = async () => {
     console.log("Here Line 169");
     await handleUpload();
@@ -218,11 +221,12 @@ const Profile = ({ route, navigation }) => {
           <View style={styles.titleConatiner}>
             <Text style={styles.title1}>Profile</Text>
           </View>
-          <View style={styles.titleConatiner}>
+          <View style={{ width: 50 }}></View>
+          {/* <View style={styles.titleConatiner}>
             <TouchableOpacity onPress={() => handleSubmit()}>
               <Text style={styles.title2}>Done</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
       {/* ScrollView */}
@@ -230,7 +234,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            {avatar.length > 0 ? (
+            {avatar?.length > 0 ? (
               <Image
                 style={styles.avatar}
                 source={{
@@ -283,6 +287,12 @@ const Profile = ({ route, navigation }) => {
                 onChangeText={setPhone}
               />
             </View>
+            <TouchableOpacity
+              onPress={() => handleSubmit()}
+              style={styles.relevant}
+            >
+              <Text style={styles.relevantTitle}>Done</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -391,5 +401,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
     shadowRadius: 2,
     elevation: 2,
+  },
+  relevant: {
+    backgroundColor: COLORS.blueBtn,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderRadius: 10,
+    marginVertical: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+  },
+  relevantTitle: {
+    fontSize: 18,
+    color: "white",
   },
 });

@@ -8,12 +8,15 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 
 const Help = ({ navigation }) => {
   const [indicatorLoad, setIndicatorLoad] = useState(false);
+  const [help, setHelp] = useState(false);
+
   // f2
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -197,26 +200,26 @@ const Help = ({ navigation }) => {
   const handleSubmit = async () => {
     // f4
     let f4 = "";
-    if (f4_1) f4.contact("Anemia, ");
-    if (f4_2) f4.contact("Asthma, ");
-    if (f4_3) f4.contact("Arthritis, ");
-    if (f4_4) f4.contact("Cancer, ");
-    if (f4_5) f4.contact("Gout , ");
-    if (f4_6) f4.contact("Diabetes, ");
-    if (f4_7) f4.contact("Emotional Disorder, ");
-    if (f4_8) f4.contact("Epilepsy Seizures, ");
-    if (f4_9) f4.contact("Fainting Spells, ");
-    if (f4_10) f4.contact("Gallstones, ");
-    if (f4_11) f4.contact("Heart Disease, ");
-    if (f4_12) f4.contact("Heart Attack, ");
+    if (f4_1) f4.concat("Anemia, ");
+    if (f4_2) f4.concat("Asthma, ");
+    if (f4_3) f4.concat("Arthritis, ");
+    if (f4_4) f4.concat("Cancer, ");
+    if (f4_5) f4.concat("Gout , ");
+    if (f4_6) f4.concat("Diabetes, ");
+    if (f4_7) f4.concat("Emotional Disorder, ");
+    if (f4_8) f4.concat("Epilepsy Seizures, ");
+    if (f4_9) f4.concat("Fainting Spells, ");
+    if (f4_10) f4.concat("Gallstones, ");
+    if (f4_11) f4.concat("Heart Disease, ");
+    if (f4_12) f4.concat("Heart Attack, ");
 
-    if (f4_17) f4.contact("Thyroid Problems, ");
-    if (f4_18) f4.contact("Tuberculosis, ");
-    if (f4_19) f4.contact("Venereal Disease, ");
-    if (f4_20) f4.contact("Neurological Disorders, ");
-    if (f4_21) f4.contact("Disorders, ");
-    if (f4_22) f4.contact("Lung Disease, ");
-    if (f4_24) f4.contact(f4_other);
+    if (f4_17) f4.concat("Thyroid Problems, ");
+    if (f4_18) f4.concat("Tuberculosis, ");
+    if (f4_19) f4.concat("Venereal Disease, ");
+    if (f4_20) f4.concat("Neurological Disorders, ");
+    if (f4_21) f4.concat("Disorders, ");
+    if (f4_22) f4.concat("Lung Disease, ");
+    if (f4_24) f4.concat(f4_other);
     // exercices
     let exercices = "";
     if (f5_1_1) exercices = "Never";
@@ -268,7 +271,6 @@ const Help = ({ navigation }) => {
       .then((response) => response.text())
       .then((res) => {
         setIndicatorLoad(false);
-        navigation.navigate("home");
         console.log("Response Fecth =>", res);
       })
       .catch((err) => {
@@ -276,6 +278,7 @@ const Help = ({ navigation }) => {
         console.log("==============================================");
         console.log("Error =>", err);
       });
+    setHelp(true);
     console.log("DONE");
   };
   return (
@@ -1089,10 +1092,43 @@ const Help = ({ navigation }) => {
               <ActivityIndicator size="large" color="#ffffff" />
             </Text>
           ) : (
-            <Text style={styles.signup}>Special Request</Text>
+            <Text style={styles.signup}>Submit Request</Text>
           )}
         </TouchableOpacity>
       </ScrollView>
+      {/* Help */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={help}
+        onRequestClose={() => {
+          setHelp(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.ModelTitleView}>
+              <Text style={styles.titleModal}>
+                Your Request have been submitted Successfully
+              </Text>
+            </View>
+            <View style={styles.ModelTitleView}>
+              <Text style={styles.titleModal}>
+                Our patient advisor will be reaching out to you in the next 24 hours
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.signup2}
+              onPress={() => {
+                setHelp(false);
+                navigation.navigate("home");
+              }}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -1260,5 +1296,51 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     marginBottom: 20,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+  },
+  titleModal: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  signup2: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

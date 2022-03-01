@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
@@ -27,6 +28,7 @@ const IntakeForm = ({ navigation }) => {
   // const { data, loading } = useQuery(USER_QUERY);
   // console.log("Data =>", data, loading);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
+  const [help, setHelp] = useState(false);
   // f2
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -249,7 +251,7 @@ const IntakeForm = ({ navigation }) => {
     if (appointment2) appointment = "4-7 Days";
     if (appointment3) appointment = "Morning India time: 5.30am - 10am";
     if (appointment4) appointment = "Evening India time: 5.30pm - 12am";
-    await fetch("http://164.52.218.166:8000/intake/", {
+    await fetch("https://app.medipocket.world/intake/", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -1103,6 +1105,34 @@ const IntakeForm = ({ navigation }) => {
           )}
         </TouchableOpacity>
       </ScrollView>
+      {/* Help */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={help}
+        onRequestClose={() => {
+          setHelp(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.ModelTitleView}>
+              <Text style={styles.titleModal}>
+                Your details have been submitted Successfully
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.signup2}
+              onPress={() => {
+                setHelp(false);
+                navigation.navigate("home");
+              }}
+            >
+              <Text style={styles.textStyle}>Back home</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -1270,5 +1300,51 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     marginBottom: 20,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+  },
+  titleModal: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  signup2: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

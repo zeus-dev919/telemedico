@@ -194,7 +194,7 @@ const Result = ({ route, navigation }) => {
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose1}</Text>
               <Text style={styles.title4}>{spec1}</Text>
-              {doctors1?.length > 0 ? (
+              {/* {doctors1?.length > 0 ? (
                 doctors1.map((item, index) => (
                   <DoctorCardModel
                     key={index}
@@ -214,12 +214,12 @@ const Result = ({ route, navigation }) => {
                 >
                   <Text style={styles.relevantTitle}>See relevant doctors</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose2}</Text>
               <Text style={styles.title4}>{spec2}</Text>
-              {doctors2?.length > 0 ? (
+              {/* {doctors2?.length > 0 ? (
                 doctors2.map((item, index) => (
                   <DoctorCardModel
                     key={index}
@@ -239,12 +239,12 @@ const Result = ({ route, navigation }) => {
                 >
                   <Text style={styles.relevantTitle}>See relevant doctors</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
             <View style={styles.diagnoseContainer}>
               <Text style={styles.title3}>{diagnose3}</Text>
               <Text style={styles.title4}>{spec3}</Text>
-              {doctors3?.length > 0 ? (
+              {/* {doctors3?.length > 0 ? (
                 doctors3.map((item, index) => (
                   <DoctorCardModel
                     key={index}
@@ -264,8 +264,14 @@ const Result = ({ route, navigation }) => {
                 >
                   <Text style={styles.relevantTitle}>See relevant doctors</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
+            <TouchableOpacity
+                  onPress={handleMoreDoctors}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See more differential diagnosis</Text>
+                </TouchableOpacity>
             <View style={{ marginVertical: 20 }}>
               <Text style={styles.title5}>
                 Consult Our Top USA Specialists
@@ -299,6 +305,12 @@ const Result = ({ route, navigation }) => {
               bg="0"
               navigation={navigation}
             />
+            <TouchableOpacity
+                  onPress={handleMoreDoctors}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See more doctors</Text>
+                </TouchableOpacity>
           </>
         ) : (
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
@@ -378,7 +390,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "700",
     marginTop: 3,
-    marginBottom: 10,
+    marginBottom: 20,
     textAlign: "left",
   },
   title5: {

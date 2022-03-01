@@ -32,7 +32,7 @@ const CONSULT_QUERY = gql`
         }
       }
       doctor {
-        profilePic
+        profilePicture
       }
     }
   }
@@ -100,8 +100,18 @@ const Consults = ({ navigation }) => {
             );
           })
         ) : (
-          <View>
-            <Text>No Consultation yet.</Text>
+          <View
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 20,
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              No Consultation yet.
+            </Text>
           </View>
         )}
       </ScrollView>

@@ -21,7 +21,7 @@ const DoctorUpcomingConsult = (props) => {
                 <Text style={styles.cardTitle3}>{spec}</Text>
                 <Text style={styles.cardTitle4}>{time}</Text>
               </View>
-              {doctorImg.length > 0 && doctorImg.startsWith('http') ? (
+              {doctorImg?.length > 0 && doctorImg?.startsWith('http') ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{
