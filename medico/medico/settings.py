@@ -172,7 +172,7 @@ GRAPHENE = {
 }
 
 GRAPHQL_AUTH = {
-    'SEND_ACTIVATION_EMAIL': False,
+    'SEND_ACTIVATION_EMAIL': True,
     # ...
 }
 
@@ -185,6 +185,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER ='sentinelhz344@gmail.com'
 EMAIL_HOST_PASSWORD = 'Aarushimalik@95'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
