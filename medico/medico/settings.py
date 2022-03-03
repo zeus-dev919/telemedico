@@ -96,8 +96,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'medi',
 	'USER': 'medipocket',
-	'PASSWORD':'medipocket21',
-	'HOST':'localhost',
+	'PASSWORD':'Jp17Qlsk7tRik',
+	'HOST':'127.0.0.1',
 	'PORT':'',
     }
 }
@@ -169,6 +169,11 @@ GRAPHENE = {
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
+}
+
+GRAPHQL_AUTH = {
+    'SEND_ACTIVATION_EMAIL': False,
+    # ...
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
