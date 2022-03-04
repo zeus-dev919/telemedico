@@ -70,7 +70,7 @@ const HomePage = ({ route, navigation }) => {
     if (!loading && !complet) {
       let user = getCurrentUser();
       console.log("currentUser => ", user);
-      dispatch(setUser(user));
+      // dispatch(setUser(user));
       setComplet(true);
     }
     // if (newAccount) {

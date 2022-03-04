@@ -15,7 +15,15 @@ import CountryPicker from "react-native-country-picker-modal";
 
 const Country = ({ route, navigation }) => {
   const [countryCode, setCountryCode] = useState("IN");
-  const [country, setCountry] = useState(null);
+  const [country, setCountry] = useState({
+    callingCode: ["91"],
+    cca2: "IN",
+    currency: ["INR"],
+    flag: "flag-in",
+    name: "India",
+    region: "Asia",
+    subregion: "Southern Asia",
+  });
   const [withCountryNameButton, setWithCountryNameButton] = useState(false);
   const [withFlag, setWithFlag] = useState(true);
   const [withEmoji, setWithEmoji] = useState(true);
@@ -58,7 +66,11 @@ const Country = ({ route, navigation }) => {
     setCheck(true);
   };
   const handleSubmit = () => {
-    const newCountryObj = apiCountries.find(item => item.country_name === country.name);
+    console.log("Country BROOOOOOOOOOOOOO");
+    console.log(country);
+    const newCountryObj = apiCountries.find(
+      (item) => item.country_name === country.name
+    );
     if (check) {
       let newpregnant = ''
       if(pregnant !== undefined) {
@@ -71,7 +83,6 @@ const Country = ({ route, navigation }) => {
         country_id: newCountryObj.country_id,
         region_id: newCountryObj.region_id,
       });
-      
     } else {
       setSelectError("* Select a gender is Required");
     }
