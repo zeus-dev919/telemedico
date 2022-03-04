@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'records',
     'payments',
-    'intake',
+    'intake_form',
 
 
 

@@ -22,7 +22,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from payments import urls
-from intake.views import intake_form
+from intake_form.views import intake_form
 
 
 
@@ -31,7 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql/',csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path('payments/', include('payments.urls')),
-    path('intake/',csrf_exempt(intake_form)),
+    path('intake_form/',csrf_exempt(intake_form)),
 
     ]
 
