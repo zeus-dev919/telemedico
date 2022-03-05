@@ -272,7 +272,8 @@ const IntakeForm = ({ navigation }) => {
       question3: q3,
       appointment: appointment,
     });
-    await fetch("https://app.medipocket.world/intake/", {
+    // await fetch("https://app.medipocket.world/intake/", {
+    await fetch("https://app.medipocket.world/intake_form/", {
       method: "POST",
       headers: {
         Accept: "application/json",
