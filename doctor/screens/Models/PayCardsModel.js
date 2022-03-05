@@ -258,7 +258,7 @@ const PayCardsModel = (props) => {
               <Text style={styles.modalText}>
                 Your specialists have been informed of your appointment request!
                 Please fill the Patient Intake Form for your specialists to know
-                about your health and put 5 main questions you want to address
+                about your health and put 3 main questions you want to address
                 during the consultation
               </Text>
               <Pressable

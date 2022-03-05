@@ -79,7 +79,7 @@ const IntakeForm = ({ navigation }) => {
   const [f5_3_2, setF5_3_2] = useState(false);
   const [f5_3_3, setF5_3_3] = useState(false);
   const [f5_3_4, setF5_3_4] = useState(false);
-  
+
   // f5_5
   const [f5_5_1, setF5_5_1] = useState(false);
   const [f5_5_2, setF5_5_2] = useState(false);
@@ -185,29 +185,29 @@ const IntakeForm = ({ navigation }) => {
   };
   // Appoitment
   const handleAppointment1 = () => {
-    setAppointment1(true)
-    setAppointment2(false)
-    setAppointment3(false)
-    setAppointment4(false)
-  }
+    setAppointment1(true);
+    setAppointment2(false);
+    setAppointment3(false);
+    setAppointment4(false);
+  };
   const handleAppointment2 = () => {
-    setAppointment1(false)
-    setAppointment2(true)
-    setAppointment3(false)
-    setAppointment4(false)
-  }
+    setAppointment1(false);
+    setAppointment2(true);
+    setAppointment3(false);
+    setAppointment4(false);
+  };
   const handleAppointment3 = () => {
-    setAppointment1(false)
-    setAppointment2(false)
-    setAppointment3(true)
-    setAppointment4(false)
-  }
+    setAppointment1(false);
+    setAppointment2(false);
+    setAppointment3(true);
+    setAppointment4(false);
+  };
   const handleAppointment4 = () => {
-    setAppointment1(false)
-    setAppointment2(false)
-    setAppointment3(false)
-    setAppointment4(true)
-  }
+    setAppointment1(false);
+    setAppointment2(false);
+    setAppointment3(false);
+    setAppointment4(true);
+  };
   // Submit
   const handleSubmit = async () => {
     // f4
@@ -251,6 +251,27 @@ const IntakeForm = ({ navigation }) => {
     if (appointment2) appointment = "4-7 Days";
     if (appointment3) appointment = "Morning India time: 5.30am - 10am";
     if (appointment4) appointment = "Evening India time: 5.30pm - 12am";
+    console.log({
+      name: name,
+      birth: birth,
+      gender: gender,
+      phone: phone,
+      patient_medical_history: f4,
+      father: father,
+      mother: mother,
+      brother: brother,
+      sister: sister,
+      current_medication: medication,
+      list_allergies: allergies,
+      exercices: exercices,
+      alcohol: alcohol,
+      smoke: smoke,
+      reason_for_consultation: f3,
+      question1: q1,
+      question2: q2,
+      question3: q3,
+      appointment: appointment,
+    });
     await fetch("https://app.medipocket.world/intake/", {
       method: "POST",
       headers: {
@@ -258,7 +279,8 @@ const IntakeForm = ({ navigation }) => {
         "Content-Type": "application/json",
       },
       body: {
-        name: name,
+        first_name: name,
+        last_name: "___",
         birth: birth,
         gender: gender,
         phone: phone,
@@ -269,9 +291,7 @@ const IntakeForm = ({ navigation }) => {
         sister: sister,
         current_medication: medication,
         list_allergies: allergies,
-        exercices: exercices,
-        alcohol: alcohol,
-        smoke: smoke,
+        healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
         reason_for_consultation: f3,
         question1: q1,
         question2: q2,
@@ -523,7 +543,7 @@ const IntakeForm = ({ navigation }) => {
               <View style={styles.checkbox_container}>
                 <Checkbox
                   value={f4_11}
-                  onValueChange={() => setF4_11(f4_11)}
+                  onValueChange={() => setF4_11(!f4_11)}
                   style={styles.checkbox}
                   color={"#40e0d0"}
                 />

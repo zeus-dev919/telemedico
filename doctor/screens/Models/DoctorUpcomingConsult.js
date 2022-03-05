@@ -5,9 +5,12 @@ import DayModel from "./DayModel";
 
 const DoctorUpcomingConsult = (props) => {
   const { day, nbDay, time, spec, doctorImg, navigation } = props;
-  console.log("Consult => ", day, nbDay, time, spec, doctorImg, navigation);
+  // console.log("Consult => ", day, nbDay, time, spec, doctorImg);
+  console.log("Consult => ", time);
   const handleJoin = () => {
-    navigation.navigate("beforecall");
+    const d = new Date();
+    const timeLeft = (time - d) / 1000;
+    navigation.navigate("beforecall", { timeLeft: timeLeft });
   };
   return (
     <View style={[styles.card1, styles.shadow1]}>
@@ -19,9 +22,9 @@ const DoctorUpcomingConsult = (props) => {
               <DayModel day={day} monthnb={nbDay} isSelected={false} bg="1" />
               <View style={styles.textContainer}>
                 <Text style={styles.cardTitle3}>{spec}</Text>
-                <Text style={styles.cardTitle4}>{time}</Text>
+                <Text style={styles.cardTitle4}>{time.getDay()}</Text>
               </View>
-              {doctorImg?.length > 0 && doctorImg?.startsWith('http') ? (
+              {doctorImg?.length > 0 && doctorImg?.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{

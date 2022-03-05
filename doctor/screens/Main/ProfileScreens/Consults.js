@@ -41,20 +41,58 @@ const CONSULT_QUERY = gql`
 const Consults = ({ navigation }) => {
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
-  const [sum, setSum] = useState(null);
+  // const loading = false;
+  // const data = {
+  //   allSchedules: [
+  //     {
+  //       startTime: "15:06:49",
+  //       endTime: "15:26:49",
+  //       date: "2022-03-06",
+  //       specializations: {
+  //         specializationName: "Orcology",
+  //       },
+  //       customer: {
+  //         user: {
+  //           email: "client@gmail.com",
+  //         },
+  //       },
+  //       doctor: {
+  //         profilePicture: "",
+  //       },
+  //     },
+  //     {
+  //       startTime: "15:06:49",
+  //       endTime: "15:26:49",
+  //       date: "2022-03-06",
+  //       specializations: {
+  //         specializationName: "Orcology",
+  //       },
+  //       customer: {
+  //         user: {
+  //           email: "client@gmail.com",
+  //         },
+  //       },
+  //       doctor: {
+  //         profilePicture: "",
+  //       },
+  //     },
+  //   ],
+  // };
+  const [sum, setSum] = useState([]);
 
   const getConsult = () => {
     let tab = [];
     for (let i = 0; i < data.allSchedules.length; i++) {
       if (data.allSchedules[i].customer.user.email === userD.email) {
-        tab.push(data.allSchedules[i]);
+      tab.push(data.allSchedules[i]);
       }
     }
     setSum(tab);
   };
 
   useEffect(() => {
-    if (data && !loading && userD) {
+    // if (data && !loading && userD) {
+    if (data && !loading) {
       getConsult();
     }
   }, [data]);
@@ -82,18 +120,37 @@ const Consults = ({ navigation }) => {
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
-        {sum && sum?.length > 0 ? (
+        {sum.length > 0 ? (
           sum.map((item, index) => {
+            const month = [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ];
             const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            // let day = weekday[item.date.getDay()];
+            const nbDate = new Date(
+              `${month[item.date.substr(5, 2) - 1]} ${item.date.substr(
+                8,
+                2
+              )}, ${item.date.substr(0, 4)} ${item.startTime}`
+            );
+            const day = weekday[nbDate.getDay()];
             return (
               <DoctorUpcomingConsult
                 key={index}
-                day="Wed"
-                nbDay={item.date.substr(item.date.length - 2, 2)}
+                day={day}
+                nbDay={item.date.substr(8, 2)}
                 spec={item.specializations.specializationName}
-                time={item.date}
-                // time="9:00 am"
+                time={nbDate}
                 doctorImg={item.doctor.profilePic}
                 navigation={navigation}
               />

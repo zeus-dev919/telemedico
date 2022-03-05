@@ -52,7 +52,7 @@ const DoctorCardModel = (props) => {
               style={styles.doctorCardRight}
             >
               <View style={styles.statusIndic}></View>
-              {img.length > 0 ? (
+              {img.length > 0 && img.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{
@@ -92,7 +92,7 @@ const DoctorCardModel = (props) => {
             <View style={styles.doctorCardRight}>
               <View style={styles.statusIndic1}></View>
               <View style={styles.statusIndic2}></View>
-              {img.length > 0 ? (
+              {img.length > 0 && img.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{

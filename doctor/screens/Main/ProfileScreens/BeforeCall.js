@@ -12,7 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons } from "../../../constants";
 import TimeLeft from "../../Models/TimeLeft";
 
-const BeforeCall = ({ navigation }) => {
+const BeforeCall = ({ navigation, route }) => {
+  const { timeLeft } = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -54,8 +55,7 @@ const BeforeCall = ({ navigation }) => {
           <Text style={[styles.title1, { marginTop: 20, fontSize: 30 }]}>
             Timer
           </Text>
-          {/* date = consultTime - currentTime then switch to seconds */}
-          <TimeLeft date="10" navigation={navigation} />
+          <TimeLeft date={timeLeft} navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

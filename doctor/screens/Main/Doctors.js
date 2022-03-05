@@ -23,6 +23,7 @@ const DOCTOR_QUERY = gql`
       lastName
       country
       state
+      profilePicture
       specialization {
         specializationName
       }
@@ -80,7 +81,7 @@ const Doctors = ({ navigation }) => {
             (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
             " ," +
             (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
-          img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+          img: data.allDoctors[i].profilePicture ? data.allDoctors[i].profilePicture : "",
           patients: data.allDoctors[i].patients
             ? data.allDoctors[i].patients
             : "--",
@@ -101,7 +102,7 @@ const Doctors = ({ navigation }) => {
   };
   useEffect(() => {
     if (data) {
-      console.log("Data NEWWWW1 => ");
+      console.log("Data NEWWWW1 => ", data);
       getDoctors();
       setDoctors(tab);
     } else {
@@ -231,6 +232,14 @@ const Doctors = ({ navigation }) => {
           </View> */}
         </View>
         {/* Card3 */}
+        {tab === 0 && (
+          <View style={styles.noChat}>
+            <Text style={styles.noChatText1}>No Doctors yet.</Text>
+            <Text style={styles.noChatText2}>
+              Start Finding Doctors by pressing in the above items.
+            </Text>
+          </View>
+        )}
         {tab.length > 0 ? (
           tab.map((item, index) => (
             <DoctorCardModel
@@ -253,9 +262,11 @@ const Doctors = ({ navigation }) => {
             <ActivityIndicator size="large" color={COLORS.blueBtn} />
           </Text>
         )}
-        <TouchableOpacity onPress={handleMoreDoctors} style={styles.relevant}>
-          <Text style={styles.relevantTitle}>See more doctors</Text>
-        </TouchableOpacity>
+        {tab.length > 0 && (
+          <TouchableOpacity onPress={handleMoreDoctors} style={styles.relevant}>
+            <Text style={styles.relevantTitle}>See more doctors</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -415,5 +426,24 @@ const styles = StyleSheet.create({
   relevantTitle: {
     fontSize: 18,
     color: "white",
+  },
+  noChat: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "10%",
+  },
+  noChatText1: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "black",
+    maxWidth: "80%",
+    marginBottom: 10,
+  },
+  noChatText2: {
+    textAlign: "center",
+    fontSize: 12,
+    color: "black",
+    maxWidth: "80%",
   },
 });
