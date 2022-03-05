@@ -72,5 +72,6 @@ buck-out/
 .expo/
 web-build/
 dist/
+local_settings.py
 
 # @end expo-cli
