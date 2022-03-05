@@ -180,11 +180,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.titan.email'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER ='sentinelhz344@gmail.com'
-EMAIL_HOST_PASSWORD = 'Aarushimalik@95'
+EMAIL_PORT = 465
+EMAIL_HOST_USER ='health@app.medipocket.world'
+EMAIL_HOST_PASSWORD = 'MediPocketHealth-100M'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
