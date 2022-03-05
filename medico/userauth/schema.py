@@ -3,7 +3,7 @@ from graphql_auth import mutations
 from graphql_auth.schema import UserQuery, MeQuery
 import authentication.schema
 from authentication.schema import DoctorCreateInput,ModelQuery, CustomerInputCreate, Mutation as MutationAuthentication
-from intake.schema import Mutation as MutationIntake
+from intake_form.schema import Mutation as MutationIntake
 
 
 class AuthMutation(graphene.ObjectType):
