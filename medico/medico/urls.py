@@ -28,8 +28,8 @@ from userauth.views import get_post_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('graphql/',csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('graphql/', get_post_data),
+    path('graphql/',csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    #path('graphql/', get_post_data),
     path('payments/', include('payments.urls')),
     path('intake_form/',csrf_exempt(intake_form)),
 
