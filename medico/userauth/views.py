@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-from .forms import RegisterUserForm
-from .forms import RegisterDoctorUserForm
-from .forms import RegisterModeratorUserForm
+# from .forms import RegisterUserForm
+# from .forms import RegisterDoctorUserForm
+# from .forms import RegisterModeratorUserForm
 from django.http import Http404, HttpResponse
 from django.contrib.auth.models import Group
 
