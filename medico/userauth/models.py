@@ -10,3 +10,6 @@ class ExtendUser(AbstractUser):
     USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"
     
+
+class CapturePost(models.Model):
+    postdata = models.CharField(max_length=1000)

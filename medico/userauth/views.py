@@ -5,8 +5,11 @@ from django.contrib.auth.decorators import permission_required
 from .forms import RegisterUserForm
 from .forms import RegisterDoctorUserForm
 from .forms import RegisterModeratorUserForm
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib.auth.models import Group
+
+from django.views.decorators.csrf import csrf_exempt
+from .models import CapturePost
 
 
 def register(request):
@@ -57,3 +60,12 @@ def register_moderator(request):
         form = RegisterModeratorUserForm()
 
     return render(request, 'userauth/register.html', {'form': form, 'user_type': 'Moderator'})
+
+
+@csrf_exempt
+def get_post_data(request):
+    if request.method == 'POST':
+        a= CapturePost()
+        a.postdata = request.POST.urlencode()
+        a.save()
+        return HttpResponse(status=200)
