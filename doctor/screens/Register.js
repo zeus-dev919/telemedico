@@ -37,9 +37,9 @@ const mapState = ({ user }) => ({
 const REGISTER_QUERY = gql`
   mutation SignUp($email: String!, $firstName: String!, $password: String!) {
     register(
-      email: $email
-      username: $firstName
-      password1: $password
+      email: $email,
+      username: $firstName,
+      password1: $password,
       password2: $password
     ) {
       success
