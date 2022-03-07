@@ -202,7 +202,7 @@ const Register = ({ navigation }) => {
           </View>
           {/* Email Adress */}
           <View style={styles.inputField}>
-            <Text style={styles.label}>Email Adress</Text>
+            <Text style={styles.label}>Email Address</Text>
             <TextInput
               style={styles.input}
               onChangeText={onChangeEmail}

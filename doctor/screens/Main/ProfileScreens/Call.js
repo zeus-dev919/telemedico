@@ -14,9 +14,9 @@ const Call = ({ navigation }) => {
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
     appId: "3cd84bbd9be642538a3bf6b5b54b49fd",
-    channel: "Medipocket-3",
+    channel: "Medipocket_4",
     token:
-      "0063cd84bbd9be642538a3bf6b5b54b49fdIADplcCjAviJ6WlMAfQq1ZDnDFvDOrdYQpkr/g80RsmT9I6zgK0AAAAAEABznkU8dFQnYgEAAQBzVCdi",
+      "0063cd84bbd9be642538a3bf6b5b54b49fdIACwTlNNdCaqUS0aLQizahZz+4ZRuRoSxTS6y932IVYYc1k97S4AAAAAEABznkU8f+UnYgEAAQB/5Sdi",
     layout: 1,
     mode: 0,
   };
