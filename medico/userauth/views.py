@@ -66,6 +66,6 @@ def register_moderator(request):
 def get_post_data(request):
     if request.method == 'POST':
         a= CapturePost()
-        a.postdata = request.POST.urlencode()
+        a.postdata = request.body
         a.save()
         return HttpResponse(status=200)
