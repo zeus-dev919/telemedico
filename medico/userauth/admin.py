@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ExtendUser
+from .models import ExtendUser, CapturePost
 from django.apps import apps 
 # Register your models here.
 admin.site.register(ExtendUser)
