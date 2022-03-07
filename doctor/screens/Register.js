@@ -10,11 +10,14 @@ import {
   ImageBackground,
   Dimensions,
   ActivityIndicator,
+  Modal,
+  Pressable,
+  Image,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import Checkbox from "expo-checkbox";
-import { COLORS } from "../constants";
+import { icons, COLORS } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signUpUser,
@@ -49,13 +52,13 @@ const REGISTER_QUERY = gql`
 
 const Register = ({ navigation }) => {
   console.log("Property Register Screen");
-  const { currentUser, signUpSuccess, token, errors } =
-    useSelector(mapState);
+  const { currentUser, signUpSuccess, token, errors } = useSelector(mapState);
   console.log("mapState =>", currentUser, signUpSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
 
+  const [doneRegister, setDoneRegister] = useState(false);
   const [firstName, onChangefirstName] = useState("");
   const [email, onChangeEmail] = useState("");
   const [password, onChangepassword] = useState("");
@@ -76,7 +79,7 @@ const Register = ({ navigation }) => {
   useEffect(() => {
     if (signUpSuccess) {
       ResetForm();
-      navigation.navigate("Login");
+      setDoneRegister(!doneRegister);
       dispatch(resetAllAuthForms);
     }
   }, [signUpSuccess]);
@@ -296,6 +299,41 @@ const Register = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={doneRegister}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setDoneRegister(!doneRegister);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.ModelTitleView}>
+              <Image
+                style={styles.ModelIcon}
+                source={icons.accept}
+                resizeMode="contain"
+              />
+              <Text style={styles.titleModal}>Register Successfully done!</Text>
+            </View>
+            <Text style={styles.modalText}>
+              Please check you email to activate your account
+            </Text>
+            <Pressable
+              style={styles.signup3}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                navigation.navigate("Login");
+              }}
+            >
+              <Text style={styles.textStyle}>Login</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -454,6 +492,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // marginVertical: 20,
   },
+  signup3: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 10,
+    borderRadius: 10,
+    paddingHorizontal: 50,
+    // marginVertical: 20,
+  },
   button1: {
     marginVertical: 15,
     padding: 5,
@@ -471,5 +519,51 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 50,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  titleModal: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  ModelIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 10,
+    marginTop: 2,
   },
 });

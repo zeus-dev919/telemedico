@@ -50,12 +50,12 @@ const HomePage = ({ route, navigation }) => {
   const getCurrentUser = () => {
     let i = 0;
     while (
-      data.allCustomers[i]?.user.email !== userD.email &&
+      data.allCustomers[i]?.user?.email !== userD.email &&
       i < data.allCustomers.length
     ) {
       i++;
     }
-    if (data.allCustomers[i]?.user.email === userD.email) {
+    if (data.allCustomers[i]?.user?.email === userD.email) {
       return {
         email: data.allCustomers[i].user.email || "",
         firstName: data.allCustomers[i].firstName || "",
@@ -67,7 +67,7 @@ const HomePage = ({ route, navigation }) => {
     return null;
   };
   useEffect(() => {
-    if (!loading && !complet) {
+    if (!loading && !complet && data) {
       let user = getCurrentUser();
       console.log("currentUser => ", user);
       // dispatch(setUser(user));
