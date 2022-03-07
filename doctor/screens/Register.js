@@ -325,7 +325,7 @@ const Register = ({ navigation }) => {
             <Pressable
               style={styles.signup3}
               onPress={() => {
-                setModalVisible(!modalVisible);
+                setDoneRegister(!doneRegister);
                 navigation.navigate("Login");
               }}
             >
