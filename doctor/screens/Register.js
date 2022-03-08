@@ -37,9 +37,9 @@ const mapState = ({ user }) => ({
 const REGISTER_QUERY = gql`
   mutation SignUp($email: String!, $firstName: String!, $password: String!) {
     register(
-      email: $email
-      username: $firstName
-      password1: $password
+      email: $email,
+      username: $firstName,
+      password1: $password,
       password2: $password
     ) {
       success
@@ -202,7 +202,7 @@ const Register = ({ navigation }) => {
           </View>
           {/* Email Adress */}
           <View style={styles.inputField}>
-            <Text style={styles.label}>Email Adress</Text>
+            <Text style={styles.label}>Email Address</Text>
             <TextInput
               style={styles.input}
               onChangeText={onChangeEmail}

@@ -181,25 +181,25 @@ const Profile = ({ route, navigation }) => {
     };
     dispatch(setUser(user));
     navigation.navigate("home");
-    // await a({
-    //   variables: {
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     profilePic: url,
-    //     phoneNumber: phone,
-    //   },
-    // }).then((res) => {
-    //   console.log(" ===========DONE========== ");
-    //   let user = {
-    //     email: email,
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     profilePic: url,
-    //     phoneNumber: phone,
-    //   };
-    //   dispatch(setUser(user));
-    //   navigation.navigate("home");
-    // });
+    await a({
+      variables: {
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: url,
+        phoneNumber: phone,
+      },
+    }).then((res) => {
+      console.log(" ===========DONE========== ");
+      let user = {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: url,
+        phoneNumber: phone,
+      };
+      dispatch(setUser(user));
+      navigation.navigate("home");
+    });
     console.log("Here Line 192");
   };
   return (

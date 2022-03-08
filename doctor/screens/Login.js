@@ -149,7 +149,7 @@ const Login = ({ navigation }) => {
         <View style={styles.content}>
           {/* Email Adresse */}
           <View style={styles.inputField}>
-            <Text style={styles.label}>Email Adresse</Text>
+            <Text style={styles.label}>Email Address</Text>
             <TextInput
               style={styles.input}
               onChangeText={onChangeEmail}

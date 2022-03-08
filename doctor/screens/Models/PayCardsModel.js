@@ -125,33 +125,42 @@ const PayCardsModel = (props) => {
       setSuccess(true);
     }
   };
+
   const [key, setKey] = useState("");
   useEffect(() => {
-    fetch("https://pay.medipocket.world/create-payment-intent/", {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const intent = res;
-        setKey(intent.clientSecret);
-      });
+    try{
+      fetch("https://pay.medipocket.world/create-payment-intent/", {
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log('=====>',res)
+          const intent = res;
+          setKey(intent.clientSecret);
+        });
+    }catch(err){
+      console.log('error => ', err)
+    }
   }, []);
 
   const handlePayment = async () => {
-    const { error } = await confirmPayment(key, {
-      type: "Card",
-      billingDetails: {
-        email: userD.email,
-      },
-    });
-
-    if (error) {
-      Alert.alert("Error : ", error);
-    } else {
-      setModalVisible(true);
+    setModalVisible(true);
       setSuccess(true);
-    }
+    // const { error } = await confirmPayment(key, {
+    //   type: "Card",
+    //   billingDetails: {
+    //     email: userD.email,
+    //   },
+    // });
+
+    // if (error) {
+    //   Alert.alert("Error : ", error);
+    // } else {
+    //   setModalVisible(true);
+    //   setSuccess(true);
+    // }
   };
+
   const handlePa = () => {
     let check = true;
     if (!isSelected) {
