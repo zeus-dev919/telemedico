@@ -38,6 +38,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         resetPasswordSuccess: action.payload,
       };
     // USER
+    case userTypes.SET_USERNAME:
+      return {
+        ...state,
+        userD: action.payload,
+      };
     case userTypes.SET_USER:
       return {
         ...state,

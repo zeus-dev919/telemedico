@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ResetErrorsState, setUser } from "../../redux/User/user.actions";
+import { ResetErrorsState, setUser, setUserame } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
@@ -22,17 +22,14 @@ const mapState = ({ user }) => ({
   errors: user.errors,
 });
 
-const USER_QUERY = gql`
+const ME_QUERY = gql`
   query {
-    allCustomers {
-      id
-      firstName
-      lastName
-      avatarPic
-      phoneNumber
-      user {
-        id
-        email
+    users {
+      edges {
+        node {
+          username
+          email
+        }
       }
     }
   }
@@ -43,40 +40,21 @@ const HomePage = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { currentProperty, userD, errors } = useSelector(mapState);
   console.log("maptate => ", { currentProperty, userD, errors });
-  const { data, loading } = useQuery(USER_QUERY);
   const [complet, setComplet] = useState(false);
+  const { data, loading } = useQuery(ME_QUERY);
   // const { newAccount, token, user } = route?.params;
   // console.log(" Details => ", newAccount, token, user);
-  const getCurrentUser = () => {
-    let i = 0;
-    while (
-      data.allCustomers[i]?.user?.email !== userD.email &&
-      i < data.allCustomers.length
-    ) {
-      i++;
-    }
-    if (data.allCustomers[i]?.user?.email === userD.email) {
-      return {
-        email: data.allCustomers[i].user.email || "",
-        firstName: data.allCustomers[i].firstName || "",
-        lastName: data.allCustomers[i].lastName || "",
-        profilePic: data.allCustomers[i].avatarPic || "",
-        phoneNumber: data.allCustomers[i].phoneNumber || "",
-      };
-    }
-    return null;
-  };
   useEffect(() => {
-    if (!loading && !complet && data) {
-      let user = getCurrentUser();
-      console.log("currentUser => ", user);
-      // dispatch(setUser(user));
-      setComplet(true);
+    if(data){
+      let i = 0
+      while(data.users.edges[i].node.email !== userD.email && i < data.users.edges.length){
+        i++
+      }
+      if(data.users.edges[i].node.email === userD.email){
+        dispatch(setUserame(data.users.edges[i].node.username, userD.email, userD.password));
+      }
     }
-    // if (newAccount) {
-    //   navigation.navigate("selectProfile");
-    // }
-  }, [loading]);
+  }, [data])
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     navigation.navigate("age");

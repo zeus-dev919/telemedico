@@ -102,9 +102,9 @@ const Login = ({ navigation }) => {
       })
         .then((res) => {
           let user = {
+            username: "",
             email: email,
             password: password,
-        
           };
           console.log("current Token => ", token);
           console.log("User + Token => ", user, res.data.tokenAuth.token);

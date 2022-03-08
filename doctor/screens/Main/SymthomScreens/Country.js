@@ -33,7 +33,7 @@ const Country = ({ route, navigation }) => {
 
   //   Start
   const { age, gender, pregnant } = route.params;
-  const [check, setCheck] = useState(true);
+  const [check, setCheck] = useState(false);
   const [apiCountries, setApiCountries] = useState(null);
   const [selectError, setSelectError] = useState("");
   const fetchCountries = async () => {
@@ -87,6 +87,9 @@ const Country = ({ route, navigation }) => {
       setSelectError("* Select a gender is Required");
     }
   };
+  useEffect(() => {
+    setTimeout(() => setCheck(true), 2000)
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>

@@ -15,6 +15,16 @@ export const signUpUser = (user, token) => async (dispatch) => {
     console.log(err);
   }
 };
+export const setUserame = (username, email, password) => async (dispatch) => {
+  try{
+    dispatch({
+      type: userTypes.SET_USERNAME,
+      payload: {username, email, password},
+    });
+  }catch(err){
+    console.log(err);
+  }
+}
 export const signInUser = (user, token) => async (dispatch) => {
   try {
     dispatch({

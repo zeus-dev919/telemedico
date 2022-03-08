@@ -44,6 +44,7 @@ const Result = ({ route, navigation }) => {
     predictive_text,
   });
   const [result, setResult] = useState(null);
+  const [showMore, setShowMore] = useState(false);
   // 1
   const [diagnose1, setDiagnose1] = useState(null);
   const [spec1, setSpec1] = useState(null);
@@ -56,6 +57,18 @@ const Result = ({ route, navigation }) => {
   const [diagnose3, setDiagnose3] = useState(null);
   const [spec3, setSpec3] = useState(null);
   const [doctors3, setDoctors3] = useState(null);
+  // 4
+  const [diagnose4, setDiagnose4] = useState(null);
+  const [spec4, setSpec4] = useState(null);
+  const [doctors4, setDoctors4] = useState(null);
+  // 5
+  const [diagnose5, setDiagnose5] = useState(null);
+  const [spec5, setSpec5] = useState(null);
+  const [doctors5, setDoctors5] = useState(null);
+  // 6
+  const [diagnose6, setDiagnose6] = useState(null);
+  const [spec6, setSpec6] = useState(null);
+  const [doctors6, setDoctors6] = useState(null);
 
   const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
@@ -90,6 +103,14 @@ const Result = ({ route, navigation }) => {
         setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
         setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
         //
+        setDiagnose4(res.diagnoses_checklist.diagnoses[3].diagnosis_name);
+        setSpec4(res.diagnoses_checklist.diagnoses[3].specialty);
+        //
+        setDiagnose5(res.diagnoses_checklist.diagnoses[4].diagnosis_name);
+        setSpec5(res.diagnoses_checklist.diagnoses[4].specialty);
+        //
+        setDiagnose6(res.diagnoses_checklist.diagnoses[5].diagnosis_name);
+        setSpec6(res.diagnoses_checklist.diagnoses[5].specialty);
       })
       .catch((error) => {
         console.error(error);
@@ -115,7 +136,7 @@ const Result = ({ route, navigation }) => {
     return tab;
   };
   const handleMoreDoctors = () => {
-    navigation.navigate("doctorList", { filter: "8" });
+    setShowMore(true)
   };
   useEffect(() => {
     if (data && spec1) {
@@ -266,12 +287,29 @@ const Result = ({ route, navigation }) => {
                 </TouchableOpacity>
               )} */}
             </View>
-            <TouchableOpacity
-                  onPress={handleMoreDoctors}
-                  style={styles.relevant}
+            {showMore ? (
+                <>
+                <View style={styles.diagnoseContainer}>
+                  <Text style={styles.title3}>{diagnose4}</Text>
+                  <Text style={styles.title4}>{spec4}</Text>
+                </View>
+                <View style={styles.diagnoseContainer}>
+                  <Text style={styles.title3}>{diagnose5}</Text>
+                  <Text style={styles.title4}>{spec5}</Text>
+                </View>
+                <View style={styles.diagnoseContainer}>
+                  <Text style={styles.title3}>{diagnose6}</Text>
+                  <Text style={styles.title4}>{spec6}</Text>
+                </View>
+                </>
+            ): (
+              <TouchableOpacity
+                onPress={handleMoreDoctors}
+                style={styles.relevant}
                 >
                   <Text style={styles.relevantTitle}>See more differential diagnosis</Text>
-                </TouchableOpacity>
+              </TouchableOpacity>
+                )}
             <View style={{ marginVertical: 20 }}>
               <Text style={styles.title5}>
                 Consult Our Top USA Specialists

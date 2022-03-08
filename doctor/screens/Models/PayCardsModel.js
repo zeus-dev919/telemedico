@@ -144,21 +144,19 @@ const PayCardsModel = (props) => {
   }, []);
 
   const handlePayment = async () => {
-    setModalVisible(true);
-      setSuccess(true);
-    // const { error } = await confirmPayment(key, {
-    //   type: "Card",
-    //   billingDetails: {
-    //     email: userD.email,
-    //   },
-    // });
+    const { error } = await confirmPayment(key, {
+      type: "Card",
+      billingDetails: {
+        email: userD.email,
+      },
+    });
 
-    // if (error) {
-    //   Alert.alert("Error : ", error);
-    // } else {
-    //   setModalVisible(true);
-    //   setSuccess(true);
-    // }
+    if (error) {
+      Alert.alert("Error : ", error);
+    } else {
+      setModalVisible(true);
+      setSuccess(true);
+    }
   };
 
   const handlePa = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -326,7 +326,6 @@ const Age = ({ navigation }) => {
             disabled={!check}
           >
             <Text style={styles.signupText}>Submit</Text>
-            
           </TouchableOpacity>
         </View>
       </ScrollView>

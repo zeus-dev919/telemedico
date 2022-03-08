@@ -24,57 +24,6 @@ const mapState = ({ user }) => ({
   userD: user.userD,
 });
 
-// mutation MutateUser(
-//   $email: String!
-//   $firstName: String!
-//   $lastName: String!
-//   $profilePic: String!
-//   $phoneNumber: String!
-// ) {
-//   customerInput(
-//     email: $email
-//     firstName: $firstName
-//     lastName: $lastName
-//     profilePic: $profilePic
-//     phoneNumber: $phoneNumber
-//   ) {
-//     success
-//     errors
-//     refreshToken
-//     token
-//   }
-// }
-// mutation MutateUser(
-//   $email: String!
-//   $firstName: String!
-//   $lastName: String!
-//   $profilePic: String!
-//   $phoneNumber: String!
-// ) {
-//   createCustomer(
-//     input: {
-//       email: $email
-//       firstName: $firstName
-//       lastName: $lastName
-//       avatarPic: $profilePic
-//       phoneNumber: $phoneNumber
-//     }
-//   ) {
-//     customer {
-//       firstName
-//     }
-//     errors {
-//       messages
-//     }
-//   }
-// }
-const ME_QUERY = gql`
-  query {
-    me {
-      id
-    }
-  }
-`;
 
 const MUTATE_QUERY = gql`
   mutation a(
@@ -104,14 +53,13 @@ const MUTATE_QUERY = gql`
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  console.log("Hello")
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
-  // const { data, loading } = useQuery(ME_QUERY);
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
-  const [a, { data, loading }] = useMutation(MUTATE_QUERY);
+  const [a, { data2, loading2 }] = useMutation(MUTATE_QUERY);
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -139,34 +87,20 @@ const Profile = ({ route, navigation }) => {
       }
     }
   };
+  
   useEffect(() => {
     if (userD) {
       setAvatar(userD.profilePic);
-      setFirstName(userD.firstName);
-      setLastName(userD.lastName);
+      setFirstName(userD.username);
       setEmail(userD.email);
       setPhone(userD.phoneNumber);
     }
-    // if (data) {
-    //   let user = {
-    //     email: email,
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     profilePic: url,
-    //     phoneNumber: phone,
-    //   };
-    //   dispatch(setUser(user));
-    //   navigation.navigate("home");
-    // }
   }, [userD]);
 
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
     setAvatar(result.uri);
-  };
-  const handleMoreDoctors = () => {
-    navigation.navigate("doctorList", { filter: "8" });
   };
   const handleSubmit = async () => {
     console.log("Here Line 169");
@@ -257,20 +191,11 @@ const Profile = ({ route, navigation }) => {
           <View style={styles.detailsContainer}>
             {/* First Name */}
             <View style={[styles.searchContainer, styles.shadow]}>
-              <Text style={styles.title4}>First Name</Text>
+              <Text style={styles.title4}>Username</Text>
               <TextInput
                 style={styles.searchInput}
                 value={firstName}
                 onChangeText={setFirstName}
-              />
-            </View>
-            {/* Last Name */}
-            <View style={[styles.searchContainer, styles.shadow]}>
-              <Text style={styles.title4}>Last Name</Text>
-              <TextInput
-                style={styles.searchInput}
-                value={lastName}
-                onChangeText={setLastName}
               />
             </View>
             {/* E mail */}

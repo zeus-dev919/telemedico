@@ -75,6 +75,9 @@ const Register = ({ navigation }) => {
   const [passwordErrors, setPasswordErrors] = useState("");
   const [termsErrors, setTermsErrors] = useState("");
   const [terms2Errors, setTerms2Errors] = useState("");
+  const [grapherror1, setGraphError1] = useState(null);
+  const [grapherror2, setGraphError2] = useState(null);
+  const [grapherror3, setGraphError3] = useState(null);
 
   useEffect(() => {
     if (signUpSuccess) {
@@ -147,8 +150,16 @@ const Register = ({ navigation }) => {
             firstName: firstName,
             password: password,
           };
+          console.log("Response username:", user, res.data.register.errors?.username);
+          console.log("Response email:", user, res.data.register.errors?.email);
+          console.log("Response password:", user, res.data.register.errors?.password);
+          setGraphError1(res.data.register?.errors?.username ? res.data.register?.errors?.username[0]?.message : "");
+          setGraphError2(res.data.register?.errors?.email ? res.data.register?.errors?.email[0]?.message : "");
+          setGraphError3(res.data.register?.errors?.password ? res.data.register?.errors?.password[0]?.message:  "");
           console.log("User + Token => ", user, res.data.register.token);
-          dispatch(signUpUser(user, res.data.register.token));
+          if(!res.data.register.errors){
+            dispatch(signUpUser(user, res.data.register.token));
+          }
           setIndicatorLoad(false);
         })
         .catch((err) => {
@@ -292,6 +303,9 @@ const Register = ({ navigation }) => {
               <Text style={styles.signup}>Submit</Text>
             )}
           </TouchableOpacity>
+          {grapherror1 !== null && grapherror1.length !== 0 &&  (<Text style={styles.fieldErrors404}>{grapherror1}</Text>)}
+          {grapherror2 !== null && grapherror2.length !== 0 && (<Text style={styles.fieldErrors404}>{grapherror2}</Text>)}
+          {grapherror3 !== null && grapherror3.length !== 0 && (<Text style={styles.fieldErrors404}>{grapherror3}</Text>)}
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>
             <Text style={styles.label1}>Already have an Account? </Text>
@@ -317,10 +331,13 @@ const Register = ({ navigation }) => {
                 source={icons.accept}
                 resizeMode="contain"
               />
-              <Text style={styles.titleModal}>Register Successfully done!</Text>
+              <Text style={styles.titleModal}>Registration done!</Text>
             </View>
             <Text style={styles.modalText}>
-              Please check you email to activate your account
+              If this email is yours, 
+            </Text>
+            <Text style={styles.modalText}>
+              Check you email to activate your account.
             </Text>
             <Pressable
               style={styles.signup3}
@@ -439,6 +456,11 @@ const styles = StyleSheet.create({
   fieldErrors: {
     color: "red",
     fontSize: 10,
+  },
+  fieldErrors404: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 14,
   },
   input: {
     borderRadius: 10,
