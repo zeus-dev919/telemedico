@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "doctor",
-    "slug": "doctor",
+    "name": "Medipocket World",
+    "slug": "HealthcareApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
