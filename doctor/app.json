@@ -43,15 +43,6 @@
     },
     "description": "",
     "plugins": [
-      [
-        "sentry-expo",
-        [
-          "expo-document-picker",
-          {
-            "appleTeamId": "YOUR_TEAM_ID"
-          }
-        ]
-    ],
     [
       "@stripe/stripe-react-native",
       {
