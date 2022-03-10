@@ -141,12 +141,13 @@ const Register = ({ navigation }) => {
     }
     if (checking_form === "true") {
       setIndicatorLoad(true);
+      let emailValid = email.toLowerCase();
       await SignUp({
-        variables: { email: email, firstName: firstName, password: password },
+        variables: { email: emailValid, firstName: firstName, password: password },
       })
         .then((res) => {
           let user = {
-            email: email,
+            email: emailValid,
             firstName: firstName,
             password: password,
           };
@@ -164,8 +165,10 @@ const Register = ({ navigation }) => {
         })
         .catch((err) => {
           console.log("error line 156", err);
+          setIndicatorLoad(false);
         });
       console.log("DONE");
+      setIndicatorLoad(false);
     }
   };
   const handleSignIn = () => {
@@ -201,12 +204,12 @@ const Register = ({ navigation }) => {
         <View style={styles.content}>
           {/* First Name */}
           <View style={styles.inputField}>
-            <Text style={styles.label}>Full Name</Text>
+            <Text style={styles.label}>Username</Text>
             <TextInput
               style={styles.input}
               onChangeText={onChangefirstName}
               value={firstName}
-              placeholder="Full Name"
+              placeholder="Username"
               placeholderTextColor={"grey"}
             />
             <Text style={styles.fieldErrors}>{firstNameErrors}</Text>
@@ -244,6 +247,7 @@ const Register = ({ navigation }) => {
                 onPress={handlePasswordSecure}
               />
             </View>
+            <Text style={styles.privacy}>* Please Enter a Strong Password Eg: password@1234</Text>
             <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
           {/* Terms and Condition */}

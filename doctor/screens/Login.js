@@ -97,13 +97,14 @@ const Login = ({ navigation }) => {
     }
     if (checking_form === "true") {
       setIndicatorLoad(true);
+      let emailValid = email.toLowerCase();
       await SignIn({
-        variables: { email: email, password: password },
+        variables: { email: emailValid, password: password },
       })
         .then((res) => {
           let user = {
             username: "",
-            email: email,
+            email: emailValid,
             password: password,
           };
           console.log("current Token => ", token);
@@ -119,8 +120,11 @@ const Login = ({ navigation }) => {
         })
         .catch((err) => {
           console.log("error line 156", err);
+          setError(err);
+          setIndicatorLoad(false);
         });
       console.log("DONE");
+      setIndicatorLoad(false);
     }
   };
   const handleForget = () => {
@@ -191,7 +195,9 @@ const Login = ({ navigation }) => {
               <Text style={styles.signup}>Sign In</Text>
             )}
           </TouchableOpacity>
-
+          {error.length > 0 && (
+            <Text style={styles.fieldErrors404}>{error} </Text>
+          )}
           <TouchableOpacity style={styles.already} onPress={handleForget}>
             <Text style={styles.label2}>Forget Password?</Text>
           </TouchableOpacity>
@@ -336,5 +342,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
+  },
+  fieldErrors404: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 14,
+    marginBottom: 15,
   },
 });

@@ -10,16 +10,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ResetErrorsState, setUser, setUserame } from "../../redux/User/user.actions";
+import {
+  ResetErrorsState,
+  setUser,
+  setUserame,
+} from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
 import Header from "../Models/Header";
 
 const mapState = ({ user }) => ({
-  currentProperty: user.currentProperty,
   userD: user.userD,
-  errors: user.errors,
 });
 
 const ME_QUERY = gql`
@@ -35,26 +37,36 @@ const ME_QUERY = gql`
   }
 `;
 
-const HomePage = ({ route, navigation }) => {
+const HomePage = ({ navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
-  const { currentProperty, userD, errors } = useSelector(mapState);
-  console.log("maptate => ", { currentProperty, userD, errors });
-  const [complet, setComplet] = useState(false);
+  const {userD } = useSelector(mapState);
+  console.log("maptate => ", userD);
+
   const { data, loading } = useQuery(ME_QUERY);
-  // const { newAccount, token, user } = route?.params;
-  // console.log(" Details => ", newAccount, token, user);
   useEffect(() => {
-    if(data){
-      let i = 0
-      while(data.users.edges[i].node.email !== userD.email && i < data.users.edges.length){
-        i++
+    if (data) {
+      let i = 0;
+      while (
+        data.users.edges[i]?.node?.email !== userD.email &&
+        i < data.users?.edges?.length
+      ) {
+        i++;
       }
-      if(data.users.edges[i].node.email === userD.email){
-        dispatch(setUserame(data.users.edges[i].node.username, userD.email, userD.password));
+      if (data.users?.edges[i]?.node?.email === userD.email) {
+        dispatch(
+          setUserame(
+            data.users?.edges[i]?.node?.username,
+            userD.email,
+            userD.password
+          )
+        );
       }
     }
-  }, [data])
+  }, [data]);
+  useEffect(() => {
+    console.log("dataUser => ", data);
+  }, [data]);
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     navigation.navigate("age");
