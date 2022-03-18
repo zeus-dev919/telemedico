@@ -48,27 +48,53 @@ const Result = ({ route, navigation }) => {
   // 1
   const [diagnose1, setDiagnose1] = useState(null);
   const [spec1, setSpec1] = useState(null);
+  const [spec1Flag, setSpec1Flag] = useState(null);
   const [doctors1, setDoctors1] = useState(null);
   // 2
   const [diagnose2, setDiagnose2] = useState(null);
   const [spec2, setSpec2] = useState(null);
+  const [spec2Flag, setSpec2Flag] = useState(null);
   const [doctors2, setDoctors2] = useState(null);
   // 3
   const [diagnose3, setDiagnose3] = useState(null);
   const [spec3, setSpec3] = useState(null);
+  const [spec3Flag, setSpec3Flag] = useState(null);
   const [doctors3, setDoctors3] = useState(null);
   // 4
   const [diagnose4, setDiagnose4] = useState(null);
   const [spec4, setSpec4] = useState(null);
+  const [spec4Flag, setSpec4Flag] = useState(null);
   const [doctors4, setDoctors4] = useState(null);
   // 5
   const [diagnose5, setDiagnose5] = useState(null);
   const [spec5, setSpec5] = useState(null);
+  const [spec5Flag, setSpec5Flag] = useState(null);
   const [doctors5, setDoctors5] = useState(null);
   // 6
   const [diagnose6, setDiagnose6] = useState(null);
   const [spec6, setSpec6] = useState(null);
+  const [spec6Flag, setSpec6Flag] = useState(null);
   const [doctors6, setDoctors6] = useState(null);
+  // 7
+  const [diagnose7, setDiagnose7] = useState(null);
+  const [spec7, setSpec7] = useState(null);
+  const [spec7Flag, setSpec7Flag] = useState(null);
+  const [doctors7, setDoctors7] = useState(null);
+  // 8
+  const [diagnose8, setDiagnose8] = useState(null);
+  const [spec8, setSpec8] = useState(null);
+  const [spec8Flag, setSpec8Flag] = useState(null);
+  const [doctors8, setDoctors8] = useState(null);
+  // 9
+  const [diagnose9, setDiagnose9] = useState(null);
+  const [spec9, setSpec9] = useState(null);
+  const [spec9Flag, setSpec9Flag] = useState(null);
+  const [doctors9, setDoctors9] = useState(null);
+  // 10
+  const [diagnose10, setDiagnose10] = useState(null);
+  const [spec10, setSpec10] = useState(null);
+  const [spec10Flag, setSpec10Flag] = useState(null);
+  const [doctors10, setDoctors10] = useState(null);
 
   const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
@@ -96,21 +122,83 @@ const Result = ({ route, navigation }) => {
         );
         setDiagnose1(res.diagnoses_checklist.diagnoses[0].diagnosis_name);
         setSpec1(res.diagnoses_checklist.diagnoses[0].specialty);
+        setSpec1Flag(
+          res.diagnoses_checklist.diagnoses[0].red_flag === "false"
+            ? false
+            : true
+        );
         //
         setDiagnose2(res.diagnoses_checklist.diagnoses[1].diagnosis_name);
         setSpec2(res.diagnoses_checklist.diagnoses[1].specialty);
+        setSpec2Flag(
+          res.diagnoses_checklist.diagnoses[1].red_flag === "false"
+            ? false
+            : true
+        );
         //
         setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
         setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
+        setSpec3Flag(
+          res.diagnoses_checklist.diagnoses[2].red_flag === "false"
+            ? false
+            : true
+        );
         //
         setDiagnose4(res.diagnoses_checklist.diagnoses[3].diagnosis_name);
         setSpec4(res.diagnoses_checklist.diagnoses[3].specialty);
+        setSpec4Flag(
+          res.diagnoses_checklist.diagnoses[3].red_flag === "false"
+            ? false
+            : true
+        );
         //
         setDiagnose5(res.diagnoses_checklist.diagnoses[4].diagnosis_name);
         setSpec5(res.diagnoses_checklist.diagnoses[4].specialty);
+        setSpec5Flag(
+          res.diagnoses_checklist.diagnoses[4].red_flag === "false"
+            ? false
+            : true
+        );
         //
         setDiagnose6(res.diagnoses_checklist.diagnoses[5].diagnosis_name);
         setSpec6(res.diagnoses_checklist.diagnoses[5].specialty);
+        setSpec6Flag(
+          res.diagnoses_checklist.diagnoses[5].red_flag === "false"
+            ? false
+            : true
+        );
+        //
+        setDiagnose7(res.diagnoses_checklist.diagnoses[6].diagnosis_name);
+        setSpec7(res.diagnoses_checklist.diagnoses[6].specialty);
+        setSpec7Flag(
+          res.diagnoses_checklist.diagnoses[6].red_flag === "false"
+            ? false
+            : true
+        );
+        //
+        setDiagnose8(res.diagnoses_checklist.diagnoses[7].diagnosis_name);
+        setSpec8(res.diagnoses_checklist.diagnoses[7].specialty);
+        setSpec8Flag(
+          res.diagnoses_checklist.diagnoses[7].red_flag === "false"
+            ? false
+            : true
+        );
+        //
+        setDiagnose9(res.diagnoses_checklist.diagnoses[8].diagnosis_name);
+        setSpec9(res.diagnoses_checklist.diagnoses[8].specialty);
+        setSpec9Flag(
+          res.diagnoses_checklist.diagnoses[8].red_flag === "false"
+            ? false
+            : true
+        );
+        //
+        setDiagnose10(res.diagnoses_checklist.diagnoses[9].diagnosis_name);
+        setSpec10(res.diagnoses_checklist.diagnoses[9].specialty);
+        setSpec10Flag(
+          res.diagnoses_checklist.diagnoses[9].red_flag === "false"
+            ? false
+            : true
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -136,7 +224,7 @@ const Result = ({ route, navigation }) => {
     return tab;
   };
   const handleMoreDoctors = () => {
-    setShowMore(true)
+    setShowMore(!showMore);
   };
   useEffect(() => {
     if (data && spec1) {
@@ -210,110 +298,145 @@ const Result = ({ route, navigation }) => {
             <Text style={styles.title1}>Result</Text>
           </View>
         </View>
+        <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
+        <Text style={[styles.title2, { marginBottom: 20 }]}>{colorText}</Text>
         {diagnose1 && data ? (
           <>
             <View style={styles.diagnoseContainer}>
-              <Text style={styles.title3}>{diagnose1}</Text>
+              <View style={styles.diagnoseContainer}>
+                <Text style={styles.title3}>
+                  {diagnose1}{" "}
+                  {spec1Flag && (
+                    <Image source={icons.redflag} style={styles.redflag} />
+                  )}
+                </Text>
+              </View>
               <Text style={styles.title4}>{spec1}</Text>
-              {/* {doctors1?.length > 0 ? (
-                doctors1.map((item, index) => (
-                  <DoctorCardModel
-                    key={index}
-                    name={item.name}
-                    location={item.location}
-                    speciality={item.speciality}
-                    experience={item.experience}
-                    img={item.img}
-                    bg="0"
-                    navigation={navigation}
-                  />
-                ))
-              ) : (
-                <TouchableOpacity
-                  onPress={handleMoreDoctors}
-                  style={styles.relevant}
-                >
-                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
-                </TouchableOpacity>
-              )} */}
             </View>
             <View style={styles.diagnoseContainer}>
-              <Text style={styles.title3}>{diagnose2}</Text>
+              <View style={styles.diagnoseContainer}>
+                <Text style={styles.title3}>
+                  {diagnose2}{" "}
+                  {spec2Flag && (
+                    <Image source={icons.redflag} style={styles.redflag} />
+                  )}
+                </Text>
+              </View>
               <Text style={styles.title4}>{spec2}</Text>
-              {/* {doctors2?.length > 0 ? (
-                doctors2.map((item, index) => (
-                  <DoctorCardModel
-                    key={index}
-                    name={item.name}
-                    location={item.location}
-                    speciality={item.speciality}
-                    experience={item.experience}
-                    img={item.img}
-                    bg="0"
-                    navigation={navigation}
-                  />
-                ))
-              ) : (
-                <TouchableOpacity
-                  onPress={handleMoreDoctors}
-                  style={styles.relevant}
-                >
-                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
-                </TouchableOpacity>
-              )} */}
             </View>
             <View style={styles.diagnoseContainer}>
-              <Text style={styles.title3}>{diagnose3}</Text>
+              <View style={styles.diagnoseContainer}>
+                <Text style={styles.title3}>
+                  {diagnose3}{" "}
+                  {spec3Flag && (
+                    <Image source={icons.redflag} style={styles.redflag} />
+                  )}
+                </Text>
+              </View>
               <Text style={styles.title4}>{spec3}</Text>
-              {/* {doctors3?.length > 0 ? (
-                doctors3.map((item, index) => (
-                  <DoctorCardModel
-                    key={index}
-                    name={item.name}
-                    location={item.location}
-                    speciality={item.speciality}
-                    experience={item.experience}
-                    img={item.img}
-                    bg="0"
-                    navigation={navigation}
-                  />
-                ))
-              ) : (
-                <TouchableOpacity
-                  onPress={handleMoreDoctors}
-                  style={styles.relevant}
-                >
-                  <Text style={styles.relevantTitle}>See relevant doctors</Text>
-                </TouchableOpacity>
-              )} */}
             </View>
-            {showMore ? (
-                <>
+            {showMore && (
+              <>
                 <View style={styles.diagnoseContainer}>
-                  <Text style={styles.title3}>{diagnose4}</Text>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose4}{" "}
+                      {spec4Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
                   <Text style={styles.title4}>{spec4}</Text>
                 </View>
                 <View style={styles.diagnoseContainer}>
-                  <Text style={styles.title3}>{diagnose5}</Text>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose5}{" "}
+                      {spec5Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
                   <Text style={styles.title4}>{spec5}</Text>
                 </View>
                 <View style={styles.diagnoseContainer}>
-                  <Text style={styles.title3}>{diagnose6}</Text>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose6}{" "}
+                      {spec6Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
                   <Text style={styles.title4}>{spec6}</Text>
                 </View>
-                </>
-            ): (
+                <View style={styles.diagnoseContainer}>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose7}{" "}
+                      {spec7Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
+                  <Text style={styles.title4}>{spec7}</Text>
+                </View>
+                <View style={styles.diagnoseContainer}>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose8}{" "}
+                      {spec8Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
+                  <Text style={styles.title4}>{spec8}</Text>
+                </View>
+                <View style={styles.diagnoseContainer}>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose9}{" "}
+                      {spec9Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
+                  <Text style={styles.title4}>{spec9}</Text>
+                </View>
+                <View style={styles.diagnoseContainer}>
+                  <View style={styles.diagnoseContainer}>
+                    <Text style={styles.title3}>
+                      {diagnose10}{" "}
+                      {spec10Flag && (
+                        <Image source={icons.redflag} style={styles.redflag} />
+                      )}
+                    </Text>
+                  </View>
+                  <Text style={styles.title4}>{spec10}</Text>
+                </View>
+              </>
+            )}
+            {!showMore ? (
               <TouchableOpacity
                 onPress={handleMoreDoctors}
                 style={styles.relevant}
-                >
-                  <Text style={styles.relevantTitle}>See more differential diagnosis</Text>
+              >
+                <Text style={styles.relevantTitle}>
+                  See more differential diagnosis
+                </Text>
               </TouchableOpacity>
-                )}
+            ) : (
+              <TouchableOpacity
+                onPress={handleMoreDoctors}
+                style={styles.relevant}
+              >
+                <Text style={styles.relevantTitle}>
+                  See Less differential diagnosis
+                </Text>
+              </TouchableOpacity>
+            )}
             <View style={{ marginVertical: 20 }}>
-              <Text style={styles.title5}>
-                Consult Our Top USA Specialists
-              </Text>
+              <Text style={styles.title5}>Consult Our Top USA Specialists</Text>
             </View>
             <Text style={styles.title3}>Cardiologist</Text>
             <DoctorCardModel
@@ -344,11 +467,11 @@ const Result = ({ route, navigation }) => {
               navigation={navigation}
             />
             <TouchableOpacity
-                  onPress={handleMoreDoctors}
-                  style={styles.relevant}
-                >
-                  <Text style={styles.relevantTitle}>See more doctors</Text>
-                </TouchableOpacity>
+              onPress={handleMoreDoctors}
+              style={styles.relevant}
+            >
+              <Text style={styles.relevantTitle}>See more doctors</Text>
+            </TouchableOpacity>
           </>
         ) : (
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
@@ -482,5 +605,9 @@ const styles = StyleSheet.create({
   relevantTitle: {
     fontSize: 18,
     color: "white",
+  },
+  redflag: {
+    width: 20,
+    height: 20,
   },
 });

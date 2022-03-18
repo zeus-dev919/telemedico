@@ -40,7 +40,7 @@ const AppMain = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialeRouteName="home"
+        initialeRouteName="age"
         screenOptions={{
           headerShown: false,
         }}

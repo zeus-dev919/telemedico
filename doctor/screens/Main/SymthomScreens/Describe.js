@@ -53,7 +53,7 @@ const Describe = ({ route, navigation }) => {
     if (search.length > 0) {
       let after = predictive.filter(checkWord);
       let array2 = [];
-      console.log("after => ", after)
+      console.log("after => ", after);
       if (after.length > 0) {
         for (let i = 0; i < 10; i++) {
           if (after[i]) {
@@ -99,8 +99,17 @@ const Describe = ({ route, navigation }) => {
     }
     setSelected(array);
   };
-  const handleAddCustom = () => {
-    console.log("Add Clicked !!");
+  const handleAddCustom = (item) => {
+    console.log("item=>", item);
+    console.log("selected=>", selected);
+    let array = [];
+    if (selected.length < 5) {
+      array = selected;
+      array.push(item);
+    }
+    setSelected(array);
+    setSearch("");
+    setSearchArray([]);
   };
 
   const handleSubmit = () => {
@@ -195,7 +204,7 @@ const Describe = ({ route, navigation }) => {
               />
               <TouchableOpacity
                 style={styles.addBtnContainer}
-                onPres={handleAddCustom}
+                onPress={(e) => handleAddItem(e, search)}
               >
                 <Image
                   style={styles.addBtn}
