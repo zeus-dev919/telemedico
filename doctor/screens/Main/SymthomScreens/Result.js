@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   View,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
@@ -32,6 +33,7 @@ const DOCTOR_QUERY = gql`
 const Result = ({ route, navigation }) => {
   const { data, loading } = useQuery(DOCTOR_QUERY);
   console.log("Data =>", data, loading);
+  const [modalVisible, setModalVisible] = useState(true);
 
   const { age, gender, pregnant, country_id, region_id, predictive_text } =
     route.params;
@@ -252,6 +254,9 @@ const Result = ({ route, navigation }) => {
       setColorText("Emergency Services/ER");
     }
   }, []);
+  const handleMoreDoctors1 = () => {
+    navigation.navigate("doctorList", { filter: "*" });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -295,11 +300,11 @@ const Result = ({ route, navigation }) => {
             />
           </View>
           <View style={{ marginBottom: 20 }}>
-            <Text style={styles.title1}>Result</Text>
+            <Text style={styles.title1}>Possible Causes</Text>
           </View>
         </View>
-        <Text style={[styles.title9, { color: colorSys }]}>{result}</Text>
-        <Text style={[styles.title2, { marginBottom: 20 }]}>{colorText}</Text>
+        {/* <Text style={[styles.title9, { color: colorSys }]}>{result}</Text> */}
+        {/* <Text style={[styles.title2, { marginBottom: 20 }]}>{colorText}</Text> */}
         {diagnose1 && data ? (
           <>
             <View style={styles.diagnoseContainer}>
@@ -442,7 +447,7 @@ const Result = ({ route, navigation }) => {
             <DoctorCardModel
               name="Robert Rose"
               desc="-- ,--"
-              img=""
+              img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20%20Robert%20M%20Rose.png?alt=media&token=de7725a3-6b23-40dc-b93d-dc9b48bbb523"
               patients="--"
               experience="--"
               speciality="Cardiology"
@@ -456,7 +461,7 @@ const Result = ({ route, navigation }) => {
             <DoctorCardModel
               name="Ari Gabayan"
               desc="-- ,--"
-              img=""
+              img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Ari%20Gabayan.png?alt=media&token=8d90448f-3ace-458d-871a-45b921778582"
               patients="--"
               experience="--"
               speciality="Radiation Oncology"
@@ -467,7 +472,7 @@ const Result = ({ route, navigation }) => {
               navigation={navigation}
             />
             <TouchableOpacity
-              onPress={handleMoreDoctors}
+              onPress={handleMoreDoctors1}
               style={styles.relevant}
             >
               <Text style={styles.relevantTitle}>See more doctors</Text>
@@ -477,6 +482,38 @@ const Result = ({ route, navigation }) => {
           <ActivityIndicator size="large" color={COLORS.blueBtn} />
         )}
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+              style={styles.ModelTitleView}
+            >
+              <Text style={styles.titleModal2}>
+                <Ionicons name="close-circle-outline" size={30} color="black" />
+              </Text>
+            </TouchableOpacity>
+            <Text style={{ fontSize: 18 }}>Note!</Text>
+            <View style={styles.flagDesc}>
+              <Text>
+                <Image source={icons.redflag} style={styles.redflag} /> Red Flag
+                F conditions are serious and acute and need to be treated in the
+                Emergency Department.
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -609,5 +646,42 @@ const styles = StyleSheet.create({
   redflag: {
     width: 20,
     height: 20,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  flagDesc: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    padding: 12,
+  },
+  titleModal2: {
+    width: "100%",
+    marginBottom: 10,
+    paddingRight: 10,
+    textAlign: "right",
+  },
+  ModelTitleView: {
+    flexDirection: "row",
   },
 });
