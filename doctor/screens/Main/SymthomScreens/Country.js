@@ -1485,6 +1485,7 @@ const Country = ({ route, navigation }) => {
   const [check, setCheck] = useState(false);
   const [apiCountries, setApiCountries] = useState(null);
   const [selectError, setSelectError] = useState("");
+  const [isabelErrorVar, setIsabelErrorVar] = useState(false);
   const fetchCountries = async () => {
     await fetch(
       "https://apiscsandbox.isabelhealthcare.com/v2/countries?language=english&web_service=json",
@@ -1539,6 +1540,18 @@ const Country = ({ route, navigation }) => {
   useEffect(() => {
     setTimeout(() => setCheck(true), 2000);
   }, []);
+  useEffect(() => {
+    const found = isabelCountries.some(
+      (el) => el.country_name.toUpperCase() == country.name.toUpperCase()
+    );
+    if (found) {
+      setCheck(true);
+      setIsabelErrorVar(false);
+    } else {
+      setCheck(false);
+      setIsabelErrorVar(true);
+    }
+  }, [country]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -1605,6 +1618,11 @@ const Country = ({ route, navigation }) => {
         {selectError.length !== 0 ? (
           <Text style={styles.error}>{selectError}</Text>
         ) : null}
+        {isabelErrorVar && (
+          <Text style={styles.error2}>
+            This Country not supported Yet. Try Again
+          </Text>
+        )}
         {/* Submit */}
         <TouchableOpacity
           style={[styles.button1, !check ? styles.signup1 : styles.signup]}
@@ -1736,6 +1754,12 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: 10,
+    color: "red",
+    marginBottom: 5,
+  },
+  error2: {
+    textAlign: "center",
+    fontSize: 16,
     color: "red",
     marginBottom: 5,
   },
