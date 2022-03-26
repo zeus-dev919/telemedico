@@ -24,6 +24,7 @@ from graphene_django.views import GraphQLView
 from payments import urls
 from intake_form.views import intake_form
 from userauth.views import get_post_data
+from intake_form.views_s import Entry
 
 
 urlpatterns = [
@@ -31,7 +32,7 @@ urlpatterns = [
     path('graphql/',csrf_exempt(GraphQLView.as_view(graphiql=True))),
     #path('graphql/', get_post_data),
     path('payments/', include('payments.urls')),
-    path('intake_form/',csrf_exempt(intake_form)),
+    path('intake_form/',csrf_exempt(Entry.as_view())),
 
     ]
 

@@ -7,6 +7,7 @@ from django.http  import HttpResponse
 import json
 from django.core.mail import send_mail
 from django.conf import settings
+from .serializers import *
 
 # Create your views here.CorsMiddleware
 
@@ -34,5 +35,3 @@ def intake_form(request):
         form = PatientIntakeForm()
         text = f'hi<br><form method="POST" action = ""><table>{form}</table><br><button type="Submit">Submit</button></form>'
         return HttpResponse(text)
-
-
