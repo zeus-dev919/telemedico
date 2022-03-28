@@ -81,7 +81,7 @@ class Appointment(models.Model):
 
 
     def __str__(self):
-        return self.customer
+        return str(self.customer)
 
     def save(self, *args, **kwargs):
         self.rn_token = gentoken()
