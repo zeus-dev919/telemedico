@@ -34,6 +34,8 @@ const CONSULT_QUERY = gql`
       doctor {
         profilePicture
       }
+      rnToken
+      channelName
     }
   }
 `;
@@ -41,53 +43,21 @@ const CONSULT_QUERY = gql`
 const Consults = ({ navigation }) => {
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
-  // const loading = false;
-  // const data = {
-  //   allSchedules: [
-  //     {
-  //       startTime: "15:06:49",
-  //       endTime: "15:26:49",
-  //       date: "2022-03-06",
-  //       specializations: {
-  //         specializationName: "Orcology",
-  //       },
-  //       customer: {
-  //         user: {
-  //           email: "client@gmail.com",
-  //         },
-  //       },
-  //       doctor: {
-  //         profilePicture: "",
-  //       },
-  //     },
-  //     {
-  //       startTime: "15:06:49",
-  //       endTime: "15:26:49",
-  //       date: "2022-03-06",
-  //       specializations: {
-  //         specializationName: "Orcology",
-  //       },
-  //       customer: {
-  //         user: {
-  //           email: "client@gmail.com",
-  //         },
-  //       },
-  //       doctor: {
-  //         profilePicture: "",
-  //       },
-  //     },
-  //   ],
-  // };
   const [sum, setSum] = useState([]);
 
   const getConsult = () => {
     let tab = [];
     for (let i = 0; i < data.allSchedules.length; i++) {
       if (data.allSchedules[i].customer.user.email === userD.email) {
-      tab.push(data.allSchedules[i]);
+        tab.push(data.allSchedules[i]);
       }
     }
     setSum(tab);
+    console.log("=================");
+    console.log("=================");
+    console.log(tab);
+    console.log("=================");
+    console.log("=================");
   };
 
   useEffect(() => {
@@ -151,7 +121,9 @@ const Consults = ({ navigation }) => {
                 nbDay={item.date.substr(8, 2)}
                 spec={item.specializations.specializationName}
                 time={nbDate}
-                doctorImg={item.doctor.profilePic}
+                doctorImg={item.doctor.profilePicture}
+                rtcToken={item.rnToken}
+                channelName={item.channelName}
                 navigation={navigation}
               />
             );

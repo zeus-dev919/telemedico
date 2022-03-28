@@ -10,15 +10,15 @@ import {
 import { COLORS, icons } from "../../../constants";
 import AgoraUIKit from "agora-rn-uikit";
 
-const Call = ({ navigation }) => {
+const Call = ({ navigation, route }) => {
+  const { RTCToken, channelName } = route.params;
   const [videoCall, setVideoCall] = useState(true);
   const rtcProps = {
-    appId: "3cd84bbd9be642538a3bf6b5b54b49fd",
-    channel: "Medipocket-5",
-    token:
-      "0063cd84bbd9be642538a3bf6b5b54b49fdIAD92r1PPMzBCRVmUOvAlQBjFgCU5608oBPrpDJ1Z5cvZ+10lb0AAAAAEABOH1vQPFEqYgEAAQA7USpi",
-    layout: 1,
-    mode: 0,
+    appId: "c7ee73a5d0d4443288bc52b2bf7eadb1",
+    channel: channelName,
+    // token: RTCToken,
+    //   layout: 1,
+    //   mode: 0,
   };
   const callbacks = {
     EndCall: () => setVideoCall(false),

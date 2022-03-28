@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { COLORS } from "../../constants";
 
 const TimeLeft = (props) => {
-  const { date, navigation } = props;
+  const { date, RTCToken, channelName, navigation } = props;
   console.log("Date from Time Left =>", date);
   const [check, setCheck] = useState(false);
   const minuteSeconds = 60;
@@ -39,7 +39,7 @@ const TimeLeft = (props) => {
   };
 
   const handleJoin = () => {
-    navigation.navigate("call");
+    navigation.navigate("call", {RTCToken: RTCToken, channelName: channelName,});
   };
 
   return (

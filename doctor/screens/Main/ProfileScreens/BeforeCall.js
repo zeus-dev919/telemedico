@@ -13,7 +13,7 @@ import { COLORS, icons } from "../../../constants";
 import TimeLeft from "../../Models/TimeLeft";
 
 const BeforeCall = ({ navigation, route }) => {
-  const { timeLeft } = route.params;
+  const { timeLeft, RTCToken, channelName } = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -55,7 +55,7 @@ const BeforeCall = ({ navigation, route }) => {
           <Text style={[styles.title1, { marginTop: 20, fontSize: 30 }]}>
             Timer
           </Text>
-          <TimeLeft date={timeLeft} navigation={navigation} />
+          <TimeLeft date={timeLeft} RTCToken={RTCToken} channelName={channelName} navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

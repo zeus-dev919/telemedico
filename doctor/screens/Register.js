@@ -13,6 +13,7 @@ import {
   Modal,
   Pressable,
   Image,
+  Alert,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconEntypo from "react-native-vector-icons/Entypo";
@@ -37,9 +38,9 @@ const mapState = ({ user }) => ({
 const REGISTER_QUERY = gql`
   mutation SignUp($email: String!, $firstName: String!, $password: String!) {
     register(
-      email: $email,
-      username: $firstName,
-      password1: $password,
+      email: $email
+      username: $firstName
+      password1: $password
       password2: $password
     ) {
       success
@@ -143,7 +144,11 @@ const Register = ({ navigation }) => {
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
       await SignUp({
-        variables: { email: emailValid, firstName: firstName, password: password },
+        variables: {
+          email: emailValid,
+          firstName: firstName,
+          password: password,
+        },
       })
         .then((res) => {
           let user = {
@@ -151,14 +156,34 @@ const Register = ({ navigation }) => {
             firstName: firstName,
             password: password,
           };
-          console.log("Response username:", user, res.data.register.errors?.username);
+          console.log(
+            "Response username:",
+            user,
+            res.data.register.errors?.username
+          );
           console.log("Response email:", user, res.data.register.errors?.email);
-          console.log("Response password:", user, res.data.register.errors?.password);
-          setGraphError1(res.data.register?.errors?.username ? res.data.register?.errors?.username[0]?.message : "");
-          setGraphError2(res.data.register?.errors?.email ? res.data.register?.errors?.email[0]?.message : "");
-          setGraphError3(res.data.register?.errors?.password ? res.data.register?.errors?.password[0]?.message:  "");
+          console.log(
+            "Response password:",
+            user,
+            res.data.register.errors?.password
+          );
+          setGraphError1(
+            res.data.register?.errors?.username
+              ? res.data.register?.errors?.username[0]?.message
+              : ""
+          );
+          setGraphError2(
+            res.data.register?.errors?.email
+              ? res.data.register?.errors?.email[0]?.message
+              : ""
+          );
+          setGraphError3(
+            res.data.register?.errors?.password
+              ? res.data.register?.errors?.password[0]?.message
+              : ""
+          );
           console.log("User + Token => ", user, res.data.register.token);
-          if(!res.data.register.errors){
+          if (!res.data.register.errors) {
             dispatch(signUpUser(user, res.data.register.token));
           }
           setIndicatorLoad(false);
@@ -247,7 +272,9 @@ const Register = ({ navigation }) => {
                 onPress={handlePasswordSecure}
               />
             </View>
-            <Text style={styles.privacy}>* Please Enter a Strong Password Eg: password@1234</Text>
+            <Text style={styles.privacy}>
+              * Please Enter a Strong Password Eg: password@1234
+            </Text>
             <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
           {/* Terms and Condition */}
@@ -307,9 +334,15 @@ const Register = ({ navigation }) => {
               <Text style={styles.signup}>Submit</Text>
             )}
           </TouchableOpacity>
-          {grapherror1 !== null && grapherror1.length !== 0 &&  (<Text style={styles.fieldErrors404}>{grapherror1}</Text>)}
-          {grapherror2 !== null && grapherror2.length !== 0 && (<Text style={styles.fieldErrors404}>{grapherror2}</Text>)}
-          {grapherror3 !== null && grapherror3.length !== 0 && (<Text style={styles.fieldErrors404}>{grapherror3}</Text>)}
+          {grapherror1 !== null && grapherror1.length !== 0 && (
+            <Text style={styles.fieldErrors404}>{grapherror1}</Text>
+          )}
+          {grapherror2 !== null && grapherror2.length !== 0 && (
+            <Text style={styles.fieldErrors404}>{grapherror2}</Text>
+          )}
+          {grapherror3 !== null && grapherror3.length !== 0 && (
+            <Text style={styles.fieldErrors404}>{grapherror3}</Text>
+          )}
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>
             <Text style={styles.label1}>Already have an Account? </Text>
@@ -337,9 +370,7 @@ const Register = ({ navigation }) => {
               />
               <Text style={styles.titleModal}>Registration done!</Text>
             </View>
-            <Text style={styles.modalText}>
-              If this email is yours, 
-            </Text>
+            <Text style={styles.modalText}>If this email is yours,</Text>
             <Text style={styles.modalText}>
               Check you email to activate your account.
             </Text>

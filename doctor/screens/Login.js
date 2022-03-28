@@ -46,8 +46,8 @@ const Login = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [email, onChangeEmail] = useState("");
-  const [password, onChangepassword] = useState("");
+  const [email, onChangeEmail] = useState("priyanka@mymedipocket.com");
+  const [password, onChangepassword] = useState("Cheena$1");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);

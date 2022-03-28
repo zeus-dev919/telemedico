@@ -8,13 +8,30 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  Image,
+  Pressable,
+  Alert,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
-import { COLORS } from "../constants";
+import { COLORS, icons } from "../constants";
 import auth from "@react-native-firebase/auth";
+import { gql, useMutation } from "@apollo/client";
+
+const RECOVERY_QUERY = gql`
+  mutation Recovery($email: String!) {
+    sendPasswordEmail(email: $email) {
+      success
+      errors
+    }
+  }
+`;
 
 const Recovery = ({ navigation }) => {
   const [email, onChangeEmail] = useState("");
+  const [error, setError] = useState("");
+  const [doneRegister, setDoneRegister] = useState(false);
+  const [Recovery, { data, loading }] = useMutation(RECOVERY_QUERY);
 
   const ResetForm = () => {
     onChangeEmail("");
@@ -22,11 +39,35 @@ const Recovery = ({ navigation }) => {
   };
 
   const handleReset = async (e) => {
-    await auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        ResetForm();
-        navigation.navigate("Login");
+    // await auth()
+    //   .sendPasswordResetEmail(email)
+    //   .then(() => {
+    //     ResetForm();
+    //     navigation.navigate("Login");
+    //   });
+    // await fetch(`https://app.medipocket.world/reset-password/?email=${email}`, {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then(() => {
+    //     setDoneRegister(true);
+    //   })
+    //   .catch(() => {
+    //     setError("Something went wrong please try again ");
+    //   });
+    await Recovery({
+      variables: {
+        email: email,
+      },
+    })
+      .then((res) => {
+        if (res.data.sendPasswordResetEmail.success) setDoneRegister(true);
+      })
+      .catch(() => {
+        setError("Something went wrong please try again ");
       });
   };
 
@@ -44,13 +85,6 @@ const Recovery = ({ navigation }) => {
         </View>
         <View style={styles.headerTitle}>
           <Text style={styles.headerText1}>Reset Password</Text>
-          {/* <Text style={styles.headerText}>
-            Lorem ipsum dolor sit amet, consectuteur
-          </Text>
-          <Text style={styles.headerText}>
-            adipiscing elit, sed do eiusmod tempor
-          </Text>
-          <Text style={styles.headerText}>incoididunt ut labore</Text> */}
         </View>
         <View style={styles.content}>
           {/* Email Adresse */}
@@ -64,12 +98,47 @@ const Recovery = ({ navigation }) => {
               placeholder="demo@demo.com"
             />
           </View>
-
+          {error.length > 0 && <Text style={styles.error}>{error}</Text>}
           <TouchableOpacity style={styles.button1} onPress={handleReset}>
-            <Text style={styles.signup}>Sign In</Text>
+            <Text style={styles.signup}>Reset Password</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={doneRegister}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setDoneRegister(!doneRegister);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.ModelTitleView}>
+              <Image
+                style={styles.ModelIcon}
+                source={icons.accept}
+                resizeMode="contain"
+              />
+              <Text style={styles.titleModal}>Reset Password</Text>
+            </View>
+            <Text style={styles.modalText}>If this email exist,</Text>
+            <Text style={styles.modalText}>
+              Check you email to reset your password.
+            </Text>
+            <Pressable
+              style={styles.signup3}
+              onPress={() => {
+                setDoneRegister(!doneRegister);
+                navigation.navigate("splash");
+              }}
+            >
+              <Text style={styles.textStyle}>Back Home</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -151,5 +220,68 @@ const styles = StyleSheet.create({
   button1: {
     marginBottom: 20,
     padding: 5,
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  titleModal: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  ModelIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 10,
+    marginTop: 2,
+  },
+  // error
+  error: {
+    color: "red",
+    fontSize: 14,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  signup3: {
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 10,
+    borderRadius: 10,
+    paddingHorizontal: 50,
+    // marginVertical: 20,
   },
 });
