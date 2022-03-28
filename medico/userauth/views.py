@@ -71,3 +71,6 @@ def get_post_data(request):
         return HttpResponse(status=200)
     else:
         return HttpResponse("not post")
+
+def change_pass(request, change_pass_code):
+    return HttpResponse('Change pass code is '+ change_pass_code)

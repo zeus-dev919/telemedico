@@ -23,7 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from payments import urls
 from intake_form.views import intake_form
-from userauth.views import get_post_data
+from userauth.views import get_post_data, change_pass
 from intake_form.views import Entry
 
 
@@ -33,6 +33,7 @@ urlpatterns = [
     #path('graphql/', get_post_data),
     path('payments/', include('payments.urls')),
     path('intake_form/',csrf_exempt(Entry.as_view())),
+    path('password-reset/<change_pass_code>', change_pass) 
 
     ]
 
