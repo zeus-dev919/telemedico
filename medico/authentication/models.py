@@ -4,7 +4,7 @@ from django.contrib.auth.models import UserManager
 import datetime
 from userauth.models import ExtendUser
 from phonenumber_field.modelfields import PhoneNumberField
-
+from intake_form.ack_gen import main as gentoken
 
 
 
