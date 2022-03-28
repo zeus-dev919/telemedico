@@ -35,3 +35,33 @@ def intake_form(request):
         form = PatientIntakeForm()
         text = f'hi<br><form method="POST" action = ""><table>{form}</table><br><button type="Submit">Submit</button></form>'
         return HttpResponse(text)
+
+
+class Entry(APIView):
+
+
+    def post(self, request):
+        """API to create new intake form
+        Arguements: request{[type]}----[description]
+        Returns : [type] -- [description]
+        """
+
+        data = request.data
+        assert isinstance(data, dict)
+
+        enquiry_serializer = PatientHealthInfoSerializer(data=data)
+
+        if not enquiry_serializer.is_valid():
+            return StandardHttpResponse.bad_rsp(enquiry_serializer.errors, "Enquiry creation failed")
+
+        enquiry_serializer.save()
+        subject = "MediPocket IntakeForm Initiated"
+        message = f'A new intake form has been added.Kindly check payment gateway to confirm timings to doctor.\n{datastr}'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ["priyanka@mymedipocket.com","samryker@gmail.com"]
+        try:
+            send_mail(subject, message, email_from, recipient_list,fail_silently=True )
+        except:
+            pass
+            # return HttpResponse('Invalid header found.')
+        return HttpResponse('success')

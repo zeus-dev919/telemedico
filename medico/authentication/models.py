@@ -76,16 +76,22 @@ class Appointment(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     specializations = models.ForeignKey(Specialization, on_delete=models.SET_NULL, null=True)
+    rn_token = models.CharField(max_length=1250, blank=False, default="a")
+
 
 
     def __str__(self):
-        return self.doctor#username , doctor and consultation time confirmed
+        return self.customer
+
+    def save(self, *args, **kwargs):
+        self.rn_token = gentoken()
+        super(Appointment, self).save(*args, **kwargs)
 
     #    class Meta:
     #        ordering = ['start_time']
 
-    def __str__(self):
-        return str(self.start_time)
+    #def __str__(self):
+        #return str(self.start_time)
 
 #    def get_absolute_url(self):
 #        return f'/{self.doctor.id}/appoint/{self.id}'

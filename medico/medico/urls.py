@@ -24,7 +24,7 @@ from graphene_django.views import GraphQLView
 from payments import urls
 from intake_form.views import intake_form
 from userauth.views import get_post_data
-from intake_form.views_s import Entry
+from intake_form.views import Entry
 
 
 urlpatterns = [
