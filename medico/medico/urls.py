@@ -34,7 +34,7 @@ urlpatterns = [
     #path('graphql/', get_post_data),
     path('payments/', include('payments.urls')),
     path('intake_form/',csrf_exempt(Entry.as_view())),
-    path('password-reset/<change_pass_code>', change_pass)
+    path('password-reset/<change_pass_code>', change_pass),
     path('activate/<activation_mail>', reactivate)
 
     ]
