@@ -4,5 +4,5 @@ from .models import *
 
 class PatientHealthInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Subscribers
+        model = PatientIntakeModel
         fields = '__all__'

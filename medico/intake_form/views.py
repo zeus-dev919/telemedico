@@ -8,6 +8,7 @@ import json
 from django.core.mail import send_mail
 from django.conf import settings
 from .serializers import *
+from rest_framework.views import APIView
 
 # Create your views here.CorsMiddleware
 
