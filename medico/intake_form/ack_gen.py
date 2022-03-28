@@ -20,7 +20,7 @@ appCertificate = "5CFd2fd1755d40ecb72977518be15d3b"
 channelName = channels
 # uid = 2882341273
 userAccount = "KunalKaushik"
-expireTimeInSeconds = 60
+expireTimeInSeconds = 2592000
 currentTimestamp = int(time.time())
 privilegeExpiredTs = currentTimestamp + expireTimeInSeconds
 
