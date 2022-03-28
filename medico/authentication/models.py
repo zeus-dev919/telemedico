@@ -77,6 +77,7 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     specializations = models.ForeignKey(Specialization, on_delete=models.SET_NULL, null=True)
     rn_token = models.CharField(max_length=1250, blank=False, default="a")
+    channel_name = models.CharField(max_length=50, blank=False, default="a")
 
 
 
@@ -84,7 +85,8 @@ class Appointment(models.Model):
         return str(self.customer)
 
     def save(self, *args, **kwargs):
-        self.rn_token = gentoken()
+        self.rn_token = gentoken()[0]
+        self.channel_name = gentoken()[1]
         super(Appointment, self).save(*args, **kwargs)
 
     #    class Meta:

@@ -30,7 +30,7 @@ def main():
     # print("Token with int uid: {}".format(token))
     token = RtcTokenBuilder.buildTokenWithAccount(appID, appCertificate, channelName, userAccount, Role_Attendee, privilegeExpiredTs)
     #print("Token with user account: {}".format(token))
-    return token
+    return [token, channelName]
 
 
 if __name__ == "__main__":

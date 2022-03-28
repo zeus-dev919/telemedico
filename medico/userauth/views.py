@@ -74,3 +74,7 @@ def get_post_data(request):
 
 def change_pass(request, change_pass_code):
     return HttpResponse('Change pass code is '+ change_pass_code)
+
+
+def reactivate(request, activation_mail):
+    return HttpResponse('Your account is activated' + activation_mail)
