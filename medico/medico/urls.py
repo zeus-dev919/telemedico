@@ -23,8 +23,9 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from payments import urls
 from intake_form.views import intake_form
-from userauth.views import get_post_data, change_pass
+from userauth.views import get_post_data, change_pass, reactivate
 from intake_form.views import Entry
+
 
 
 urlpatterns = [
@@ -34,7 +35,7 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
     path('intake_form/',csrf_exempt(Entry.as_view())),
     path('password-reset/<change_pass_code>', change_pass)
-    path('activate/<activation_mail>', reactivatemail)
+    path('activate/<activation_mail>', reactivate)
 
     ]
 
