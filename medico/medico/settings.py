@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'payments',
     'intake_form',
     'rest_framework',
+    'agora_token_builder',
 
 
 
