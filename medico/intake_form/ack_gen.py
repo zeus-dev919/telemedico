@@ -15,7 +15,7 @@ Role_Subscriber = 2 # default, for live audience
 Role_Admin = 101 # deprecated, same as publisher
 
 channels = str(uuid.uuid4())
-appID = "970CA35de60c44645bbae8a215061b33"
+appID = "c7ee73a5d0d4443288bc52b2bf7eadb1"
 appCertificate = "5CFd2fd1755d40ecb72977518be15d3b"
 channelName = channels
 # uid = 2882341273
