@@ -16,17 +16,19 @@ export const signUpUser = (user, token) => async (dispatch) => {
   }
 };
 export const setUserame = (username, email, password) => async (dispatch) => {
-  try{
+  try {
     dispatch({
       type: userTypes.SET_USERNAME,
-      payload: {username, email, password},
+      payload: { username, email, password },
     });
-  }catch(err){
+  } catch (err) {
     console.log(err);
   }
-}
+};
 export const signInUser = (user, token) => async (dispatch) => {
   try {
+    console.log("User from signInUser");
+    console.log(user);
     dispatch({
       type: userTypes.SIGN_IN_SUCCESS,
       payload: user,
@@ -56,7 +58,18 @@ export const setUser = (user) => async (dispatch) => {
       payload: user,
     });
   } catch (err) {
-    console.log("error from fetchPrperty catch !!");
+    console.log("error from setUser catch !!");
+    console.log(err);
+  }
+};
+export const setDoctor = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: userTypes.SET_DOCTOR,
+      payload: user,
+    });
+  } catch (err) {
+    console.log("error from setDoctor catch !!");
     console.log(err);
   }
 };

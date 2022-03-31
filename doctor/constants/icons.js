@@ -37,6 +37,7 @@ const paypal = require("../assets/icons/payments/paypal.png");
 const maestro = require("../assets/icons/payments/maestro.png");
 const visa = require("../assets/icons/payments/visa.png");
 const accept = require("../assets/icons/payments/accept.png");
+const collapse = require("../assets/icons/payments/arrow-down.png");
 // Symthom
 const gender = require("../assets/icons/symthom/equality.png");
 const male = require("../assets/icons/symthom/male.png");
@@ -98,6 +99,7 @@ export default {
   maestro,
   visa,
   accept,
+  collapse,
   // symthom
   gender,
   male,

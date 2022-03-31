@@ -1065,12 +1065,6 @@ const isabelCountries = [
     region_id: "17",
   },
   {
-    country_id: "173",
-    country_name: "Reunion",
-    abbreviation: "RE",
-    region_id: "5",
-  },
-  {
     country_id: "174",
     country_name: "Romania",
     abbreviation: "RO",
@@ -1545,7 +1539,7 @@ const Country = ({ route, navigation }) => {
       (el) => el.country_name.toUpperCase() == country.name.toUpperCase()
     );
     if (found) {
-      setCheck(true);
+      setTimeout(() => setCheck(true), 2000);
       setIsabelErrorVar(false);
     } else {
       setCheck(false);

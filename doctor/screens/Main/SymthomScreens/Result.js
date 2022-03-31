@@ -15,6 +15,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
 import DoctorCardModel from "../../Models/DoctorCardModel";
 import { gql, useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
+
+const mapState = ({ user }) => ({
+  doctorD: user.doctorD,
+});
 
 const DOCTOR_QUERY = gql`
   query {
@@ -31,6 +36,7 @@ const DOCTOR_QUERY = gql`
 `;
 
 const Result = ({ route, navigation }) => {
+  const { doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   console.log("Data =>", data, loading);
   const [modalVisible, setModalVisible] = useState(true);
@@ -102,7 +108,7 @@ const Result = ({ route, navigation }) => {
   const [colorText, setColorText] = useState("");
   const getResult = async () => {
     await fetch(
-      `https://apiscsandbox.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${
+      `https://apisc.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${
         pregnant === "_" ? "" : pregnant
       }&region=${region_id}&country_id=${country_id}&querytext=${predictive_text}&suggest=Suggest+Differe
     ntial+Diagnosis&flag=sortbyRW_advanced&searchType=0&web_service=json`,
@@ -111,7 +117,8 @@ const Result = ({ route, navigation }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `nIWd9Dad9cJ9PJnrML1B92N4jWu3C76n`,
+          Authorization: `U7IdoNJWWzV75NZGxVGJ8KE7p0W5A1m2`,
+          // Authorization: `nIWd9Dad9cJ9PJnrML1B92N4jWu3C76n`,
           // Authorization: `${ISABELL_API_KEY}`,
         },
       }
@@ -440,43 +447,49 @@ const Result = ({ route, navigation }) => {
                 </Text>
               </TouchableOpacity>
             )}
-            <View style={{ marginVertical: 20 }}>
-              <Text style={styles.title5}>Consult Our Top USA Specialists</Text>
-            </View>
-            <Text style={styles.title3}>Cardiologist</Text>
-            <DoctorCardModel
-              name="Robert Rose"
-              desc="-- ,--"
-              img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20%20Robert%20M%20Rose.png?alt=media&token=de7725a3-6b23-40dc-b93d-dc9b48bbb523"
-              patients="--"
-              experience="--"
-              speciality="Cardiology"
-              info="--"
-              fees="--"
-              duration="20"
-              bg="0"
-              navigation={navigation}
-            />
-            <Text style={styles.title3}>Oncologist</Text>
-            <DoctorCardModel
-              name="Ari Gabayan"
-              desc="-- ,--"
-              img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Ari%20Gabayan.png?alt=media&token=8d90448f-3ace-458d-871a-45b921778582"
-              patients="--"
-              experience="--"
-              speciality="Radiation Oncology"
-              info="--"
-              fees="--"
-              duration="20"
-              bg="0"
-              navigation={navigation}
-            />
-            <TouchableOpacity
-              onPress={handleMoreDoctors1}
-              style={styles.relevant}
-            >
-              <Text style={styles.relevantTitle}>See more doctors</Text>
-            </TouchableOpacity>
+            {!doctorD && (
+              <>
+                <View style={{ marginVertical: 20 }}>
+                  <Text style={styles.title5}>
+                    Consult Our Top USA Specialists
+                  </Text>
+                </View>
+                <Text style={styles.title3}>Cardiologist</Text>
+                <DoctorCardModel
+                  name="Robert Rose"
+                  desc="-- ,--"
+                  img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20%20Robert%20M%20Rose.png?alt=media&token=de7725a3-6b23-40dc-b93d-dc9b48bbb523"
+                  patients="--"
+                  experience="--"
+                  speciality="Cardiology"
+                  info="--"
+                  fees="--"
+                  duration="20"
+                  bg="0"
+                  navigation={navigation}
+                />
+                <Text style={styles.title3}>Oncologist</Text>
+                <DoctorCardModel
+                  name="Ari Gabayan"
+                  desc="-- ,--"
+                  img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Ari%20Gabayan.png?alt=media&token=8d90448f-3ace-458d-871a-45b921778582"
+                  patients="--"
+                  experience="--"
+                  speciality="Radiation Oncology"
+                  info="--"
+                  fees="--"
+                  duration="20"
+                  bg="0"
+                  navigation={navigation}
+                />
+                <TouchableOpacity
+                  onPress={handleMoreDoctors1}
+                  style={styles.relevant}
+                >
+                  <Text style={styles.relevantTitle}>See more doctors</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </>
         ) : (
           <ActivityIndicator size="large" color={COLORS.blueBtn} />

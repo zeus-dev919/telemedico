@@ -10,63 +10,64 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  ResetErrorsState,
-  setUser,
-  setUserame,
-} from "../../redux/User/user.actions";
+import { ResetErrorsState, setDoctor } from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { COLORS, icons, images } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
 import Header from "../Models/Header";
+import DoctorUpcomingConsult from "../Models/DoctorUpcomingConsult";
+import DoctorHomeConsult from "../Models/DoctorHomeConsult";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
+  doctorD: user.doctorD,
 });
 
-const ME_QUERY = gql`
+const DOCTOR_QUERY = gql`
   query {
-    users {
-      edges {
-        node {
-          username
-          email
-        }
+    allDoctors {
+      firstName
+      lastName
+      specialization {
+        specializationName
+      }
+      profilePicture
+      consultationTime
+      timeSlots
+      username {
+        email
       }
     }
   }
 `;
 
+
 const HomePage = ({ navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
-  const {userD } = useSelector(mapState);
-  console.log("maptate => ", userD);
+  const { userD, doctorD } = useSelector(mapState);
+  const { data, loading } = useQuery(DOCTOR_QUERY);
+  
 
-  const { data, loading } = useQuery(ME_QUERY);
   useEffect(() => {
     if (data) {
       let i = 0;
       while (
-        data.users.edges[i]?.node?.email !== userD.email &&
-        i < data.users?.edges?.length
+        data.allDoctors[i]?.username?.email !== userD.email &&
+        i < data.allDoctors?.length
       ) {
         i++;
       }
-      if (data.users?.edges[i]?.node?.email === userD.email) {
-        dispatch(
-          setUserame(
-            data.users?.edges[i]?.node?.username,
-            userD.email,
-            userD.password
-          )
-        );
+      if (data.allDoctors[i]?.username?.email === userD.email) {
+        dispatch(setDoctor(data.allDoctors[i]));
       }
     }
   }, [data]);
+
   useEffect(() => {
-    console.log("dataUser => ", data);
-  }, [data]);
+    console.log("doctorD =>", doctorD);
+  }, [doctorD]);
+
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
     navigation.navigate("age");
@@ -102,150 +103,162 @@ const HomePage = ({ navigation }) => {
     navigation.navigate("doctorList", { filter: "*" });
   };
   return (
-    <View style={styles.container}>
+    <View style={doctorD ? styles.container2 : styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
         <Header navigation={navigation} bg="" />
         {/* Fixed Image */}
         <ScrollView style={styles.scrollView}>
           {/* <Text style={{ fontSize: 25 }}>Welcome Page</Text> */}
-          <View style={styles.headerCards}>
-            <TouchableOpacity
-              style={styles.Headercard}
-              onPress={handleSymthoms}
-            >
-              <Image
-                style={styles.cardImg}
-                source={images.right_img}
-                // resizeMode="cover"
-              />
-              <View style={[styles.headerCardContent, styles.shadow]}>
-                <Text style={styles.headerCardTitle}>DR. AI</Text>
-                <Text style={styles.headerCardDescription}>
-                  Free Symptoms{"\n"} checker
+          {!doctorD ? (
+            <>
+              <View style={styles.headerCards}>
+                <TouchableOpacity
+                  style={styles.Headercard}
+                  onPress={handleSymthoms}
+                >
+                  <Image
+                    style={styles.cardImg}
+                    source={images.right_img}
+                    // resizeMode="cover"
+                  />
+                  <View style={[styles.headerCardContent, styles.shadow]}>
+                    <Text style={styles.headerCardTitle}>DR. AI</Text>
+                    <Text style={styles.headerCardDescription}>
+                      Free Symptoms{"\n"} checker
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.Headercard}
+                  onPress={handleDoctors}
+                >
+                  <Image
+                    style={styles.cardImg}
+                    source={images.left_img}
+                    resizeMode="cover"
+                  />
+                  <View style={[styles.headerCardContent, styles.shadow]}>
+                    <Text style={styles.headerCardTitle}>
+                      Top USA Specialists
+                    </Text>
+                    <Text style={styles.headerCardDescription}>
+                      Video consult top USA doctors
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <ImageBackground
+                  style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
+                  source={images.homeBg}
+                />
+              </View>
+              {/* Specialities Title */}
+              <View style={styles.specContainer}>
+                <Text style={styles.SpecTitle}>Specialities</Text>
+              </View>
+              {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+              <View style={styles.menuContent}>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleLungs}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.lungs} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Oncology</Text>
+                  <Text style={styles.menuCardTitle1}>cancer</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleTooth}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.thyroid} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Endocrinology</Text>
+                  <Text style={styles.menuCardTitle1}>Diabetes, Thyroid</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleDermatologist}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.heart} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Cardiology</Text>
+                  <Text style={styles.menuCardTitle1}>Heart Problems</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleHeart}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.joints} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Rheumatology</Text>
+                  <Text style={styles.menuCardTitle1}>Arthritis, Joints</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.menuContent}>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleBrain}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.reproductive} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Fertility</Text>
+                  <Text style={styles.menuCardTitle1}>IVF, Treatments</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handlePsychology}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.anatomy} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Plastic Surgery</Text>
+                  <Text style={styles.menuCardTitle1}>Nose, Body</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleUrology}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.psychology} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>Mental Health</Text>
+                  <Text style={styles.menuCardTitle1}>Anxiety, Depression</Text>
+                </TouchableOpacity>
+                {/* Health Profile */}
+                <TouchableOpacity
+                  style={styles.cardContainer99}
+                  onPress={handleOthers}
+                >
+                  <View style={[styles.menuCard, styles.shadow]}>
+                    <Image source={icons.dermis} style={styles.icon} />
+                  </View>
+                  <Text style={styles.menuCardTitle}>More</Text>
+                  <Text style={styles.menuCardTitle1}>Skin, Neuro</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.button1} onPress={handleConsult}>
+                <Text style={styles.signup}>
+                  Video Consult Our Top USA Specialists
                 </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.Headercard} onPress={handleDoctors}>
-              <Image
-                style={styles.cardImg}
-                source={images.left_img}
-                resizeMode="cover"
-              />
-              <View style={[styles.headerCardContent, styles.shadow]}>
-                <Text style={styles.headerCardTitle}>Top USA Specialists</Text>
-                <Text style={styles.headerCardDescription}>
-                  Video consult top USA doctors
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <ImageBackground
-              style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
-              source={images.homeBg}
-            />
-          </View>
-          {/* Specialities Title */}
-          <View style={styles.specContainer}>
-            <Text style={styles.SpecTitle}>Specialities</Text>
-          </View>
-          {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
-          <View style={styles.menuContent}>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleLungs}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.lungs} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Oncology</Text>
-              <Text style={styles.menuCardTitle1}>cancer</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleTooth}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.thyroid} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Endocrinology</Text>
-              <Text style={styles.menuCardTitle1}>Diabetes, Thyroid</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleDermatologist}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.heart} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Cardiology</Text>
-              <Text style={styles.menuCardTitle1}>Heart Problems</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleHeart}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.joints} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Rheumatology</Text>
-              <Text style={styles.menuCardTitle1}>Arthritis, Joints</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.menuContent}>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleBrain}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.reproductive} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Fertility</Text>
-              <Text style={styles.menuCardTitle1}>IVF, Treatments</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handlePsychology}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.anatomy} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Plastic Surgery</Text>
-              <Text style={styles.menuCardTitle1}>Nose, Body</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleUrology}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.psychology} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>Mental Health</Text>
-              <Text style={styles.menuCardTitle1}>Anxiety, Depression</Text>
-            </TouchableOpacity>
-            {/* Health Profile */}
-            <TouchableOpacity
-              style={styles.cardContainer99}
-              onPress={handleOthers}
-            >
-              <View style={[styles.menuCard, styles.shadow]}>
-                <Image source={icons.dermis} style={styles.icon} />
-              </View>
-              <Text style={styles.menuCardTitle}>More</Text>
-              <Text style={styles.menuCardTitle1}>Skin, Neuro</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.button1} onPress={handleConsult}>
-            <Text style={styles.signup}>
-              Video Consult Our Top USA Specialists
-            </Text>
-          </TouchableOpacity>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <DoctorHomeConsult />
+          )}
+
           {/* <View style={styles.specContainer}>
             <Text style={styles.SpecTitle}>Packages</Text>
           </View>
@@ -273,6 +286,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    paddingTop: 0,
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: COLORS.bgColor2,
     paddingTop: 0,
   },
   subContainer: {
@@ -320,6 +338,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "100%",
   },
+  
   Headercard: {
     // position: "relative",
     borderRadius: 10,
@@ -327,14 +346,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // maxHeight: 200,
   },
+  
   cardImg: {
     width: "100%",
     height: 100,
     overflow: "hidden",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    // marginBottom: 100,
   },
+  
   headerCardContent: {
     // position: "absolute",
     // bottom: -75,

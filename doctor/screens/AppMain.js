@@ -25,6 +25,8 @@ import {
   SelectProfile,
   Profile,
   Consults,
+  DoctorConsults,
+  DoctorPayment,
   BeforeCall,
   Call,
 } from "./index.js";
@@ -73,6 +75,8 @@ const AppMain = () => {
             <Stack.Screen name="selectProfile" component={SelectProfile} />
             <Stack.Screen name="profile" component={Profile} />
             <Stack.Screen name="consults" component={Consults} />
+            <Stack.Screen name="doctorConsults" component={DoctorConsults} />
+            <Stack.Screen name="doctorPayment" component={DoctorPayment} />
             <Stack.Screen name="beforecall" component={BeforeCall} />
             <Stack.Screen name="call" component={Call} />
           </>

@@ -18,12 +18,24 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
-import { setUser } from "../../../redux/User/user.actions";
+import { setUser, setUserame } from "../../../redux/User/user.actions";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
 });
 
+const ME_QUERY = gql`
+  query {
+    users {
+      edges {
+        node {
+          username
+          email
+        }
+      }
+    }
+  }
+`;
 
 const MUTATE_QUERY = gql`
   mutation a(
@@ -53,12 +65,13 @@ const MUTATE_QUERY = gql`
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  console.log("Hello")
+  console.log("Hello");
   const { userD } = useSelector(mapState);
   // console.log("maptate => ", { userD });
   // const { ch } = route?.params || "empty";
   // console.log("Profile Type =>", ch);
   const [a, { data2, loading2 }] = useMutation(MUTATE_QUERY);
+  const { data, loading } = useQuery(ME_QUERY);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -87,7 +100,26 @@ const Profile = ({ route, navigation }) => {
       }
     }
   };
-  
+  useEffect(() => {
+    if (data) {
+      let i = 0;
+      while (
+        data.users.edges[i]?.node?.email !== userD.email &&
+        i < data.users?.edges?.length
+      ) {
+        i++;
+      }
+      if (data.users?.edges[i]?.node?.email === userD.email) {
+        dispatch(
+          setUserame(
+            data.users?.edges[i]?.node?.username,
+            userD.email,
+            userD.password
+          )
+        );
+      }
+    }
+  }, [data]);
   useEffect(() => {
     if (userD) {
       setAvatar(userD.profilePic);

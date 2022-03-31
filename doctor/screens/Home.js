@@ -27,12 +27,13 @@ import { signOutUser } from "../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const mapState = ({ user }) => ({
+  doctorD: user.doctorD,
   currentUser: user.currentUser,
   errors: user.errors,
 });
 
 const CustomDrawerContent = ({ navigation }) => {
-  const { currentUser, errors } = useSelector(mapState);
+  const { doctorD, currentUser, errors } = useSelector(mapState);
   console.log("mapState =>", currentUser, errors);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,6 +56,12 @@ const CustomDrawerContent = ({ navigation }) => {
   };
   const handleConsults = () => {
     navigation.navigate("consults");
+  };
+  const handleDoctorConsults = () => {
+    navigation.navigate("doctorConsults");
+  };
+  const handlePayment = () => {
+    navigation.navigate("doctorPayment");
   };
   const _handlePressTerms = () => {
     WebBrowser.openBrowserAsync("http://medipocket.world/privacy-policy/");
@@ -108,25 +115,39 @@ const CustomDrawerContent = ({ navigation }) => {
             <Text style={styles.itemText}>DR. AI</Text>
           </TouchableOpacity>
           {/* About Us */}
-          <TouchableOpacity onPress={handledoctors} style={styles.item}>
-            <MaterialIcons
-              style={styles.itemIcon}
-              name="folder-special"
-              size={22}
-              color="#9ba8bb"
-            />
-            <Text style={styles.itemText}>USA Specialists</Text>
-          </TouchableOpacity>
-          {/* Services */}
-          <TouchableOpacity onPress={handleConsults} style={styles.item}>
-            <Entypo
-              style={styles.itemIcon}
-              name="clipboard"
-              size={20}
-              color="#9ba8bb"
-            />
-            <Text style={styles.itemText}>My consults</Text>
-          </TouchableOpacity>
+          {!doctorD && (
+            <TouchableOpacity onPress={handledoctors} style={styles.item}>
+              <MaterialIcons
+                style={styles.itemIcon}
+                name="folder-special"
+                size={22}
+                color="#9ba8bb"
+              />
+              <Text style={styles.itemText}>USA Specialists</Text>
+            </TouchableOpacity>
+          )}
+          {!doctorD ? (
+            <TouchableOpacity onPress={handleConsults} style={styles.item}>
+              <Entypo
+                style={styles.itemIcon}
+                name="clipboard"
+                size={20}
+                color="#9ba8bb"
+              />
+              <Text style={styles.itemText}>My consults</Text>
+            </TouchableOpacity>
+          ) : null}
+          {doctorD && (
+            <TouchableOpacity onPress={handlePayment} style={styles.item}>
+              <MaterialIcons
+                style={styles.itemIcon}
+                name="payments"
+                size={22}
+                color="#9ba8bb"
+              />
+              <Text style={styles.itemText}>Payments</Text>
+            </TouchableOpacity>
+          )}
           {/* Contact */}
           <TouchableOpacity onPress={_handlePressTerms} style={styles.item}>
             <MaterialIcons

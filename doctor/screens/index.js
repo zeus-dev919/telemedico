@@ -25,6 +25,8 @@ import Result from "./Main/SymthomScreens/Result.js";
 import SelectProfile from "./Main/ProfileScreens/SelectProfile.js";
 import Profile from "./Main/ProfileScreens/Profile.js";
 import Consults from "./Main/ProfileScreens/Consults.js";
+import DoctorConsults from "./Main/ProfileScreens/DoctorConsults.js";
+import DoctorPayment from "./Main/ProfileScreens/DoctorPayment.js";
 import BeforeCall from "./Main/ProfileScreens/BeforeCall.js";
 import Call from "./Main/ProfileScreens/Call.js";
 
@@ -51,6 +53,8 @@ export {
   SelectProfile,
   Profile,
   Consults,
+  DoctorConsults,
+  DoctorPayment,
   BeforeCall,
   Call,
 };

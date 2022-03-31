@@ -1,22 +1,41 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
 import { COLORS, icons } from "../../constants";
 import DayModel from "./DayModel";
 
+const mapState = ({ user }) => ({
+  doctorD: user.doctorD,
+});
+
 const DoctorUpcomingConsult = (props) => {
-  const { day, nbDay, time, spec, doctorImg, rtcToken, channelName, navigation } = props;
+  const {
+    day,
+    nbDay,
+    time,
+    spec,
+    doctorImg,
+    rtcToken,
+    channelName,
+    navigation,
+  } = props;
   // console.log("Consult => ", day, nbDay, time, spec, doctorImg);
+  const { doctorD } = useSelector(mapState);
   console.log("Consult => ", time);
   const handleJoin = () => {
     const d = new Date();
     const timeLeft = (time - d) / 1000;
-    navigation.navigate("beforecall", { timeLeft: timeLeft, RTCToken: rtcToken, channelName: channelName, });
+    navigation.navigate("beforecall", {
+      timeLeft: timeLeft,
+      RTCToken: rtcToken,
+      channelName: channelName,
+    });
   };
   return (
     <View style={[styles.card1, styles.shadow1]}>
       <View style={styles.doctorCard}>
         <View style={styles.doctorCardLeft}>
-          <Text style={styles.cardTitle1}>Upcoming Consult</Text>
+          {!doctorD && <Text style={styles.cardTitle1}>Upcoming Consult</Text>}
           <View style={styles.containerBoxes}>
             <View style={styles.box}>
               <DayModel day={day} monthnb={nbDay} isSelected={false} bg="1" />

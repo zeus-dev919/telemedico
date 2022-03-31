@@ -8,6 +8,7 @@ const mrAi = require("../assets/images/mr_ai.png");
 //
 const left_img = require("../assets/images/left_img.png");
 const right_img = require("../assets/images/right_img.png");
+const right_img2 = require("../assets/images/right_img2.png");
 
 export default {
   logo,
@@ -19,4 +20,5 @@ export default {
   mrAi,
   left_img,
   right_img,
+  right_img2,
 };

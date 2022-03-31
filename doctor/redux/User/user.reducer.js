@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   signUpSuccess: false,
   resetPasswordSuccess: false,
   userD: null,
+  doctorD: null,
   token: null,
   errors: [],
 };
@@ -47,6 +48,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userD: action.payload,
+      };
+    case userTypes.SET_DOCTOR:
+      return {
+        ...state,
+        doctorD: action.payload,
       };
 
     // TOKEN
