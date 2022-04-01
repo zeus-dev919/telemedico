@@ -2,7 +2,7 @@
   "expo": {
     "name": "Medipocket World",
     "slug": "HealthcareApp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
@@ -31,7 +31,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO"
