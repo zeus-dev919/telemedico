@@ -282,7 +282,8 @@ const Result = ({ route, navigation }) => {
           <View style={styles.titleConatiner}>
             <Text style={styles.title1}>DR. AI</Text>
           </View>
-          <TouchableOpacity
+          <View style={styles.imgStyle}></View>
+          {/* <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.navigate("home")}
           >
@@ -292,7 +293,7 @@ const Result = ({ route, navigation }) => {
               color="black"
               style={styles.icon_style}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       {/* ScrollView */}

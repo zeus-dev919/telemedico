@@ -59,6 +59,7 @@ const videoCall = require("../assets/icons/profile/videoCall.png");
 // placeholder
 const placeholder = require("../assets/icons/placeholder.png");
 const redflag = require("../assets/icons/redflag.png");
+const cancel = require("../assets/icons/cancel.png");
 
 export default {
   menu1,
@@ -120,4 +121,6 @@ export default {
   // placeholder
   placeholder,
   redflag,
+  // cancel
+  cancel,
 };

@@ -205,6 +205,7 @@ const Describe = ({ route, navigation }) => {
               <TouchableOpacity
                 style={styles.addBtnContainer}
                 onPress={(e) => handleAddItem(e, search)}
+                disabled={search.length > 0 ? false : true}
               >
                 <Image
                   style={styles.addBtn}

@@ -42,6 +42,7 @@ const PayCardsModel = (props) => {
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [validCard, setValidCard] = useState(false);
   //   Error data
   const [isSelectedError, setSelectedError] = useState(false);
 
@@ -128,18 +129,18 @@ const PayCardsModel = (props) => {
 
   const [key, setKey] = useState("");
   useEffect(() => {
-    try{
+    try {
       fetch("https://pay.medipocket.world/create-payment-intent/", {
         method: "POST",
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log('=====>',res)
+          console.log("=====>", res);
           const intent = res;
           setKey(intent.clientSecret);
         });
-    }catch(err){
-      console.log('error => ', err)
+    } catch (err) {
+      console.log("error => ", err);
     }
   }, []);
 
@@ -195,6 +196,7 @@ const PayCardsModel = (props) => {
         }}
         onCardChange={(cardDetails) => {
           console.log("cardDetails", cardDetails);
+          setValidCard(cardDetails.complete);
         }}
         onFocus={(focusedField) => {
           console.log("focusField", focusedField);
@@ -214,9 +216,15 @@ const PayCardsModel = (props) => {
         <Text style={styles.error}>{isSelectedError}</Text>
       )}
       {/* Pay */}
-      <TouchableOpacity style={styles.button1} onPress={handlePayment}>
-        <Text style={styles.signup}>Pay {pay}$</Text>
-      </TouchableOpacity>
+      {validCard && isSelected ? (
+        <TouchableOpacity style={styles.button1} onPress={handlePayment}>
+          <Text style={styles.signup}>Pay {pay}$</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.button1} disabled={true}>
+          <Text style={styles.signup5}>Pay {pay}$</Text>
+        </TouchableOpacity>
+      )}
       {!success ? (
         <Modal
           animationType="slide"
@@ -373,6 +381,15 @@ const styles = StyleSheet.create({
   },
   signup: {
     backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 22,
+    textAlign: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  signup5: {
+    backgroundColor: COLORS.darkgray,
     color: "white",
     fontSize: 22,
     textAlign: "center",

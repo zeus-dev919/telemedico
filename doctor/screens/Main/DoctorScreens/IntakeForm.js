@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   Modal,
 } from "react-native";
-import { COLORS } from "../../../constants";
+import { COLORS, icons } from "../../../constants";
 import Checkbox from "expo-checkbox";
 
 // const USER_QUERY = gql`
@@ -29,6 +29,7 @@ const IntakeForm = ({ navigation }) => {
   // console.log("Data =>", data, loading);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
   const [help, setHelp] = useState(false);
+  const [help2, setHelp2] = useState(false);
   // f2
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -251,67 +252,70 @@ const IntakeForm = ({ navigation }) => {
     if (appointment2) appointment = "4-7 Days";
     if (appointment3) appointment = "Morning India time: 5.30am - 10am";
     if (appointment4) appointment = "Evening India time: 5.30pm - 12am";
-    console.log({
-      name: name,
-      birth: birth,
-      gender: gender,
-      phone: phone,
-      patient_medical_history: f4,
-      father: father,
-      mother: mother,
-      brother: brother,
-      sister: sister,
-      current_medication: medication,
-      list_allergies: allergies,
-      exercices: exercices,
-      alcohol: alcohol,
-      smoke: smoke,
-      reason_for_consultation: f3,
-      question1: q1,
-      question2: q2,
-      question3: q3,
-      appointment: appointment,
-    });
-    // await fetch("https://app.medipocket.world/intake/", {
-    await fetch("https://app.medipocket.world/intake_form/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: {
-        first_name: name,
-        last_name: "___",
-        birth: birth,
-        gender: gender,
-        phone: phone,
-        patient_medical_history: f4,
-        father: father,
-        mother: mother,
-        brother: brother,
-        sister: sister,
-        current_medication: medication,
-        list_allergies: allergies,
-        healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
-        reason_for_consultation: f3,
-        question1: q1,
-        question2: q2,
-        question3: q3,
-        appointment: appointment,
-      },
-    })
-      .then((response) => response.text())
-      .then((res) => {
-        setIndicatorLoad(false);
-        navigation.navigate("home");
-        console.log("Response Fecth =>", res);
+    if (
+      name.length === 0 ||
+      birth.length === 0 ||
+      gender.length === 0 ||
+      phone.length === 0 ||
+      f4.length === 0 ||
+      father.length === 0 ||
+      mother.length === 0 ||
+      brother.length === 0 ||
+      sister.length === 0 ||
+      medication.length === 0 ||
+      allergies.length === 0 ||
+      exercices.length === 0 ||
+      alcohol.length === 0 ||
+      smoke.length === 0 ||
+      f3.length === 0 ||
+      q1.length === 0 ||
+      q2.length === 0 ||
+      q3.length === 0 ||
+      append.length === 0
+    ) {
+      setHelp2(true);
+    } else {
+      // await fetch("https://app.medipocket.world/intake/", {
+      await fetch("https://app.medipocket.world/intake_form/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: {
+          first_name: name,
+          last_name: "___",
+          birth: birth,
+          gender: gender,
+          phone: phone,
+          patient_medical_history: f4,
+          father: father,
+          mother: mother,
+          brother: brother,
+          sister: sister,
+          current_medication: medication,
+          list_allergies: allergies,
+          healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
+          reason_for_consultation: f3,
+          question1: q1,
+          question2: q2,
+          question3: q3,
+          appointment: appointment,
+        },
       })
-      .catch((err) => {
-        setIndicatorLoad(false);
-        console.log("==============================================");
-        console.log("Error =>", err);
-      });
-    console.log("DONE");
+        .then((response) => response.text())
+        .then((res) => {
+          setIndicatorLoad(false);
+          navigation.navigate("home");
+          console.log("Response Fecth =>", res);
+        })
+        .catch((err) => {
+          setIndicatorLoad(false);
+          console.log("==============================================");
+          console.log("Error =>", err);
+        });
+      console.log("DONE");
+    }
   };
 
   return (
@@ -1154,6 +1158,40 @@ const IntakeForm = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+      {/* Help2 */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={help2}
+        onRequestClose={() => {
+          setHelp2(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View>
+              <Image
+                source={icons.cancel}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={[styles.ModelTitleView, { marginBottom: 20 }]}>
+              <Text style={styles.titleModal}>
+                Please fill all fields before submit
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.signup2}
+              onPress={() => {
+                setHelp2(false);
+              }}
+            >
+              <Text style={styles.textStyle}>Ok</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -1228,7 +1266,7 @@ const styles = StyleSheet.create({
     color: COLORS.fontColor4,
     fontSize: 16,
     fontWeight: "bold",
-    marginLeft: 10,
+    marginLeft: 3,
     marginTop: 10,
   },
   shadow1: {
@@ -1272,6 +1310,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 10,
+    marginLeft: 3,
   },
   input: {
     fontSize: 14,
