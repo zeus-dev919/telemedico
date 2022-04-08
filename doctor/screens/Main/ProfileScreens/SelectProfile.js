@@ -58,7 +58,9 @@ const SelectProfile = ({ navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.choosing}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fprofile%2Fchoosing.png?alt=media&token=f577f324-4f25-4c94-b5df-f201f2027001",
+              }}
               resizeMode="contain"
             />
           </View>
@@ -79,7 +81,9 @@ const SelectProfile = ({ navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.doctor}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fprofile%2Fdoctor.png?alt=media&token=7118bca5-2adb-43bd-a9ba-a3fe569d22e4",
+                }}
                 resizeMode="contain"
               />
               <Text style={male ? styles.title32 : styles.title3}>Doctor</Text>
@@ -90,7 +94,9 @@ const SelectProfile = ({ navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.patient}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fprofile%2Fpatient.png?alt=media&token=ada5ccfe-598c-4d56-b391-05eaf90cee5a",
+                }}
                 resizeMode="contain"
               />
               <Text style={female ? styles.title32 : styles.title3}>

@@ -42,21 +42,21 @@ const Splash = ({ navigation }) => {
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          source={images.bg}
+          source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg.png?alt=media&token=a36ec316-b594-4a1a-9de5-104ed8ef3287" }}
         />
       );
     if (index === 1)
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          source={images.bg1}
+          source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg1.png?alt=media&token=6491998f-fdb1-4db2-965b-3e6a2e5c4ced" }}
         />
       );
     if (index === 2)
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          source={images.bg2}
+          source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg2.png?alt=media&token=1751b966-0977-4ab6-983f-446dd94bc6d0" }}
         />
       );
   };

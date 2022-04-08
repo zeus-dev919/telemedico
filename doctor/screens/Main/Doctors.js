@@ -81,7 +81,9 @@ const Doctors = ({ navigation }) => {
             (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
             " ," +
             (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
-          img: data.allDoctors[i].profilePicture ? data.allDoctors[i].profilePicture : "",
+          img: data.allDoctors[i].profilePicture
+            ? data.allDoctors[i].profilePicture
+            : "",
           patients: data.allDoctors[i].patients
             ? data.allDoctors[i].patients
             : "--",
@@ -133,7 +135,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.lungs}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Flungs.png?alt=media&token=51b706ef-dafc-484f-954b-ab8ceba22a67",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -144,7 +148,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.thyroid}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fthyroid.png?alt=media&token=5ea0ce92-b936-4797-8f5c-e388bf252419",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -155,7 +161,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.heart}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fheart.png?alt=media&token=8d5d1ab2-5ec6-480d-b09b-105a54dd0eb1",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -166,7 +174,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.joints}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fjoints.png?alt=media&token=0a758366-8ee0-4b67-99c0-ea8ec030c0f6",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -177,7 +187,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.reproductive}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Freproductive.png?alt=media&token=c142449d-0f72-470b-9c36-a164f0133e99",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -188,7 +200,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.anatomy}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fanatomy.png?alt=media&token=ddd77593-c445-4112-b7e6-f87ab1ad1258",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -199,7 +213,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.psychology}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fpsychology.png?alt=media&token=002d3ca4-dcf2-4180-92e0-34485613e844",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -210,7 +226,9 @@ const Doctors = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon}
-                  source={icons.dermis}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fdermis.png?alt=media&token=e7169f17-ca33-49bc-a361-9bc2019de915",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>

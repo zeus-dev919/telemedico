@@ -43,10 +43,12 @@ const CONSULT_QUERY = gql`
   }
 `;
 
-const DoctorHomeConsult = ({ navigation }) => {
+const DoctorHomeConsult = (props) => {
+  const { navigation } = props;
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
   const [sum, setSum] = useState([]);
+  const [countUICard, setCountUICard] = useState(0);
   const getConsult = () => {
     let tab = [];
     for (let i = 0; i < data.allSchedules.length; i++) {
@@ -72,7 +74,9 @@ const DoctorHomeConsult = ({ navigation }) => {
         <TouchableOpacity style={styles.Headercard2} onPress={handleSymthoms}>
           <Image
             style={styles.cardImg2}
-            source={images.right_img2}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fright_img2.png?alt=media&token=13ad195b-b7c5-45de-b795-761e1a4d4ee6",
+            }}
             // resizeMode="cover"
           />
           <View style={[styles.headerCardContent, styles.shadow]}>
@@ -84,7 +88,9 @@ const DoctorHomeConsult = ({ navigation }) => {
         </TouchableOpacity>
         <ImageBackground
           style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
-          source={images.homeBg}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2FhomeBg.png?alt=media&token=3cbc2277-915d-4ad6-85df-dcc98f84e7f7",
+          }}
         />
       </View>
       {/* Consultations Title */}
@@ -93,6 +99,7 @@ const DoctorHomeConsult = ({ navigation }) => {
       </View>
       {sum.length > 0 ? (
         sum.map((item, index) => {
+          let i = 0;
           const month = [
             "January",
             "February",
@@ -115,19 +122,25 @@ const DoctorHomeConsult = ({ navigation }) => {
             )}, ${item.date.substr(0, 4)} ${item.startTime}`
           );
           const day = weekday[nbDate.getDay()];
-          return (
-            <DoctorUpcomingConsult
-              key={index}
-              day={day}
-              nbDay={item.date.substr(8, 2)}
-              spec={item.specializations.specializationName}
-              time={nbDate}
-              doctorImg={item.doctor.profilePicture}
-              rtcToken={item.rnToken}
-              channelName={item.channelName}
-              navigation={navigation}
-            />
-          );
+          const d = new Date();
+          const timeLeft = (nbDate - d) / 1000;
+          if (timeLeft > 0) {
+            i++;
+            return (
+              <DoctorUpcomingConsult
+                key={index}
+                day={day}
+                nbDay={item.date.substr(8, 2)}
+                spec={item.specializations.specializationName}
+                time={nbDate}
+                doctorImg={item.doctor.profilePicture}
+                rtcToken={item.rnToken}
+                channelName={item.channelName}
+                navigation={navigation}
+              />
+            );
+          }
+          setCountUICard(i);
         })
       ) : (
         <View
@@ -141,6 +154,22 @@ const DoctorHomeConsult = ({ navigation }) => {
         >
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>
             No Consultation yet.
+          </Text>
+        </View>
+      )}
+
+      {countUICard === 0 && (
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingVertical: 20,
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: "600" }}>
+            Contact admin for missed consultations.
           </Text>
         </View>
       )}

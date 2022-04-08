@@ -42,7 +42,9 @@ const BeforeCall = ({ navigation, route }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.hourglass}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fprofile%2Fhourglass.png?alt=media&token=7c5842e7-417a-468c-9d53-7533c839a101",
+              }}
               resizeMode="contain"
             />
           </View>
@@ -55,7 +57,12 @@ const BeforeCall = ({ navigation, route }) => {
           <Text style={[styles.title1, { marginTop: 20, fontSize: 30 }]}>
             Timer
           </Text>
-          <TimeLeft date={timeLeft} RTCToken={RTCToken} channelName={channelName} navigation={navigation} />
+          <TimeLeft
+            date={timeLeft}
+            RTCToken={RTCToken}
+            channelName={channelName}
+            navigation={navigation}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -80,7 +80,9 @@ const Pregnant = ({ route, navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.gender}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fequality.png?alt=media&token=47681ef1-3f78-499e-a60c-0a0bd41773db",
+              }}
               resizeMode="contain"
             />
           </View>
@@ -103,7 +105,9 @@ const Pregnant = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.pregnant}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fwoman.png?alt=media&token=47c838d9-52fe-4d81-951b-fc521303ab32",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={pregnant ? styles.title32 : styles.title3}>
@@ -124,7 +128,9 @@ const Pregnant = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.female}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Ffemale.png?alt=media&token=83529e04-433a-4b5c-b9a9-f7156aea7b0d",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={dontKnowPregnant ? styles.title32 : styles.title3}>
@@ -145,7 +151,9 @@ const Pregnant = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.notPregnant}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fpregnant.png?alt=media&token=2b024101-ae05-4356-810a-e232ff4fd6a5",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={notPregnant ? styles.title32 : styles.title3}>

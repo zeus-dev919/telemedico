@@ -21,14 +21,18 @@ const DoctorUpcomingCard = (props) => {
                 <View style={styles.callIconBox}>
                   <Image
                     style={styles.icon}
-                    source={icons.phone}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fphone.png?alt=media&token=09a45e97-b8fd-42d1-92b6-264bcf0b5d4f",
+                    }}
                     resizeMode="contain"
                   />
                 </View>
                 <View style={styles.callIconBox}>
                   <Image
                     style={styles.icon}
-                    source={icons.video}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fvideo-camera.png?alt=media&token=32d77f62-426d-42ae-83d2-806a6b45e51a",
+                    }}
                     resizeMode="contain"
                   />
                 </View>

@@ -2,7 +2,7 @@ import "expo-dev-client";
 import "react-native-gesture-handler";
 import React from "react";
 import { Provider } from "react-redux";
-import { StatusBar } from 'react-native';
+import { StatusBar, SafeAreaView } from "react-native";
 import AppMain from "./screens/AppMain";
 import store from "./redux/createStore";
 import { StripeProvider } from "@stripe/stripe-react-native";
@@ -17,18 +17,20 @@ const client = new ApolloClient({
 
 const App = () => {
   return (
-    <StripeProvider
-      publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
-      merchantIdentifier="merchant.identifier"
-    >
-      <ApolloProvider client={client}>
-        <Provider store={store}>
-          {/* <StatusBar style="dark" /> */}
-          <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
-          <AppMain />
-        </Provider>
-      </ApolloProvider>
-    </StripeProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StripeProvider
+        publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
+        merchantIdentifier="merchant.identifier"
+      >
+        <ApolloProvider client={client}>
+          <Provider store={store}>
+            {/* <StatusBar style="dark" /> */}
+            <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
+            <AppMain />
+          </Provider>
+        </ApolloProvider>
+      </StripeProvider>
+    </SafeAreaView>
   );
 };
 

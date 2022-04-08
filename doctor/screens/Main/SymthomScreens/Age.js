@@ -145,7 +145,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option1 ? styles.title22 : styles.title2}>
@@ -163,7 +165,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option2 ? styles.title22 : styles.title2}>
@@ -181,7 +185,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option3 ? styles.title22 : styles.title2}>
@@ -199,7 +205,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option4 ? styles.title22 : styles.title2}>
@@ -217,7 +225,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option5 ? styles.title22 : styles.title2}>
@@ -235,7 +245,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option6 ? styles.title22 : styles.title2}>
@@ -253,7 +265,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option7 ? styles.title22 : styles.title2}>
@@ -271,7 +285,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option8 ? styles.title22 : styles.title2}>
@@ -289,7 +305,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option9 ? styles.title22 : styles.title2}>
@@ -307,7 +325,9 @@ const Age = ({ navigation }) => {
               >
                 <Image
                   style={styles.icon2}
-                  source={icons.male}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                  }}
                   resizeMode="contain"
                 />
                 <Text style={option10 ? styles.title22 : styles.title2}>

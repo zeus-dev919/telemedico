@@ -303,7 +303,9 @@ const Result = ({ route, navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.light}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Flight.png?alt=media&token=027bc0a1-686f-4032-aea6-73575a09e183",
+              }}
               resizeMode="contain"
             />
           </View>
@@ -320,7 +322,12 @@ const Result = ({ route, navigation }) => {
                 <Text style={styles.title3}>
                   {diagnose1}{" "}
                   {spec1Flag && (
-                    <Image source={icons.redflag} style={styles.redflag} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                      }}
+                      style={styles.redflag}
+                    />
                   )}
                 </Text>
               </View>
@@ -331,7 +338,12 @@ const Result = ({ route, navigation }) => {
                 <Text style={styles.title3}>
                   {diagnose2}{" "}
                   {spec2Flag && (
-                    <Image source={icons.redflag} style={styles.redflag} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                      }}
+                      style={styles.redflag}
+                    />
                   )}
                 </Text>
               </View>
@@ -342,7 +354,12 @@ const Result = ({ route, navigation }) => {
                 <Text style={styles.title3}>
                   {diagnose3}{" "}
                   {spec3Flag && (
-                    <Image source={icons.redflag} style={styles.redflag} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                      }}
+                      style={styles.redflag}
+                    />
                   )}
                 </Text>
               </View>
@@ -355,7 +372,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose4}{" "}
                       {spec4Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -366,7 +388,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose5}{" "}
                       {spec5Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -377,7 +404,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose6}{" "}
                       {spec6Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -388,7 +420,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose7}{" "}
                       {spec7Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -399,7 +436,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose8}{" "}
                       {spec8Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -410,7 +452,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose9}{" "}
                       {spec9Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -421,7 +468,12 @@ const Result = ({ route, navigation }) => {
                     <Text style={styles.title3}>
                       {diagnose10}{" "}
                       {spec10Flag && (
-                        <Image source={icons.redflag} style={styles.redflag} />
+                        <Image
+                          source={{
+                            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                          }}
+                          style={styles.redflag}
+                        />
                       )}
                     </Text>
                   </View>
@@ -520,9 +572,14 @@ const Result = ({ route, navigation }) => {
             <Text style={{ fontSize: 18 }}>Note!</Text>
             <View style={styles.flagDesc}>
               <Text>
-                <Image source={icons.redflag} style={styles.redflag} /> Red Flag
-                F conditions are serious and acute and need to be treated in the
-                Emergency Department.
+                <Image
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+                  }}
+                  style={styles.redflag}
+                />{" "}
+                Red Flag F conditions are serious and acute and need to be
+                treated in the Emergency Department.
               </Text>
             </View>
           </View>

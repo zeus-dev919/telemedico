@@ -1575,7 +1575,9 @@ const Country = ({ route, navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.countries}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fcountries.png?alt=media&token=8c1804f5-c46c-4591-9455-ca0f06818a7d",
+              }}
               resizeMode="contain"
             />
           </View>

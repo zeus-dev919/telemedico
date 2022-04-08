@@ -1171,7 +1171,9 @@ const IntakeForm = ({ navigation }) => {
           <View style={styles.modalView}>
             <View>
               <Image
-                source={icons.cancel}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fcancel.png?alt=media&token=871e1a80-7e50-4d5b-b6df-67eae1af334c",
+                }}
                 style={{ width: 30, height: 30 }}
                 resizeMode="contain"
               />

@@ -299,7 +299,9 @@ const DoctorsList = ({ route, navigation }) => {
           <View style={styles.searchContainer1}>
             <Image
               style={styles.search}
-              source={icons.filter}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Ffilter.png?alt=media&token=a6a047ab-6ee2-4597-9675-c38608e3ef62",
+              }}
               resizeMode="contain"
             />
             <Text

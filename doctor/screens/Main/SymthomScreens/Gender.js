@@ -72,13 +72,15 @@ const Gender = ({ route, navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.gender}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fequality.png?alt=media&token=47681ef1-3f78-499e-a60c-0a0bd41773db",
+              }}
               resizeMode="contain"
             />
           </View>
           <View>
-            <Text style={styles.title1}>Select Sex</Text>
-            <Text style={styles.title2}>Please select your sex</Text>
+            <Text style={styles.title1}>Select gender</Text>
+            <Text style={styles.title2}>Please select your gender</Text>
           </View>
           <View
             style={{
@@ -93,7 +95,9 @@ const Gender = ({ route, navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.male}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fmale.png?alt=media&token=33003d87-4a93-4d0b-a26c-0222cef18505",
+                }}
                 resizeMode="contain"
               />
               <Text style={male ? styles.title32 : styles.title3}>Male</Text>
@@ -104,7 +108,9 @@ const Gender = ({ route, navigation }) => {
             >
               <Image
                 style={styles.icon2}
-                source={icons.female}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Ffemale.png?alt=media&token=83529e04-433a-4b5c-b9a9-f7156aea7b0d",
+                }}
                 resizeMode="contain"
               />
               <Text style={female ? styles.title32 : styles.title3}>

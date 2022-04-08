@@ -118,7 +118,9 @@ const Recovery = ({ navigation }) => {
             <View style={styles.ModelTitleView}>
               <Image
                 style={styles.ModelIcon}
-                source={icons.accept}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Faccept.png?alt=media&token=3d1f009d-14be-45d9-80cb-75e1d9878a45",
+                }}
                 resizeMode="contain"
               />
               <Text style={styles.titleModal}>Reset Password</Text>

@@ -157,7 +157,9 @@ const Describe = ({ route, navigation }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.notes}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fnotes.png?alt=media&token=3ded13d5-a1bd-4dbc-80d4-1ebd758fdb4b",
+              }}
               resizeMode="contain"
             />
           </View>
@@ -179,7 +181,9 @@ const Describe = ({ route, navigation }) => {
                   >
                     <Text style={styles.wordContentStyle2}>{item}</Text>
                     <Image
-                      source={icons.close}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fclose.png?alt=media&token=7179b5d1-2b8b-46ff-89b5-b6b5a474c46c",
+                      }}
                       style={styles.plusIcon}
                       resizeMode="contain"
                     />
@@ -192,7 +196,9 @@ const Describe = ({ route, navigation }) => {
             <View style={[styles.searchContainer, styles.shadow]}>
               <Image
                 style={styles.search}
-                source={icons.search}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsearch.png?alt=media&token=102ca289-8daa-42a8-bc21-02903cd95d68",
+                }}
                 resizeMode="contain"
               />
               <TextInput
@@ -209,7 +215,9 @@ const Describe = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.addBtn}
-                  source={icons.add}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fplus.png?alt=media&token=f9ee0e65-92a1-4f4e-84df-a50cb981af74",
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -225,7 +233,9 @@ const Describe = ({ route, navigation }) => {
                 >
                   <Text style={styles.wordContentStyle}>{item}</Text>
                   <Image
-                    source={icons.plus}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fsympthom%2Fplus.png?alt=media&token=f9ee0e65-92a1-4f4e-84df-a50cb981af74",
+                    }}
                     style={styles.plusIcon}
                     resizeMode="contain"
                   />

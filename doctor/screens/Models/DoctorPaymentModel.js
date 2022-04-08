@@ -17,14 +17,24 @@ const DoctorPaymentModel = () => {
               onPress={() => setCollapsed(!collapsed)}
               style={[styles.doctorBtnStyle, styles.shadow1]}
             >
-              <Image source={icons.collapse} style={styles.icon} />
+              <Image
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Farrow-down.png?alt=media&token=088e6adb-e587-4484-ae6f-f9fa8272b891",
+                }}
+                style={styles.icon}
+              />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               onPress={() => setCollapsed(!collapsed)}
               style={[styles.doctorBtnStyle, styles.shadow1]}
             >
-              <Image source={icons.collapse} style={styles.icon2} />
+              <Image
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Farrow-down.png?alt=media&token=088e6adb-e587-4484-ae6f-f9fa8272b891",
+                }}
+                style={styles.icon2}
+              />
             </TouchableOpacity>
           )}
         </View>

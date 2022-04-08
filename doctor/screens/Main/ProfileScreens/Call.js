@@ -44,7 +44,9 @@ const Call = ({ navigation, route }) => {
           <View style={{ marginBottom: 20 }}>
             <Image
               style={styles.icon}
-              source={icons.videoCall}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fprofile%2FvideoCall.png?alt=media&token=3b7c560e-048c-4f98-a509-7ced4f88ef74",
+              }}
               resizeMode="contain"
             />
           </View>

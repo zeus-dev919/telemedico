@@ -41,13 +41,11 @@ const DOCTOR_QUERY = gql`
   }
 `;
 
-
 const HomePage = ({ navigation }) => {
   console.log("Home Screen");
   const dispatch = useDispatch();
   const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
-  
 
   useEffect(() => {
     if (data) {
@@ -119,7 +117,9 @@ const HomePage = ({ navigation }) => {
                 >
                   <Image
                     style={styles.cardImg}
-                    source={images.right_img}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fright_img.png?alt=media&token=f4c52de7-4981-4bed-8877-2562c3f42881",
+                    }}
                     // resizeMode="cover"
                   />
                   <View style={[styles.headerCardContent, styles.shadow]}>
@@ -135,7 +135,9 @@ const HomePage = ({ navigation }) => {
                 >
                   <Image
                     style={styles.cardImg}
-                    source={images.left_img}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fleft_img.png?alt=media&token=3b1e05b7-1b30-4209-a6c2-df19582872d5",
+                    }}
                     resizeMode="cover"
                   />
                   <View style={[styles.headerCardContent, styles.shadow]}>
@@ -149,7 +151,9 @@ const HomePage = ({ navigation }) => {
                 </TouchableOpacity>
                 <ImageBackground
                   style={[styles.fixed, styles.bgContainer, { zIndex: -1 }]}
-                  source={images.homeBg}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2FhomeBg.png?alt=media&token=3cbc2277-915d-4ad6-85df-dcc98f84e7f7",
+                  }}
                 />
               </View>
               {/* Specialities Title */}
@@ -164,7 +168,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleLungs}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.lungs} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Flungs.png?alt=media&token=51b706ef-dafc-484f-954b-ab8ceba22a67",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Oncology</Text>
                   <Text style={styles.menuCardTitle1}>cancer</Text>
@@ -175,7 +184,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleTooth}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.thyroid} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fthyroid.png?alt=media&token=5ea0ce92-b936-4797-8f5c-e388bf252419",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Endocrinology</Text>
                   <Text style={styles.menuCardTitle1}>Diabetes, Thyroid</Text>
@@ -186,7 +200,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleDermatologist}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.heart} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fheart.png?alt=media&token=8d5d1ab2-5ec6-480d-b09b-105a54dd0eb1",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Cardiology</Text>
                   <Text style={styles.menuCardTitle1}>Heart Problems</Text>
@@ -197,7 +216,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleHeart}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.joints} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fjoints.png?alt=media&token=0a758366-8ee0-4b67-99c0-ea8ec030c0f6",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Rheumatology</Text>
                   <Text style={styles.menuCardTitle1}>Arthritis, Joints</Text>
@@ -210,7 +234,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleBrain}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.reproductive} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Freproductive.png?alt=media&token=c142449d-0f72-470b-9c36-a164f0133e99",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Fertility</Text>
                   <Text style={styles.menuCardTitle1}>IVF, Treatments</Text>
@@ -221,7 +250,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handlePsychology}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.anatomy} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fanatomy.png?alt=media&token=ddd77593-c445-4112-b7e6-f87ab1ad1258",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Plastic Surgery</Text>
                   <Text style={styles.menuCardTitle1}>Nose, Body</Text>
@@ -232,7 +266,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleUrology}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.psychology} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fpsychology.png?alt=media&token=002d3ca4-dcf2-4180-92e0-34485613e844",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>Mental Health</Text>
                   <Text style={styles.menuCardTitle1}>Anxiety, Depression</Text>
@@ -243,7 +282,12 @@ const HomePage = ({ navigation }) => {
                   onPress={handleOthers}
                 >
                   <View style={[styles.menuCard, styles.shadow]}>
-                    <Image source={icons.dermis} style={styles.icon} />
+                    <Image
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fbody%2Fdermis.png?alt=media&token=e7169f17-ca33-49bc-a361-9bc2019de915",
+                      }}
+                      style={styles.icon}
+                    />
                   </View>
                   <Text style={styles.menuCardTitle}>More</Text>
                   <Text style={styles.menuCardTitle1}>Skin, Neuro</Text>
@@ -256,7 +300,7 @@ const HomePage = ({ navigation }) => {
               </TouchableOpacity>
             </>
           ) : (
-            <DoctorHomeConsult />
+            <DoctorHomeConsult navigation={navigation} />
           )}
 
           {/* <View style={styles.specContainer}>
@@ -338,7 +382,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: "100%",
   },
-  
+
   Headercard: {
     // position: "relative",
     borderRadius: 10,
@@ -346,7 +390,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // maxHeight: 200,
   },
-  
+
   cardImg: {
     width: "100%",
     height: 100,
@@ -354,7 +398,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  
+
   headerCardContent: {
     // position: "absolute",
     // bottom: -75,

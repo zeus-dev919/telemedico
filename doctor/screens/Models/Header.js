@@ -28,7 +28,9 @@ const Header = (props) => {
         ) : (
           <Image
             style={styles.avatar}
-            source={icons.placeholder}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
+            }}
             resizeMode="cover"
           />
         )}
