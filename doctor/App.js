@@ -7,12 +7,18 @@ import AppMain from "./screens/AppMain";
 import store from "./redux/createStore";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import * as Sentry from "sentry-expo";
 const cache = new InMemoryCache();
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: "https://app.medipocket.world/graphql/",
   cache,
   defaultOptions: { watchQuery: { fetchPolicy: "cache-and-network" } },
+});
+Sentry.init({
+  dsn: "https://64bbf94482e64740a325d9680dd0cdf2@o1199963.ingest.sentry.io/6323878",
+  enableInExpoDevelopment: true,
+  debug: false,
 });
 
 const App = () => {

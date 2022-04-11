@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBDp6rXG75cbD3iF01WUsyNKGt5QEME8AY",
@@ -12,18 +13,20 @@ import { getStorage } from "firebase/storage";
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBXo2h9mJ3bBfckgpfElVZQGyITvYk_yyw",
-  authDomain: "medipocket-e876b.firebaseapp.com",
-  projectId: "medipocket-e876b",
-  storageBucket: "medipocket-e876b.appspot.com",
-  messagingSenderId: "583710522933",
-  appId: "1:583710522933:web:0e5fcad56f91e40270fb7c",
-  measurementId: "G-SWSV012JMG",
+  apiKey: "AIzaSyCILSNGV57q21TeffjtUb5AU-bLYKyJhho",
+  authDomain: "medipocket2022.firebaseapp.com",
+  projectId: "medipocket2022",
+  storageBucket: "medipocket2022.appspot.com",
+  messagingSenderId: "262308121730",
+  appId: "1:262308121730:web:7d17307b719356ffe4389b",
+  measurementId: "G-4305QZX2HJ",
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+// initializeApp(firebaseConfig);
 const storage = getStorage();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-// export { auth, db, storage };
-export { storage };
+export { storage, analytics };
