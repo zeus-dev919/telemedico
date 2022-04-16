@@ -46,8 +46,8 @@ const Login = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [email, onChangeEmail] = useState("kunalkdas@outlook.com");
-  const [password, onChangepassword] = useState("Kepler@2209");
+  const [email, onChangeEmail] = useState("");
+  const [password, onChangepassword] = useState("");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);

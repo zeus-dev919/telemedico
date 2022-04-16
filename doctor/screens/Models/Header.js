@@ -41,7 +41,9 @@ const Header = (props) => {
       >
         <Image
           style={styles.imgStyle}
-          source={images.logo}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989",
+          }}
           resizeMode="contain"
         />
       </TouchableOpacity>
@@ -82,9 +84,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon_style: {
+    width: 35,
+    height: 35,
     marginRight: 10,
   },
   imgStyle: {
     width: 100,
+    height: 80,
   },
 });

@@ -52,9 +52,9 @@ const REGISTER_QUERY = gql`
 `;
 
 const Register = ({ navigation }) => {
-  console.log("Property Register Screen");
+  // console.log("Property Register Screen");
   const { currentUser, signUpSuccess, token, errors } = useSelector(mapState);
-  console.log("mapState =>", currentUser, signUpSuccess, token, errors);
+  // console.log("mapState =>", currentUser, signUpSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
@@ -167,6 +167,7 @@ const Register = ({ navigation }) => {
             user,
             res.data.register.errors?.password
           );
+          console.log("Response Error:", user, res.data.register);
           setGraphError1(
             res.data.register?.errors?.username
               ? res.data.register?.errors?.username[0]?.message

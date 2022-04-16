@@ -16,7 +16,7 @@ const PayTimeModel = (props) => {
           >
             Total Payable
           </Text>
-          <Text style={[styles.boxNb, { color: "#f9b664" }]}>{pay}$</Text>
+          <Text style={[styles.boxNb, { color: "#f9b664" }]}>{pay}</Text>
         </View>
       </View>
       {/* <View style={styles.boxContainer}>

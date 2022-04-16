@@ -509,6 +509,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   specContainer: {
+    backgroundColor: COLORS.bgColor1,
+    // backgroundColor: "red",
     margin: 10,
     marginTop: 20,
     width: "100%",

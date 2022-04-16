@@ -41,7 +41,9 @@ const PayCardsModel = (props) => {
   // data
   const [isSelected, setSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [validCard, setValidCard] = useState(false);
   //   Error data
   const [isSelectedError, setSelectedError] = useState(false);
@@ -145,18 +147,22 @@ const PayCardsModel = (props) => {
   }, []);
 
   const handlePayment = async () => {
-    const { error } = await confirmPayment(key, {
-      type: "Card",
-      billingDetails: {
-        email: userD.email,
-      },
-    });
+    try {
+      const { error } = await confirmPayment(key, {
+        type: "Card",
+        billingDetails: {
+          email: userD.email,
+        },
+      });
 
-    if (error) {
-      Alert.alert("Error : ", error);
-    } else {
-      setModalVisible(true);
-      setSuccess(true);
+      if (error) {
+        Alert.alert("Error : ", error);
+      } else {
+        setModalVisible(true);
+        setSuccess(true);
+      }
+    } catch (err) {
+      setFailed(true);
     }
   };
 
@@ -218,36 +224,14 @@ const PayCardsModel = (props) => {
       {/* Pay */}
       {validCard && isSelected ? (
         <TouchableOpacity style={styles.button1} onPress={handlePayment}>
-          <Text style={styles.signup}>Pay {pay}$</Text>
+          <Text style={styles.signup}>Pay {pay}</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.button1} disabled={true}>
-          <Text style={styles.signup5}>Pay {pay}$</Text>
+          <Text style={styles.signup5}>Pay {pay}</Text>
         </TouchableOpacity>
       )}
-      {!success ? (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      ) : (
+      {success && (
         <Modal
           animationType="slide"
           transparent={true}
@@ -286,6 +270,36 @@ const PayCardsModel = (props) => {
                 }}
               >
                 <Text style={styles.textStyle}>Patient Intake Form</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      )}
+      {failed && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible2(!modalVisible2);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View style={styles.ModelTitleView}>
+                <Text style={styles.titleModal}>Something went wrong!</Text>
+              </View>
+              <Text style={styles.titleModal}>Note!</Text>
+              <Text style={styles.modalText}>Please try again later</Text>
+              <Pressable
+                style={styles.signup2}
+                onPress={() => {
+                  setModalVisible2(!modalVisible2);
+                  navigation.navigate("home");
+                }}
+              >
+                <Text style={styles.textStyle}>Back home</Text>
               </Pressable>
             </View>
           </View>
