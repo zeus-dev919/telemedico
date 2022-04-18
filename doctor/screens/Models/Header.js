@@ -84,12 +84,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon_style: {
-    width: 35,
-    height: 35,
-    marginRight: 10,
+    marginRight: 0,
   },
   imgStyle: {
     width: 100,
-    height: 80,
+    height: 40,
   },
 });
