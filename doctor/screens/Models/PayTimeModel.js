@@ -16,7 +16,16 @@ const PayTimeModel = (props) => {
           >
             Total Payable
           </Text>
-          <Text style={[styles.boxNb, { color: "#f9b664" }]}>{pay}</Text>
+          <Text style={[styles.boxNb, { color: "#f9b664", marginBottom: 20}]}>{pay}</Text>
+          <Text
+            style={[
+              styles.cardTitle2,
+              { fontSize: 14, textAlign: "center", lineHeight: 18 },
+            ]}
+          >
+            Your payment will be processed in your local currency with no
+            additional charges
+          </Text>
         </View>
       </View>
       {/* <View style={styles.boxContainer}>

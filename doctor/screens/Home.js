@@ -13,16 +13,13 @@ import {
   FontAwesome5,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { images } from "../constants";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import * as WebBrowser from "expo-web-browser";
 // Screen
-import HomePage from "./Main/HomePage";
-import Doctors from "./Main/Doctors";
-import IntakeForm from "./Main/DoctorScreens/IntakeForm";
+import { HomePage, Doctors, IntakeForm } from "./index.js";
 import { signOutUser } from "../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -79,7 +76,9 @@ const CustomDrawerContent = ({ navigation }) => {
         <View style={styles.profileStyle}>
           <Image
             style={styles.imgStyle}
-            source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989" }}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989",
+            }}
             resizeMode="contain"
           />
         </View>
@@ -168,6 +167,25 @@ const CustomDrawerContent = ({ navigation }) => {
             />
             <Text style={styles.itemText}>Terms of use</Text>
           </TouchableOpacity>
+          {/* Contact Us */}
+          <View style={styles.item}>
+            <Entypo
+              style={styles.itemIcon}
+              name="email"
+              size={20}
+              color="#9ba8bb"
+            />
+            <Text style={styles.itemText}>Contact Us:</Text>
+          </View>
+          <View style={styles.item2}>
+            <Entypo
+              style={styles.itemIcon}
+              name="email"
+              size={20}
+              color="transparent"
+            />
+            <Text style={styles.itemText2}>health@app.medipocket.world</Text>
+          </View>
           {/* Horizontal Line */}
           {/* <View style={styles.itemBorderTop}></View> */}
           {/* Logout */}
@@ -236,6 +254,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 12,
   },
+  item2: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+  },
   itemIcon: {
     marginRight: 20,
     marginLeft: 20,
@@ -244,6 +267,10 @@ const styles = StyleSheet.create({
     color: "#20283d",
     fontSize: 14,
     fontWeight: "bold",
+  },
+  itemText2: {
+    color: "grey",
+    fontSize: 14,
   },
   itemBorderTop: {
     borderBottomColor: "grey",

@@ -11,8 +11,9 @@ import {
   ActivityIndicator,
   Modal,
 } from "react-native";
-import { COLORS, icons } from "../../../constants";
+import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
+import { Ionicons } from "@expo/vector-icons";
 
 // const USER_QUERY = gql`
 //   query {
@@ -27,6 +28,14 @@ import Checkbox from "expo-checkbox";
 const IntakeForm = ({ navigation }) => {
   // const { data, loading } = useQuery(USER_QUERY);
   // console.log("Data =>", data, loading);
+  const preAppointment = [
+    "ASAP",
+    "4-7 Days",
+    "Morning India time: 5.30am - 10am",
+    "Evening India time: 5.30pm - 12am",
+  ];
+
+  const [appointmentArray, setAppointmentArray] = useState([]);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
   const [help, setHelp] = useState(false);
   const [help2, setHelp2] = useState(false);
@@ -51,10 +60,12 @@ const IntakeForm = ({ navigation }) => {
   const [f4_10, setF4_10] = useState(false);
   const [f4_11, setF4_11] = useState(false);
   const [f4_12, setF4_12] = useState(false);
+  // Not Used
   const [f4_13, setF4_13] = useState(false);
   const [f4_14, setF4_14] = useState(false);
   const [f4_15, setF4_15] = useState(false);
   const [f4_16, setF4_16] = useState(false);
+  // Not Used
   const [f4_17, setF4_17] = useState(false);
   const [f4_18, setF4_18] = useState(false);
   const [f4_19, setF4_19] = useState(false);
@@ -186,53 +197,158 @@ const IntakeForm = ({ navigation }) => {
   };
   // Appoitment
   const handleAppointment1 = () => {
+    let tab = appointmentArray;
+    console.log("Appointment Array Before =>", tab);
     setAppointment1(true);
-    setAppointment2(false);
-    setAppointment3(false);
-    setAppointment4(false);
+    if (tab.length < 2) {
+      console.log("case 1");
+      tab.push(preAppointment[0]);
+    } else {
+      console.log("case 2");
+      tab = [tab[1], preAppointment[0]];
+    }
+    console.log("Appointment Array After =>", tab);
+    if (tab.includes(preAppointment[0])) {
+      setAppointment1(true);
+    } else {
+      setAppointment1(false);
+    }
+    if (tab.includes(preAppointment[1])) {
+      setAppointment2(true);
+    } else {
+      setAppointment2(false);
+    }
+    if (tab.includes(preAppointment[2])) {
+      setAppointment3(true);
+    } else {
+      setAppointment3(false);
+    }
+    if (tab.includes(preAppointment[3])) {
+      setAppointment4(true);
+    } else {
+      setAppointment4(false);
+    }
+    setAppointmentArray(tab);
   };
   const handleAppointment2 = () => {
-    setAppointment1(false);
-    setAppointment2(true);
-    setAppointment3(false);
-    setAppointment4(false);
+    let tab = appointmentArray;
+    console.log("Appointment Array Before =>", tab);
+    setAppointment1(true);
+    if (tab.length < 2) {
+      tab.push(preAppointment[1]);
+    } else {
+      tab = [tab[1], preAppointment[1]];
+    }
+    console.log("Appointment Array After =>", tab);
+    if (tab.includes(preAppointment[0])) {
+      setAppointment1(true);
+    } else {
+      setAppointment1(false);
+    }
+    if (tab.includes(preAppointment[1])) {
+      setAppointment2(true);
+    } else {
+      setAppointment2(false);
+    }
+    if (tab.includes(preAppointment[2])) {
+      setAppointment3(true);
+    } else {
+      setAppointment3(false);
+    }
+    if (tab.includes(preAppointment[3])) {
+      setAppointment4(true);
+    } else {
+      setAppointment4(false);
+    }
+    setAppointmentArray(tab);
   };
   const handleAppointment3 = () => {
-    setAppointment1(false);
-    setAppointment2(false);
-    setAppointment3(true);
-    setAppointment4(false);
+    let tab = appointmentArray;
+    console.log("Appointment Array Before =>", tab);
+    setAppointment1(true);
+    if (tab.length < 2) {
+      tab.push(preAppointment[2]);
+    } else {
+      tab = [tab[1], preAppointment[2]];
+    }
+    console.log("Appointment Array After =>", tab);
+    if (tab.includes(preAppointment[0])) {
+      setAppointment1(true);
+    } else {
+      setAppointment1(false);
+    }
+    if (tab.includes(preAppointment[1])) {
+      setAppointment2(true);
+    } else {
+      setAppointment2(false);
+    }
+    if (tab.includes(preAppointment[2])) {
+      setAppointment3(true);
+    } else {
+      setAppointment3(false);
+    }
+    if (tab.includes(preAppointment[3])) {
+      setAppointment4(true);
+    } else {
+      setAppointment4(false);
+    }
+    setAppointmentArray(tab);
   };
   const handleAppointment4 = () => {
-    setAppointment1(false);
-    setAppointment2(false);
-    setAppointment3(false);
-    setAppointment4(true);
+    let tab = appointmentArray;
+    console.log("Appointment Array Before =>", tab);
+    setAppointment1(true);
+    if (tab.length < 2) {
+      tab.push(preAppointment[3]);
+    } else {
+      tab = [tab[1], preAppointment[3]];
+    }
+    console.log("Appointment Array After =>", tab);
+    if (tab.includes(preAppointment[0])) {
+      setAppointment1(true);
+    } else {
+      setAppointment1(false);
+    }
+    if (tab.includes(preAppointment[1])) {
+      setAppointment2(true);
+    } else {
+      setAppointment2(false);
+    }
+    if (tab.includes(preAppointment[2])) {
+      setAppointment3(true);
+    } else {
+      setAppointment3(false);
+    }
+    if (tab.includes(preAppointment[3])) {
+      setAppointment4(true);
+    } else {
+      setAppointment4(false);
+    }
+    setAppointmentArray(tab);
   };
   // Submit
   const handleSubmit = async () => {
     // f4
     let f4 = "";
-    if (f4_1) f4.concat("Anemia, ");
-    if (f4_2) f4.concat("Asthma, ");
-    if (f4_3) f4.concat("Arthritis, ");
-    if (f4_4) f4.concat("Cancer, ");
-    if (f4_5) f4.concat("Gout , ");
-    if (f4_6) f4.concat("Diabetes, ");
-    if (f4_7) f4.concat("Emotional Disorder, ");
-    if (f4_8) f4.concat("Epilepsy Seizures, ");
-    if (f4_9) f4.concat("Fainting Spells, ");
-    if (f4_10) f4.concat("Gallstones, ");
-    if (f4_11) f4.concat("Heart Disease, ");
-    if (f4_12) f4.concat("Heart Attack, ");
-
-    if (f4_17) f4.concat("Thyroid Problems, ");
-    if (f4_18) f4.concat("Tuberculosis, ");
-    if (f4_19) f4.concat("Venereal Disease, ");
-    if (f4_20) f4.concat("Neurological Disorders, ");
-    if (f4_21) f4.concat("Disorders, ");
-    if (f4_22) f4.concat("Lung Disease, ");
-    if (f4_24) f4.concat(f4_other);
+    if (f4_1) f4 += "Anemia, ";
+    if (f4_2) f4 += "Asthma, ";
+    if (f4_3) f4 += "Arthritis, ";
+    if (f4_4) f4 += "Cancer, ";
+    if (f4_5) f4 += "Gout , ";
+    if (f4_6) f4 += "Diabetes, ";
+    if (f4_7) f4 += "Emotional Disorder, ";
+    if (f4_8) f4 += "Epilepsy Seizures, ";
+    if (f4_9) f4 += "Fainting Spells, ";
+    if (f4_10) f4 += "Gallstones, ";
+    if (f4_11) f4 += "Heart Disease, ";
+    if (f4_12) f4 += "Heart Attack, ";
+    if (f4_17) f4 += "Thyroid Problems, ";
+    if (f4_18) f4 += "Tuberculosis, ";
+    if (f4_19) f4 += "Venereal Disease, ";
+    if (f4_20) f4 += "Neurological Disorders, ";
+    if (f4_21) f4 += "Disorders, ";
+    if (f4_22) f4 += "Lung Disease, ";
+    if (f4_24) f4 += f4_other;
     // exercices
     let exercices = "";
     if (f5_1_1) exercices = "Never";
@@ -306,7 +422,8 @@ const IntakeForm = ({ navigation }) => {
         .then((response) => response.text())
         .then((res) => {
           setIndicatorLoad(false);
-          navigation.navigate("home");
+          setHelp(true);
+          // navigation.navigate("homePage");
           console.log("Response Fecth =>", res);
         })
         .catch((err) => {
@@ -323,6 +440,32 @@ const IntakeForm = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {/* Card1 */}
+        <View style={[styles.header2, { backgroundColor: COLORS.bgColor1 }]}>
+          <TouchableOpacity
+            style={styles.headerSub}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons
+              name="ios-arrow-back-sharp"
+              size={24}
+              color="black"
+              style={styles.icon_style}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.headerSub}
+            onPress={() => navigation.navigate("home")}
+          >
+            <Image
+              style={styles.imgStyle}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989",
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <View style={styles.headerSub}></View>
+        </View>
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle}>Telemedicine Patient</Text>
           <Text style={styles.cardTitle}>Intake Form</Text>
@@ -986,7 +1129,7 @@ const IntakeForm = ({ navigation }) => {
         {/* Top 3 questions */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle2}>
-            Top 5 questions for your specialists?{" "}
+            Top 3 questions for your specialists?{" "}
           </Text>
           {/* Form */}
           <View style={styles.inputsContainer}>
@@ -1201,6 +1344,17 @@ const IntakeForm = ({ navigation }) => {
 export default IntakeForm;
 
 const styles = StyleSheet.create({
+  header2: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 60,
+    paddingHorizontal: 20,
+  },
+  imgStyle: {
+    width: 100,
+    height: 40,
+  },
   // Header
   container: {
     flex: 1,

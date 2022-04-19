@@ -230,12 +230,12 @@ const Register = ({ navigation }) => {
         <View style={styles.content}>
           {/* First Name */}
           <View style={styles.inputField}>
-            <Text style={styles.label}>Username</Text>
+            <Text style={styles.label}>Full Name</Text>
             <TextInput
               style={styles.input}
               onChangeText={onChangefirstName}
               value={firstName}
-              placeholder="Username"
+              placeholder="Full Name"
               placeholderTextColor={"grey"}
             />
             <Text style={styles.fieldErrors}>{firstNameErrors}</Text>
@@ -274,7 +274,10 @@ const Register = ({ navigation }) => {
               />
             </View>
             <Text style={styles.privacy}>
-              * Please Enter a Strong Password Eg: password@1234
+              * Uppercase characters (A-Z){'\n'}
+              * Lowercase characters (a-z){'\n'}
+              * Digits (0-9){'\n'}
+              * Special characters (~!@#$%^&*_-+=`|\(){'\{'}{'\}'}{'\['}{'\]'}:;"',.?/)
             </Text>
             <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
@@ -472,10 +475,10 @@ const styles = StyleSheet.create({
   },
   privacy: {
     textAlign: "left",
-    fontSize: 10,
+    fontSize: 12,
     color: "black",
     marginRight: 3,
-    // marginBottom: 10,
+    // marginTop: 10,
   },
   label1: {
     textAlign: "left",

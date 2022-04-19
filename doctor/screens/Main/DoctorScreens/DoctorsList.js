@@ -268,7 +268,7 @@ const DoctorsList = ({ route, navigation }) => {
             />
           </TouchableOpacity>
           <View style={styles.titleConatiner}>
-            <Text style={styles.title1}>Doctor List</Text>
+            <Text style={styles.title1}>USA Specialists List</Text>
           </View>
           <TouchableOpacity
             onPress={() => setHelp(true)}

@@ -38,8 +38,8 @@ const DoctorCardModel2 = (props) => {
           <View style={[styles.card, styles.shadow]}>
             <View style={styles.ImgContainer}>
               <View style={styles.doctorCardRight}>
-                <View style={styles.statusIndic2}></View>
-                <View style={styles.statusIndic3}></View>
+                {/* <View style={styles.statusIndic2}></View> */}
+                {/* <View style={styles.statusIndic3}></View> */}
                 {img.length > 0 && img.startsWith("http") ? (
                   <Image
                     style={styles.doctorAvatar2}
@@ -103,7 +103,7 @@ const DoctorCardModel2 = (props) => {
           <View style={[styles.card, styles.shadow]}>
             <View style={styles.ImgContainer}>
               <View style={styles.doctorCardRight}>
-                <View style={styles.statusIndic}></View>
+                {/* <View style={styles.statusIndic}></View> */}
                 <Image
                   style={styles.doctorAvatar}
                   source={{

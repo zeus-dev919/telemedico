@@ -104,7 +104,7 @@ const HomePage = ({ navigation }) => {
     <View style={doctorD ? styles.container2 : styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
-        <Header navigation={navigation} bg="" />
+        <Header navigation={navigation} bg="" isHome={true} />
         {/* Fixed Image */}
         <ScrollView style={styles.scrollView}>
           {/* <Text style={{ fontSize: 25 }}>Welcome Page</Text> */}
@@ -410,16 +410,18 @@ const styles = StyleSheet.create({
   },
   headerCardTitle: {
     color: "black",
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
     marginVertical: 5,
+    fontWeight: "bold",
   },
   headerCardDescription: {
-    color: "grey",
+    color: "black",
     fontSize: 14,
     textAlign: "center",
     paddingHorizontal: 10,
     marginBottom: 10,
+    fontWeight: "600",
   },
   menuContent: {
     flexDirection: "row",

@@ -3,22 +3,20 @@ import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import { useSelector } from "react-redux";
 import { icons, images } from "../../constants";
+import { Ionicons } from "@expo/vector-icons";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
 });
 
 const Header = (props) => {
-  const { navigation, bg } = props;
+  const { navigation, bg, isHome } = props;
   const { userD } = useSelector(mapState);
-  const handleProfileRedirect = () => {
-    navigation.navigate("profile");
-  };
   return (
     <View
       style={[styles.header, { backgroundColor: bg.length > 0 ? bg : "white" }]}
     >
-      <TouchableOpacity onPress={handleProfileRedirect}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate("profile")}>
         {userD?.profilePic?.length > 0 ? (
           <Image
             style={styles.avatar}
@@ -34,7 +32,22 @@ const Header = (props) => {
             resizeMode="cover"
           />
         )}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      {isHome ? (
+        <View style={{ width: 20 }}></View>
+      ) : (
+        <TouchableOpacity
+          style={styles.headerSub}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons
+            name="ios-arrow-back-sharp"
+            size={24}
+            color="black"
+            style={styles.icon_style}
+          />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         style={styles.headerSub}
         onPress={() => navigation.navigate("home")}

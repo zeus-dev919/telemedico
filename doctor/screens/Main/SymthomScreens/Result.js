@@ -275,7 +275,9 @@ const Result = ({ route, navigation }) => {
           >
             <Image
               style={styles.imgStyle}
-              source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989" }}
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Flogo.png?alt=media&token=fc05e438-598e-47ea-8858-9bc564f5f989",
+              }}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -298,7 +300,7 @@ const Result = ({ route, navigation }) => {
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.cardTitle2}>Welcome to the DR. AI</Text>
+        <Text style={styles.cardTitle2}>Possible Causes in just 2 minutes</Text>
         <View style={{ alignItems: "center", width: "100%" }}>
           <View style={{ marginBottom: 20 }}>
             <Image
@@ -487,7 +489,7 @@ const Result = ({ route, navigation }) => {
                 style={styles.relevant}
               >
                 <Text style={styles.relevantTitle}>
-                  See more differential diagnosis
+                  See More Possible Causes
                 </Text>
               </TouchableOpacity>
             ) : (
@@ -496,7 +498,7 @@ const Result = ({ route, navigation }) => {
                 style={styles.relevant}
               >
                 <Text style={styles.relevantTitle}>
-                  See Less differential diagnosis
+                  See Less Possible Causes
                 </Text>
               </TouchableOpacity>
             )}
@@ -559,6 +561,13 @@ const Result = ({ route, navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            {/* <View></View> */}
+            <Image
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
+              }}
+              style={styles.redflag}
+            />
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(!modalVisible);
@@ -572,14 +581,8 @@ const Result = ({ route, navigation }) => {
             <Text style={{ fontSize: 18 }}>Note!</Text>
             <View style={styles.flagDesc}>
               <Text>
-                <Image
-                  source={{
-                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fredflag.png?alt=media&token=23785d76-ccf2-45ec-be97-ede89073456b",
-                  }}
-                  style={styles.redflag}
-                />{" "}
-                Red Flag F conditions are serious and acute and need to be
-                treated in the Emergency Department.
+                Red Flag conditions are serious and need to be treated in
+                Emergency Room or Urgent Care
               </Text>
             </View>
           </View>
@@ -716,15 +719,16 @@ const styles = StyleSheet.create({
     color: "white",
   },
   redflag: {
-    width: 20,
-    height: 20,
+    width: 50,
+    height: 50,
+    marginBottom: 10,
   },
   //   Model
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    // marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -748,12 +752,15 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   titleModal2: {
-    width: "100%",
+    // width: "100%",
     marginBottom: 10,
     paddingRight: 10,
     textAlign: "right",
   },
   ModelTitleView: {
-    flexDirection: "row",
+    position: "absolute",
+    top: 15,
+    right: 15,
+    // flexDirection: "row",
   },
 });

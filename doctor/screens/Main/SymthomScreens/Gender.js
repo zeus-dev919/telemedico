@@ -79,7 +79,7 @@ const Gender = ({ route, navigation }) => {
             />
           </View>
           <View>
-            <Text style={styles.title1}>Select gender</Text>
+            <Text style={styles.title1}>Select Gender</Text>
             <Text style={styles.title2}>Please select your gender</Text>
           </View>
           <View

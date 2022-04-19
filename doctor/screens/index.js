@@ -7,6 +7,7 @@ import Login from "./Login";
 import Recovery from "./Recovery";
 import Home from "./Home";
 // Doctor
+import HomePage from "./Main/HomePage";
 import Doctors from "./Main/Doctors";
 import DoctorsList from "./Main/DoctorScreens/DoctorsList.js";
 import Appointment from "./Main/DoctorScreens/Appointment.js";
@@ -38,6 +39,7 @@ export {
   Recovery,
   Conscent,
   Home,
+  HomePage,
   Doctors,
   DoctorsList,
   Appointment,

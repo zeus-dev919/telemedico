@@ -233,10 +233,8 @@ const styles = StyleSheet.create({
   },
   // background
   bgcontainer: {
-    width: Dimensions.get("window").width, //for full screen
-    height: Dimensions.get("window").height, //for full screen
-    // backgroundColor: "rgba(0, 0, 0, 1)",
-    // opacity: 0.5,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   fixed: {
     position: "absolute",

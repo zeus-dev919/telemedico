@@ -23,6 +23,7 @@ const DOCTOR_QUERY = gql`
       lastName
       country
       state
+      city
       profilePicture
       specialization {
         specializationName
@@ -78,9 +79,11 @@ const Doctors = ({ navigation }) => {
           name:
             data.allDoctors[i].firstName + " " + data.allDoctors[i].lastName,
           desc:
-            (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
+            (data.allDoctors[i].state ? data.allDoctors[i].city : "--") +
             " ," +
-            (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
+            (data.allDoctors[i].state ? data.allDoctors[i].state : "--"),
+          country: 
+            data.allDoctors[i].country ? data.allDoctors[i].country : "--",
           img: data.allDoctors[i].profilePicture
             ? data.allDoctors[i].profilePicture
             : "",
@@ -234,20 +237,6 @@ const Doctors = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          {/* <View style={[styles.searchContainer, styles.shadow]}>
-            <Image
-              style={styles.search}
-              source={icons.search}
-              resizeMode="contain"
-            />
-            <TextInput
-              style={styles.searchInput}
-              value={search}
-              onChangeText={setSearch}
-              placeholder="Search by specialization"
-              placeholderTextColor="#b2b8cc"
-            />
-          </View> */}
         </View>
         {/* Card3 */}
         {tab === 0 && (
@@ -264,6 +253,7 @@ const Doctors = ({ navigation }) => {
               key={index}
               name={item.name}
               desc={item.desc}
+              country= {item.country}
               img={item.img}
               patients={item.patients}
               experience={item.experience}

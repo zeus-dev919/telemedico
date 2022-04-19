@@ -48,7 +48,7 @@ const Consults = ({ navigation }) => {
   const getConsult = () => {
     let tab = [];
     for (let i = 0; i < data.allSchedules.length; i++) {
-      if (data.allSchedules[i].customer.user.email === userD.email) {
+      if (data.allSchedules[i].customer.user?.email === userD.email) {
         tab.push(data.allSchedules[i]);
       }
     }

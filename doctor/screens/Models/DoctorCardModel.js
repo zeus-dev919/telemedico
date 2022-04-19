@@ -6,6 +6,7 @@ const DoctorCardModel = (props) => {
   const {
     name,
     desc,
+    country,
     img,
     patients,
     experience,
@@ -16,12 +17,28 @@ const DoctorCardModel = (props) => {
     navigation,
     bg,
   } = props;
+  console.log("=====================");
+  console.log({
+    name,
+    desc,
+    country,
+    img,
+    patients,
+    experience,
+    speciality,
+    info,
+    fees,
+    duration,
+    bg,
+  });
+  console.log("=====================");
   var check = false;
   if (bg === "0") check = true;
   const handleRedirect = () => {
     navigation.navigate("appointment", {
       name: name,
       desc: desc,
+      country: country,
       img: img,
       patients: patients,
       experience: experience,
@@ -45,13 +62,14 @@ const DoctorCardModel = (props) => {
                 <Text style={styles.cardTitle1}>{name}</Text>
               </TouchableOpacity>
               <Text style={styles.cardTitle2}>{desc}</Text>
+              <Text style={styles.cardTitle2}>{country}</Text>
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
             <TouchableOpacity
               onPress={() => handleRedirect()}
               style={styles.doctorCardRight}
             >
-              <View style={styles.statusIndic}></View>
+              {/* <View style={styles.statusIndic}></View> */}
               {img.length > 0 && img.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}
@@ -89,11 +107,12 @@ const DoctorCardModel = (props) => {
             <View style={styles.doctorCardLeft}>
               <Text style={styles.cardTitle1}>{name}</Text>
               <Text style={styles.cardTitle2}>{desc}</Text>
+              <Text style={styles.cardTitle2}>{country}</Text>
               <Text style={styles.cardTitle2}>{speciality}</Text>
             </View>
             <View style={styles.doctorCardRight}>
-              <View style={styles.statusIndic1}></View>
-              <View style={styles.statusIndic2}></View>
+              {/* <View style={styles.statusIndic1}></View>
+              <View style={styles.statusIndic2}></View> */}
               {img.length > 0 && img.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}

@@ -75,6 +75,8 @@ const Profile = ({ route, navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [DOB, setDOB] = useState("");
+  const [country, setCountry] = useState("");
   const [avatar, setAvatar] = useState("");
   const [url, setUrl] = useState(null);
 
@@ -225,7 +227,7 @@ const Profile = ({ route, navigation }) => {
           <View style={styles.detailsContainer}>
             {/* First Name */}
             <View style={[styles.searchContainer, styles.shadow]}>
-              <Text style={styles.title4}>Username</Text>
+              <Text style={styles.title4}>Full Name</Text>
               <TextInput
                 style={styles.searchInput}
                 value={firstName}
@@ -246,10 +248,25 @@ const Profile = ({ route, navigation }) => {
                 onChangeText={setPhone}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => handleSubmit()}
-              style={styles.relevant}
-            >
+            {/* DOB */}
+            <View style={[styles.searchContainer, styles.shadow]}>
+              <Text style={styles.title4}>DOB</Text>
+              <TextInput
+                style={styles.searchInput}
+                value={DOB}
+                onChangeText={setDOB}
+              />
+            </View>
+            {/* City, country */}
+            <View style={[styles.searchContainer, styles.shadow]}>
+              <Text style={styles.title4}>City, country</Text>
+              <TextInput
+                style={styles.searchInput}
+                value={country}
+                onChangeText={setCountry}
+              />
+            </View>
+            <TouchableOpacity onPress={handleSubmit} style={styles.relevant}>
               <Text style={styles.relevantTitle}>Done</Text>
             </TouchableOpacity>
           </View>
