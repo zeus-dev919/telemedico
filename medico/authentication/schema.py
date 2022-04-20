@@ -68,6 +68,7 @@ class DoctorCreateInput(graphene.Mutation):
         npi_number = graphene.String(required=False)
         state_license_number = graphene.String(required=False)
         available_days = graphene.String(required=False)
+        experience = graphene.String(required=False)
 
     doctor = graphene.Field(DoctorInfo)
 
@@ -90,6 +91,7 @@ class DoctorCreateInput(graphene.Mutation):
         doctor.npi_number = npi_number
         doctor.state_license_number = state_license_number
         doctor.available_days = available_days
+        doctor.experience = experience
         doctor.save()
 
         return DoctorCreateInput(doctor=doctor)
