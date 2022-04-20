@@ -43,7 +43,7 @@ class Doctor(models.Model):
     available_days = models.CharField(max_length=10, choices=DAYS,default="Mon")
     time_slots = models.CharField(max_length=20,null=False, blank=True)
     consultation_time = models.IntegerField()
-    experience = models>CharField(max_length=64,  verbose_name="experience", blank=True)
+    experience = models.CharField(max_length=64,  verbose_name="experience", blank=True)
 
 
     def __str__(self):
