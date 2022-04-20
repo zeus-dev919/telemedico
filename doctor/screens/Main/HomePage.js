@@ -95,7 +95,7 @@ const HomePage = ({ navigation }) => {
     navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleConsult = () => {
-    navigation.navigate("doctors");
+    navigation.navigate("doctors", {nav: navigation});
   };
   const handleOthers = () => {
     navigation.navigate("doctorList", { filter: "*" });

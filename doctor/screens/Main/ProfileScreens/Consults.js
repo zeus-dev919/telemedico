@@ -12,6 +12,7 @@ import { COLORS } from "../../../constants";
 import DoctorUpcomingConsult from "../../Models/DoctorUpcomingConsult";
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
+import Header from "../../Models/Header";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -68,25 +69,9 @@ const Consults = ({ navigation }) => {
   }, [data]);
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.subContainer}>
-        {/* Red Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.headerSub}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons
-              name="ios-arrow-back-sharp"
-              size={24}
-              color="black"
-              style={styles.icon_style}
-            />
-          </TouchableOpacity>
-          <View style={styles.titleConatiner}>
-            <Text style={styles.title1}>My Consults</Text>
-          </View>
-          <View style={{ width: 30 }}></View>
-        </View>
+      <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
+      <View style={styles.titleConatiner}>
+        <Text style={styles.title1}>My Consults</Text>
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
@@ -138,7 +123,7 @@ const Consults = ({ navigation }) => {
               paddingVertical: 20,
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
               No Consultation yet.
             </Text>
           </View>

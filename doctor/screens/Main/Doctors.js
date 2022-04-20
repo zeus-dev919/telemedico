@@ -31,6 +31,7 @@ const DOCTOR_QUERY = gql`
       consultationFees
       info
       consultationTime
+      experience
     }
   }
 `;
@@ -40,19 +41,15 @@ const Doctors = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const handleLungs = () => {
-    console.log("Lungs Clicked !!");
     navigation.navigate("doctorList", { filter: "Oncology" });
   };
   const handleTooth = () => {
-    console.log("Tooth Clicked !!");
     navigation.navigate("doctorList", { filter: "Endocrinology" });
   };
   const handleDermatologist = () => {
-    console.log("Dermatologist Clicked !!");
     navigation.navigate("doctorList", { filter: "Cardiology" });
   };
   const handleHeart = () => {
-    console.log("Heart Clicked !!");
     navigation.navigate("doctorList", { filter: "Rheumatology" });
   };
   const handleBrain = () => {
@@ -60,15 +57,12 @@ const Doctors = ({ navigation }) => {
     navigation.navigate("doctorList", { filter: "Fertility" });
   };
   const handlePsychology = () => {
-    console.log("Psychology Clicked !!");
     navigation.navigate("doctorList", { filter: "Surgery" });
   };
   const handleUrology = () => {
-    console.log("Urology Clicked !!");
     navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleOthers = () => {
-    console.log("Others Clicked !!");
     navigation.navigate("doctorList", { filter: "*" });
   };
 
@@ -79,11 +73,9 @@ const Doctors = ({ navigation }) => {
           name:
             data.allDoctors[i].firstName + " " + data.allDoctors[i].lastName,
           desc:
-            (data.allDoctors[i].state ? data.allDoctors[i].city : "--") +
+            (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
             " ," +
-            (data.allDoctors[i].state ? data.allDoctors[i].state : "--"),
-          country: 
-            data.allDoctors[i].country ? data.allDoctors[i].country : "--",
+            (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
           img: data.allDoctors[i].profilePicture
             ? data.allDoctors[i].profilePicture
             : "",
@@ -107,11 +99,8 @@ const Doctors = ({ navigation }) => {
   };
   useEffect(() => {
     if (data) {
-      console.log("Data NEWWWW1 => ", data);
       getDoctors();
       setDoctors(tab);
-    } else {
-      console.log("Data NEWWWW2 => ");
     }
   }, [data]);
   const handleMoreDoctors = () => {
@@ -121,7 +110,7 @@ const Doctors = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.subContainer}>
         {/* Red Header */}
-        <Header avatar="" navigation={navigation} bg={COLORS.bgColor1} />
+        <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
@@ -253,7 +242,7 @@ const Doctors = ({ navigation }) => {
               key={index}
               name={item.name}
               desc={item.desc}
-              country= {item.country}
+              country={item.country}
               img={item.img}
               patients={item.patients}
               experience={item.experience}

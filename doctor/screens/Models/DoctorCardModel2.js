@@ -77,15 +77,15 @@ const DoctorCardModel2 = (props) => {
               </View>
               <View>
                 <Text style={styles.title2}>
-                  Patients:{" "}
+                  Fee:{" "}
                   <Text style={[styles.boxNb, { color: "#f9b664" }]}>
-                    {patients}
+                    {fees !== "--" ? `${fees}$` : fees}
                   </Text>
                 </Text>
                 <Text style={styles.title2}>
                   Experience:{" "}
                   <Text style={[styles.boxNb, { color: "#f660be" }]}>
-                    {experience}
+                  {experience !== "--" ? `${experience}yrs+` : experience}
                   </Text>
                 </Text>
               </View>

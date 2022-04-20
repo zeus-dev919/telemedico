@@ -23,6 +23,9 @@ import { HomePage, Doctors, IntakeForm } from "./index.js";
 import { signOutUser } from "../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 
+import Header from "./Models/Header.js";
+import { MyTabs } from "./AppMain.js";
+
 const mapState = ({ user }) => ({
   doctorD: user.doctorD,
   currentUser: user.currentUser,
@@ -213,10 +216,12 @@ const Home = () => {
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName="homePage"
+      initialRouteName="homeBottomTab"
       style={styles.drawerNavStyle}
     >
-      <Drawer.Screen name="homePage" component={HomePage} />
+      {/* <Drawer.Screen name="header" component={Header} /> */}
+      <Drawer.Screen name="homeBottomTab" component={MyTabs} />
+
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="intakeForm" component={IntakeForm} />
     </Drawer.Navigator>

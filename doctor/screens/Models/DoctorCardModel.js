@@ -17,21 +17,6 @@ const DoctorCardModel = (props) => {
     navigation,
     bg,
   } = props;
-  console.log("=====================");
-  console.log({
-    name,
-    desc,
-    country,
-    img,
-    patients,
-    experience,
-    speciality,
-    info,
-    fees,
-    duration,
-    bg,
-  });
-  console.log("=====================");
   var check = false;
   if (bg === "0") check = true;
   const handleRedirect = () => {
@@ -59,11 +44,10 @@ const DoctorCardModel = (props) => {
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
               <TouchableOpacity onPress={() => handleRedirect()}>
-                <Text style={styles.cardTitle1}>{name}</Text>
+                <Text style={[styles.cardTitle1,{ marginVertical: 3, fontSize: 16 }]}>{name}</Text>
               </TouchableOpacity>
-              <Text style={styles.cardTitle2}>{desc}</Text>
-              <Text style={styles.cardTitle2}>{country}</Text>
-              <Text style={styles.cardTitle2}>{speciality}</Text>
+              <Text style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}>{desc}</Text>
+              <Text style={[styles.cardTitle2, { marginVertical: 4, fontSize: 13 }]}>{speciality}</Text>
             </View>
             <TouchableOpacity
               onPress={() => handleRedirect()}
@@ -91,7 +75,7 @@ const DoctorCardModel = (props) => {
           </View>
           <View style={styles.doctorBottomCard}>
             <Text style={styles.doctorBottomCardLeftText}>
-              {experience}yrs+
+              {experience !== "--" ? `${experience}yrs+` : experience}
             </Text>
             <TouchableOpacity
               style={[styles.doctorBtnStyle, styles.shadow1]}
@@ -105,10 +89,22 @@ const DoctorCardModel = (props) => {
         <>
           <View style={styles.doctorCard}>
             <View style={styles.doctorCardLeft}>
-              <Text style={styles.cardTitle1}>{name}</Text>
-              <Text style={styles.cardTitle2}>{desc}</Text>
-              <Text style={styles.cardTitle2}>{country}</Text>
-              <Text style={styles.cardTitle2}>{speciality}</Text>
+              <Text
+                style={[styles.cardTitle1, { marginVertical: 3, fontSize: 18 }]}
+              >
+                {name}
+              </Text>
+              <Text
+                style={[styles.cardTitle2, { marginVertical: 3, fontSize: 14 }]}
+              >
+                {desc}
+              </Text>
+              {/* <Text style={styles.cardTitle2}>{country}</Text> */}
+              <Text
+                style={[styles.cardTitle2, { marginVertical: 3, fontSize: 14 }]}
+              >
+                {speciality}
+              </Text>
             </View>
             <View style={styles.doctorCardRight}>
               {/* <View style={styles.statusIndic1}></View>
@@ -141,10 +137,10 @@ const DoctorCardModel = (props) => {
                     { marginLeft: 0, textAlign: "center", fontSize: 14 },
                   ]}
                 >
-                  Patients
+                  Fee
                 </Text>
                 <Text style={[styles.boxNb, { color: "#f9b664" }]}>
-                  {patients !== "--" ? `${patients}+` : patients}
+                  {fees ? `${fees}$` : "--"}
                 </Text>
               </View>
             </View>

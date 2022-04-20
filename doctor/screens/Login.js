@@ -46,8 +46,8 @@ const Login = ({ navigation }) => {
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
 
-  const [email, onChangeEmail] = useState("");
-  const [password, onChangepassword] = useState("");
+  const [email, onChangeEmail] = useState("ramykhweldi@gmail.com");
+  const [password, onChangepassword] = useState("hello156");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (signInSuccess) {
-      navigation.navigate("home");
+      navigation.navigate("homeBottomTab");
       dispatch(resetAllAuthForms());
       ResetForm();
     }

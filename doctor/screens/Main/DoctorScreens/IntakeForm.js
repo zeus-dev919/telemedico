@@ -14,6 +14,7 @@ import {
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
+import Header from "../../Models/Header";
 
 // const USER_QUERY = gql`
 //   query {
@@ -440,7 +441,8 @@ const IntakeForm = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {/* Card1 */}
-        <View style={[styles.header2, { backgroundColor: COLORS.bgColor1 }]}>
+        <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
+        {/* <View style={[styles.header2, { backgroundColor: COLORS.bgColor1 }]}>
           <TouchableOpacity
             style={styles.headerSub}
             onPress={() => navigation.goBack()}
@@ -465,7 +467,7 @@ const IntakeForm = ({ navigation }) => {
             />
           </TouchableOpacity>
           <View style={styles.headerSub}></View>
-        </View>
+        </View> */}
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle}>Telemedicine Patient</Text>
           <Text style={styles.cardTitle}>Intake Form</Text>

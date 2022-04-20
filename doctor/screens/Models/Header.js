@@ -4,6 +4,7 @@ import IconFeather from "react-native-vector-icons/Feather";
 import { useSelector } from "react-redux";
 import { icons, images } from "../../constants";
 import { Ionicons } from "@expo/vector-icons";
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -12,6 +13,8 @@ const mapState = ({ user }) => ({
 const Header = (props) => {
   const { navigation, bg, isHome } = props;
   const { userD } = useSelector(mapState);
+  // const isDrawerOpen = useDrawerStatus() === 'open';
+  // console.log('')
   return (
     <View
       style={[styles.header, { backgroundColor: bg.length > 0 ? bg : "white" }]}
@@ -63,6 +66,8 @@ const Header = (props) => {
       <TouchableOpacity
         style={styles.headerSub}
         onPress={() => navigation.openDrawer()}
+        // onPress={() => console.log("Navigation: ", navigation)}
+        // onPress={() => navigation.getParent().openDrawer()
       >
         <IconFeather
           name="menu"

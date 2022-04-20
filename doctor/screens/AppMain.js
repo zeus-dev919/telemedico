@@ -38,18 +38,18 @@ import { FontAwesome, Fontisto, Entypo } from "@expo/vector-icons";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const MyTabs = () => {
+export const MyTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="home"
+      initialRouteName="homePage"
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { height: 60 }
+        tabBarStyle: { height: 60 },
       }}
     >
       <Tab.Screen
-        name="home"
-        component={Home}
+        name="homePage"
+        component={HomePage}
         options={{
           tabBarLabel: () => (
             <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
@@ -117,7 +117,7 @@ const AppMain = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialeRouteName="age"
+        initialeRouteName="BeforeSplash"
         screenOptions={{
           headerShown: false,
         }}
@@ -134,9 +134,8 @@ const AppMain = () => {
         )}
         {currentUser && (
           <>
-            {/* <MyTabs /> */}
-            <Stack.Screen name="homeBottomTab" component={MyTabs} />
-            <Stack.Screen name="homePage" component={HomePage} />
+            {/* <Stack.Screen name="homeBottomTab" component={MyTabs} /> */}
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
             <Stack.Screen name="doctorList" component={DoctorsList} />
             <Stack.Screen name="appointment" component={Appointment} />

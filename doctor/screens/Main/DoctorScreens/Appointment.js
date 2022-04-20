@@ -42,10 +42,11 @@ const Appointment = ({ route, navigation }) => {
       <ScrollView style={styles.scrollView}>
         <DoctorCardModel
           name={name}
-          location={desc}
+          desc={desc}
           speciality={speciality}
           experience={experience}
           patients={patients}
+          fees={fees}
           img={img}
           bg="1"
           navigation={navigation}

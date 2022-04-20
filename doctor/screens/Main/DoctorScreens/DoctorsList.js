@@ -119,6 +119,7 @@ const DOCTOR_QUERY = gql`
       consultationFees
       info
       consultationTime
+      experience
     }
   }
 `;
