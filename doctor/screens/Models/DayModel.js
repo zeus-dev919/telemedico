@@ -25,7 +25,7 @@ const DayModel = (props) => {
           ) : (
             <View style={[styles.iconContainerS, styles.shadow]}>
               <Text style={styles.text2S}>{month}</Text>
-              <Text style={styles.text1S}>{day}+1</Text>
+              <Text style={styles.text1S}>{day}</Text>
             </View>
           )}
         </>
