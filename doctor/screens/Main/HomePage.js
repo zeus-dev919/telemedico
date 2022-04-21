@@ -46,25 +46,25 @@ const HomePage = ({ navigation }) => {
   const dispatch = useDispatch();
   const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
-
+  const [done, setDone] = useState(false);
+  
   useEffect(() => {
-    if (data) {
-      let i = 0;
-      while (
-        data.allDoctors[i]?.username?.email !== userD.email &&
-        i < data.allDoctors?.length
-      ) {
-        i++;
-      }
-      if (data.allDoctors[i]?.username?.email === userD.email) {
-        dispatch(setDoctor(data.allDoctors[i]));
+    if (!done) {
+      if (data) {
+        let i = 0;
+        while (
+          data.allDoctors[i]?.username?.email !== userD.email &&
+          i < data.allDoctors?.length
+        ) {
+          i++;
+        }
+        if (data.allDoctors[i]?.username?.email === userD.email) {
+          setDone(true);
+          dispatch(setDoctor(data.allDoctors[i]));
+        }
       }
     }
   }, [data]);
-
-  useEffect(() => {
-    console.log("doctorD =>", doctorD);
-  }, [doctorD]);
 
   dispatch(ResetErrorsState);
   const handleSymthoms = () => {
@@ -95,7 +95,7 @@ const HomePage = ({ navigation }) => {
     navigation.navigate("doctorList", { filter: "Mental" });
   };
   const handleConsult = () => {
-    navigation.navigate("doctors", {nav: navigation});
+    navigation.navigate("doctors", { nav: navigation });
   };
   const handleOthers = () => {
     navigation.navigate("doctorList", { filter: "*" });

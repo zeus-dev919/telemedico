@@ -47,8 +47,9 @@ const DoctorHomeConsult = (props) => {
   const { navigation } = props;
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
-  const [sum, setSum] = useState([]);
+  const [sum, setSum] = useState(null);
   const [countUICard, setCountUICard] = useState(0);
+  const [done, setDone] = useState(false);
   const getConsult = () => {
     let tab = [];
     for (let i = 0; i < data.allSchedules.length; i++) {
@@ -57,21 +58,20 @@ const DoctorHomeConsult = (props) => {
       }
     }
     setSum(tab);
+    setDone(true);
   };
 
   useEffect(() => {
-    // if (data && !loading && userD) {
-    if (data && !loading) {
-      getConsult();
-    }
+    if (!done && data) getConsult();
   }, [data]);
-  const handleSymthoms = () => {
-    navigation.navigate("age");
-  };
+
   return (
     <>
       <View style={styles.headerCards2}>
-        <TouchableOpacity style={styles.Headercard2} onPress={handleSymthoms}>
+        <TouchableOpacity
+          style={styles.Headercard2}
+          onPress={() => navigation.navigate("age")}
+        >
           <Image
             style={styles.cardImg2}
             source={{
@@ -97,7 +97,7 @@ const DoctorHomeConsult = (props) => {
       <View style={styles.specContainer}>
         <Text style={styles.SpecTitle}>My Consultations</Text>
       </View>
-      {sum.length > 0 ? (
+      {sum && sum.length > 0 ? (
         sum.map((item, index) => {
           let i = 0;
           const month = [
@@ -155,22 +155,21 @@ const DoctorHomeConsult = (props) => {
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>
             No Consultation yet.
           </Text>
-        </View>
-      )}
-
-      {countUICard === 0 && (
-        <View
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingVertical: 20,
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: "600" }}>
-            Contact admin for missed consultations.
-          </Text>
+          {countUICard === 0 && (
+            <View
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: 10,
+              }}
+            >
+              <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                Contact admin for missed consultations.
+              </Text>
+            </View>
+          )}
         </View>
       )}
     </>

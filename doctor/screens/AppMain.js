@@ -110,6 +110,7 @@ export const MyTabs = () => {
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
+  doctorD: user.doctorD,
 });
 
 const AppMain = () => {
