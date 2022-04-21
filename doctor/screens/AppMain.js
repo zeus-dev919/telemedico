@@ -38,7 +38,13 @@ import { FontAwesome, Fontisto, Entypo } from "@expo/vector-icons";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+  doctorD: user.doctorD,
+});
+
 export const MyTabs = () => {
+  const { doctorD } = useSelector(mapState);
   return (
     <Tab.Navigator
       initialRouteName="homePage"
@@ -66,25 +72,27 @@ export const MyTabs = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="doctors"
-        component={Doctors}
-        options={{
-          tabBarLabel: () => (
-            <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
-              Doctors
-            </Text>
-          ),
-          tabBarIcon: () => (
-            <Fontisto
-              name="doctor"
-              color="#40e0d0"
-              size={22}
-              style={{ marginTop: 0 }}
-            />
-          ),
-        }}
-      />
+      {!doctorD && (
+        <Tab.Screen
+          name="doctors"
+          component={Doctors}
+          options={{
+            tabBarLabel: () => (
+              <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
+                Doctors
+              </Text>
+            ),
+            tabBarIcon: () => (
+              <Fontisto
+                name="doctor"
+                color="#40e0d0"
+                size={22}
+                style={{ marginTop: 0 }}
+              />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen
         name="consults"
         component={Consults}
@@ -108,13 +116,9 @@ export const MyTabs = () => {
   );
 };
 
-const mapState = ({ user }) => ({
-  currentUser: user.currentUser,
-  doctorD: user.doctorD,
-});
-
 const AppMain = () => {
   const { currentUser } = useSelector(mapState);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -135,8 +139,13 @@ const AppMain = () => {
         )}
         {currentUser && (
           <>
+          <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="homeTab" component={MyTabs} />
+            
+
+            {/* <Stack.Screen name="homePage" component={HomePage} /> */}
+
             {/* <Stack.Screen name="homeBottomTab" component={MyTabs} /> */}
-            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="doctors" component={Doctors} />
             <Stack.Screen name="doctorList" component={DoctorsList} />
             <Stack.Screen name="appointment" component={Appointment} />

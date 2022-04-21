@@ -47,7 +47,7 @@ const HomePage = ({ navigation }) => {
   const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const [done, setDone] = useState(false);
-  
+
   useEffect(() => {
     if (!done) {
       if (data) {
@@ -299,26 +299,8 @@ const HomePage = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </>
-          ) : (
-            <DoctorHomeConsult navigation={navigation} />
-          )}
-
-          {/* <View style={styles.specContainer}>
-            <Text style={styles.SpecTitle}>Packages</Text>
-          </View>
-          <View style={styles.packages}>
-            <View style={styles.package}>
-              <Image
-                style={styles.packageImg}
-                source={{
-                  uri: "https://www.fraserinstitute.org/sites/default/files/styles/large/public/waiting-your-turn-2017-web.jpg?itok=-Tl8eEoR",
-                }}
-                resizeMode="contain"
-              />
-              <Text style={styles.packageTitle1}>Antigent Test</Text>
-              <Text style={styles.packageTitle2}>K-Klinic</Text>
-            </View>
-          </View> */}
+          ) : null}
+          {doctorD && <DoctorHomeConsult navigation={navigation} />}
         </ScrollView>
       </View>
     </View>

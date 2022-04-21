@@ -28,6 +28,7 @@ const CONSULT_QUERY = gql`
       }
       customer {
         user {
+          username
           email
         }
       }
@@ -43,27 +44,69 @@ const CONSULT_QUERY = gql`
   }
 `;
 
+let i = 0;
 const DoctorHomeConsult = (props) => {
   const { navigation } = props;
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
-  const [sum, setSum] = useState(null);
-  const [countUICard, setCountUICard] = useState(0);
-  const [done, setDone] = useState(false);
+  const [sum, setSum] = useState([]);
   const getConsult = () => {
     let tab = [];
-    for (let i = 0; i < data.allSchedules.length; i++) {
-      if (data.allSchedules[i].doctor.username.email === userD.email) {
-        tab.push(data.allSchedules[i]);
+    if (data)
+      for (let i = 0; i < data.allSchedules.length; i++) {
+        if (data.allSchedules[i].doctor.username.email === userD.email) {
+          const month = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          // const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+          const nbDate = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+              i
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
+          );
+          // const day = weekday[nbDate.getDay()];
+          const d = new Date();
+          const timeLeft = (nbDate - d) / 1000;
+          if (timeLeft > 0) {
+            const t = {
+              day: data.allSchedules[i].date.substr(8, 2),
+              month: month[
+                parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
+              ].substr(0, 3),
+              spec: data.allSchedules[i].specializations.specializationName,
+              time: nbDate,
+              doctorImg: data.allSchedules[i].doctor.profilePicture,
+              rtcToken: data.allSchedules[i].rnToken,
+              channelName: data.allSchedules[i].channelName,
+              customerName: data.allSchedules[i].customer.user?.username
+                ? data.allSchedules[i].customer.user?.username
+                : "--",
+            };
+            i++;
+            tab.push(t);
+          }
+        }
       }
-    }
     setSum(tab);
-    setDone(true);
   };
 
   useEffect(() => {
-    if (!done && data) getConsult();
-  }, [data]);
+    console.log("Here Again", loading);
+    if (loading === false) getConsult();
+  }, [loading]);
 
   return (
     <>
@@ -97,52 +140,24 @@ const DoctorHomeConsult = (props) => {
       <View style={styles.specContainer}>
         <Text style={styles.SpecTitle}>My Consultations</Text>
       </View>
-      {sum && sum.length > 0 ? (
-        sum.map((item, index) => {
-          let i = 0;
-          const month = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ];
-          const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-          const nbDate = new Date(
-            `${month[item.date.substr(5, 2) - 1]} ${item.date.substr(
-              8,
-              2
-            )}, ${item.date.substr(0, 4)} ${item.startTime}`
-          );
-          const day = weekday[nbDate.getDay()];
-          const d = new Date();
-          const timeLeft = (nbDate - d) / 1000;
-          if (timeLeft > 0) {
-            i++;
-            return (
-              <DoctorUpcomingConsult
-                key={index}
-                day={day}
-                nbDay={item.date.substr(8, 2)}
-                spec={item.specializations.specializationName}
-                time={nbDate}
-                doctorImg={item.doctor.profilePicture}
-                rtcToken={item.rnToken}
-                channelName={item.channelName}
-                navigation={navigation}
-              />
-            );
-          }
-          setCountUICard(i);
-        })
-      ) : (
+      {sum.map((item, index) => {
+        console.log("Item )> ", item);
+        return (
+          <DoctorUpcomingConsult
+            key={index}
+            day={item.day}
+            month={item.month}
+            spec={item.spec}
+            time={item.time}
+            doctorImg={item.doctorImg}
+            rtcToken={item.rtcToken}
+            channelName={item.channelName}
+            customerName={item.customerName}
+            navigation={navigation}
+          />
+        );
+      })}
+      {sum?.length === 0 && (
         <View
           style={{
             width: "100%",
@@ -155,7 +170,7 @@ const DoctorHomeConsult = (props) => {
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>
             No Consultation yet.
           </Text>
-          {countUICard === 0 && (
+          {i === 0 && (
             <View
               style={{
                 width: "100%",

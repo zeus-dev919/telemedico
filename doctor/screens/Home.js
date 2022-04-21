@@ -216,11 +216,11 @@ const Home = () => {
         headerShown: false,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName="homeBottomTab"
+      initialRouteName="homeTab"
       style={styles.drawerNavStyle}
     >
       {/* <Drawer.Screen name="header" component={Header} /> */}
-      <Drawer.Screen name="homeBottomTab" component={MyTabs} />
+      <Drawer.Screen name="homeTab" component={MyTabs} />
 
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="intakeForm" component={IntakeForm} />

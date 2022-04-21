@@ -4,7 +4,7 @@ import { COLORS } from "../../constants";
 
 const DayModel = (props) => {
   console.log("props from DayModel ", props);
-  const { day, monthnb, isSelected, bg } = props;
+  const { day, month, isSelected, bg } = props;
   var check = true;
   if (bg === "1") check = false;
   console.log(check);
@@ -12,20 +12,20 @@ const DayModel = (props) => {
     <TouchableOpacity onPress={console.log("Clicked")}>
       {isSelected ? (
         <View style={styles.iconContainer1}>
+          <Text style={styles.text2}>{month}</Text>
           <Text style={styles.text1}>{day}</Text>
-          <Text style={styles.text2}>{monthnb}</Text>
         </View>
       ) : (
         <>
           {!check ? (
             <View style={[styles.iconContainerSPlus, styles.shadowPlus]}>
+              <Text style={styles.text2S}>{month}</Text>
               <Text style={styles.text1S}>{day}</Text>
-              <Text style={styles.text2S}>{monthnb}</Text>
             </View>
           ) : (
             <View style={[styles.iconContainerS, styles.shadow]}>
-              <Text style={styles.text1S}>{day}</Text>
-              <Text style={styles.text2S}>{monthnb}</Text>
+              <Text style={styles.text2S}>{month}</Text>
+              <Text style={styles.text1S}>{day}+1</Text>
             </View>
           )}
         </>
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
     width: 45,
   },
   text1S: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginVertical: 5,
     color: "white",
   },
   text2S: {

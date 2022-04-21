@@ -11,15 +11,16 @@ const mapState = ({ user }) => ({
 const DoctorUpcomingConsult = (props) => {
   const {
     day,
-    nbDay,
+    month,
     time,
     spec,
     doctorImg,
     rtcToken,
     channelName,
+    customerName,
     navigation,
   } = props;
-  // console.log("Consult => ", day, nbDay, time, spec, doctorImg);
+  console.log("Consult => ", day, month);
   const { doctorD } = useSelector(mapState);
   console.log("Consult => ", time);
   const handleJoin = () => {
@@ -38,8 +39,9 @@ const DoctorUpcomingConsult = (props) => {
           {!doctorD && <Text style={styles.cardTitle1}>Upcoming Consult</Text>}
           <View style={styles.containerBoxes}>
             <View style={styles.box}>
-              <DayModel day={day} monthnb={nbDay} isSelected={false} bg="1" />
+              <DayModel day={day} month={month} isSelected={false} bg="1" />
               <View style={styles.textContainer}>
+                <Text style={styles.cardTitle2}>{customerName}</Text>
                 <Text style={styles.cardTitle3}>{spec}</Text>
                 {/* <Text style={styles.cardTitle4}>{weekday[time.getDay()]}</Text> */}
               </View>
@@ -118,8 +120,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   cardTitle2: {
-    color: COLORS.fontColor2,
-    fontSize: 15,
+    color: COLORS.fontColor4,
+    fontSize: 18,
+    fontWeight: "bold",
     marginLeft: 10,
     margin: 0,
     lineHeight: 24,
