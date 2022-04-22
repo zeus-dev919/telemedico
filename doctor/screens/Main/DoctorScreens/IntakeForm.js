@@ -388,7 +388,7 @@ const IntakeForm = ({ navigation }) => {
       q1.length === 0 ||
       q2.length === 0 ||
       q3.length === 0 ||
-      append.length === 0
+      appointment.length === 0
     ) {
       setHelp2(true);
     } else {
