@@ -9,7 +9,7 @@ const DoctorPaymentModel = () => {
       <View style={styles.box}>
         <View style={styles.textContainer}>
           <Text style={styles.cardTitle3}>Mon 15 March 2022 at 18:00</Text>
-          <Text style={styles.cardTitle4}>150$ </Text>
+          <Text style={styles.cardTitle4}>$150 </Text>
         </View>
         <View style={styles.joinContainer}>
           {!collapsed ? (

@@ -44,7 +44,7 @@ const CONSULT_QUERY = gql`
   }
 `;
 
-let i = 0;
+let j = 0;
 const DoctorHomeConsult = (props) => {
   const { navigation } = props;
   const { userD } = useSelector(mapState);
@@ -95,7 +95,7 @@ const DoctorHomeConsult = (props) => {
                 ? data.allSchedules[i].customer.user?.username
                 : "--",
             };
-            i++;
+            j++;
             tab.push(t);
           }
         }
@@ -105,7 +105,7 @@ const DoctorHomeConsult = (props) => {
 
   useEffect(() => {
     console.log("Here Again", loading);
-    if (loading === false) getConsult();
+    if (!loading) getConsult();
   }, [loading]);
 
   return (
@@ -141,7 +141,6 @@ const DoctorHomeConsult = (props) => {
         <Text style={styles.SpecTitle}>My Consultations</Text>
       </View>
       {sum.map((item, index) => {
-        console.log("Item )> ", item);
         return (
           <DoctorUpcomingConsult
             key={index}
@@ -170,7 +169,7 @@ const DoctorHomeConsult = (props) => {
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>
             No Consultation yet.
           </Text>
-          {i === 0 && (
+          {j === 0 && (
             <View
               style={{
                 width: "100%",

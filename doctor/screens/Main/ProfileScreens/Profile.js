@@ -166,7 +166,7 @@ const Profile = ({ route, navigation }) => {
         phoneNumber: phone,
       };
       dispatch(setUser(user));
-      navigation.navigate("home");
+      navigation.navigate("Home");
     });
     console.log("Here Line 192");
   };
@@ -177,7 +177,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("home")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Ionicons
               name="ios-arrow-back-sharp"

@@ -19,6 +19,7 @@ import {
 } from "@stripe/stripe-react-native";
 import { useSelector } from "react-redux";
 import { gql, useQuery } from "@apollo/client";
+import * as WebBrowser from "expo-web-browser";
 
 const ME_QUERY = gql`
   query {
@@ -182,6 +183,9 @@ const PayCardsModel = (props) => {
       setSuccess(true);
     }
   };
+  const _handlePressTerms1 = () => {
+    WebBrowser.openBrowserAsync("https://medipocket.world/terms-conditions/");
+  };
   return (
     <>
       {/* Stripe */}
@@ -216,7 +220,12 @@ const PayCardsModel = (props) => {
           style={styles.checkbox}
           color={"#40e0d0"}
         />
-        <Text style={styles.privacy}>Agree to the Terms & Conditions</Text>
+        <Text style={styles.privacy}>Agree to </Text>
+        <TouchableOpacity onPress={_handlePressTerms1}>
+          <Text style={[styles.privacy, { textDecorationLine: "underline" }]}>
+            the Terms & Conditions
+          </Text>
+        </TouchableOpacity>
       </View>
       {isSelectedError.length === 0 ? null : (
         <Text style={styles.error}>{isSelectedError}</Text>
@@ -224,11 +233,11 @@ const PayCardsModel = (props) => {
       {/* Pay */}
       {validCard && isSelected ? (
         <TouchableOpacity style={styles.button1} onPress={handlePayment}>
-          <Text style={styles.signup}>Pay {pay}</Text>
+          <Text style={styles.signup}>Pay ${pay}</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.button1} disabled={true}>
-          <Text style={styles.signup5}>Pay {pay}</Text>
+          <Text style={styles.signup5}>Pay ${pay}</Text>
         </TouchableOpacity>
       )}
       {success && (

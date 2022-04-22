@@ -40,7 +40,7 @@ const DoctorCardModel2 = (props) => {
               <View style={styles.doctorCardRight}>
                 {/* <View style={styles.statusIndic2}></View> */}
                 {/* <View style={styles.statusIndic3}></View> */}
-                {img.length > 0 && img.startsWith("http") ? (
+                {img.startsWith("http") ? (
                   <Image
                     style={styles.doctorAvatar2}
                     source={{
@@ -79,7 +79,7 @@ const DoctorCardModel2 = (props) => {
                 <Text style={styles.title2}>
                   Fee:{" "}
                   <Text style={[styles.boxNb, { color: "#f9b664" }]}>
-                    {fees !== "--" ? `${fees}$` : fees}
+                    {fees !== "--" ? `$${fees}` : fees}
                   </Text>
                 </Text>
                 <Text style={styles.title2}>
@@ -104,13 +104,23 @@ const DoctorCardModel2 = (props) => {
             <View style={styles.ImgContainer}>
               <View style={styles.doctorCardRight}>
                 {/* <View style={styles.statusIndic}></View> */}
-                <Image
-                  style={styles.doctorAvatar}
-                  source={{
-                    uri: img,
-                  }}
-                  resizeMode="cover"
-                />
+                {img.startsWith("http") ? (
+                  <Image
+                    style={styles.doctorAvatar}
+                    source={{
+                      uri: img,
+                    }}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <Image
+                    style={styles.doctorAvatar}
+                    source={{
+                      uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
+                    }}
+                    resizeMode="cover"
+                  />
+                )}
               </View>
             </View>
             <Text style={styles.title1}>{name}</Text>

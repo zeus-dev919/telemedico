@@ -16,7 +16,7 @@ const PayTimeModel = (props) => {
           >
             Total Payable
           </Text>
-          <Text style={[styles.boxNb, { color: "#f9b664", marginBottom: 20}]}>{pay}</Text>
+          <Text style={[styles.boxNb, { color: "#f9b664", marginBottom: 20}]}>${pay}</Text>
           <Text
             style={[
               styles.cardTitle2,

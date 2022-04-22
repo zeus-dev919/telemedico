@@ -22,7 +22,6 @@ const DoctorUpcomingConsult = (props) => {
   } = props;
   console.log("Consult => ", day, month);
   const { doctorD } = useSelector(mapState);
-  console.log("Consult => ", time);
   const handleJoin = () => {
     const d = new Date();
     const timeLeft = (time - d) / 1000;
@@ -45,7 +44,7 @@ const DoctorUpcomingConsult = (props) => {
                 <Text style={styles.cardTitle3}>{spec}</Text>
                 {/* <Text style={styles.cardTitle4}>{weekday[time.getDay()]}</Text> */}
               </View>
-              {doctorImg?.length > 0 ? (
+              {doctorImg.startsWith("https") ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{
@@ -57,7 +56,7 @@ const DoctorUpcomingConsult = (props) => {
                 <Image
                   style={styles.doctorAvatar}
                   source={{
-                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Faccept.png?alt=media&token=3d1f009d-14be-45d9-80cb-75e1d9878a45",
+                    uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
                   }}
                   resizeMode="cover"
                 />

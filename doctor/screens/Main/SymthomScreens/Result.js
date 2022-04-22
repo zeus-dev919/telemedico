@@ -719,8 +719,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   redflag: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     marginBottom: 10,
   },
   //   Model

@@ -109,7 +109,7 @@ const DoctorCardModel = (props) => {
             <View style={styles.doctorCardRight}>
               {/* <View style={styles.statusIndic1}></View>
               <View style={styles.statusIndic2}></View> */}
-              {img.length > 0 && img.startsWith("http") ? (
+              {img.startsWith("http") ? (
                 <Image
                   style={styles.doctorAvatar}
                   source={{
@@ -140,7 +140,7 @@ const DoctorCardModel = (props) => {
                   Fee
                 </Text>
                 <Text style={[styles.boxNb, { color: "#f9b664" }]}>
-                  {fees ? `${fees}$` : "--"}
+                  {fees ? `$${fees}` : "--"}
                 </Text>
               </View>
             </View>
