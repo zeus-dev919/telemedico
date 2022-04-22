@@ -221,7 +221,6 @@ const Home = () => {
     >
       {/* <Drawer.Screen name="header" component={Header} /> */}
       <Drawer.Screen name="homeTab" component={MyTabs} />
-
       <Drawer.Screen name="doctors" component={Doctors} />
       <Drawer.Screen name="intakeForm" component={IntakeForm} />
     </Drawer.Navigator>

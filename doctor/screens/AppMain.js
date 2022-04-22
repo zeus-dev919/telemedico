@@ -139,13 +139,8 @@ const AppMain = () => {
         )}
         {currentUser && (
           <>
-          <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="homeTab" component={MyTabs} />
-            
-
-            {/* <Stack.Screen name="homePage" component={HomePage} /> */}
-
-            {/* <Stack.Screen name="homeBottomTab" component={MyTabs} /> */}
             <Stack.Screen name="doctors" component={Doctors} />
             <Stack.Screen name="doctorList" component={DoctorsList} />
             <Stack.Screen name="appointment" component={Appointment} />

@@ -40,6 +40,9 @@ const IntakeForm = ({ navigation }) => {
   const [indicatorLoad, setIndicatorLoad] = useState(false);
   const [help, setHelp] = useState(false);
   const [help2, setHelp2] = useState(false);
+  const [modalHome, setModalHome] = useState(false);
+  const [modalBack, setModalBack] = useState(false);
+
   // f2
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
@@ -441,11 +444,11 @@ const IntakeForm = ({ navigation }) => {
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
         {/* Card1 */}
-        <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
-        {/* <View style={[styles.header2, { backgroundColor: COLORS.bgColor1 }]}>
+        <View style={[styles.header, { backgroundColor: COLORS.bgColor1 }]}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.goBack()}
+            // onPress={() => navigation.goBack()}
+            onPress={() => setModalBack(true)}
           >
             <Ionicons
               name="ios-arrow-back-sharp"
@@ -456,7 +459,8 @@ const IntakeForm = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("home")}
+            // onPress={() => navigation.navigate("home")}
+            onPress={() => setModalHome(true)}
           >
             <Image
               style={styles.imgStyle}
@@ -466,8 +470,8 @@ const IntakeForm = ({ navigation }) => {
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <View style={styles.headerSub}></View>
-        </View> */}
+          <View style={{ width: 20 }}></View>
+        </View>
         <View style={[styles.card, styles.shadow1]}>
           <Text style={styles.cardTitle}>Telemedicine Patient</Text>
           <Text style={styles.cardTitle}>Intake Form</Text>
@@ -1339,6 +1343,94 @@ const IntakeForm = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+      {/* ModalBack */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalBack}
+        onRequestClose={() => {
+          setModalBack(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={[styles.ModelTitleView, { marginBottom: 20 }]}>
+              <Text style={styles.titleModal}>
+                You can only back to the home page
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "60%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalBack(false);
+                  navigation.navigate("home");
+                }}
+              >
+                <Text style={styles.textStyle}>Back Home</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalBack(false);
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {/* ModalHome */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalHome}
+        onRequestClose={() => {
+          setModalHome(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={[styles.ModelTitleView, { marginBottom: 20 }]}>
+              <Text style={styles.titleModal}>
+                Do you want to go to the home page
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "60%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalHome(false);
+                  navigation.navigate("home");
+                }}
+              >
+                <Text style={styles.textStyle}>Go Home</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalHome(false);
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -1551,18 +1643,46 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   signup2: {
+    width: 120,
     backgroundColor: COLORS.blueBtn,
     color: "white",
     fontSize: 18,
     textAlign: "center",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     borderRadius: 10,
     marginBottom: 20,
+    marginHorizontal: 20,
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  // header
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 60,
+    paddingHorizontal: 20,
+  },
+  avatar: {
+    width: 35,
+    height: 35,
+    marginTop: 5,
+    borderRadius: 200,
+  },
+  headerSub: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  icon_style: {
+    marginRight: 0,
+  },
+  imgStyle: {
+    width: 100,
+    height: 40,
   },
 });
