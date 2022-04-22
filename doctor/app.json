@@ -24,7 +24,8 @@
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
       },
       "usesIcloudStorage": true,
-      "bundleIdentifier": "com.rami404.doctor"
+      "bundleIdentifier": "com.rami404.doctor",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "adaptiveIcon": {

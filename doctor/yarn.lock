@@ -5241,40 +5241,40 @@ expo-constants@~13.0.1:
     "@expo/config" "^6.0.6"
     uuid "^3.3.2"
 
-expo-dev-client@~0.8.0:
-  version "0.8.0"
-  resolved "https://registry.npmjs.org/expo-dev-client/-/expo-dev-client-0.8.0.tgz"
-  integrity sha512-pMA0Uo+izVed7GjrMBC7G+VuGNa6cb/OVWGJbfWdzV7AK38hRvvD3/vc5epfIuDxGmMFukwgVxVY8rVGfnR3FQ==
+expo-dev-client@~0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-0.8.4.tgz#c521da0818ee846e24bfc96a901350342eba5ded"
+  integrity sha512-FB5ouz9dMyccnuYbuAi0EcTNdRh+5vPGuOuhYWo5Fq3SBTU8ZdKQmcMidAoHOrYgMzQWiT+S7ypt0AjxPSgHnA==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-launcher "0.10.0"
-    expo-dev-menu "0.9.0"
-    expo-dev-menu-interface "0.5.0"
+    expo-dev-launcher "0.10.4"
+    expo-dev-menu "0.9.3"
+    expo-dev-menu-interface "0.5.3"
     expo-manifests "~0.2.2"
     expo-updates-interface "~0.5.0"
 
-expo-dev-launcher@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.npmjs.org/expo-dev-launcher/-/expo-dev-launcher-0.10.0.tgz"
-  integrity sha512-BS1E2diYw4TRgv1ujbu8Sl5zq6EyK+BGdXAXELCauD3UWX7sU9YEZdnVTYuANa8o5jNU/RdYqfG37xREYIw6FQ==
+expo-dev-launcher@0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-0.10.4.tgz#b4a6f01b3aa10afa142fb6c91b18c6983433d8fd"
+  integrity sha512-ItqkxzzwgeK4+o9hyV3/YAvPxiVIXtcOWPcjpuPxYDtLigF4D4sMSqRb1aBA+7Nmxoc6EuLASZnvge0WPco+cA==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu "0.9.0"
+    expo-dev-menu "0.9.3"
     resolve-from "^5.0.0"
     semver "^7.3.5"
 
-expo-dev-menu-interface@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/expo-dev-menu-interface/-/expo-dev-menu-interface-0.5.0.tgz"
-  integrity sha512-pfjWxIQurHEMXlmFnhMG8AgdN/uOyV/Sh0wyE4SkzAOVRQjlM0Kir6E8Cjw0v0M69KveJEQIqbcEnp0JgmOx3Q==
+expo-dev-menu-interface@0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-0.5.3.tgz#d1a43ef450d6c727780ed3018376046f0a185980"
+  integrity sha512-i1d7vtKILnq7mo6r5jSQ++UxkpP+VX/IkOAKuWGeB/B32pCTFCD32rplymFS3qPQ+vlmb5zKl5yhYSYZSVobhg==
 
-expo-dev-menu@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/expo-dev-menu/-/expo-dev-menu-0.9.0.tgz"
-  integrity sha512-klKRu6Qa+zqSoCtb0+e7Fl0PtiapIV1I9Fi6rZdeTXx6OLWDB+AUX3UKWM8zbyXtYc+ke1D8vV0qyYnjUf9asw==
+expo-dev-menu@0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-0.9.3.tgz#d4572d86c28b19f4f807534091122b5077821cba"
+  integrity sha512-ZUCDSO2rAhFOKuCXdwBf09VVkvAqZBhjA36b7YkwfvKxQ4nb6ZbB/JRCdtxLcre5hDJX1ya3YMNPY3R0/WCBbg==
   dependencies:
     "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu-interface "0.5.0"
+    expo-dev-menu-interface "0.5.3"
 
 expo-device@~4.1.0:
   version "4.1.0"
@@ -5283,10 +5283,10 @@ expo-device@~4.1.0:
   dependencies:
     ua-parser-js "^0.7.19"
 
-expo-document-picker@~10.1.0:
-  version "10.1.0"
-  resolved "https://registry.npmjs.org/expo-document-picker/-/expo-document-picker-10.1.0.tgz"
-  integrity sha512-zt4zGHii4efanElPeK0uJ8yAgO4S5gkKrplxr7DkfDK97LrJBqYJodE52ZCj967nVGhyXtfMi5dKDY5FG+QXdA==
+expo-document-picker@~10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-10.1.3.tgz#68a82635e9473eb19f128193f1111e7400055a7d"
+  integrity sha512-JKARJBnQ5Aug92hg2MFKrM2LqiMQabcUBYJwBhwSuc0A7dNUeprw0hkaOK0D9Fk7Ae9t+flRX0N5R/aADek3HA==
   dependencies:
     "@expo/config-plugins" "^4.0.2"
     uuid "^3.3.2"
