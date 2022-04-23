@@ -1299,7 +1299,7 @@ const IntakeForm = ({ navigation }) => {
               style={styles.signup2}
               onPress={() => {
                 setHelp(false);
-                navigation.navigate("home");
+                navigation.navigate("Home");
               }}
             >
               <Text style={styles.textStyle}>Back home</Text>
@@ -1370,7 +1370,7 @@ const IntakeForm = ({ navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalBack(false);
-                  navigation.navigate("home");
+                  navigation.navigate("Home");
                 }}
               >
                 <Text style={styles.textStyle}>Back Home</Text>
@@ -1414,7 +1414,7 @@ const IntakeForm = ({ navigation }) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalHome(false);
-                  navigation.navigate("home");
+                  navigation.navigate("Home");
                 }}
               >
                 <Text style={styles.textStyle}>Go Home</Text>

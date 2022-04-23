@@ -123,6 +123,16 @@ const Consults = ({ navigation }) => {
             />
           );
         })}
+        {/* <DoctorUpcomingConsult
+          day="19"
+          month="Jun"
+          spec="Obstetrics & Gynecology"
+          time="2022-04-25T01:57:00.000Z"
+          doctorImg="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20Lloyd%20B.png?alt=media&token=0a1e38e2-6382-48b9-bf6f-5cb6ead802a5"
+          rtcToken="a"
+          channelName="a"
+          navigation={navigation}
+        /> */}
         {sum?.length === 0 && (
           <View
             style={{

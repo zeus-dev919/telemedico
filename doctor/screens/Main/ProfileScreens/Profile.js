@@ -224,7 +224,7 @@ const Profile = ({ route, navigation }) => {
       phoneNumber: phone,
     };
     dispatch(setUser(user));
-    navigation.navigate("home");
+    navigation.navigate("Home");
     await a({
       variables: {
         firstName: firstName,

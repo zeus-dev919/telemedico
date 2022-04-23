@@ -271,7 +271,7 @@ const Result = ({ route, navigation }) => {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.headerSub}
-            onPress={() => navigation.navigate("home")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image
               style={styles.imgStyle}

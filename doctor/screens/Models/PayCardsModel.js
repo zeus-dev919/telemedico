@@ -305,7 +305,7 @@ const PayCardsModel = (props) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalVisible2(!modalVisible2);
-                  navigation.navigate("home");
+                  navigation.navigate("Home");
                 }}
               >
                 <Text style={styles.textStyle}>Back home</Text>
