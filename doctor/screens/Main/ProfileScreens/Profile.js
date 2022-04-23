@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, icons, images } from "../../../constants";
+import { COLORS } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 import { gql, useMutation, useQuery } from "@apollo/client";
