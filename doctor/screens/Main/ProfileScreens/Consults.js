@@ -48,25 +48,58 @@ const Consults = ({ navigation }) => {
 
   const getConsult = () => {
     let tab = [];
-    for (let i = 0; i < data.allSchedules.length; i++) {
-      if (data.allSchedules[i].customer.user?.email === userD.email) {
-        tab.push(data.allSchedules[i]);
+    if (data)
+      for (let i = 0; i < data.allSchedules.length; i++) {
+        if (data.allSchedules[i].customer.user.email === userD.email) {
+          const month = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          const nbDate = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+              i
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
+          );
+          const d = new Date();
+          const timeLeft = (nbDate - d) / 1000;
+          if (timeLeft > 0) {
+            const t = {
+              day: data.allSchedules[i].date.substr(8, 2),
+              month: month[
+                parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
+              ].substr(0, 3),
+              spec: data.allSchedules[i].specializations.specializationName,
+              time: nbDate,
+              doctorImg: data.allSchedules[i].doctor.profilePicture,
+              rtcToken: data.allSchedules[i].rnToken,
+              channelName: data.allSchedules[i].channelName,
+              customerName: data.allSchedules[i].customer.user?.username
+                ? data.allSchedules[i].customer.user?.username
+                : "--",
+            };
+            tab.push(t);
+          }
+        }
       }
-    }
     setSum(tab);
-    console.log("=================");
-    console.log("=================");
-    console.log(tab);
-    console.log("=================");
-    console.log("=================");
   };
 
   useEffect(() => {
     // if (data && !loading && userD) {
-    if (data && !loading) {
-      getConsult();
-    }
-  }, [data]);
+    if (!loading) getConsult();
+  }, [loading]);
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
@@ -75,45 +108,22 @@ const Consults = ({ navigation }) => {
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
-        {sum.length > 0 ? (
-          sum.map((item, index) => {
-            const month = [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-            ];
-            const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            const nbDate = new Date(
-              `${month[item.date.substr(5, 2) - 1]} ${item.date.substr(
-                8,
-                2
-              )}, ${item.date.substr(0, 4)} ${item.startTime}`
-            );
-            const day = weekday[nbDate.getDay()];
-            return (
-              <DoctorUpcomingConsult
-                key={index}
-                day={day}
-                nbDay={item.date.substr(8, 2)}
-                spec={item.specializations.specializationName}
-                time={nbDate}
-                doctorImg={item.doctor.profilePicture}
-                rtcToken={item.rnToken}
-                channelName={item.channelName}
-                navigation={navigation}
-              />
-            );
-          })
-        ) : (
+        {sum.map((item, index) => {
+          return (
+            <DoctorUpcomingConsult
+              key={index}
+              day={item.day}
+              month={item.month}
+              spec={item.spec}
+              time={item.time}
+              doctorImg={item.doctorImg}
+              rtcToken={item.rtcToken}
+              channelName={item.channelName}
+              navigation={navigation}
+            />
+          );
+        })}
+        {sum?.length === 0 && (
           <View
             style={{
               width: "100%",

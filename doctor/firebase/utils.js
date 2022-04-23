@@ -1,32 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBDp6rXG75cbD3iF01WUsyNKGt5QEME8AY",
-//   authDomain: "doctor-bec0a.firebaseapp.com",
-//   projectId: "doctor-bec0a",
-//   storageBucket: "doctor-bec0a.appspot.com",
-//   messagingSenderId: "963217372103",
-//   appId: "1:963217372103:web:b78742e8441004519f1fe2",
-//   measurementId: "G-W5FV11L5DM",
-// };
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCILSNGV57q21TeffjtUb5AU-bLYKyJhho",
-  authDomain: "medipocket2022.firebaseapp.com",
-  projectId: "medipocket2022",
-  storageBucket: "medipocket2022.appspot.com",
-  messagingSenderId: "262308121730",
-  appId: "1:262308121730:web:7d17307b719356ffe4389b",
-  measurementId: "G-4305QZX2HJ",
+  apiKey: "AIzaSyDd53NzsC0SnP5Zk5v4iZXLeqJdYrkRldg",
+  authDomain: "medipocket-1944c.firebaseapp.com",
+  projectId: "medipocket-1944c",
+  storageBucket: "medipocket-1944c.appspot.com",
+  messagingSenderId: "657591050698",
+  appId: "1:657591050698:web:1ecb7382070a454e42af33",
+  measurementId: "G-6YZNLZ0Z7P"
 };
 
 // Initialize Firebase
-// initializeApp(firebaseConfig);
-const storage = getStorage();
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore();
+const storage = getStorage();
 const analytics = getAnalytics(app);
 
-export { storage, analytics };
+export { app, storage, db, analytics };

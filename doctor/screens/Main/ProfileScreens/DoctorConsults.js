@@ -53,11 +53,6 @@ const DoctorConsults = ({ route, navigation }) => {
     if (data)
       for (let i = 0; i < data.allSchedules.length; i++) {
         if (data.allSchedules[i].customer.user.email === userD.email) {
-          console.log(" =)> ");
-          console.log(data.allSchedules[i]);
-          console.log(month[
-            parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
-          ].substr(0, 3));
           const month = [
             "January",
             "February",

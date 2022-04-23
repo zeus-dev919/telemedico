@@ -16,9 +16,16 @@ import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../../firebase/utils";
+import { storage, db } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
 import { setUser, setUserame } from "../../../redux/User/user.actions";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+} from "firebase/firestore";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -65,11 +72,8 @@ const MUTATE_QUERY = gql`
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  console.log("Hello");
   const { userD } = useSelector(mapState);
-  // console.log("maptate => ", { userD });
-  // const { ch } = route?.params || "empty";
-  // console.log("Profile Type =>", ch);
+  console.log(userD);
   const [a, { data2, loading2 }] = useMutation(MUTATE_QUERY);
   const { data, loading } = useQuery(ME_QUERY);
   const [firstName, setFirstName] = useState("");
@@ -79,29 +83,101 @@ const Profile = ({ route, navigation }) => {
   const [country, setCountry] = useState("");
   const [avatar, setAvatar] = useState("");
   const [url, setUrl] = useState(null);
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [firebaseDocId, setFirebaseDocId] = useState(null);
 
-  const handleUpload = async () => {
-    // setIndicatorLoad(true);
-    if (avatar.length > 0) {
-      const url_uuid = uuid.v4();
-      const storageRef = ref(storage, `${userD.email}/${url_uuid}.png`);
-      try {
-        const r = await fetch(avatar);
-        const b = await r.blob();
-        uploadBytes(storageRef, b)
-          .then((snapshot) => {
-            getDownloadURL(storageRef).then((downloadURL) => {
-              setUrl(downloadURL);
-            });
-          })
-          .catch((error) => {
-            console.log("Error LINE 89 =>", error);
-          });
-      } catch (error) {
-        console.log("Catch ===============");
-      }
-    }
+  // Func*
+
+  const addNewUser = async () => {
+    console.log("this line 1");
+    const docRef = await addDoc(collection(db, "users"), {
+      fullname: userD.username,
+      email: userD.email,
+      phone: "",
+      dob: "",
+      city: "",
+    });
+    setFirebaseUser({
+      fullname: userD.username,
+      email: userD.email,
+      phone: "",
+      dob: "",
+      city: "",
+    });
+    setFirebaseDocId(docRef.id);
   };
+
+  useEffect(() => {
+    const q = query(collection(db, "users"), where("email", "==", userD.email));
+    const querySnapshot = onSnapshot(q, (snapshot) => {
+      if (snapshot.docs.length === 0) {
+        addNewUser();
+      } else {
+        console.log("this line 2");
+        snapshot.docs.map((doc) => {
+          console.log("Doc");
+          setFirebaseUser(doc.data());
+          setFirebaseDocId(doc.id);
+        });
+      }
+    });
+    return () => {
+      querySnapshot();
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("firebaseUser: ", firebaseUser);
+    console.log("firebaseDocId: ", firebaseDocId);
+  }, [firebaseUser, firebaseDocId]);
+
+  // const updateAvatarUser = async (downloadURL) => {
+  //   const userRef = doc(db, "users", userDocId);
+  //   await updateDoc(userRef, {
+  //     avatar: downloadURL,
+  //     updatedAt: new Date(),
+  //   })
+  //     .then(() => {
+  //       console.log("Avatar switched !!");
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
+  // const handleUpload = async () => {
+  //   if (avatar.length > 0) {
+  //     const url_uuid = uuid.v4();
+  //     const storageRef = ref(storage, `${userD?.email}/${url_uuid}.png`);
+  //     try {
+  //       const r = await fetch(avatar);
+  //       const b = await r.blob();
+  //       uploadBytes(storageRef, b)
+  //         .then(() => {
+  //           getDownloadURL(storageRef).then(async (downloadURL) => {
+  //             updateAvatarUser(downloadURL);
+  //           });
+  //         })
+  //         .catch((error) => {
+  //           console.log("catch", error);
+  //         });
+  //     } catch (error) {
+  //       console.log("Catch ", error);
+  //     }
+  //   }
+  //   if (firstName !== userD?.name) {
+  //     const userRef = doc(db, "users", userDocId);
+  //     await updateDoc(userRef, {
+  //       name: firstName,
+  //       updatedAt: new Date(),
+  //     })
+  //       .then(() => {
+  //         console.log("FirstName switched !!");
+  //       })
+  //       .catch((err) => console.error(err));
+  //   }
+  //   navigation.goBack();
+  // };
+
+  // Func*
+
   useEffect(() => {
     if (data) {
       let i = 0;
@@ -170,6 +246,7 @@ const Profile = ({ route, navigation }) => {
     });
     console.log("Here Line 192");
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
