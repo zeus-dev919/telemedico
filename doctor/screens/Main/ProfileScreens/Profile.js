@@ -24,7 +24,10 @@ import {
   query,
   where,
   onSnapshot,
+  doc,
   addDoc,
+  getDocs,
+  updateDoc,
 } from "firebase/firestore";
 
 const mapState = ({ user }) => ({
@@ -73,108 +76,153 @@ const MUTATE_QUERY = gql`
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userD } = useSelector(mapState);
-  console.log(userD);
   const [a, { data2, loading2 }] = useMutation(MUTATE_QUERY);
   const { data, loading } = useQuery(ME_QUERY);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [DOB, setDOB] = useState("");
+  const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [url, setUrl] = useState(null);
+  // const [url, setUrl] = useState(null);
   const [firebaseUser, setFirebaseUser] = useState(null);
   const [firebaseDocId, setFirebaseDocId] = useState(null);
 
   // Func*
 
   const addNewUser = async () => {
-    console.log("this line 1");
     const docRef = await addDoc(collection(db, "users"), {
+      avatar:
+        "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
       fullname: userD.username,
       email: userD.email,
       phone: "",
       dob: "",
-      city: "",
+      country: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
     setFirebaseUser({
+      avatar:
+        "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
       fullname: userD.username,
       email: userD.email,
       phone: "",
       dob: "",
-      city: "",
+      country: "",
     });
     setFirebaseDocId(docRef.id);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     const q = query(collection(db, "users"), where("email", "==", userD.email));
-    const querySnapshot = onSnapshot(q, (snapshot) => {
-      if (snapshot.docs.length === 0) {
-        addNewUser();
-      } else {
-        console.log("this line 2");
-        snapshot.docs.map((doc) => {
-          console.log("Doc");
-          setFirebaseUser(doc.data());
-          setFirebaseDocId(doc.id);
-        });
-      }
-    });
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.docs.length == 0) {
+      addNewUser();
+    } else {
+      querySnapshot.docs.map((doc) => {
+        setFirebaseUser(doc.data());
+        setFirebaseDocId(doc.id);
+        // info
+        setAvatar(doc.data().avatar);
+        setFirstName(doc.data().fullname);
+        setPhone(doc.data().phone);
+        setDob(doc.data().dob);
+        setCountry(doc.data().country);
+        // info
+      });
+    }
     return () => {
       querySnapshot();
     };
   }, []);
 
-  useEffect(() => {
-    console.log("firebaseUser: ", firebaseUser);
-    console.log("firebaseDocId: ", firebaseDocId);
-  }, [firebaseUser, firebaseDocId]);
+  // handleSubmit Func
+  // Avatar
+  const updateAvatarUser = async () => {
+    const url_uuid = uuid.v4();
+    const storageRef = ref(storage, `${userD?.email}/${url_uuid}.png`);
+    try {
+      const r = await fetch(avatar);
+      const b = await r.blob();
+      uploadBytes(storageRef, b)
+        .then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            updateAvatarUser2(downloadURL);
+          });
+        })
+        .catch((error) => {
+          console.log("catch", error);
+        });
+    } catch (error) {
+      console.log("Catch ", error);
+    }
+  };
+  const updateAvatarUser2 = async (downloadURL) => {
+    const userRef = doc(db, "users", firebaseDocId);
+    await updateDoc(userRef, {
+      avatar: downloadURL,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        console.log("Avatar switched !!");
+      })
+      .catch((err) => console.error(err));
+  };
 
-  // const updateAvatarUser = async (downloadURL) => {
-  //   const userRef = doc(db, "users", userDocId);
-  //   await updateDoc(userRef, {
-  //     avatar: downloadURL,
-  //     updatedAt: new Date(),
-  //   })
-  //     .then(() => {
-  //       console.log("Avatar switched !!");
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
-  // const handleUpload = async () => {
-  //   if (avatar.length > 0) {
-  //     const url_uuid = uuid.v4();
-  //     const storageRef = ref(storage, `${userD?.email}/${url_uuid}.png`);
-  //     try {
-  //       const r = await fetch(avatar);
-  //       const b = await r.blob();
-  //       uploadBytes(storageRef, b)
-  //         .then(() => {
-  //           getDownloadURL(storageRef).then(async (downloadURL) => {
-  //             updateAvatarUser(downloadURL);
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           console.log("catch", error);
-  //         });
-  //     } catch (error) {
-  //       console.log("Catch ", error);
-  //     }
-  //   }
-  //   if (firstName !== userD?.name) {
-  //     const userRef = doc(db, "users", userDocId);
-  //     await updateDoc(userRef, {
-  //       name: firstName,
-  //       updatedAt: new Date(),
-  //     })
-  //       .then(() => {
-  //         console.log("FirstName switched !!");
-  //       })
-  //       .catch((err) => console.error(err));
-  //   }
-  //   navigation.goBack();
-  // };
+  // fullname
+  const updateFullnameUser = async () => {
+    const userRef = doc(db, "users", firebaseDocId);
+    await updateDoc(userRef, {
+      fullname: firstName,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        console.log("FirstName switched !!");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // Phone
+  const updatePhoneUser = async () => {
+    const userRef = doc(db, "users", firebaseDocId);
+    await updateDoc(userRef, {
+      phone: phone,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        console.log("Phone switched !!");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // DOB
+  const updateDobUser = async () => {
+    const userRef = doc(db, "users", firebaseDocId);
+    await updateDoc(userRef, {
+      dob: dob,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        console.log("DOB switched !!");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // country
+  const updateCountryUser = async () => {
+    const userRef = doc(db, "users", firebaseDocId);
+    await updateDoc(userRef, {
+      country: country,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        console.log("country switched !!");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // handleSubmit Func
 
   // Func*
 
@@ -212,39 +260,16 @@ const Profile = ({ route, navigation }) => {
     console.log("Response2 =>", result);
     setAvatar(result.uri);
   };
+
   const handleSubmit = async () => {
-    console.log("Here Line 169");
-    await handleUpload();
-    console.log("Here Line 171");
-    let user = {
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      profilePic: url,
-      phoneNumber: phone,
-    };
-    dispatch(setUser(user));
+    console.log("Here HandleSubmit");
+    if (avatar !== firebaseUser.avatar) await updateAvatarUser();
+    if (firstName !== firebaseUser.fullname) await updateFullnameUser();
+    if (phone !== firebaseUser.phone) await updatePhoneUser();
+    if (dob !== firebaseUser.dob) await updateDobUser();
+    if (country !== firebaseUser.city) await updateCountryUser();
     navigation.navigate("Home");
-    await a({
-      variables: {
-        firstName: firstName,
-        lastName: lastName,
-        profilePic: url,
-        phoneNumber: phone,
-      },
-    }).then((res) => {
-      console.log(" ===========DONE========== ");
-      let user = {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        profilePic: url,
-        phoneNumber: phone,
-      };
-      dispatch(setUser(user));
-      navigation.navigate("Home");
-    });
-    console.log("Here Line 192");
+    console.log("Here HandleSubmit done");
   };
 
   return (
@@ -267,11 +292,6 @@ const Profile = ({ route, navigation }) => {
             <Text style={styles.title1}>Profile</Text>
           </View>
           <View style={{ width: 50 }}></View>
-          {/* <View style={styles.titleConatiner}>
-            <TouchableOpacity onPress={() => handleSubmit()}>
-              <Text style={styles.title2}>Done</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
       </View>
       {/* ScrollView */}
@@ -279,7 +299,7 @@ const Profile = ({ route, navigation }) => {
         <View style={styles.profileContainer}>
           {/* Avatar */}
           <View style={styles.avatarContainer}>
-            {avatar?.length > 0 ? (
+            {avatar ? (
               <Image
                 style={styles.avatar}
                 source={{
@@ -296,6 +316,7 @@ const Profile = ({ route, navigation }) => {
                 resizeMode="cover"
               />
             )}
+
             <TouchableOpacity onPress={() => handleChangePicture()}>
               <Text style={styles.title3}>Change profile picture</Text>
             </TouchableOpacity>
@@ -330,8 +351,8 @@ const Profile = ({ route, navigation }) => {
               <Text style={styles.title4}>DOB</Text>
               <TextInput
                 style={styles.searchInput}
-                value={DOB}
-                onChangeText={setDOB}
+                value={dob}
+                onChangeText={setDob}
               />
             </View>
             {/* City, country */}
