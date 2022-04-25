@@ -3,7 +3,7 @@ from django import forms
 from medico.settings import EMAIL_HOST_USER
 from .forms import PatientIntakeForm
 from .models import *
-from django.http  import HttpResponse
+from django.http  import HttpResponse,HttpResponseBadRequest,
 import json
 from django.core.mail import send_mail
 from django.conf import settings
@@ -54,7 +54,7 @@ class Entry(APIView):
         enquiry_serializer = PatientHealthInfoSerializer(data=data)
 
         if not enquiry_serializer.is_valid():
-            return HttpResponse.bad_rsp(enquiry_serializer.errors, "Enquiry creation failed")
+            return HttpResponse("Enquiry creation failed - " + str(enquiry_serializer.errors),status=400)
 
         enquiry_serializer.save()
         subject = "MediPocket IntakeForm Initiated"
