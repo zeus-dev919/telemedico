@@ -54,7 +54,7 @@ class Entry(APIView):
         enquiry_serializer = PatientHealthInfoSerializer(data=data)
 
         if not enquiry_serializer.is_valid():
-            return StandardHttpResponse.bad_rsp(enquiry_serializer.errors, "Enquiry creation failed")
+            return HttpResponse.bad_rsp(enquiry_serializer.errors, "Enquiry creation failed")
 
         enquiry_serializer.save()
         subject = "MediPocket IntakeForm Initiated"
