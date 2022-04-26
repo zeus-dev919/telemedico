@@ -67,3 +67,6 @@ class Entry(APIView):
             pass
             # return HttpResponse('Invalid header found.')
         return HttpResponse('success')
+
+    def get(self, request):
+        return HttpResponse('success')
