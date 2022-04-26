@@ -66,7 +66,7 @@ class Entry(APIView):
         except:
             pass
             # return HttpResponse('Invalid header found.')
-        return HttpResponse('success')
+        return HttpResponse('success post')
 
     def get(self, request):
-        return HttpResponse('success')
+        return HttpResponse('success get')
