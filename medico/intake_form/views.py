@@ -50,6 +50,10 @@ class Entry(APIView):
 
         data = request.data
         assert isinstance(data, dict)
+        datastr=""
+        for key, value in data.items():
+            datastr = datastr+ key+": "+str(value)+", \n"
+
 
         enquiry_serializer = PatientHealthInfoSerializer(data=data)
 
