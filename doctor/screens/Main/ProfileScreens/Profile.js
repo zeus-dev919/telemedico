@@ -14,128 +14,44 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../../../firebase/utils";
 import uuid from "react-native-uuid";
-import { setUser, setUserame } from "../../../redux/User/user.actions";
+import { setProfile } from "../../../redux/User/user.actions";
 import {
-  collection,
-  query,
-  where,
-  onSnapshot,
   doc,
-  addDoc,
-  getDocs,
   updateDoc,
+  query,
+  collection,
+  where,
+  getDocs,
 } from "firebase/firestore";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
+  profileD: user.profileD,
 });
-
-const ME_QUERY = gql`
-  query {
-    users {
-      edges {
-        node {
-          username
-          email
-        }
-      }
-    }
-  }
-`;
-
-const MUTATE_QUERY = gql`
-  mutation a(
-    $firstName: String!
-    $lastName: String!
-    $phone: String!
-    $profilePic: String!
-  ) {
-    createCustomer(
-      input: {
-        id: 1
-        firstName: $firstName
-        lastName: $lastName
-        phoneNumber: $phone
-        avatarPic: $profilePic
-      }
-    ) {
-      customer {
-        firstName
-      }
-      errors {
-        messages
-      }
-    }
-  }
-`;
 
 const Profile = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { userD } = useSelector(mapState);
-  const [a, { data2, loading2 }] = useMutation(MUTATE_QUERY);
-  const { data, loading } = useQuery(ME_QUERY);
+  const { userD, profileD } = useSelector(mapState);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [avatar, setAvatar] = useState("");
-  // const [url, setUrl] = useState(null);
-  const [firebaseUser, setFirebaseUser] = useState(null);
-  const [firebaseDocId, setFirebaseDocId] = useState(null);
 
-  // Func*
-
-  const addNewUser = async () => {
-    const docRef = await addDoc(collection(db, "users"), {
-      avatar:
-        "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
-      fullname: userD.username,
-      email: userD.email,
-      phone: "",
-      dob: "",
-      country: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    setFirebaseUser({
-      avatar:
-        "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
-      fullname: userD.username,
-      email: userD.email,
-      phone: "",
-      dob: "",
-      country: "",
-    });
-    setFirebaseDocId(docRef.id);
-  };
-
-  useEffect(async () => {
-    const q = query(collection(db, "users"), where("email", "==", userD.email));
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.docs.length == 0) {
-      addNewUser();
-    } else {
-      querySnapshot.docs.map((doc) => {
-        setFirebaseUser(doc.data());
-        setFirebaseDocId(doc.id);
-        // info
-        setAvatar(doc.data().avatar);
-        setFirstName(doc.data().fullname);
-        setPhone(doc.data().phone);
-        setDob(doc.data().dob);
-        setCountry(doc.data().country);
-        // info
-      });
+  useEffect(() => {
+    if (profileD) {
+      setAvatar(profileD.firebaseUser.avatar);
+      setFirstName(profileD.firebaseUser.fullname);
+      setEmail(userD.email);
+      setPhone(profileD.firebaseUser.phone);
+      setDob(profileD.firebaseUser.dob);
+      setCountry(profileD.firebaseUser.country);
     }
-    return () => {
-      querySnapshot();
-    };
-  }, []);
+  }, [profileD]);
 
   // handleSubmit Func
   // Avatar
@@ -159,7 +75,7 @@ const Profile = ({ route, navigation }) => {
     }
   };
   const updateAvatarUser2 = async (downloadURL) => {
-    const userRef = doc(db, "users", firebaseDocId);
+    const userRef = doc(db, "users", profileD?.firebaseDocId);
     await updateDoc(userRef, {
       avatar: downloadURL,
       updatedAt: new Date(),
@@ -172,7 +88,7 @@ const Profile = ({ route, navigation }) => {
 
   // fullname
   const updateFullnameUser = async () => {
-    const userRef = doc(db, "users", firebaseDocId);
+    const userRef = doc(db, "users", profileD.firebaseDocId);
     await updateDoc(userRef, {
       fullname: firstName,
       updatedAt: new Date(),
@@ -185,7 +101,7 @@ const Profile = ({ route, navigation }) => {
 
   // Phone
   const updatePhoneUser = async () => {
-    const userRef = doc(db, "users", firebaseDocId);
+    const userRef = doc(db, "users", profileD?.firebaseDocId);
     await updateDoc(userRef, {
       phone: phone,
       updatedAt: new Date(),
@@ -198,7 +114,7 @@ const Profile = ({ route, navigation }) => {
 
   // DOB
   const updateDobUser = async () => {
-    const userRef = doc(db, "users", firebaseDocId);
+    const userRef = doc(db, "users", profileD?.firebaseDocId);
     await updateDoc(userRef, {
       dob: dob,
       updatedAt: new Date(),
@@ -211,7 +127,7 @@ const Profile = ({ route, navigation }) => {
 
   // country
   const updateCountryUser = async () => {
-    const userRef = doc(db, "users", firebaseDocId);
+    const userRef = doc(db, "users", profileD?.firebaseDocId);
     await updateDoc(userRef, {
       country: country,
       updatedAt: new Date(),
@@ -224,37 +140,6 @@ const Profile = ({ route, navigation }) => {
 
   // handleSubmit Func
 
-  // Func*
-
-  useEffect(() => {
-    if (data) {
-      let i = 0;
-      while (
-        data.users.edges[i]?.node?.email !== userD.email &&
-        i < data.users?.edges?.length
-      ) {
-        i++;
-      }
-      if (data.users?.edges[i]?.node?.email === userD.email) {
-        dispatch(
-          setUserame(
-            data.users?.edges[i]?.node?.username,
-            userD.email,
-            userD.password
-          )
-        );
-      }
-    }
-  }, [data]);
-  useEffect(() => {
-    if (userD) {
-      setAvatar(userD.profilePic);
-      setFirstName(userD.username);
-      setEmail(userD.email);
-      setPhone(userD.phoneNumber);
-    }
-  }, [userD]);
-
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
     console.log("Response2 =>", result);
@@ -263,11 +148,21 @@ const Profile = ({ route, navigation }) => {
 
   const handleSubmit = async () => {
     console.log("Here HandleSubmit");
-    if (avatar !== firebaseUser.avatar) await updateAvatarUser();
-    if (firstName !== firebaseUser.fullname) await updateFullnameUser();
-    if (phone !== firebaseUser.phone) await updatePhoneUser();
-    if (dob !== firebaseUser.dob) await updateDobUser();
-    if (country !== firebaseUser.city) await updateCountryUser();
+    if (avatar !== profileD.firebaseUser.avatar) await updateAvatarUser();
+    if (firstName !== profileD.firebaseUser.fullname)
+      await updateFullnameUser();
+    if (phone !== profileD.firebaseUser.phone) await updatePhoneUser();
+    if (dob !== profileD.firebaseUser.dob) await updateDobUser();
+    if (country !== profileD.firebaseUser.city) await updateCountryUser();
+    const q = query(collection(db, "users"), where("email", "==", userD.email));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.docs.map((doc) => {
+      let user = {
+        firebaseUser: doc.data(),
+        firebaseDocId: doc.id,
+      };
+      dispatch(setProfile(user));
+    });
     navigation.navigate("Home");
     console.log("Here HandleSubmit done");
   };
@@ -316,7 +211,6 @@ const Profile = ({ route, navigation }) => {
                 resizeMode="cover"
               />
             )}
-
             <TouchableOpacity onPress={() => handleChangePicture()}>
               <Text style={styles.title3}>Change profile picture</Text>
             </TouchableOpacity>

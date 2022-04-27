@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   resetPasswordSuccess: false,
   userD: null,
   doctorD: null,
+  profileD: null,
   token: null,
   errors: [],
 };
@@ -53,7 +54,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         doctorD: action.payload,
-      };
+      }; 
+    case userTypes.SET_PROFILE_DATA:
+      return {
+        ...state,
+        profileD: action.payload,
+      }; 
 
     // TOKEN
     case userTypes.SET_TOKEN:
@@ -85,6 +91,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         signUpSuccess: false,
         resetPasswordSuccess: false,
         userD: null,
+        doctorD: null,
+        profileD: null,
         errors: [],
       };
     // DEFAULT

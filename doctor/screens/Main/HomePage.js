@@ -3,20 +3,24 @@ import {
   Dimensions,
   Image,
   ImageBackground,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { ResetErrorsState, setDoctor } from "../../redux/User/user.actions";
+import {
+  ResetErrorsState,
+  setDoctor,
+  setProfile,
+} from "../../redux/User/user.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { COLORS, icons, images } from "../../constants";
+import { COLORS } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
 import Header from "../Models/Header";
-import DoctorUpcomingConsult from "../Models/DoctorUpcomingConsult";
 import DoctorHomeConsult from "../Models/DoctorHomeConsult";
+import { collection, query, where, addDoc, getDocs, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/utils";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -47,6 +51,73 @@ const HomePage = ({ navigation }) => {
   const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const [done, setDone] = useState(false);
+
+  // Func*
+
+  const addNewUser = async () => {
+    const docRef = await addDoc(collection(db, "users"), {
+      avatar:
+        "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
+      fullname: userD.username,
+      email: userD.email,
+      phone: "",
+      dob: "",
+      country: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    let user = {
+      firebaseUser: {
+        avatar:
+          "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
+        fullname: userD.username,
+        email: userD.email,
+        phone: "",
+        dob: "",
+        country: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      firebaseDocId: docRef.id,
+    };
+    dispatch(setProfile(user));
+  };
+
+  useEffect(async () => {
+    const q = query(collection(db, "users"), where("email", "==", userD.email));
+    // const querySnapshot = await getDocs(q);
+    // if (querySnapshot.docs.length == 0) {
+    //   addNewUser();
+    // } else {
+    //   querySnapshot.docs.map((doc) => {
+    //     // info
+    //     let user = {
+    //       firebaseUser: doc.data(),
+    //       firebaseDocId: doc.id,
+    //     };
+    //     dispatch(setProfile(user));
+    //     // info
+    //   });
+    // }
+    const querySnapshot = onSnapshot(q, (snapshot) => {
+      if (snapshot.docs.length === 0) {
+        addNewUser();
+      } else {
+        snapshot.docs.map((doc) => {
+          let user = {
+            firebaseUser: doc.data(),
+            firebaseDocId: doc.id,
+          };
+          dispatch(setProfile(user));
+        });
+      }
+    });
+    return () => {
+      querySnapshot();
+    };
+  }, []);
+
+  // FRunc*
 
   useEffect(() => {
     if (!done) {

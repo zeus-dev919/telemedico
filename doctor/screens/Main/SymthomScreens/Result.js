@@ -106,7 +106,12 @@ const Result = ({ route, navigation }) => {
 
   const [colorSys, setColorSys] = useState("#000000");
   const [colorText, setColorText] = useState("");
+  const [loadCanceled, setLoadCanceled] = useState(false);
+  const [loadDone, setLoadDone] = useState(false);
   const getResult = async () => {
+    setTimeout(() => {
+      if (!loadDone) setLoadCanceled(true);
+    }, 10000);
     await fetch(
       `https://apisc.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${
         pregnant === "_" ? "" : pregnant
@@ -126,88 +131,91 @@ const Result = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((res) => {
         console.log("Response =>", res);
+        setLoadDone(true);
         setResult(
           res.diagnoses_checklist.query_result_details.total_results_returned
         );
-        setDiagnose1(res.diagnoses_checklist.diagnoses[0].diagnosis_name);
-        setSpec1(res.diagnoses_checklist.diagnoses[0].specialty);
-        setSpec1Flag(
-          res.diagnoses_checklist.diagnoses[0].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose2(res.diagnoses_checklist.diagnoses[1].diagnosis_name);
-        setSpec2(res.diagnoses_checklist.diagnoses[1].specialty);
-        setSpec2Flag(
-          res.diagnoses_checklist.diagnoses[1].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
-        setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
-        setSpec3Flag(
-          res.diagnoses_checklist.diagnoses[2].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose4(res.diagnoses_checklist.diagnoses[3].diagnosis_name);
-        setSpec4(res.diagnoses_checklist.diagnoses[3].specialty);
-        setSpec4Flag(
-          res.diagnoses_checklist.diagnoses[3].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose5(res.diagnoses_checklist.diagnoses[4].diagnosis_name);
-        setSpec5(res.diagnoses_checklist.diagnoses[4].specialty);
-        setSpec5Flag(
-          res.diagnoses_checklist.diagnoses[4].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose6(res.diagnoses_checklist.diagnoses[5].diagnosis_name);
-        setSpec6(res.diagnoses_checklist.diagnoses[5].specialty);
-        setSpec6Flag(
-          res.diagnoses_checklist.diagnoses[5].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose7(res.diagnoses_checklist.diagnoses[6].diagnosis_name);
-        setSpec7(res.diagnoses_checklist.diagnoses[6].specialty);
-        setSpec7Flag(
-          res.diagnoses_checklist.diagnoses[6].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose8(res.diagnoses_checklist.diagnoses[7].diagnosis_name);
-        setSpec8(res.diagnoses_checklist.diagnoses[7].specialty);
-        setSpec8Flag(
-          res.diagnoses_checklist.diagnoses[7].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose9(res.diagnoses_checklist.diagnoses[8].diagnosis_name);
-        setSpec9(res.diagnoses_checklist.diagnoses[8].specialty);
-        setSpec9Flag(
-          res.diagnoses_checklist.diagnoses[8].red_flag === "false"
-            ? false
-            : true
-        );
-        //
-        setDiagnose10(res.diagnoses_checklist.diagnoses[9].diagnosis_name);
-        setSpec10(res.diagnoses_checklist.diagnoses[9].specialty);
-        setSpec10Flag(
-          res.diagnoses_checklist.diagnoses[9].red_flag === "false"
-            ? false
-            : true
-        );
+        if (res?.diagnoses_checklist?.diagnoses?.length > 9) {
+          setDiagnose1(res.diagnoses_checklist.diagnoses[0].diagnosis_name);
+          setSpec1(res.diagnoses_checklist.diagnoses[0].specialty);
+          setSpec1Flag(
+            res.diagnoses_checklist.diagnoses[0].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose2(res.diagnoses_checklist.diagnoses[1].diagnosis_name);
+          setSpec2(res.diagnoses_checklist.diagnoses[1].specialty);
+          setSpec2Flag(
+            res.diagnoses_checklist.diagnoses[1].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose3(res.diagnoses_checklist.diagnoses[2].diagnosis_name);
+          setSpec3(res.diagnoses_checklist.diagnoses[2].specialty);
+          setSpec3Flag(
+            res.diagnoses_checklist.diagnoses[2].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose4(res.diagnoses_checklist.diagnoses[3].diagnosis_name);
+          setSpec4(res.diagnoses_checklist.diagnoses[3].specialty);
+          setSpec4Flag(
+            res.diagnoses_checklist.diagnoses[3].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose5(res.diagnoses_checklist.diagnoses[4].diagnosis_name);
+          setSpec5(res.diagnoses_checklist.diagnoses[4].specialty);
+          setSpec5Flag(
+            res.diagnoses_checklist.diagnoses[4].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose6(res.diagnoses_checklist.diagnoses[5].diagnosis_name);
+          setSpec6(res.diagnoses_checklist.diagnoses[5].specialty);
+          setSpec6Flag(
+            res.diagnoses_checklist.diagnoses[5].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose7(res.diagnoses_checklist.diagnoses[6].diagnosis_name);
+          setSpec7(res.diagnoses_checklist.diagnoses[6].specialty);
+          setSpec7Flag(
+            res.diagnoses_checklist.diagnoses[6].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose8(res.diagnoses_checklist.diagnoses[7].diagnosis_name);
+          setSpec8(res.diagnoses_checklist.diagnoses[7].specialty);
+          setSpec8Flag(
+            res.diagnoses_checklist.diagnoses[7].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose9(res.diagnoses_checklist.diagnoses[8].diagnosis_name);
+          setSpec9(res.diagnoses_checklist.diagnoses[8].specialty);
+          setSpec9Flag(
+            res.diagnoses_checklist.diagnoses[8].red_flag === "false"
+              ? false
+              : true
+          );
+          //
+          setDiagnose10(res.diagnoses_checklist.diagnoses[9].diagnosis_name);
+          setSpec10(res.diagnoses_checklist.diagnoses[9].specialty);
+          setSpec10Flag(
+            res.diagnoses_checklist.diagnoses[9].red_flag === "false"
+              ? false
+              : true
+          );
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -317,7 +325,7 @@ const Result = ({ route, navigation }) => {
         </View>
         {/* <Text style={[styles.title9, { color: colorSys }]}>{result}</Text> */}
         {/* <Text style={[styles.title2, { marginBottom: 20 }]}>{colorText}</Text> */}
-        {diagnose1 && data ? (
+        {diagnose1 && data && !loadCanceled ? (
           <>
             <View style={styles.diagnoseContainer}>
               <View style={styles.diagnoseContainer}>
@@ -338,7 +346,7 @@ const Result = ({ route, navigation }) => {
             <View style={styles.diagnoseContainer}>
               <View style={styles.diagnoseContainer}>
                 <Text style={styles.title3}>
-                  {diagnose2}{" "}
+                  {diagnose2}
                   {spec2Flag && (
                     <Image
                       source={{
@@ -546,8 +554,17 @@ const Result = ({ route, navigation }) => {
               </>
             )}
           </>
+        ) : loadCanceled ? (
+          <View style={styles.laterContainer}>
+            <Text style={styles.laterText}>
+              Oops ! We are still searching for your diagnosis .{"\n"} Please
+              try again in sometime
+            </Text>
+          </View>
         ) : (
-          <ActivityIndicator size="large" color={COLORS.blueBtn} />
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color={COLORS.blueBtn} />
+          </View>
         )}
       </ScrollView>
       <Modal
@@ -651,7 +668,7 @@ const styles = StyleSheet.create({
   },
   title3: {
     color: COLORS.fontColor4,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     margin: 0,
     textAlign: "left",
@@ -719,8 +736,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   redflag: {
-    width: 40,
-    height: 40,
+    width: 20,
+    height: 20,
     marginBottom: 10,
   },
   //   Model
@@ -762,5 +779,17 @@ const styles = StyleSheet.create({
     top: 15,
     right: 15,
     // flexDirection: "row",
+  },
+  loaderContainer: {
+    width: "100%",
+    paddingLeft: 10,
+  },
+  laterContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
+  laterText: {
+    width: "100%",
+    textAlign: "center",
   },
 });

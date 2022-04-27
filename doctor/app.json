@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.1.0",
+      "buildNumber": "1.2.0",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
@@ -32,7 +32,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#40e0d0"
       },
-      "versionCode": 5,
+      "versionCode": 6,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO"

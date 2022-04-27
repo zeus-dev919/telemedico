@@ -62,6 +62,18 @@ export const setUser = (user) => async (dispatch) => {
     console.log(err);
   }
 };
+export const setProfile = (user) => async (dispatch) => {
+  console.log("Here setProfile Redux");
+  try {
+    dispatch({
+      type: userTypes.SET_PROFILE_DATA,
+      payload: user,
+    });
+  } catch (err) {
+    console.log("error from setProfile catch !!");
+    console.log(err);
+  }
+};
 export const setDoctor = (user) => async (dispatch) => {
   try {
     dispatch({

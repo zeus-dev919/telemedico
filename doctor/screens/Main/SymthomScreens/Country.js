@@ -1512,7 +1512,7 @@ const Country = ({ route, navigation }) => {
   const handleSubmit = () => {
     console.log("Country BROOOOOOOOOOOOOO");
     console.log(country);
-    const newCountryObj = apiCountries.find(
+    const newCountryObj = apiCountries?.find(
       (item) => item.country_name === country.name
     );
     if (check) {
