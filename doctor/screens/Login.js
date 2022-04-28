@@ -45,8 +45,8 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
-  const [email, onChangeEmail] = useState("");
-  const [password, onChangepassword] = useState("");
+  const [email, onChangeEmail] = useState("ramykhweldi@gmail.com");
+  const [password, onChangepassword] = useState("hello156");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -97,6 +97,7 @@ const Login = ({ navigation }) => {
     if (checking_form === "true") {
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
+      emailValid = emailValid.replace(/\s/g, '');
       await SignIn({
         variables: { email: emailValid, password: password },
       })
@@ -158,7 +159,7 @@ const Login = ({ navigation }) => {
               onChangeText={onChangeEmail}
               value={email}
               textContentType="emailAddress"
-              placeholder="demo@demo.com"
+              placeholder=""
               placeholderTextColor={"grey"}
             />
             <Text style={styles.fieldErrors}>{emailErrors}</Text>
@@ -172,7 +173,7 @@ const Login = ({ navigation }) => {
                 onChangeText={onChangepassword}
                 value={password}
                 secureTextEntry={isSecure}
-                placeholder="Password"
+                placeholder=""
                 placeholderTextColor={"grey"}
               />
               <IconEntypo
@@ -187,9 +188,7 @@ const Login = ({ navigation }) => {
           </View>
           <TouchableOpacity style={styles.button1} onPress={handleRegister}>
             {indicatorLoad ? (
-              <Text style={styles.signup}>
-                <ActivityIndicator size="large" color="#ffffff" />
-              </Text>
+              <ActivityIndicator color="#ffffff" />
             ) : (
               <Text style={styles.signup}>Sign In</Text>
             )}
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.greyColor,
     backgroundColor: COLORS.whiteColor,
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingLeft: 20,
     width: "100%",
   },
@@ -324,17 +323,19 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   signup: {
-    backgroundColor: COLORS.blueBtn,
     color: "white",
     fontSize: 22,
-    textAlign: "center",
-    paddingVertical: 15,
-    borderRadius: 10,
+    alignContent: "center",
+
     // marginVertical: 20,
   },
   button1: {
+    backgroundColor: COLORS.blueBtn,
     marginBottom: 20,
     padding: 5,
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   already: {
     flexDirection: "row",

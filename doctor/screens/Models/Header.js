@@ -11,31 +11,12 @@ const mapState = ({ user }) => ({
 });
 
 const Header = (props) => {
-  const { navigation, bg, isHome } = props;
+  const { navigation, bg, isHome, fromBT } = props;
   const { userD } = useSelector(mapState);
-  // const isDrawerOpen = useDrawerStatus() === 'open';
-  // console.log('')
   return (
     <View
       style={[styles.header, { backgroundColor: bg.length > 0 ? bg : "white" }]}
     >
-      {/* <TouchableOpacity onPress={() => navigation.navigate("profile")}>
-        {userD?.profilePic?.length > 0 ? (
-          <Image
-            style={styles.avatar}
-            source={{ uri: userD.profilePic }}
-            resizeMode="cover"
-          />
-        ) : (
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fplaceholder.png?alt=media&token=50c889a1-fb4c-4e92-af36-034f6a9f6cdf",
-            }}
-            resizeMode="cover"
-          />
-        )}
-      </TouchableOpacity> */}
       {isHome ? (
         <View style={{ width: 20 }}></View>
       ) : (

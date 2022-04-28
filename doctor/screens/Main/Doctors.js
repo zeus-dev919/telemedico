@@ -255,9 +255,7 @@ const Doctors = ({ navigation }) => {
             />
           ))
         ) : (
-          <Text style={styles.signup}>
-            <ActivityIndicator size="large" color={COLORS.blueBtn} />
-          </Text>
+          <ActivityIndicator size="large" color={COLORS.blueBtn} />
         )}
         {tab.length > 0 && (
           <TouchableOpacity onPress={handleMoreDoctors} style={styles.relevant}>

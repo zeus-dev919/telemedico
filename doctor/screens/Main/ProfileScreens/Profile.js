@@ -9,6 +9,7 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
@@ -41,6 +42,8 @@ const Profile = ({ route, navigation }) => {
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [modalHome, setModalHome] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     if (profileD) {
@@ -138,19 +141,26 @@ const Profile = ({ route, navigation }) => {
       .catch((err) => console.error(err));
   };
 
-  // handleSubmit Func
-
   const handleChangePicture = async () => {
     let result = await DocumentPicker.getDocumentAsync({ type: "image/*" });
-    console.log("Response2 =>", result);
-    setAvatar(result.uri);
+    if (result.type.toLowerCase() !== "cancel") {
+      setAvatar(result.uri);
+    }
   };
 
+  // handleSubmit Func
   const handleSubmit = async () => {
     console.log("Here HandleSubmit");
+    if (!firstName || !phone || !dob || !country) {
+      alert('Please fill all the fields...')
+      return;
+    }
+    if (phone && phone.length < 8) {
+      alert('Please enter 8 digit or above...')
+      return;
+    }
     if (avatar !== profileD.firebaseUser.avatar) await updateAvatarUser();
-    if (firstName !== profileD.firebaseUser.fullname)
-      await updateFullnameUser();
+    if (firstName !== profileD.firebaseUser.fullname) await updateFullnameUser();
     if (phone !== profileD.firebaseUser.phone) await updatePhoneUser();
     if (dob !== profileD.firebaseUser.dob) await updateDobUser();
     if (country !== profileD.firebaseUser.city) await updateCountryUser();
@@ -229,7 +239,7 @@ const Profile = ({ route, navigation }) => {
             {/* E mail */}
             <View style={[styles.searchContainer, styles.shadow]}>
               <Text style={styles.title4}>E mail</Text>
-              <TextInput style={styles.searchInput} value={email} />
+              <TextInput style={styles.searchInput} editable={false} value={email} />
             </View>
             {/* Phone Number */}
             <View style={[styles.searchContainer, styles.shadow]}>
@@ -238,6 +248,7 @@ const Profile = ({ route, navigation }) => {
                 style={styles.searchInput}
                 value={phone}
                 onChangeText={setPhone}
+                keyboardType="numeric"
               />
             </View>
             {/* DOB */}
@@ -247,6 +258,7 @@ const Profile = ({ route, navigation }) => {
                 style={styles.searchInput}
                 value={dob}
                 onChangeText={setDob}
+                keyboardType="numeric"
               />
             </View>
             {/* City, country */}
@@ -259,11 +271,64 @@ const Profile = ({ route, navigation }) => {
               />
             </View>
             <TouchableOpacity onPress={handleSubmit} style={styles.relevant}>
-              <Text style={styles.relevantTitle}>Done</Text>
+              {isDone ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <Text style={styles.relevantTitle}>Done</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+      {/* ModalHome */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalHome}
+        onRequestClose={() => {
+          setModalHome(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={[styles.ModelTitleView, { marginBottom: 20 }]}>
+              <Image
+                style={styles.ModelIcon}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Faccept.png?alt=media&token=3d1f009d-14be-45d9-80cb-75e1d9878a45",
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.titleModal}>Profile details saved</Text>
+            </View>
+            <View
+              style={{
+                width: "60%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalHome(false);
+                  navigation.navigate("Home");
+                }}
+              >
+                <Text style={styles.textStyle}>Go Home</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.signup2}
+                onPress={() => {
+                  setModalHome(false);
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -359,6 +424,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     fontSize: 18,
+    color: "#000",
   },
   shadow: {
     shadowColor: "#cdcddd",
@@ -383,5 +449,60 @@ const styles = StyleSheet.create({
   relevantTitle: {
     fontSize: 18,
     color: "white",
+  },
+  //   Model
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  ModelTitleView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  titleModal: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  signup2: {
+    width: 120,
+    backgroundColor: COLORS.blueBtn,
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+    marginHorizontal: 20,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  ModelIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 10,
+    // marginTop: 2,
   },
 });

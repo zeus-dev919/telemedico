@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   userD: null,
   doctorD: null,
   profileD: null,
+  prevRoute: null,
   token: null,
   errors: [],
 };
@@ -54,12 +55,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         doctorD: action.payload,
-      }; 
+      };
     case userTypes.SET_PROFILE_DATA:
       return {
         ...state,
         profileD: action.payload,
-      }; 
+      };
+    case userTypes.SET_PREV_ROUTE:
+      return {
+        ...state,
+        prevRoute: action.payload,
+      };
 
     // TOKEN
     case userTypes.SET_TOKEN:
@@ -86,13 +92,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     case userTypes.RESET_STATES:
       return {
-        currentUser: false,
+        // currentUser: false,
+        
         signInSuccess: false,
         signUpSuccess: false,
         resetPasswordSuccess: false,
         userD: null,
         doctorD: null,
         profileD: null,
+        prevRoute: null,
+        token: null,
         errors: [],
       };
     // DEFAULT

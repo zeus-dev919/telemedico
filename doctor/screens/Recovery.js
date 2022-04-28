@@ -12,6 +12,7 @@ import {
   Image,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import IconFeather from "react-native-vector-icons/Feather";
 import { COLORS, icons } from "../constants";
@@ -28,10 +29,11 @@ const RECOVERY_QUERY = gql`
 `;
 
 const Recovery = ({ navigation }) => {
-  const [email, onChangeEmail] = useState("");
+  const [email, onChangeEmail] = useState("ramykhweldi@gmail.com");
   const [error, setError] = useState("");
   const [doneRegister, setDoneRegister] = useState(false);
   const [Recovery, { data, loading }] = useMutation(RECOVERY_QUERY);
+  const [indicatorLoad, setIndicatorLoad] = useState(false);
 
   const ResetForm = () => {
     onChangeEmail("");
@@ -39,35 +41,24 @@ const Recovery = ({ navigation }) => {
   };
 
   const handleReset = async (e) => {
-    // await auth()
-    //   .sendPasswordResetEmail(email)
-    //   .then(() => {
-    //     ResetForm();
-    //     navigation.navigate("Login");
-    //   });
-    // await fetch(`https://app.medipocket.world/reset-password/?email=${email}`, {
-    //   method: "GET",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then(() => {
-    //     setDoneRegister(true);
-    //   })
-    //   .catch(() => {
-    //     setError("Something went wrong please try again ");
-    //   });
+    setIndicatorLoad(true);
+    let emailValid = email.toLowerCase();
+    emailValid = emailValid.replace(/\s/g, "");
     await Recovery({
       variables: {
-        email: email,
+        email: emailValid,
       },
     })
       .then((res) => {
-        if (res.data.sendPasswordResetEmail.success) setDoneRegister(true);
+        setIndicatorLoad(false);
+        console.log("Res =>");
+        console.log(res);
+        if (res.data.sendPasswordEmail.success) setDoneRegister(true);
       })
-      .catch(() => {
+      .catch((err) => {
+        setIndicatorLoad(false);
         setError("Something went wrong please try again ");
+        setError(err);
       });
   };
 
@@ -95,12 +86,16 @@ const Recovery = ({ navigation }) => {
               onChangeText={onChangeEmail}
               value={email}
               textContentType="emailAddress"
-              placeholder="demo@demo.com"
+              placeholder=""
             />
           </View>
           {error.length > 0 && <Text style={styles.error}>{error}</Text>}
           <TouchableOpacity style={styles.button1} onPress={handleReset}>
-            <Text style={styles.signup}>Reset Password</Text>
+            {indicatorLoad ? (
+              <ActivityIndicator color="#ffffff" />
+            ) : (
+              <Text style={styles.signup}>Reset Password</Text>
+            )}
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -133,7 +128,7 @@ const Recovery = ({ navigation }) => {
               style={styles.signup3}
               onPress={() => {
                 setDoneRegister(!doneRegister);
-                navigation.navigate("splash");
+                navigation.navigate("Splash");
               }}
             >
               <Text style={styles.textStyle}>Back Home</Text>
@@ -207,21 +202,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.greyColor,
     backgroundColor: COLORS.whiteColor,
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingLeft: 20,
     width: "100%",
   },
   signup: {
-    backgroundColor: COLORS.blueBtn,
     color: "white",
     fontSize: 22,
     textAlign: "center",
-    paddingVertical: 15,
-    borderRadius: 10,
   },
   button1: {
+    backgroundColor: COLORS.blueBtn,
     marginBottom: 20,
     padding: 5,
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   //   Model
   centeredView: {

@@ -195,6 +195,9 @@ const DoctorsList = ({ route, navigation }) => {
     setNewDoctors(null);
     setFilterModal(false);
     setSearch(title);
+    if (doctors) {
+      filterList(search);
+    }
   };
   // done
   const filterList = (filtername) => {
@@ -247,7 +250,7 @@ const DoctorsList = ({ route, navigation }) => {
     }
   }, [data, doctors]);
   useEffect(() => {
-    if (doctors) {
+    if (doctors && search) {
       filterList(search);
     }
   }, [search]);

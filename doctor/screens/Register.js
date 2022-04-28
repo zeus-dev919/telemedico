@@ -143,6 +143,9 @@ const Register = ({ navigation }) => {
     if (checking_form === "true") {
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
+      emailValid = emailValid.replace(/\s/g, "");
+      // let firstName2 = firstName;
+      // firstName2 = firstName2.replace(" ", "_");
       await SignUp({
         variables: {
           email: emailValid,
@@ -235,7 +238,7 @@ const Register = ({ navigation }) => {
               style={styles.input}
               onChangeText={onChangefirstName}
               value={firstName}
-              placeholder="Full Name"
+              placeholder=""
               placeholderTextColor={"grey"}
             />
             <Text style={styles.fieldErrors}>{firstNameErrors}</Text>
@@ -247,8 +250,8 @@ const Register = ({ navigation }) => {
               style={styles.input}
               onChangeText={onChangeEmail}
               value={email}
-              textContentType="emailAddress"
-              placeholder="Email"
+              textContentType=""
+              placeholder=""
               placeholderTextColor={"grey"}
             />
             <Text style={styles.fieldErrors}>{emailErrors}</Text>
@@ -262,7 +265,7 @@ const Register = ({ navigation }) => {
                 onChangeText={onChangepassword}
                 value={password}
                 secureTextEntry={isSecure}
-                placeholder="Password"
+                placeholder=""
                 placeholderTextColor={"grey"}
               />
               <IconEntypo
@@ -274,10 +277,12 @@ const Register = ({ navigation }) => {
               />
             </View>
             <Text style={styles.privacy}>
-              * Uppercase characters (A-Z){'\n'}
-              * Lowercase characters (a-z){'\n'}
-              * Digits (0-9){'\n'}
-              * Special characters (~!@#$%^&*_-+=`|\(){'\{'}{'\}'}{'\['}{'\]'}:;"',.?/)
+              * Uppercase characters (A-Z){"\n"}* Lowercase characters (a-z)
+              {"\n"}* Digits (0-9){"\n"}* Special characters (~!@#$%^&*_-+=`|\()
+              {"{"}
+              {"}"}
+              {"["}
+              {"]"}:;"',.?/)
             </Text>
             <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
@@ -331,9 +336,7 @@ const Register = ({ navigation }) => {
           <Text style={styles.fieldErrors}>{terms2Errors}</Text>
           <TouchableOpacity style={styles.button1} onPress={handleRegister}>
             {indicatorLoad ? (
-              <Text style={styles.signup}>
-                <ActivityIndicator size="large" color="#ffffff" />
-              </Text>
+              <ActivityIndicator color="#ffffff" />
             ) : (
               <Text style={styles.signup}>Submit</Text>
             )}
@@ -508,7 +511,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.greyColor,
     backgroundColor: "white",
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingLeft: 20,
     width: "100%",
     borderWidth: 1,
@@ -542,8 +545,8 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 22,
     textAlign: "center",
-    paddingVertical: 15,
-    borderRadius: 10,
+    // paddingVertical: 15,
+    // borderRadius: 10,
     // marginVertical: 20,
   },
   signup2: {
@@ -566,8 +569,12 @@ const styles = StyleSheet.create({
     // marginVertical: 20,
   },
   button1: {
-    marginVertical: 15,
+    backgroundColor: COLORS.blueBtn,
+    marginBottom: 20,
     padding: 5,
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   errors: {
     paddingVertical: 10,

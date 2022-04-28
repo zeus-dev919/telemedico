@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   Modal,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, icons, images } from "../../../constants";
@@ -38,19 +39,10 @@ const DOCTOR_QUERY = gql`
 const Result = ({ route, navigation }) => {
   const { doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
-  console.log("Data =>", data, loading);
   const [modalVisible, setModalVisible] = useState(true);
 
   const { age, gender, pregnant, country_id, region_id, predictive_text } =
     route.params;
-  console.log("From Result => ", {
-    age,
-    gender,
-    pregnant,
-    country_id,
-    region_id,
-    predictive_text,
-  });
   const [result, setResult] = useState(null);
   const [showMore, setShowMore] = useState(false);
   // 1
@@ -110,7 +102,10 @@ const Result = ({ route, navigation }) => {
   const [loadDone, setLoadDone] = useState(false);
   const getResult = async () => {
     setTimeout(() => {
-      if (!loadDone) setLoadCanceled(true);
+      if (!loadDone) {
+        console.log("here lien 114 ", loadDone);
+        setLoadCanceled(true);
+      }
     }, 10000);
     await fetch(
       `https://apisc.isabelhealthcare.com/v2/ranked_differential_diagnoses?specialties=28&dob=${age}&sex=${gender}&pregnant=${
@@ -130,7 +125,6 @@ const Result = ({ route, navigation }) => {
     )
       .then((response) => response.json())
       .then((res) => {
-        console.log("Response =>", res);
         setLoadDone(true);
         setResult(
           res.diagnoses_checklist.query_result_details.total_results_returned
@@ -218,11 +212,11 @@ const Result = ({ route, navigation }) => {
         }
       })
       .catch((error) => {
+        console.error("line 224");
         console.error(error);
       });
   };
   const getDoctors = (data, ch) => {
-    console.log("Data from getDoctors =>", data.allDoctors[0]);
     let tab = [];
     for (let i = 0; i < data.allDoctors.length; i++) {
       if (data.allDoctors[i].specialization.specializationName === ch) {
@@ -325,7 +319,7 @@ const Result = ({ route, navigation }) => {
         </View>
         {/* <Text style={[styles.title9, { color: colorSys }]}>{result}</Text> */}
         {/* <Text style={[styles.title2, { marginBottom: 20 }]}>{colorText}</Text> */}
-        {diagnose1 && data && !loadCanceled ? (
+        {diagnose1 && data ? (
           <>
             <View style={styles.diagnoseContainer}>
               <View style={styles.diagnoseContainer}>

@@ -25,15 +25,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./Models/Header.js";
 import { MyTabs } from "./AppMain.js";
+import Consults from "./Main/ProfileScreens/Consults.js";
+import { useRoute } from "@react-navigation/native";
 
 const mapState = ({ user }) => ({
   doctorD: user.doctorD,
   currentUser: user.currentUser,
   errors: user.errors,
+  prevRoute: user.prevRoute,
 });
 
 const CustomDrawerContent = ({ navigation }) => {
-  const { doctorD, currentUser, errors } = useSelector(mapState);
+  const route = useRoute();
+  const { doctorD, currentUser, errors, prevRoute } = useSelector(mapState);
   console.log("mapState =>", currentUser, errors);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,7 +59,15 @@ const CustomDrawerContent = ({ navigation }) => {
     navigation.navigate("doctors");
   };
   const handleConsults = () => {
-    navigation.navigate("consults");
+    console.log(
+      "prevRoute =>",
+      prevRoute
+    );
+    if (prevRoute === "bt") {
+      navigation.closeDrawer();
+    } else {
+      navigation.navigate("consults");
+    }
   };
   const handleDoctorConsults = () => {
     navigation.navigate("doctorConsults");
@@ -219,10 +231,10 @@ const Home = () => {
       initialRouteName="homeTab"
       style={styles.drawerNavStyle}
     >
-      {/* <Drawer.Screen name="header" component={Header} /> */}
       <Drawer.Screen name="homeTab" component={MyTabs} />
       <Drawer.Screen name="doctors" component={Doctors} />
-      <Drawer.Screen name="intakeForm" component={IntakeForm} />
+      {/* <Drawer.Screen name="intakeForm" component={IntakeForm} /> */}
+      <Drawer.Screen name="consults" component={Consults} />
     </Drawer.Navigator>
   );
 };

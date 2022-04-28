@@ -96,6 +96,7 @@ export const MyTabs = () => {
       <Tab.Screen
         name="consults"
         component={Consults}
+        initialParams={{ prev: "0" }}
         options={{
           tabBarLabel: () => (
             <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>

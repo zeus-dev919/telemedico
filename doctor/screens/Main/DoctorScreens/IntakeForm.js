@@ -122,29 +122,29 @@ const IntakeForm = ({ navigation }) => {
   const [phoneError, setPhoneError] = useState("");
   // f4
   const handleOtherf4 = () => {
-    setF4_1(false);
-    setF4_2(false);
-    setF4_3(false);
-    setF4_4(false);
-    setF4_5(false);
-    setF4_6(false);
-    setF4_7(false);
-    setF4_8(false);
-    setF4_9(false);
-    setF4_10(false);
-    setF4_11(false);
-    setF4_12(false);
-    setF4_13(false);
-    setF4_14(false);
-    setF4_15(false);
-    setF4_16(false);
-    setF4_17(false);
-    setF4_18(false);
-    setF4_19(false);
-    setF4_20(false);
-    setF4_21(false);
-    setF4_22(false);
-    setF4_23(false);
+    // setF4_1(false);
+    // setF4_2(false);
+    // setF4_3(false);
+    // setF4_4(false);
+    // setF4_5(false);
+    // setF4_6(false);
+    // setF4_7(false);
+    // setF4_8(false);
+    // setF4_9(false);
+    // setF4_10(false);
+    // setF4_11(false);
+    // setF4_12(false);
+    // setF4_13(false);
+    // setF4_14(false);
+    // setF4_15(false);
+    // setF4_16(false);
+    // setF4_17(false);
+    // setF4_18(false);
+    // setF4_19(false);
+    // setF4_20(false);
+    // setF4_21(false);
+    // setF4_22(false);
+    // setF4_23(false);
     setF4_24(!f4_24);
   };
   // f5
@@ -201,134 +201,138 @@ const IntakeForm = ({ navigation }) => {
   };
   // Appoitment
   const handleAppointment1 = () => {
-    let tab = appointmentArray;
-    console.log("Appointment Array Before =>", tab);
-    setAppointment1(true);
-    if (tab.length < 2) {
-      console.log("case 1");
-      tab.push(preAppointment[0]);
-    } else {
-      console.log("case 2");
-      tab = [tab[1], preAppointment[0]];
-    }
-    console.log("Appointment Array After =>", tab);
-    if (tab.includes(preAppointment[0])) {
-      setAppointment1(true);
-    } else {
-      setAppointment1(false);
-    }
-    if (tab.includes(preAppointment[1])) {
-      setAppointment2(true);
-    } else {
-      setAppointment2(false);
-    }
-    if (tab.includes(preAppointment[2])) {
-      setAppointment3(true);
-    } else {
-      setAppointment3(false);
-    }
-    if (tab.includes(preAppointment[3])) {
-      setAppointment4(true);
-    } else {
-      setAppointment4(false);
-    }
-    setAppointmentArray(tab);
+    // let tab = appointmentArray;
+    // console.log("Appointment Array Before =>", tab);
+    // setAppointment1(true);
+    // if (tab.length < 2) {
+    //   console.log("case 1");
+    //   tab.push(preAppointment[0]);
+    // } else {
+    //   console.log("case 2");
+    //   tab = [tab[1], preAppointment[0]];
+    // }
+    // console.log("Appointment Array After =>", tab);
+    // if (tab.includes(preAppointment[0])) {
+    //   setAppointment1(true);
+    // } else {
+    //   setAppointment1(false);
+    // }
+    // if (tab.includes(preAppointment[1])) {
+    //   setAppointment2(true);
+    // } else {
+    //   setAppointment2(false);
+    // }
+    // if (tab.includes(preAppointment[2])) {
+    //   setAppointment3(true);
+    // } else {
+    //   setAppointment3(false);
+    // }
+    // if (tab.includes(preAppointment[3])) {
+    //   setAppointment4(true);
+    // } else {
+    //   setAppointment4(false);
+    // }
+    // setAppointmentArray(tab);
+    setAppointment1(!appointment1);
   };
   const handleAppointment2 = () => {
-    let tab = appointmentArray;
-    console.log("Appointment Array Before =>", tab);
-    setAppointment1(true);
-    if (tab.length < 2) {
-      tab.push(preAppointment[1]);
-    } else {
-      tab = [tab[1], preAppointment[1]];
-    }
-    console.log("Appointment Array After =>", tab);
-    if (tab.includes(preAppointment[0])) {
-      setAppointment1(true);
-    } else {
-      setAppointment1(false);
-    }
-    if (tab.includes(preAppointment[1])) {
-      setAppointment2(true);
-    } else {
-      setAppointment2(false);
-    }
-    if (tab.includes(preAppointment[2])) {
-      setAppointment3(true);
-    } else {
-      setAppointment3(false);
-    }
-    if (tab.includes(preAppointment[3])) {
-      setAppointment4(true);
-    } else {
-      setAppointment4(false);
-    }
-    setAppointmentArray(tab);
+    // let tab = appointmentArray;
+    // console.log("Appointment Array Before =>", tab);
+    // setAppointment1(true);
+    // if (tab.length < 2) {
+    //   tab.push(preAppointment[1]);
+    // } else {
+    //   tab = [tab[1], preAppointment[1]];
+    // }
+    // console.log("Appointment Array After =>", tab);
+    // if (tab.includes(preAppointment[0])) {
+    //   setAppointment1(true);
+    // } else {
+    //   setAppointment1(false);
+    // }
+    // if (tab.includes(preAppointment[1])) {
+    //   setAppointment2(true);
+    // } else {
+    //   setAppointment2(false);
+    // }
+    // if (tab.includes(preAppointment[2])) {
+    //   setAppointment3(true);
+    // } else {
+    //   setAppointment3(false);
+    // }
+    // if (tab.includes(preAppointment[3])) {
+    //   setAppointment4(true);
+    // } else {
+    //   setAppointment4(false);
+    // }
+    // setAppointmentArray(tab);
+    setAppointment2(!appointment2);
   };
   const handleAppointment3 = () => {
-    let tab = appointmentArray;
-    console.log("Appointment Array Before =>", tab);
-    setAppointment1(true);
-    if (tab.length < 2) {
-      tab.push(preAppointment[2]);
-    } else {
-      tab = [tab[1], preAppointment[2]];
-    }
-    console.log("Appointment Array After =>", tab);
-    if (tab.includes(preAppointment[0])) {
-      setAppointment1(true);
-    } else {
-      setAppointment1(false);
-    }
-    if (tab.includes(preAppointment[1])) {
-      setAppointment2(true);
-    } else {
-      setAppointment2(false);
-    }
-    if (tab.includes(preAppointment[2])) {
-      setAppointment3(true);
-    } else {
-      setAppointment3(false);
-    }
-    if (tab.includes(preAppointment[3])) {
-      setAppointment4(true);
-    } else {
-      setAppointment4(false);
-    }
-    setAppointmentArray(tab);
+    // let tab = appointmentArray;
+    // console.log("Appointment Array Before =>", tab);
+    // setAppointment1(true);
+    // if (tab.length < 2) {
+    //   tab.push(preAppointment[2]);
+    // } else {
+    //   tab = [tab[1], preAppointment[2]];
+    // }
+    // console.log("Appointment Array After =>", tab);
+    // if (tab.includes(preAppointment[0])) {
+    //   setAppointment1(true);
+    // } else {
+    //   setAppointment1(false);
+    // }
+    // if (tab.includes(preAppointment[1])) {
+    //   setAppointment2(true);
+    // } else {
+    //   setAppointment2(false);
+    // }
+    // if (tab.includes(preAppointment[2])) {
+    //   setAppointment3(true);
+    // } else {
+    //   setAppointment3(false);
+    // }
+    // if (tab.includes(preAppointment[3])) {
+    //   setAppointment4(true);
+    // } else {
+    //   setAppointment4(false);
+    // }
+    // setAppointmentArray(tab);
+    setAppointment3(!appointment3);
   };
   const handleAppointment4 = () => {
-    let tab = appointmentArray;
-    console.log("Appointment Array Before =>", tab);
-    setAppointment1(true);
-    if (tab.length < 2) {
-      tab.push(preAppointment[3]);
-    } else {
-      tab = [tab[1], preAppointment[3]];
-    }
-    console.log("Appointment Array After =>", tab);
-    if (tab.includes(preAppointment[0])) {
-      setAppointment1(true);
-    } else {
-      setAppointment1(false);
-    }
-    if (tab.includes(preAppointment[1])) {
-      setAppointment2(true);
-    } else {
-      setAppointment2(false);
-    }
-    if (tab.includes(preAppointment[2])) {
-      setAppointment3(true);
-    } else {
-      setAppointment3(false);
-    }
-    if (tab.includes(preAppointment[3])) {
-      setAppointment4(true);
-    } else {
-      setAppointment4(false);
-    }
-    setAppointmentArray(tab);
+    // let tab = appointmentArray;
+    // console.log("Appointment Array Before =>", tab);
+    // setAppointment1(true);
+    // if (tab.length < 2) {
+    //   tab.push(preAppointment[3]);
+    // } else {
+    //   tab = [tab[1], preAppointment[3]];
+    // }
+    // console.log("Appointment Array After =>", tab);
+    // if (tab.includes(preAppointment[0])) {
+    //   setAppointment1(true);
+    // } else {
+    //   setAppointment1(false);
+    // }
+    // if (tab.includes(preAppointment[1])) {
+    //   setAppointment2(true);
+    // } else {
+    //   setAppointment2(false);
+    // }
+    // if (tab.includes(preAppointment[2])) {
+    //   setAppointment3(true);
+    // } else {
+    //   setAppointment3(false);
+    // }
+    // if (tab.includes(preAppointment[3])) {
+    //   setAppointment4(true);
+    // } else {
+    //   setAppointment4(false);
+    // }
+    // setAppointmentArray(tab);
+    setAppointment4(!appointment4);
   };
   // Submit
   const handleSubmit = async () => {
@@ -368,10 +372,10 @@ const IntakeForm = ({ navigation }) => {
     if (f5_5_2) smoke = "Stopped";
     if (f5_5_3) smoke = "Daily";
     let appointment = "";
-    if (appointment1) appointment = "ASAP";
-    if (appointment2) appointment = "4-7 Days";
-    if (appointment3) appointment = "Morning India time: 5.30am - 10am";
-    if (appointment4) appointment = "Evening India time: 5.30pm - 12am";
+    if (appointment1) appointment += "ASAP";
+    if (appointment2) appointment += "4-7 Days";
+    if (appointment3) appointment += "Morning India time: 5.30am - 10am";
+    if (appointment4) appointment += "Evening India time: 5.30pm - 12am";
     if (
       name.length === 0 ||
       birth.length === 0 ||

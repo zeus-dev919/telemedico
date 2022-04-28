@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
@@ -13,6 +14,7 @@ import DoctorUpcomingConsult from "../../Models/DoctorUpcomingConsult";
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import Header from "../../Models/Header";
+import { getPrevRoute } from "../../../redux/User/user.actions";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -41,10 +43,16 @@ const CONSULT_QUERY = gql`
   }
 `;
 
-const Consults = ({ navigation }) => {
+const Consults = ({ route, navigation }) => {
+  const prev = route?.params?.prev;
+  console.log("Prev => ", prev);
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
   const [sum, setSum] = useState([]);
+
+  useEffect(() => {
+    if (prev == "0") getPrevRoute("bt");
+  }, [prev]);
 
   const getConsult = () => {
     let tab = [];
@@ -136,11 +144,12 @@ const Consults = ({ navigation }) => {
         {sum?.length === 0 && (
           <View
             style={{
+              flex: 1,
               width: "100%",
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
               paddingVertical: 20,
+              height: Dimensions.get("window").height - 220,
             }}
           >
             <Text style={{ fontSize: 14, fontWeight: "bold" }}>

@@ -1532,7 +1532,7 @@ const Country = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
-    setTimeout(() => setCheck(true), 2000);
+    setTimeout(() => setCheck(true), 1000);
   }, []);
   useEffect(() => {
     const found = isabelCountries.some(

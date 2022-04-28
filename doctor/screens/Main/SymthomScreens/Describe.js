@@ -80,11 +80,8 @@ const Describe = ({ route, navigation }) => {
   const handleAddItem = (e, item) => {
     console.log("Item Added => ", item);
     let array = [];
-
-    if (selected.length < 5) {
-      array = selected;
-      array.push(item);
-    }
+    array = selected;
+    array.push(item);
     setSelected(array);
     setSearch("");
     setSearchArray([]);

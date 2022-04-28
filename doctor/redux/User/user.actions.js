@@ -93,6 +93,18 @@ export const getUser = (email) => async (dispatch) => {
     console.log(err);
   }
 };
+export const getPrevRoute = (value) => async (dispatch) => {
+  try {
+    console.log("getPrevRoute", value);
+    dispatch({
+      type: userTypes.SET_PREV_ROUTE,
+      payload: value,
+    });
+  } catch (err) {
+    console.log("error from fetchPrperty catch !!");
+    console.log(err);
+  }
+};
 // Token
 export const resetToken = () => ({
   type: userTypes.RESET_TOKEN,
