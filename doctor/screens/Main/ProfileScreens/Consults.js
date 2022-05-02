@@ -56,9 +56,10 @@ const Consults = ({ route, navigation }) => {
 
   const getConsult = () => {
     let tab = [];
-    if (data)
+
+    if (data?.allSchedules?.length > 0)
       for (let i = 0; i < data.allSchedules.length; i++) {
-        if (data.allSchedules[i].customer.user.email === userD.email) {
+        if (data.allSchedules[i].customer?.user?.email === userD.email) {
           const month = [
             "January",
             "February",
@@ -74,8 +75,7 @@ const Consults = ({ route, navigation }) => {
             "December",
           ];
           const nbDate = new Date(
-            `${
-              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            `${month[data.allSchedules[i].date.substr(5, 2) - 1]
             } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
               i
             ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`

@@ -49,11 +49,12 @@ const DoctorConsults = ({ route, navigation }) => {
   const { data, loading } = useQuery(CONSULT_QUERY);
   const [sum, setSum] = useState([]);
   const getConsult = () => {
-    let tab = [];
-    if (data)
+    let tab = []
+
+    if (data?.allSchedules?.length > 0)
       for (let i = 0; i < data.allSchedules.length; i++) {
-        if (data.allSchedules[i].customer.user.email === userD.email) {
-          const month = [
+        if (data.allSchedules[i].customer?.user?.email === userD.email) {
+        const month = [
             "January",
             "February",
             "March",
