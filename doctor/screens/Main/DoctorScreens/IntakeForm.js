@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Modal,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,6 +27,11 @@ import Header from "../../Models/Header";
 //   }
 // `;
 
+
+const mapState = ({ user }) => ({
+  userD: user.userD,
+});
+
 const IntakeForm = ({ navigation }) => {
   // const { data, loading } = useQuery(USER_QUERY);
   // console.log("Data =>", data, loading);
@@ -35,6 +41,8 @@ const IntakeForm = ({ navigation }) => {
     "Morning India time: 5.30am - 10am",
     "Evening India time: 5.30pm - 12am",
   ];
+
+  const { userD } = useSelector(mapState);
 
   const [appointmentArray, setAppointmentArray] = useState([]);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
@@ -336,6 +344,8 @@ const IntakeForm = ({ navigation }) => {
   };
   // Submit
   const handleSubmit = async () => {
+
+    setIndicatorLoad(true)
     // f4
     let f4 = "";
     if (f4_1) f4 += "Anemia, ";
@@ -399,6 +409,30 @@ const IntakeForm = ({ navigation }) => {
     ) {
       setHelp2(true);
     } else {
+
+      let post_data = {
+        // first_name: name,
+        // last_name: "___",
+        name: name,
+        comments:"___",
+        birth: birth,
+        gender: gender,
+        phone_number: phone,
+        "patient medical hstory": f4,
+        father: father,
+        mother: mother,
+        brother: brother,
+        sister: sister,
+        "current medications": medication,
+        "list allergies": allergies,
+        healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
+        reason_for_consultation: f3,
+        question1: q1,
+        question2: q2,
+        question3: q3,
+        appointment: appointment,
+      }
+      
       // await fetch("https://app.medipocket.world/intake/", {
       await fetch("https://app.medipocket.world/intake_form/", {
         method: "POST",
@@ -406,33 +440,13 @@ const IntakeForm = ({ navigation }) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: {
-          first_name: name,
-          last_name: "___",
-          birth: birth,
-          gender: gender,
-          phone: phone,
-          patient_medical_history: f4,
-          father: father,
-          mother: mother,
-          brother: brother,
-          sister: sister,
-          current_medication: medication,
-          list_allergies: allergies,
-          healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
-          reason_for_consultation: f3,
-          question1: q1,
-          question2: q2,
-          question3: q3,
-          appointment: appointment,
-        },
+        body: JSON.stringify(post_data),
       })
         .then((response) => response.text())
         .then((res) => {
           setIndicatorLoad(false);
           setHelp(true);
           // navigation.navigate("homePage");
-          console.log("Response Fecth =>", res);
         })
         .catch((err) => {
           setIndicatorLoad(false);
@@ -441,6 +455,9 @@ const IntakeForm = ({ navigation }) => {
         });
       console.log("DONE");
     }
+
+    setIndicatorLoad(false)
+
   };
 
   return (
@@ -914,7 +931,7 @@ const IntakeForm = ({ navigation }) => {
                 placeholder="Please list all medications currently taking"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-                // multiline={true}
+              // multiline={true}
               />
             </View>
           </View>
@@ -932,7 +949,7 @@ const IntakeForm = ({ navigation }) => {
                 placeholder="Any Food, Medicine, Seasonal allergies"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-                // multiline={true}
+              // multiline={true}
               />
             </View>
           </View>
@@ -1131,7 +1148,7 @@ const IntakeForm = ({ navigation }) => {
                 placeholder="Reason for consulting the doctor"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-                // multiline="true"
+              // multiline="true"
               />
             </View>
           </View>
@@ -1275,9 +1292,7 @@ const IntakeForm = ({ navigation }) => {
         </View>
         <TouchableOpacity style={styles.button1} onPress={handleSubmit}>
           {indicatorLoad ? (
-            <Text style={styles.signup}>
-              <ActivityIndicator size="large" color="#ffffff" />
-            </Text>
+            <ActivityIndicator size="large" color="#ffffff" />
           ) : (
             <Text style={styles.signup}>Submit</Text>
           )}
@@ -1605,15 +1620,15 @@ const styles = StyleSheet.create({
   button1: {
     marginVertical: 15,
     padding: 5,
-  },
-  signup: {
     backgroundColor: COLORS.blueBtn,
-    color: "white",
-    fontSize: 22,
-    textAlign: "center",
-    paddingVertical: 15,
+    alignItems:'center',
+    justifyContent:'center',
     borderRadius: 10,
     marginBottom: 20,
+  },
+  signup: {
+    color: "white",
+    fontSize: 22,
   },
   //   Model
   centeredView: {

@@ -9,6 +9,7 @@ import {
   TextInput,
   Pressable,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { COLORS, icons } from "../../constants";
 import Checkbox from "expo-checkbox";
@@ -44,6 +45,7 @@ const PayCardsModel = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [failed, setFailed] = useState(false);
   const [validCard, setValidCard] = useState(false);
   //   Error data
@@ -148,6 +150,8 @@ const PayCardsModel = (props) => {
   }, []);
 
   const handlePayment = async () => {
+
+    setPaymentLoading(true)
     try {
       const { error } = await confirmPayment(key, {
         type: "Card",
@@ -165,6 +169,7 @@ const PayCardsModel = (props) => {
     } catch (err) {
       setFailed(true);
     }
+    setPaymentLoading(false)
   };
 
   const handlePa = () => {
@@ -231,12 +236,19 @@ const PayCardsModel = (props) => {
         <Text style={styles.error}>{isSelectedError}</Text>
       )}
       {/* Pay */}
-      {validCard && isSelected ? (
+      {
+      validCard && isSelected ?
+       (
         <TouchableOpacity style={styles.button1} onPress={handlePayment}>
-          <Text style={styles.signup}>Pay ${pay}</Text>
+          {
+            paymentLoading ?
+              <ActivityIndicator color="#ffffff" />
+              :
+              <Text style={styles.signup}>Pay ${pay}</Text>
+          }
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.button1} disabled={true}>
+        <TouchableOpacity style={styles.buttonDisable} disabled={true}>
           <Text style={styles.signup5}>Pay ${pay}</Text>
         </TouchableOpacity>
       )}
@@ -403,24 +415,28 @@ const styles = StyleSheet.create({
   button1: {
     marginVertical: 15,
     padding: 5,
+    backgroundColor: COLORS.blueBtn,
+    justifyContent: "center",
+    alignItems:'center',
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  buttonDisable: {
+    marginVertical: 15,
+    padding: 5,
+    backgroundColor: COLORS.darkgray,
+    justifyContent: "center",
+    alignItems:'center',
+    borderRadius: 10,
+    marginBottom: 20,
   },
   signup: {
-    backgroundColor: COLORS.blueBtn,
     color: "white",
     fontSize: 22,
-    textAlign: "center",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 20,
   },
   signup5: {
-    backgroundColor: COLORS.darkgray,
     color: "white",
     fontSize: 22,
-    textAlign: "center",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 20,
   },
   signup2: {
     backgroundColor: COLORS.blueBtn,
