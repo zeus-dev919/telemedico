@@ -14,6 +14,7 @@ import PayCardsModel from "../../Models/PayCardsModel";
 
 const Payments = ({ route, navigation }) => {
   const {
+    id,
     name,
     desc,
     img,
@@ -62,7 +63,7 @@ const Payments = ({ route, navigation }) => {
         {/* Payment Details */}
         <PayTimeModel pay={fees} duration={duration} />
         {/* Payment Form */}
-        <PayCardsModel pay={fees} navigation={navigation} />
+        <PayCardsModel name={name} pay={fees} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

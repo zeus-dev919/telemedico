@@ -16,27 +16,8 @@ import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../../Models/Header";
 
-// const USER_QUERY = gql`
-//   query {
-//     me {
-//       id
-//       firstName
-//       lastName
-//     }
-//   }
-// `;
-
-const IntakeForm = ({ navigation }) => {
-  // const { data, loading } = useQuery(USER_QUERY);
-  // console.log("Data =>", data, loading);
-  const preAppointment = [
-    "ASAP",
-    "4-7 Days",
-    "Morning India time: 5.30am - 10am",
-    "Evening India time: 5.30pm - 12am",
-  ];
-
-  const [appointmentArray, setAppointmentArray] = useState([]);
+const IntakeForm = ({ route, navigation }) => {
+  const { doctorName } = route.params;
   const [indicatorLoad, setIndicatorLoad] = useState(false);
   const [help, setHelp] = useState(false);
   const [help2, setHelp2] = useState(false);
@@ -122,29 +103,6 @@ const IntakeForm = ({ navigation }) => {
   const [phoneError, setPhoneError] = useState("");
   // f4
   const handleOtherf4 = () => {
-    // setF4_1(false);
-    // setF4_2(false);
-    // setF4_3(false);
-    // setF4_4(false);
-    // setF4_5(false);
-    // setF4_6(false);
-    // setF4_7(false);
-    // setF4_8(false);
-    // setF4_9(false);
-    // setF4_10(false);
-    // setF4_11(false);
-    // setF4_12(false);
-    // setF4_13(false);
-    // setF4_14(false);
-    // setF4_15(false);
-    // setF4_16(false);
-    // setF4_17(false);
-    // setF4_18(false);
-    // setF4_19(false);
-    // setF4_20(false);
-    // setF4_21(false);
-    // setF4_22(false);
-    // setF4_23(false);
     setF4_24(!f4_24);
   };
   // f5
@@ -201,137 +159,15 @@ const IntakeForm = ({ navigation }) => {
   };
   // Appoitment
   const handleAppointment1 = () => {
-    // let tab = appointmentArray;
-    // console.log("Appointment Array Before =>", tab);
-    // setAppointment1(true);
-    // if (tab.length < 2) {
-    //   console.log("case 1");
-    //   tab.push(preAppointment[0]);
-    // } else {
-    //   console.log("case 2");
-    //   tab = [tab[1], preAppointment[0]];
-    // }
-    // console.log("Appointment Array After =>", tab);
-    // if (tab.includes(preAppointment[0])) {
-    //   setAppointment1(true);
-    // } else {
-    //   setAppointment1(false);
-    // }
-    // if (tab.includes(preAppointment[1])) {
-    //   setAppointment2(true);
-    // } else {
-    //   setAppointment2(false);
-    // }
-    // if (tab.includes(preAppointment[2])) {
-    //   setAppointment3(true);
-    // } else {
-    //   setAppointment3(false);
-    // }
-    // if (tab.includes(preAppointment[3])) {
-    //   setAppointment4(true);
-    // } else {
-    //   setAppointment4(false);
-    // }
-    // setAppointmentArray(tab);
     setAppointment1(!appointment1);
   };
   const handleAppointment2 = () => {
-    // let tab = appointmentArray;
-    // console.log("Appointment Array Before =>", tab);
-    // setAppointment1(true);
-    // if (tab.length < 2) {
-    //   tab.push(preAppointment[1]);
-    // } else {
-    //   tab = [tab[1], preAppointment[1]];
-    // }
-    // console.log("Appointment Array After =>", tab);
-    // if (tab.includes(preAppointment[0])) {
-    //   setAppointment1(true);
-    // } else {
-    //   setAppointment1(false);
-    // }
-    // if (tab.includes(preAppointment[1])) {
-    //   setAppointment2(true);
-    // } else {
-    //   setAppointment2(false);
-    // }
-    // if (tab.includes(preAppointment[2])) {
-    //   setAppointment3(true);
-    // } else {
-    //   setAppointment3(false);
-    // }
-    // if (tab.includes(preAppointment[3])) {
-    //   setAppointment4(true);
-    // } else {
-    //   setAppointment4(false);
-    // }
-    // setAppointmentArray(tab);
     setAppointment2(!appointment2);
   };
   const handleAppointment3 = () => {
-    // let tab = appointmentArray;
-    // console.log("Appointment Array Before =>", tab);
-    // setAppointment1(true);
-    // if (tab.length < 2) {
-    //   tab.push(preAppointment[2]);
-    // } else {
-    //   tab = [tab[1], preAppointment[2]];
-    // }
-    // console.log("Appointment Array After =>", tab);
-    // if (tab.includes(preAppointment[0])) {
-    //   setAppointment1(true);
-    // } else {
-    //   setAppointment1(false);
-    // }
-    // if (tab.includes(preAppointment[1])) {
-    //   setAppointment2(true);
-    // } else {
-    //   setAppointment2(false);
-    // }
-    // if (tab.includes(preAppointment[2])) {
-    //   setAppointment3(true);
-    // } else {
-    //   setAppointment3(false);
-    // }
-    // if (tab.includes(preAppointment[3])) {
-    //   setAppointment4(true);
-    // } else {
-    //   setAppointment4(false);
-    // }
-    // setAppointmentArray(tab);
     setAppointment3(!appointment3);
   };
   const handleAppointment4 = () => {
-    // let tab = appointmentArray;
-    // console.log("Appointment Array Before =>", tab);
-    // setAppointment1(true);
-    // if (tab.length < 2) {
-    //   tab.push(preAppointment[3]);
-    // } else {
-    //   tab = [tab[1], preAppointment[3]];
-    // }
-    // console.log("Appointment Array After =>", tab);
-    // if (tab.includes(preAppointment[0])) {
-    //   setAppointment1(true);
-    // } else {
-    //   setAppointment1(false);
-    // }
-    // if (tab.includes(preAppointment[1])) {
-    //   setAppointment2(true);
-    // } else {
-    //   setAppointment2(false);
-    // }
-    // if (tab.includes(preAppointment[2])) {
-    //   setAppointment3(true);
-    // } else {
-    //   setAppointment3(false);
-    // }
-    // if (tab.includes(preAppointment[3])) {
-    //   setAppointment4(true);
-    // } else {
-    //   setAppointment4(false);
-    // }
-    // setAppointmentArray(tab);
     setAppointment4(!appointment4);
   };
   // Submit
@@ -399,6 +235,28 @@ const IntakeForm = ({ navigation }) => {
     ) {
       setHelp2(true);
     } else {
+      console.log('=>=<>=> ', JSON.stringify({
+        type_form: "intake_form",
+        doc_name: doctorName,
+        name: name,
+        birth: birth,
+        gender: gender,
+        phone_number: phone,
+        patient_medical_history: f4,
+        father: father,
+        mother: mother,
+        brother: brother,
+        sister: sister,
+        comments: "___",
+        current_medication: medication,
+        list_allergies: allergies,
+        healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
+        reason_for_consultation: f3,
+        question1: q1,
+        question2: q2,
+        question3: q3,
+        appointment: appointment,
+      }))
       // await fetch("https://app.medipocket.world/intake/", {
       await fetch("https://app.medipocket.world/intake_form/", {
         method: "POST",
@@ -406,17 +264,19 @@ const IntakeForm = ({ navigation }) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: {
-          first_name: name,
-          last_name: "___",
+        body: JSON.stringify({
+          type_form: "intake_form",
+          doc_name: doctorName,
+          name: name,
           birth: birth,
           gender: gender,
-          phone: phone,
+          phone_number: phone,
           patient_medical_history: f4,
           father: father,
           mother: mother,
           brother: brother,
           sister: sister,
+          comments: "",
           current_medication: medication,
           list_allergies: allergies,
           healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
@@ -425,7 +285,7 @@ const IntakeForm = ({ navigation }) => {
           question2: q2,
           question3: q3,
           appointment: appointment,
-        },
+        }),
       })
         .then((response) => response.text())
         .then((res) => {

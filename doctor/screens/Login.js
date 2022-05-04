@@ -39,9 +39,7 @@ const REGISTER_QUERY = gql`
 `;
 
 const Login = ({ navigation }) => {
-  console.log("Property Loign Screen");
   const { currentUser, signInSuccess, token, errors } = useSelector(mapState);
-  console.log("mapState =>", currentUser, signInSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);

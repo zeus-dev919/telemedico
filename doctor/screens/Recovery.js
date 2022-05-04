@@ -29,7 +29,7 @@ const RECOVERY_QUERY = gql`
 `;
 
 const Recovery = ({ navigation }) => {
-  const [email, onChangeEmail] = useState("ramykhweldi@gmail.com");
+  const [email, onChangeEmail] = useState("");
   const [error, setError] = useState("");
   const [doneRegister, setDoneRegister] = useState(false);
   const [Recovery, { data, loading }] = useMutation(RECOVERY_QUERY);

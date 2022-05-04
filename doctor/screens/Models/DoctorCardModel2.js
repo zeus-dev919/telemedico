@@ -85,7 +85,7 @@ const DoctorCardModel2 = (props) => {
                 <Text style={styles.title2}>
                   Experience:{" "}
                   <Text style={[styles.boxNb, { color: "#f660be" }]}>
-                  {experience !== "--" ? `${experience}yrs+` : experience}
+                    {experience !== "--" ? `${experience}yrs+` : experience}
                   </Text>
                 </Text>
               </View>

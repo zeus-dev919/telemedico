@@ -34,7 +34,7 @@ const mapState = ({ user }) => ({
 });
 
 const PayCardsModel = (props) => {
-  const { pay, navigation } = props;
+  const { name, pay, navigation } = props;
   // const { confirmPayment, loading } = useConfirmPayment();
   const { confirmPayment } = useStripe();
   const { userD } = useSelector(mapState);
@@ -66,7 +66,6 @@ const PayCardsModel = (props) => {
       }
     );
     const { clientSecret } = await response.json();
-
     return clientSecret;
   };
   const handlePayPress = async () => {
@@ -275,7 +274,7 @@ const PayCardsModel = (props) => {
                 style={styles.signup2}
                 onPress={() => {
                   setModalVisible(!modalVisible);
-                  navigation.navigate("intakeForm");
+                  navigation.navigate("intakeForm", { doctorName: name });
                 }}
               >
                 <Text style={styles.textStyle}>Patient Intake Form</Text>

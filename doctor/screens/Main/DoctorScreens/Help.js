@@ -229,7 +229,7 @@ const Help = ({ navigation }) => {
     //   setAppointment4(false);
     // }
     // setAppointmentArray(tab);
-    setAppointment1(!appointment1)
+    setAppointment1(!appointment1);
   };
   const handleAppointment2 = () => {
     // let tab = appointmentArray;
@@ -262,7 +262,7 @@ const Help = ({ navigation }) => {
     //   setAppointment4(false);
     // }
     // setAppointmentArray(tab);
-    setAppointment2(!appointment2)
+    setAppointment2(!appointment2);
   };
   const handleAppointment3 = () => {
     // let tab = appointmentArray;
@@ -295,7 +295,7 @@ const Help = ({ navigation }) => {
     //   setAppointment4(false);
     // }
     // setAppointmentArray(tab);
-    setAppointment3(!appointment3)
+    setAppointment3(!appointment3);
   };
   const handleAppointment4 = () => {
     // let tab = appointmentArray;
@@ -328,7 +328,7 @@ const Help = ({ navigation }) => {
     //   setAppointment4(false);
     // }
     // setAppointmentArray(tab);
-    setAppointment4(!appointment4)
+    setAppointment4(!appointment4);
   };
   // Submit
   const handleSubmit = async () => {
@@ -401,28 +401,28 @@ const Help = ({ navigation }) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: {
-          customer: "special_request",
+        body: JSON.stringify({
+          type_form: "special_request",
+          doc_name: "__",
           name: name,
           birth: birth,
           gender: gender,
-          phone: phone,
+          phone_number: phone,
           patient_medical_history: f4,
           father: father,
           mother: mother,
           brother: brother,
           sister: sister,
+          comments: "___",
           current_medication: medication,
           list_allergies: allergies,
-          exercices: exercices,
-          alcohol: alcohol,
-          smoke: smoke,
+          healthy_unhealthy: `Exercices: ${exercices}, Alcohol ${alcohol}, Smoke: ${smoke}.`,
           reason_for_consultation: f3,
           question1: q1,
           question2: q2,
           question3: q3,
           appointment: appointment,
-        },
+        }),
       })
         .then((response) => response.text())
         .then((res) => {

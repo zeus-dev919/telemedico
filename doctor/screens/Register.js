@@ -52,9 +52,7 @@ const REGISTER_QUERY = gql`
 `;
 
 const Register = ({ navigation }) => {
-  // console.log("Property Register Screen");
   const { currentUser, signUpSuccess, token, errors } = useSelector(mapState);
-  // console.log("mapState =>", currentUser, signUpSuccess, token, errors);
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignUp, { data, loading }] = useMutation(REGISTER_QUERY);
@@ -69,8 +67,6 @@ const Register = ({ navigation }) => {
   const [iconPasswordName, setIconPasswordName] = useState("eye-with-line");
   const [error, setError] = useState(null);
   const [indicatorLoad, setIndicatorLoad] = useState(false);
-  // const [_token, setToken] = useState(false);
-  // Hnadle Errors
   const [firstNameErrors, setFirstNameErrors] = useState("");
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
@@ -159,18 +155,6 @@ const Register = ({ navigation }) => {
             firstName: firstName,
             password: password,
           };
-          console.log(
-            "Response username:",
-            user,
-            res.data.register.errors?.username
-          );
-          console.log("Response email:", user, res.data.register.errors?.email);
-          console.log(
-            "Response password:",
-            user,
-            res.data.register.errors?.password
-          );
-          console.log("Response Error:", user, res.data.register);
           setGraphError1(
             res.data.register?.errors?.username
               ? res.data.register?.errors?.username[0]?.message
@@ -186,7 +170,6 @@ const Register = ({ navigation }) => {
               ? res.data.register?.errors?.password[0]?.message
               : ""
           );
-          console.log("User + Token => ", user, res.data.register.token);
           if (!res.data.register.errors) {
             dispatch(signUpUser(user, res.data.register.token));
           }
