@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 class PatientIntakeModel(models.Model):
+    type_form = models.CharField(max_length=50,null=False)
+    doc_name  = models.CharField(max_length=50, null=True)
     name =  models.CharField(max_length=50, null=False)
     gender = models.CharField(max_length=50, null=False)
     birth = models.CharField(max_length=50, null =False)
@@ -19,8 +21,7 @@ class PatientIntakeModel(models.Model):
     question2 = models.CharField(max_length=100)
     question3 = models.CharField(max_length=100)
     appointment = models.CharField(max_length=64, null=True)
-    comments = models.CharField(max_length=100)
+    #comments = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.name)
-

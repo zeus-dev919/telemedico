@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  ActivityIndicator
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
@@ -15,6 +16,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import Header from "../../Models/Header";
 import { getPrevRoute } from "../../../redux/User/user.actions";
+import { useIsFocused } from "@react-navigation/native";
 
 const mapState = ({ user }) => ({
   userD: user.userD,
@@ -48,17 +50,22 @@ const Consults = ({ route, navigation }) => {
   console.log("Prev => ", prev);
   const { userD } = useSelector(mapState);
   const { data, loading } = useQuery(CONSULT_QUERY);
+  const [initialLoading, setInitialLoading] = useState(false);
   const [sum, setSum] = useState([]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (prev == "0") getPrevRoute("bt");
   }, [prev]);
 
   const getConsult = () => {
+
+    setInitialLoading(true)
     let tab = [];
-    if (data)
+
+    if (data?.allSchedules?.length > 0)
       for (let i = 0; i < data.allSchedules.length; i++) {
-        if (data.allSchedules[i].customer.user.email === userD.email) {
+        if (data.allSchedules[i].customer?.user?.email === userD.email) {
           const month = [
             "January",
             "February",
@@ -73,15 +80,16 @@ const Consults = ({ route, navigation }) => {
             "November",
             "December",
           ];
+
           const nbDate = new Date(
-            `${
-              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            `${month[data.allSchedules[i].date.substr(5, 2) - 1]
             } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
               i
             ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
           );
           const d = new Date();
           const timeLeft = (nbDate - d) / 1000;
+
           if (timeLeft > 0) {
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
@@ -101,13 +109,47 @@ const Consults = ({ route, navigation }) => {
           }
         }
       }
+
     setSum(tab);
+    setInitialLoading(false)
   };
 
+  // useEffect(() => {
+  //   // if (data && !loading && userD) {
+  //   if (!loading) getConsult();
+  // },[loading]);
+
+
   useEffect(() => {
-    // if (data && !loading && userD) {
-    if (!loading) getConsult();
-  }, [loading]);
+
+    if (isFocused) {
+
+      getConsult();
+    }
+  }, [isFocused]);
+
+
+  useEffect(() => {
+
+    getConsult();
+  }, []);
+
+
+  if (initialLoading) {
+
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <ActivityIndicator color="#000 " />
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />

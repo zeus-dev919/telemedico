@@ -4,8 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector } from "react-redux";
+import BeforeSplash from './BeforeSplash'
 import {
-  BeforeSplash,
+  // BeforeSplash,
   Splash,
   Register,
   Login,
