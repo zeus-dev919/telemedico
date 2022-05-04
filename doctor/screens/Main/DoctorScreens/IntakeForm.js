@@ -626,6 +626,7 @@ const IntakeForm = ({ navigation }) => {
                 </Text>
               </View>
             </View>
+            
             {/* Line 3 */}
             <View style={styles.inputContainer22}>
               <View style={styles.checkbox_container}>

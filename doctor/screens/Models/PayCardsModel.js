@@ -152,24 +152,55 @@ const PayCardsModel = (props) => {
   const handlePayment = async () => {
 
     setPaymentLoading(true)
-    try {
-      const { error } = await confirmPayment(key, {
-        type: "Card",
-        billingDetails: {
-          email: userD.email,
-        },
-      });
 
-      if (error) {
-        Alert.alert("Error : ", error);
-      } else {
+    confirmPayment(key, {
+      type: 'Card',
+      billingDetails: {
+        email: userD.email,
+      },
+    }).then(res => {
+
+      console.log('paymentIntent', res);
+
+      if(res?.error){
+
+        Alert.alert("Failed", "You enterd the wrong card number...");
+      }else{
+
+        setPaymentLoading(false)
         setModalVisible(true);
         setSuccess(true);
       }
-    } catch (err) {
-      setFailed(true);
-    }
-    setPaymentLoading(false)
+
+    }).catch(error => {
+
+      setPaymentLoading(false)
+
+      if (error?.message) {
+        Alert.alert(`Error code: ${error.code}`, error.message); console.log('Payment confirmation error', error.message);
+      } else {
+        Alert.alert("Failed", "payment got some error");
+      }
+    })
+
+    // try {
+    //   const { error } = await confirmPayment(key, {
+    //     type: "Card",
+    //     billingDetails: {
+    //       email: userD.email,
+    //     },
+    //   });
+
+    //   if (error) {
+    //     Alert.alert("Error : ", error);
+    //   } else {
+    //     setModalVisible(true);
+    //     setSuccess(true);
+    //   }
+    // } catch (err) {
+    //   setFailed(true);
+    // }
+    // setPaymentLoading(false)
   };
 
   const handlePa = () => {
@@ -237,21 +268,21 @@ const PayCardsModel = (props) => {
       )}
       {/* Pay */}
       {
-      validCard && isSelected ?
-       (
-        <TouchableOpacity style={styles.button1} onPress={handlePayment}>
-          {
-            paymentLoading ?
-              <ActivityIndicator color="#ffffff" />
-              :
-              <Text style={styles.signup}>Pay ${pay}</Text>
-          }
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={styles.buttonDisable} disabled={true}>
-          <Text style={styles.signup5}>Pay ${pay}</Text>
-        </TouchableOpacity>
-      )}
+        validCard && isSelected ?
+          (
+            <TouchableOpacity style={styles.button1} onPress={handlePayment}>
+              {
+                paymentLoading ?
+                  <ActivityIndicator color="#ffffff" />
+                  :
+                  <Text style={styles.signup}>Pay ${pay}</Text>
+              }
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.buttonDisable} disabled={true}>
+              <Text style={styles.signup5}>Pay ${pay}</Text>
+            </TouchableOpacity>
+          )}
       {success && (
         <Modal
           animationType="slide"
@@ -417,7 +448,7 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: COLORS.blueBtn,
     justifyContent: "center",
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: 10,
     marginBottom: 20,
   },
@@ -426,7 +457,7 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: COLORS.darkgray,
     justifyContent: "center",
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: 10,
     marginBottom: 20,
   },
