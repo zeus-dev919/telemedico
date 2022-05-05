@@ -29,9 +29,14 @@ const DOCTOR_QUERY = gql`
       lastName
       country
       state
+      profilePicture
       specialization {
         specializationName
       }
+      consultationFees
+      info
+      consultationTime
+      experience
     }
   }
 `;
@@ -49,57 +54,48 @@ const Result = ({ route, navigation }) => {
   const [diagnose1, setDiagnose1] = useState(null);
   const [spec1, setSpec1] = useState(null);
   const [spec1Flag, setSpec1Flag] = useState(null);
-  const [doctors1, setDoctors1] = useState(null);
   // 2
   const [diagnose2, setDiagnose2] = useState(null);
   const [spec2, setSpec2] = useState(null);
   const [spec2Flag, setSpec2Flag] = useState(null);
-  const [doctors2, setDoctors2] = useState(null);
   // 3
   const [diagnose3, setDiagnose3] = useState(null);
   const [spec3, setSpec3] = useState(null);
   const [spec3Flag, setSpec3Flag] = useState(null);
-  const [doctors3, setDoctors3] = useState(null);
   // 4
   const [diagnose4, setDiagnose4] = useState(null);
   const [spec4, setSpec4] = useState(null);
   const [spec4Flag, setSpec4Flag] = useState(null);
-  const [doctors4, setDoctors4] = useState(null);
   // 5
   const [diagnose5, setDiagnose5] = useState(null);
   const [spec5, setSpec5] = useState(null);
   const [spec5Flag, setSpec5Flag] = useState(null);
-  const [doctors5, setDoctors5] = useState(null);
   // 6
   const [diagnose6, setDiagnose6] = useState(null);
   const [spec6, setSpec6] = useState(null);
   const [spec6Flag, setSpec6Flag] = useState(null);
-  const [doctors6, setDoctors6] = useState(null);
   // 7
   const [diagnose7, setDiagnose7] = useState(null);
   const [spec7, setSpec7] = useState(null);
   const [spec7Flag, setSpec7Flag] = useState(null);
-  const [doctors7, setDoctors7] = useState(null);
   // 8
   const [diagnose8, setDiagnose8] = useState(null);
   const [spec8, setSpec8] = useState(null);
   const [spec8Flag, setSpec8Flag] = useState(null);
-  const [doctors8, setDoctors8] = useState(null);
   // 9
   const [diagnose9, setDiagnose9] = useState(null);
   const [spec9, setSpec9] = useState(null);
   const [spec9Flag, setSpec9Flag] = useState(null);
-  const [doctors9, setDoctors9] = useState(null);
   // 10
   const [diagnose10, setDiagnose10] = useState(null);
   const [spec10, setSpec10] = useState(null);
   const [spec10Flag, setSpec10Flag] = useState(null);
-  const [doctors10, setDoctors10] = useState(null);
 
-  const [colorSys, setColorSys] = useState("#000000");
-  const [colorText, setColorText] = useState("");
   const [loadCanceled, setLoadCanceled] = useState(false);
   const [loadDone, setLoadDone] = useState(false);
+
+  const [customDoctor1, setCustomDoctor1] = useState(null);
+  const [customDoctor2, setCustomDoctor2] = useState(null);
   const getResult = async () => {
     setTimeout(() => {
       if (!loadDone) {
@@ -216,19 +212,67 @@ const Result = ({ route, navigation }) => {
         console.error(error);
       });
   };
-  const getDoctors = (data, ch) => {
+  const getDoctors = (data) => {
     let tab = [];
     for (let i = 0; i < data.allDoctors.length; i++) {
-      if (data.allDoctors[i].specialization.specializationName === ch) {
-        tab.push({
-          name: data.allDoctors[i].firstName + data.allDoctors[i].lastName,
-          location:
-            data.allDoctors[i].state + " ," + data.allDoctors[i].country,
-          speciality: data.allDoctors[i].specialization.specializationName,
+      if (
+        data.allDoctors[i].firstName === "Dr. Robert" &&
+        data.allDoctors[i].lastName === "Rose"
+      ) {
+        setCustomDoctor1({
+          name:
+            data.allDoctors[i].firstName + " " + data.allDoctors[i].lastName,
+          desc:
+            (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
+            " ," +
+            (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
+          img: data.allDoctors[i].profilePicture
+            ? data.allDoctors[i].profilePicture
+            : "",
+          patients: data.allDoctors[i].patients
+            ? data.allDoctors[i].patients
+            : "--",
           experience: data.allDoctors[i].experience
             ? data.allDoctors[i].experience
             : "--",
-          img: data.allDoctors[i].avatar ? data.allDoctors[i].avatar : "",
+          speciality: data.allDoctors[i].specialization.specializationName,
+          info: data.allDoctors[i].info ? data.allDoctors[i].info : "--",
+          fees: data.allDoctors[i].consultationFees
+            ? data.allDoctors[i].consultationFees
+            : "--",
+          duration: data.allDoctors[i].consultationTime
+            ? data.allDoctors[i].consultationTime
+            : "--",
+        });
+      }
+      if (
+        data.allDoctors[i].firstName === "Dr. Ari" &&
+        data.allDoctors[i].lastName === "Gabayan"
+      ) {
+        setCustomDoctor2({
+          name:
+            data.allDoctors[i].firstName + " " + data.allDoctors[i].lastName,
+          desc:
+            (data.allDoctors[i].state ? data.allDoctors[i].state : "--") +
+            " ," +
+            (data.allDoctors[i].country ? data.allDoctors[i].country : "--"),
+          img: data.allDoctors[i].profilePicture
+            ? data.allDoctors[i].profilePicture
+            : "",
+          patients: data.allDoctors[i].patients
+            ? data.allDoctors[i].patients
+            : "--",
+          experience: data.allDoctors[i].experience
+            ? data.allDoctors[i].experience
+            : "--",
+          speciality: data.allDoctors[i].specialization.specializationName,
+          info: data.allDoctors[i].info ? data.allDoctors[i].info : "--",
+          fees: data.allDoctors[i].consultationFees
+            ? data.allDoctors[i].consultationFees
+            : "--",
+          duration: data.allDoctors[i].consultationTime
+            ? data.allDoctors[i].consultationTime
+            : "--",
         });
       }
     }
@@ -238,30 +282,12 @@ const Result = ({ route, navigation }) => {
     setShowMore(!showMore);
   };
   useEffect(() => {
-    if (data && spec1) {
-      setDoctors1(getDoctors(data, spec1));
-    }
-    if (data && spec2) {
-      setDoctors2(getDoctors(data, spec1));
-    }
-    if (data && spec3) {
-      setDoctors3(getDoctors(data, spec1));
-    }
+    console.log("Data Now => ");
+    console.log(data);
+    if (data?.allDoctors) getDoctors(data);
   }, [data]);
   useEffect(() => {
     getResult();
-    if (result >= 0 && result <= 39) {
-      setColorSys("#00CC00");
-      setColorText("Walk in clinic/Telemedicine");
-    }
-    if (result >= 40 && result <= 79) {
-      setColorSys("#FF8000");
-      setColorText("Family Physician/Urgent Care Clinic/Minor Injuries Unit");
-    }
-    if (result >= 80 && result <= 100) {
-      setColorSys("#FF0000");
-      setColorText("Emergency Services/ER");
-    }
   }, []);
   const handleMoreDoctors1 = () => {
     navigation.navigate("doctorList", { filter: "*" });
@@ -512,33 +538,37 @@ const Result = ({ route, navigation }) => {
                   </Text>
                 </View>
                 <Text style={styles.title3}>Cardiologist</Text>
-                <DoctorCardModel
-                  name="Robert Rose"
-                  desc="California ,USA"
-                  img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20%20Robert%20M%20Rose.png?alt=media&token=de7725a3-6b23-40dc-b93d-dc9b48bbb523"
-                  patients="--"
-                  experience="50"
-                  speciality="Cardiology"
-                  info="ABOUT: Dr. Rose is an expert in general clinical, consultative and interventional cardiology. He is currently the Director of Cardiovascular Services and a member of the Board of Directors at the Brotman Medical Center. He has received his medical degree from Wayne State University School of Medicine in Detroit and completed his residency at Los Angeles County – USC Medical Center and Cedars-Sinai Medical Center. He has been certified by the American Board of Internal Medicine and American Board of Cardiovascular Diseases. Dr. Rose has received the Certificate of Service from the Department of Medicine, University of California, Los Angeles for 25 years of medical teaching at the West LA VA Hospital and UCLA Hospitals. In addition, he has received Physician of the Year from the Brotman Medical Center, 2009, The Inaugural Award."
-                  fees="350"
-                  duration="20"
-                  bg="0"
-                  navigation={navigation}
-                />
+                {customDoctor1 && (
+                  <DoctorCardModel
+                    name={customDoctor1.name}
+                    desc={customDoctor1.desc}
+                    img={customDoctor1.img}
+                    patients={customDoctor1.patients}
+                    experience={customDoctor1.experience}
+                    speciality={customDoctor1.speciality}
+                    info={customDoctor1.info}
+                    fees={customDoctor1.fees}
+                    duration={customDoctor1.duration}
+                    bg="0"
+                    navigation={navigation}
+                  />
+                )}
                 <Text style={styles.title3}>Oncologist</Text>
-                <DoctorCardModel
-                  name="Ari Gabayan"
-                  desc="California ,USA"
-                  img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Ari%20Gabayan.png?alt=media&token=8d90448f-3ace-458d-871a-45b921778582"
-                  patients="--"
-                  experience="20"
-                  speciality="Radiation Oncology"
-                  info="ABOUT: Dr. Gabayan is one of the best radiation oncologist working today and is the chief of Radiation Oncology and Imaging at the Beverly Hills Cancer Center. He pursued hi medical degree from UCLA’s renowned David Geffen School of Medicine and a residency at University of Arizona’s Department of Radiation Oncology, where he held the esteemed position of Chief Resident. Recognition of Dr. Ari Gabayan pursuit and achievement of excellence lead to his selection as Lead Investigator for a national multi-institutional study of the GliaSite Radiotherapy System, a device used in the treatment of malignant brain tumors. Dr. Gabayan's research studies earned him the prominent Roentgen Research Award. Dr. Ari Gabayan strives to provide his patients with the latest treatment technologies in a soothing and relaxing environment. Dr. Gabayan dedicates himself to the highest standards in all aspects of his career, from the care and treatment of patients to the pursuit of cutting-edge research"
-                  fees="250"
-                  duration="20"
-                  bg="0"
-                  navigation={navigation}
-                />
+                {customDoctor2 && (
+                  <DoctorCardModel
+                    name={customDoctor2.name}
+                    desc={customDoctor2.desc}
+                    img={customDoctor2.img}
+                    patients={customDoctor2.patients}
+                    experience={customDoctor2.experience}
+                    speciality={customDoctor2.speciality}
+                    info={customDoctor2.info}
+                    fees={customDoctor2.fees}
+                    duration={customDoctor2.duration}
+                    bg="0"
+                    navigation={navigation}
+                  />
+                )}
                 <TouchableOpacity
                   onPress={handleMoreDoctors1}
                   style={styles.relevant}

@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.2.0",
+      "buildNumber": "1.2.2",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
@@ -32,7 +32,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#40e0d0"
       },
-      "versionCode": 6,
+      "versionCode": 7,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO"
@@ -56,6 +56,15 @@
             "authToken": "75fcdb35e01c4c009ac66fd6b1c6a708d3e9f6c1a0c44f5983cc06fb43359b95"
           }
         }
+      ],
+      "plugins": [
+        [
+          "@stripe/stripe-react-native",
+          {
+            "merchantIdentifier": "merchant.com.medipocket",
+            "enableGooglePay": true
+          }
+        ]
       ]
     }
   }

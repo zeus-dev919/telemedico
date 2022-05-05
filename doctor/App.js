@@ -25,7 +25,8 @@ const App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StripeProvider
-        publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
+        // publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
+        publishableKey="pk_live_HuXS0sPYQFn62lfDrx0SuoKR"
         merchantIdentifier="merchant.identifier"
       >
         <ApolloProvider client={client}>
