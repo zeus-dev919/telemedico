@@ -514,13 +514,13 @@ const Result = ({ route, navigation }) => {
                 <Text style={styles.title3}>Cardiologist</Text>
                 <DoctorCardModel
                   name="Robert Rose"
-                  desc="-- ,--"
+                  desc="California ,USA"
                   img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr.%20%20Robert%20M%20Rose.png?alt=media&token=de7725a3-6b23-40dc-b93d-dc9b48bbb523"
                   patients="--"
-                  experience="--"
+                  experience="50"
                   speciality="Cardiology"
-                  info="--"
-                  fees="--"
+                  info="ABOUT: Dr. Rose is an expert in general clinical, consultative and interventional cardiology. He is currently the Director of Cardiovascular Services and a member of the Board of Directors at the Brotman Medical Center. He has received his medical degree from Wayne State University School of Medicine in Detroit and completed his residency at Los Angeles County – USC Medical Center and Cedars-Sinai Medical Center. He has been certified by the American Board of Internal Medicine and American Board of Cardiovascular Diseases. Dr. Rose has received the Certificate of Service from the Department of Medicine, University of California, Los Angeles for 25 years of medical teaching at the West LA VA Hospital and UCLA Hospitals. In addition, he has received Physician of the Year from the Brotman Medical Center, 2009, The Inaugural Award."
+                  fees="350"
                   duration="20"
                   bg="0"
                   navigation={navigation}
@@ -528,13 +528,13 @@ const Result = ({ route, navigation }) => {
                 <Text style={styles.title3}>Oncologist</Text>
                 <DoctorCardModel
                   name="Ari Gabayan"
-                  desc="-- ,--"
+                  desc="California ,USA"
                   img="https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Ari%20Gabayan.png?alt=media&token=8d90448f-3ace-458d-871a-45b921778582"
                   patients="--"
-                  experience="--"
+                  experience="20"
                   speciality="Radiation Oncology"
-                  info="--"
-                  fees="--"
+                  info="ABOUT: Dr. Gabayan is one of the best radiation oncologist working today and is the chief of Radiation Oncology and Imaging at the Beverly Hills Cancer Center. He pursued hi medical degree from UCLA’s renowned David Geffen School of Medicine and a residency at University of Arizona’s Department of Radiation Oncology, where he held the esteemed position of Chief Resident. Recognition of Dr. Ari Gabayan pursuit and achievement of excellence lead to his selection as Lead Investigator for a national multi-institutional study of the GliaSite Radiotherapy System, a device used in the treatment of malignant brain tumors. Dr. Gabayan's research studies earned him the prominent Roentgen Research Award. Dr. Ari Gabayan strives to provide his patients with the latest treatment technologies in a soothing and relaxing environment. Dr. Gabayan dedicates himself to the highest standards in all aspects of his career, from the care and treatment of patients to the pursuit of cutting-edge research"
+                  fees="250"
                   duration="20"
                   bg="0"
                   navigation={navigation}

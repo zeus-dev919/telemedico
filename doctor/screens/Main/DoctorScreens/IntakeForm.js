@@ -11,11 +11,9 @@ import {
   ActivityIndicator,
   Modal,
 } from "react-native";
-import { useSelector } from "react-redux";
 import { COLORS } from "../../../constants";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
-import Header from "../../Models/Header";
 
 const IntakeForm = ({ route, navigation }) => {
   const { doctorName } = route.params;

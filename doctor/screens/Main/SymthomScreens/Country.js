@@ -1515,6 +1515,7 @@ const Country = ({ route, navigation }) => {
     const newCountryObj = apiCountries?.find(
       (item) => item.country_name === country.name
     );
+    console.log(newCountryObj);
     if (check) {
       let newpregnant = "";
       if (pregnant !== undefined) {
