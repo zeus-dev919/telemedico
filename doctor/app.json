@@ -44,7 +44,14 @@
     },
     "description": "",
     "plugins": [
-      "sentry-expo"
+      "sentry-expo",
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.medipocket",
+          "enableGooglePay": true
+        }
+      ]
     ],
     "hooks": {
       "postPublish": [
@@ -56,15 +63,6 @@
             "authToken": "75fcdb35e01c4c009ac66fd6b1c6a708d3e9f6c1a0c44f5983cc06fb43359b95"
           }
         }
-      ],
-      "plugins": [
-        [
-          "@stripe/stripe-react-native",
-          {
-            "merchantIdentifier": "merchant.com.medipocket",
-            "enableGooglePay": true
-          }
-        ]
       ]
     }
   }
