@@ -37,7 +37,7 @@
         "CAMERA",
         "RECORD_AUDIO"
       ],
-      "package": "com.rami404.doctor"
+      "package": "com.medipocket.world"
     },
     "web": {
       "favicon": "./assets/favicon.png"

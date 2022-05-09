@@ -1,4 +1,4 @@
-package com.rami404.doctor;
+package com.medipocket.world;
 import expo.modules.devmenu.react.DevMenuAwareReactActivity;
 import android.content.Intent;
 import expo.modules.devlauncher.DevLauncherController;

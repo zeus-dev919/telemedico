@@ -1,4 +1,4 @@
-package com.rami404.doctor;
+package com.medipocket.world;
 import expo.modules.updates.UpdatesDevLauncherController;
 import expo.modules.devlauncher.DevLauncherController;
 
@@ -85,7 +85,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.rami404.doctor.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.medipocket.world.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);
