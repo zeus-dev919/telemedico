@@ -79,7 +79,7 @@ const Register = ({ navigation }) => {
   useEffect(() => {
     if (signUpSuccess) {
       ResetForm();
-      setDoneRegister(!doneRegister);
+      setDoneRegister(false);
       dispatch(resetAllAuthForms);
     }
   }, [signUpSuccess]);
@@ -140,34 +140,43 @@ const Register = ({ navigation }) => {
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
       emailValid = emailValid.replace(/\s/g, "");
-      // let firstName2 = firstName;
-      // firstName2 = firstName2.replace(" ", "_");
+      let firstName2 = firstName;
+      firstName2 = firstName2.replace(/ /g, "_");
+      console.log(" Submitted => ");
+      console.log({
+        email: emailValid,
+        firstName: firstName2,
+        password: password,
+      });
+
       await SignUp({
         variables: {
           email: emailValid,
-          firstName: firstName,
+          firstName: firstName2,
           password: password,
         },
       })
         .then((res) => {
+          console.log("Response from register: ");
+          console.log(res);
           let user = {
             email: emailValid,
             firstName: firstName,
             password: password,
           };
-          setGraphError1(
+          setFirstNameErrors(
             res.data.register?.errors?.username
               ? res.data.register?.errors?.username[0]?.message
               : ""
           );
-          setGraphError2(
+          setEmailErrors(
             res.data.register?.errors?.email
               ? res.data.register?.errors?.email[0]?.message
               : ""
           );
-          setGraphError3(
-            res.data.register?.errors?.password
-              ? res.data.register?.errors?.password[0]?.message
+          setPasswordErrors(
+            res.data.register?.errors?.password2
+              ? res.data.register?.errors?.password2[0]?.message
               : ""
           );
           if (!res.data.register.errors) {
@@ -233,7 +242,6 @@ const Register = ({ navigation }) => {
               style={styles.input}
               onChangeText={onChangeEmail}
               value={email}
-              textContentType=""
               placeholder=""
               placeholderTextColor={"grey"}
             />
@@ -259,6 +267,7 @@ const Register = ({ navigation }) => {
                 onPress={handlePasswordSecure}
               />
             </View>
+            <Text style={styles.fieldErrors}>{passwordErrors}</Text>
             <Text style={styles.privacy}>
               * Uppercase characters (A-Z){"\n"}* Lowercase characters (a-z)
               {"\n"}* Digits (0-9){"\n"}* Special characters (~!@#$%^&*_-+=`|\()
@@ -267,7 +276,6 @@ const Register = ({ navigation }) => {
               {"["}
               {"]"}:;"',.?/)
             </Text>
-            <Text style={styles.fieldErrors}>{passwordErrors}</Text>
           </View>
           {/* Terms and Condition */}
           <View style={styles.terms}>
@@ -324,7 +332,7 @@ const Register = ({ navigation }) => {
               <Text style={styles.signup}>Submit</Text>
             )}
           </TouchableOpacity>
-          {grapherror1 !== null && grapherror1.length !== 0 && (
+          {/* {grapherror1 !== null && grapherror1.length !== 0 && (
             <Text style={styles.fieldErrors404}>{grapherror1}</Text>
           )}
           {grapherror2 !== null && grapherror2.length !== 0 && (
@@ -332,7 +340,7 @@ const Register = ({ navigation }) => {
           )}
           {grapherror3 !== null && grapherror3.length !== 0 && (
             <Text style={styles.fieldErrors404}>{grapherror3}</Text>
-          )}
+          )} */}
           <Text style={styles.fieldErrors2}>{errors}</Text>
           <TouchableOpacity style={styles.already} onPress={handleSignIn}>
             <Text style={styles.label1}>Already have an Account? </Text>
@@ -494,7 +502,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.greyColor,
     backgroundColor: "white",
-    paddingVertical: 15,
+    paddingVertical: 8,
     paddingLeft: 20,
     width: "100%",
     borderWidth: 1,

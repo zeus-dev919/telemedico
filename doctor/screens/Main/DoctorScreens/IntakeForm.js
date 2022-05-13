@@ -171,8 +171,7 @@ const IntakeForm = ({ route, navigation }) => {
   };
   // Submit
   const handleSubmit = async () => {
-
-    setIndicatorLoad(true)
+    setIndicatorLoad(true);
     // f4
     let f4 = "";
     if (f4_1) f4 += "Anemia, ";
@@ -280,8 +279,7 @@ const IntakeForm = ({ route, navigation }) => {
       console.log("DONE");
     }
 
-    setIndicatorLoad(false)
-
+    setIndicatorLoad(false);
   };
 
   return (
@@ -332,7 +330,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.input}
                 value={name}
                 onChangeText={setName}
-                placeholder="Name (Autofill if Consultation for self))"
+                placeholder="Name"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -346,7 +344,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.input}
                 value={birth}
                 onChangeText={setBirth}
-                placeholder="Age (Autofill if Consultation for self))"
+                placeholder="Age"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -360,7 +358,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.input}
                 value={gender}
                 onChangeText={setGender}
-                placeholder="Gender (Autofill if Consultation for self))"
+                placeholder="Gender"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -374,7 +372,7 @@ const IntakeForm = ({ route, navigation }) => {
                 style={styles.input}
                 value={phone}
                 onChangeText={setPhone}
-                placeholder="PhoneNumber (Autofill if Consultation for self))"
+                placeholder="PhoneNumber"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -450,7 +448,7 @@ const IntakeForm = ({ route, navigation }) => {
                 </Text>
               </View>
             </View>
-            
+
             {/* Line 3 */}
             <View style={styles.inputContainer22}>
               <View style={styles.checkbox_container}>
@@ -756,7 +754,7 @@ const IntakeForm = ({ route, navigation }) => {
                 placeholder="Please list all medications currently taking"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-              // multiline={true}
+                // multiline={true}
               />
             </View>
           </View>
@@ -774,7 +772,7 @@ const IntakeForm = ({ route, navigation }) => {
                 placeholder="Any Food, Medicine, Seasonal allergies"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-              // multiline={true}
+                // multiline={true}
               />
             </View>
           </View>
@@ -973,7 +971,7 @@ const IntakeForm = ({ route, navigation }) => {
                 placeholder="Reason for consulting the doctor"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
-              // multiline="true"
+                // multiline="true"
               />
             </View>
           </View>
@@ -1446,8 +1444,8 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     padding: 5,
     backgroundColor: COLORS.blueBtn,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     marginBottom: 20,
   },

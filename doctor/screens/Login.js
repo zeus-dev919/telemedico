@@ -43,8 +43,8 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
-  const [email, onChangeEmail] = useState(""); // ramykhweldi@gmail.com
-  const [password, onChangepassword] = useState(""); // hello156
+  const [email, onChangeEmail] = useState("ramykhweldi@gmail.com"); // ramykhweldi@gmail.com
+  const [password, onChangepassword] = useState("hello156"); // hello156
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -158,7 +158,6 @@ const Login = ({ navigation }) => {
               style={styles.input}
               onChangeText={onChangeEmail}
               value={email}
-              textContentType="emailAddress"
               placeholder=""
               placeholderTextColor={"grey"}
             />
@@ -306,7 +305,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.greyColor,
     backgroundColor: COLORS.whiteColor,
-    paddingVertical: 15,
+    paddingVertical: 8,
     paddingLeft: 20,
     width: "100%",
   },

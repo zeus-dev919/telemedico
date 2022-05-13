@@ -19,7 +19,14 @@ import { COLORS } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
 import Header from "../Models/Header";
 import DoctorHomeConsult from "../Models/DoctorHomeConsult";
-import { collection, query, where, addDoc, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  addDoc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../firebase/utils";
 
 const mapState = ({ user }) => ({
@@ -51,6 +58,21 @@ const HomePage = ({ navigation }) => {
   const { userD, doctorD } = useSelector(mapState);
   const { data, loading } = useQuery(DOCTOR_QUERY);
   const [done, setDone] = useState(false);
+
+  // const doctorD = {
+  //   firstName: "Dr. Bruce",
+  //   lastName: "Samuels",
+  //   specialization: {
+  //     specializationName: "Cardiology & Internal Medicine",
+  //   },
+  //   profilePicture:
+  //     "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/doctor%2FDr_%20Bruce%20Samuels.png?alt=media&token=25240d0c-4973-4a75-a2b4-7cb1cf6d449e",
+  //   consultationTime: 20,
+  //   timeSlots: "",
+  //   username: {
+  //     email: "kunal@kunal.kunal",
+  //   },
+  // };
 
   // Func*
 

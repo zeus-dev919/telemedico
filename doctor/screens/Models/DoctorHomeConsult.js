@@ -54,7 +54,7 @@ const DoctorHomeConsult = (props) => {
     let tab = [];
     if (data)
       for (let i = 0; i < data.allSchedules.length; i++) {
-        if (data.allSchedules[i].doctor.username.email === userD.email) {
+        if (data?.allSchedules[i]?.doctor?.username?.email === userD.email) {
           const month = [
             "January",
             "February",

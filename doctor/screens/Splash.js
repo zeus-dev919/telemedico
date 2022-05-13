@@ -25,12 +25,10 @@ const Splash = ({ navigation }) => {
   }, []);
 
   const RedirectRegister = () => {
-    console.log("RedirectRegister Clicked !!");
     navigation.navigate("Register");
   };
 
   const RedirectLogin = () => {
-    console.log("RedirectLogin Clicked !!");
     navigation.navigate("Login");
   };
 
@@ -42,32 +40,37 @@ const Splash = ({ navigation }) => {
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg.png?alt=media&token=a36ec316-b594-4a1a-9de5-104ed8ef3287" }}
-          source={require('../assets/bg.png')}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg.png?alt=media&token=a36ec316-b594-4a1a-9de5-104ed8ef3287",
+          }}
+          // source={require('../assets/bg.png')}
         />
       );
     if (index === 1)
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg1.png?alt=media&token=6491998f-fdb1-4db2-965b-3e6a2e5c4ced" }}
-          source={require('../assets/bg1.png')}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg1.png?alt=media&token=6491998f-fdb1-4db2-965b-3e6a2e5c4ced",
+          }}
+          // source={require('../assets/bg1.png')}
         />
       );
     if (index === 2)
       return (
         <ImageBackground
           style={[styles.fixed, styles.bgcontainer, { zIndex: -1 }]}
-          // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg2.png?alt=media&token=1751b966-0977-4ab6-983f-446dd94bc6d0" }}
-          source={require('../assets/bg2.png')}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Fimages%2Fbg2.png?alt=media&token=1751b966-0977-4ab6-983f-446dd94bc6d0",
+          }}
+          // source={require('../assets/bg2.png')}
         />
       );
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.flexContainer}>
           <Image
             style={styles.logo}
@@ -142,7 +145,8 @@ export default Splash;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: "gray",
+    // backgroundColor: COLORS.primary,
     // position: "relative",
     // color: COLORS.primary,
     //   backgroundColor: "transparent",

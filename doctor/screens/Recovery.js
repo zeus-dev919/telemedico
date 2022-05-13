@@ -85,7 +85,6 @@ const Recovery = ({ navigation }) => {
               style={styles.input}
               onChangeText={onChangeEmail}
               value={email}
-              textContentType="emailAddress"
               placeholder=""
             />
           </View>
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.greyColor,
     backgroundColor: COLORS.whiteColor,
-    paddingVertical: 15,
+    paddingVertical: 8,
     paddingLeft: 20,
     width: "100%",
   },

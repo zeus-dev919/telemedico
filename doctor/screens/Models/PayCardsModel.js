@@ -55,8 +55,8 @@ const PayCardsModel = (props) => {
 
   const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(
-      // `https://pay.medipocket.world/payments/save-stripe-info/`,
-      `http://197.16.69.246:3000/create-payment-intent`,
+      `https://pay.medipocket.world/payments/save-stripe-info/`,
+      // `http://192.168.43.149:3000/create-payment-intent`,
       {
         method: "POST",
         headers: {
@@ -66,7 +66,7 @@ const PayCardsModel = (props) => {
           amount: parseInt(pay),
           currency: "pln",
           payment_method_id: "card",
-          email: "test2022@example.com",
+          email: userD?.email,
         }),
       }
     );
@@ -94,11 +94,11 @@ const PayCardsModel = (props) => {
       console.log("Success from promise", paymentIntent);
     }
   };
-
   const [key, setKey] = useState("");
   useEffect(() => {
     try {
       fetch("https://pay.medipocket.world/create-payment-intent/", {
+      // fetch("http://192.168.43.149:3000/create-payment-intent/", {
         method: "POST",
       })
         .then((res) => res.json())
@@ -113,8 +113,8 @@ const PayCardsModel = (props) => {
   }, []);
 
   const handlePayment = async () => {
+    console.log("Key => ", key);
     setPaymentLoading(true);
-
     confirmPayment(key, {
       type: "Card",
       billingDetails: {
@@ -123,12 +123,13 @@ const PayCardsModel = (props) => {
     })
       .then((res) => {
         console.log("paymentIntent", res);
-
         if (res?.error) {
+          // Failed
           Alert.alert("Failed", "You enterd the wrong card number...");
           setPaymentLoading(false);
           setSuccess(false);
         } else {
+          // Success
           setPaymentLoading(false);
           setModalVisible(true);
           setSuccess(true);

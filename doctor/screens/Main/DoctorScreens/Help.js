@@ -491,7 +491,7 @@ const Help = ({ navigation }) => {
                 style={styles.input}
                 value={name}
                 onChangeText={setName}
-                placeholder="Name (Autofill if Consultation for self))"
+                placeholder="Name"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -505,7 +505,7 @@ const Help = ({ navigation }) => {
                 style={styles.input}
                 value={birth}
                 onChangeText={setBirth}
-                placeholder="Age (Autofill if Consultation for self))"
+                placeholder="Age"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -519,7 +519,7 @@ const Help = ({ navigation }) => {
                 style={styles.input}
                 value={gender}
                 onChangeText={setGender}
-                placeholder="Gender (Autofill if Consultation for self))"
+                placeholder="Gender"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
@@ -533,7 +533,7 @@ const Help = ({ navigation }) => {
                 style={styles.input}
                 value={phone}
                 onChangeText={setPhone}
-                placeholder="PhoneNumber (Autofill if Consultation for self))"
+                placeholder="PhoneNumber"
                 placeholderTextColor={"grey"}
                 keyboardType="default"
               />
