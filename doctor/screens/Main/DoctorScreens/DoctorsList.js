@@ -18,93 +18,6 @@ import { COLORS, icons, images } from "../../../constants";
 import DoctorCardModel2 from "../../Models/DoctorCardModel2";
 import { gql, useQuery } from "@apollo/client";
 
-const DATA = [
-  {
-    title: "Cardiologistic",
-    data: [
-      {
-        name: "Christina Frazier",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-      {
-        name: "Jane Andrews",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Oncologist",
-    data: [
-      {
-        name: "Alma Wallace",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Endocrinologist",
-    data: [
-      {
-        name: "Mayme Gomez",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Rheumatologist",
-    data: [
-      {
-        name: "Mayme Gomez",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Fertility Experts",
-    data: [
-      {
-        name: "Mayme Gomez",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-      {
-        name: "Iva Carpenter",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-      {
-        name: "Iva Carpenter",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Plastic Surgeons",
-    data: [
-      {
-        name: "Mayme Gomez",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-  {
-    title: "Mental Health",
-    data: [
-      {
-        name: "Mayme Gomez",
-        desc: "Heart Surgeon, London",
-        img: "https://image.shutterstock.com/image-photo/profile-side-photo-young-woman-260nw-1961318188.jpg",
-      },
-    ],
-  },
-];
 const DOCTOR_QUERY = gql`
   query {
     allDoctors {
@@ -280,6 +193,7 @@ const DoctorsList = ({ route, navigation }) => {
               backgroundColor: COLORS.blueBtn,
               padding: 5,
               borderRadius: 8,
+              width: 50,
             }}
           >
             {/* <Ionicons
@@ -467,7 +381,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLORS.bgColor1,
     height: 60,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
   logo: {
     width: 30,

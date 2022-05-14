@@ -19,7 +19,7 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "@sentry/react-native": "^3.4.0",
-    "@stripe/stripe-react-native": "^0.2.3",
+    "@stripe/stripe-react-native": "0.2.3",
     "agora-rn-uikit": "^3.3.0",
     "dotenv": "^10.0.0",
     "eas-cli": "^0.43.0",
