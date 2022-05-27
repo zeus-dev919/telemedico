@@ -13,7 +13,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 import DoctorPaymentModel from "../../Models/DoctorPaymentModel";
 
-const doctorPayment = ({ navigation }) => {
+const DoctorPayment = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -45,7 +45,7 @@ const doctorPayment = ({ navigation }) => {
   );
 };
 
-export default doctorPayment;
+export default DoctorPayment;
 
 const styles = StyleSheet.create({
   // Header

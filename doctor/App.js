@@ -26,6 +26,8 @@ const App = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StripeProvider
         // publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
+        // publishableKey="pk_test_51L3CFeSIfO58XcZRgR6oWGXV6A90OC0jSQ4IYExtdNsb4806PrPZBnZ8hT1Sr6y0ZMRPcZZafcmwxRGsFOnrluBt00lHZYrUhU"
+        
         publishableKey="pk_live_HuXS0sPYQFn62lfDrx0SuoKR"
         merchantIdentifier="merchant.identifier"
       >

@@ -68,15 +68,30 @@ const DoctorConsults = ({ route, navigation }) => {
             "November",
             "December",
           ];
-          const nbDate = new Date(
-            `${
-              month[data.allSchedules[i].date.substr(5, 2) - 1]
-            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
-              i
-            ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
-          );
-          const d = new Date();
-          const timeLeft = (nbDate - d) / 1000;
+          // const nbDate = new Date(
+          //   `${
+          //     month[data.allSchedules[i].date.substr(5, 2) - 1]
+          //   } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+          //     i
+          //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
+          // );
+          // const d = new Date();
+          // const timeLeft = (nbDate - d) / 1000;
+
+          let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
+          } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+            i
+          ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`)
+
+        let current_date_time_from_server = new Date(data.serverCurrenttime * 1000);
+
+        var [nyear, nmonth, nday] = data.allSchedules[i].date.split('-');
+        var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(':');
+        let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
+
+        // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
+        const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
+
           if (timeLeft > 0) {
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
@@ -84,7 +99,7 @@ const DoctorConsults = ({ route, navigation }) => {
                 parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
               ].substr(0, 3),
               spec: data.allSchedules[i].specializations.specializationName,
-              time: nbDate,
+              time: appointment_date_time_in_given_gmt,
               doctorImg: data.allSchedules[i].doctor.profilePicture,
               rtcToken: data.allSchedules[i].rnToken,
               channelName: data.allSchedules[i].channelName,

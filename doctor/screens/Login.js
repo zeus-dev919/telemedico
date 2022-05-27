@@ -43,8 +43,8 @@ const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   dispatch(ResetErrorsState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
-  const [email, onChangeEmail] = useState(""); // ramykhweldi@gmail.com
-  const [password, onChangepassword] = useState(""); // hello156
+  const [email, onChangeEmail] = useState(""); // ramykhweldi@gmail.com //kunalkdas@outlook.com //samryker@gmailcom
+  const [password, onChangepassword] = useState(""); // hello156 //Kepler@2209
   const [emailErrors, setEmailErrors] = useState("");
   const [passwordErrors, setPasswordErrors] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -95,7 +95,7 @@ const Login = ({ navigation }) => {
     if (checking_form === "true") {
       setIndicatorLoad(true);
       let emailValid = email.toLowerCase();
-      emailValid = emailValid.replace(/\s/g, '');
+      emailValid = emailValid.replace(/\s/g, "");
       await SignIn({
         variables: { email: emailValid, password: password },
       })
@@ -111,8 +111,10 @@ const Login = ({ navigation }) => {
             dispatch(signInUser(user, res.data.tokenAuth.token));
             setIndicatorLoad(false);
           } else {
-            console.log('res                                                          ')
-            console.log('res L:', res)
+            console.log(
+              "res                                                          "
+            );
+            console.log("res L:", res);
             setError(
               "we do not have any account with this email. try to signed up first"
             );

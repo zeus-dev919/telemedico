@@ -50,7 +50,7 @@ const Describe = ({ route, navigation }) => {
     getPredictive();
   }, []);
   useEffect(() => {
-    if (search.length > 0) {
+    if (search.length > 0 && predictive.length !== 0) {
       let after = predictive.filter(checkWord);
       let array2 = [];
       console.log("after => ", after);

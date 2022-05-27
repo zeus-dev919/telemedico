@@ -12,10 +12,11 @@ import {
 } from "react-native";
 import { COLORS } from "../../constants";
 import Checkbox from "expo-checkbox";
-import { CardField, useStripe } from "@stripe/stripe-react-native";
+import { CardField, initStripe, useStripe } from "@stripe/stripe-react-native";
 import { useSelector } from "react-redux";
 import { gql, useQuery } from "@apollo/client";
 import * as WebBrowser from "expo-web-browser";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 const ME_QUERY = gql`
   query {
@@ -30,6 +31,7 @@ const mapState = ({ user }) => ({
 });
 
 const PayCardsModel = (props) => {
+
   const { name, pay, navigation } = props;
   console.log("name, pay => ");
   console.log(name, pay);
@@ -47,53 +49,131 @@ const PayCardsModel = (props) => {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [failed, setFailed] = useState(false);
   const [validCard, setValidCard] = useState(false);
+  const [cardData, setcardData] = useState(null);
+
   //   Error data
   const [isSelectedError, setSelectedError] = useState(false);
 
+
   useEffect(() => {
-    try {
-      fetch("https://pay.medipocket.world/create-payment-intent/", {
-      // fetch("http://192.168.43.149:3000/create-payment-intent/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ amount: pay }),
+
+    async function setStripeKey() {
+
+      // initStripe({
+      //   // publishableKey: EnvironmentVariables.UAT.stripeKey,  //pk_test_51L3CFeSIfO58XcZRgR6oWGXV6A90OC0jSQ4IYExtdNsb4806PrPZBnZ8hT1Sr6y0ZMRPcZZafcmwxRGsFOnrluBt00lHZYrUhU
+      //   // merchantIdentifier: 'merchant.identifier',
+      // });
+
+      initStripe({
+        publishableKey: "pk_live_HuXS0sPYQFn62lfDrx0SuoKR",
+        merchantIdentifier: "merchant.identifier"
       })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log("Here Then line 61");
-          setKey(res.clientSecret);
-        });
-    } catch (err) {
-      Alert.alert(err.message);
-      console.log("error => ", err);
     }
+
+    setStripeKey()
+  }, []);
+
+  useEffect(async () => {
+
+    getPaymentIntentFromServer()
   }, []);
 
   const handlePayment = async () => {
+
+    console.log('--------------- test payment key ', key)
     setPaymentLoading(true);
     if (key) {
-      const { paymentIntent, error } = await confirmPayment(key, {
-        type: "Card",
-        billingDetails: {
-          email: userD.email,
-          amout: pay,
-        },
-      });
 
-      if (!error) {
-        Alert.alert("Received payment", `Billed for $${parseInt(paymentIntent?.amount)/100}`);
-        // Success
-        setPaymentLoading(false);
-        setModalVisible(true);
-        setSuccess(true);
-      } else {
-        // Failed
-        Alert.alert("Error", error.message);
+      let clientSecret = key
+      confirmPayment(clientSecret,
+        {
+          type: 'Card',
+          // billingDetails: {
+          //   email: userD.email,
+          //   amout: pay,
+          // },
+        }
+      ).then(res => {
+
+        console.log('==============-============-===========');
+        console.log('res.paymentIntent', res);
+        console.log('==============-============-===========');
+
+        if (res?.paymentIntent) {
+
+          Alert.alert(
+            "Received payment",
+            `Billed for $${parseInt(res.paymentIntent?.amount) / 100}`
+          );
+          // Success
+          setPaymentLoading(false);
+          setModalVisible(true);
+          setSuccess(true);
+        }
+
+        if (res?.error) {
+
+          Alert.alert(`Error code: ${res?.error?.code}`, res?.error?.message);
+          setPaymentLoading(false);
+          setSuccess(false);
+        }
+
+      }).catch(error => {
+
+        console.log('Payment confirmation error ==>', error);
+
         setPaymentLoading(false);
         setSuccess(false);
-      }
+        if (error?.message) {
+
+          Alert.alert(`Error code: ${error.code}`, error.message);
+          console.log('Payment confirmation error', error.message);
+
+        } else {
+
+          Alert.alert("Failed", "payment got some error");
+        }
+      })
+
+
+
+
+      // ======================= previous code for payment =============
+
+      //   const { paymentIntent, error } = await confirmPayment(key, {
+      //     type: "Card",
+      //     billingDetails: {
+      //       email: userD.email,
+      //       amout: pay,
+      //     },
+      //   });
+
+
+      // console.log('--------------- paymentIntent :', paymentIntent)
+      // console.log('--------------- error :', error)
+
+      //   if (!error) {
+      //     Alert.alert(
+      //       "Received payment",
+      //       `Billed for $${parseInt(paymentIntent?.amount) / 100}`
+      //     );
+      //     // Success
+      //     setPaymentLoading(false);
+      //     setModalVisible(true);
+      //     setSuccess(true);
+      //   } else {
+      //     // Failed
+      //     Alert.alert("Error", "Something went wrong!\nplease try again later");
+      //     setPaymentLoading(false);
+      //     setSuccess(false);
+      //   }
+
+      // ======================= previous code for payment =============
+
+    } else {
+
+      setPaymentLoading(false);
+      Alert.alert("Failed", "Something went wrong!\nplease try again later");
     }
     // confirmPayment(key, {
     //   type: "Card",
@@ -130,8 +210,38 @@ const PayCardsModel = (props) => {
   const _handlePressTerms1 = () => {
     WebBrowser.openBrowserAsync("https://medipocket.world/terms-conditions/");
   };
+
+  const getPaymentIntentFromServer = async () => {
+
+    console.log("get payment intent from server =-=-=-=-=-=-=-=-=-=-=-");
+
+    try {
+      // https://app.medipocket.world/payments/test-payment/   // https://pay.medipocket.world/create-payment-intent/
+      await fetch("https://pay.medipocket.world/create-payment-intent/", {
+        // fetch("http://192.168.43.149:3000/create-payment-intent/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: `amount=${pay}`,
+        body: JSON.stringify({ amount: pay }),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          console.log("Here Then line 61", res);
+          // setKey(res.id);
+          setKey(res.clientSecret);
+        });
+    } catch (err) {
+      Alert.alert("Something went wrong!", "please try again later...");
+      setPaymentLoading(true);
+      console.log("error =====> ", err);
+    }
+  }
+
   return (
     <>
+
       {/* Stripe */}
       <CardField
         postalCodeEnabled={false}
@@ -151,6 +261,7 @@ const PayCardsModel = (props) => {
         onCardChange={(cardDetails) => {
           console.log("cardDetails", cardDetails);
           setValidCard(cardDetails.complete);
+          setcardData(cardDetails)
         }}
         onFocus={(focusedField) => {
           console.log("focusField", focusedField);

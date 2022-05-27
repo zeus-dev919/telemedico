@@ -22,9 +22,10 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
+        
       },
       "usesIcloudStorage": true,
-      "bundleIdentifier": "com.rami404.doctor",
+      "bundleIdentifier": "com.medipocket.world",
       "icon": "./assets/icon.png"
     },
     "android": {

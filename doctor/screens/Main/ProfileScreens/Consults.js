@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
@@ -38,12 +38,21 @@ const CONSULT_QUERY = gql`
       }
       doctor {
         profilePicture
+        firstName
+        lastName
       }
       rnToken
       channelName
     }
+    serverCurrenttime
   }
 `;
+
+// const CURRENT_TIME = gql`
+//   query {
+//     serverCurrenttime
+//   }
+// `;
 
 const Consults = ({ route, navigation }) => {
   const prev = route?.params?.prev;
@@ -59,12 +68,10 @@ const Consults = ({ route, navigation }) => {
   }, [prev]);
 
   const getConsult = () => {
-
-    setInitialLoading(true)
+    setInitialLoading(true);
     let tab = [];
-
     if (data?.allSchedules?.length > 0)
-      for (let i = 0; i < data.allSchedules.length; i++) {
+      for (let i = 0; i < data?.allSchedules?.length; i++) {
         if (data.allSchedules[i].customer?.user?.email === userD.email) {
           const month = [
             "January",
@@ -81,14 +88,26 @@ const Consults = ({ route, navigation }) => {
             "December",
           ];
 
-          const nbDate = new Date(
-            `${month[data.allSchedules[i].date.substr(5, 2) - 1]
+          // let appointment_date_time = new Date(
+          //   `${month[data.allSchedules[i].date.substr(5, 2) - 1]
+          //   } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+          //     i
+          //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
+          // );
+
+          let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
             } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
               i
-            ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
-          );
-          const d = new Date();
-          const timeLeft = (nbDate - d) / 1000;
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`)
+
+          let current_date_time_from_server = new Date(data.serverCurrenttime * 1000);
+
+          var [nyear, nmonth, nday] = data.allSchedules[i].date.split('-');
+          var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(':');
+          let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
+
+          // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
+          const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
 
           if (timeLeft > 0) {
             const t = {
@@ -97,7 +116,7 @@ const Consults = ({ route, navigation }) => {
                 parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
               ].substr(0, 3),
               spec: data.allSchedules[i].specializations.specializationName,
-              time: nbDate,
+              time:  appointment_date_time_in_given_gmt,
               doctorImg: data.allSchedules[i].doctor.profilePicture,
               rtcToken: data.allSchedules[i].rnToken,
               channelName: data.allSchedules[i].channelName,
@@ -111,43 +130,31 @@ const Consults = ({ route, navigation }) => {
       }
 
     setSum(tab);
-    setInitialLoading(false)
+    setInitialLoading(false);
   };
 
   // useEffect(() => {
-  //   // if (data && !loading && userD) {
-  //   if (!loading) getConsult();
-  // },[loading]);
-
-
-  useEffect(() => {
-
-    if (isFocused) {
-
-      getConsult();
-    }
-  }, [isFocused]);
-
+  //   if (isFocused) {
+  //     getConsult();
+  //   }
+  // }, [isFocused]);
 
   useEffect(() => {
-
     getConsult();
   }, []);
 
-
   if (initialLoading) {
-
     return (
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <ActivityIndicator color="#000 " />
       </View>
-    )
+    );
   }
 
   return (
