@@ -245,9 +245,9 @@ const PayCardsModel = (props) => {
       {/* Stripe */}
       <CardField
         postalCodeEnabled={false}
-        placeholder={{
-          number: "4242 4242 4242 4242",
-        }}
+        // placeholder={{
+        //   number: "4242 4242 4242 4242",
+        // }}
         cardStyle={{
           backgroundColor: "#FFFFFF",
           textColor: "#000000",

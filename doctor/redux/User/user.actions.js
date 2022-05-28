@@ -1,4 +1,5 @@
 import userTypes from "./user.types";
+import { storeData, removeStoreData, getStorage } from '../../util/AsyncStorage';
 
 // PROPERTY
 export const signUpUser = (user, token) => async (dispatch) => {
@@ -27,6 +28,13 @@ export const setUserame = (username, email, password) => async (dispatch) => {
 };
 export const signInUser = (user, token) => async (dispatch) => {
   try {
+    await storeData({
+      key: 'user_info',
+      data: {
+        isLogin: true,
+        user, token,
+      }
+    });
     console.log("User from signInUser");
     console.log(user);
     dispatch({
@@ -41,7 +49,9 @@ export const signInUser = (user, token) => async (dispatch) => {
     console.log(err);
   }
 };
-export const signOutUser = () => (dispatch) => {
+export const signOutUser = () => async (dispatch) => {
+
+  await removeStoreData('user_info')
   try {
     dispatch({
       type: userTypes.SET_CURRENT_USER_OUT,

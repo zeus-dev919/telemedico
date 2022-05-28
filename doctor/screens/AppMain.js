@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useSelector } from "react-redux";
 import BeforeSplash from './BeforeSplash'
+import { gql, useMutation } from "@apollo/client";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  signInUser,
+  resetAllAuthForms,
+  ResetErrorsState,
+} from "../redux/User/user.actions";
+
 import {
   // BeforeSplash,
   Splash,
@@ -40,6 +48,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const mapState = ({ user }) => ({
+  signInSuccess: user.signInSuccess,
   currentUser: user.currentUser,
   doctorD: user.doctorD,
 });
@@ -118,20 +127,97 @@ export const MyTabs = () => {
   );
 };
 
-const AppMain = () => {
-  const { currentUser } = useSelector(mapState);
+const REGISTER_QUERY = gql`
+  mutation SignIn($email: String!, $password: String!) {
+    tokenAuth(email: $email, password: $password) {
+      success
+      errors
+      refreshToken
+      token
+    }
+  }
+`;
+
+const AppMain = ({ isLogin, userData }) => {
+
+  const { currentUser, signInSuccess, token, errors } = useSelector(mapState);
+  const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
+  const dispatch = useDispatch();
+
+  const [waiting, setWating] = React.useState(true);
+
+  useEffect(async () => {
+
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log('isLogin', isLogin)
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log('userData', userData)
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+
+
+    if (isLogin) {
+
+      await SignIn({
+        variables: { email: userData.user.email, password: userData.user.password },
+      })
+        .then((res) => {
+          let user = {
+            username: "",
+            email: userData.user.email,
+            password: userData.user.password,
+          };
+
+          if (res.data.tokenAuth.token) {
+            dispatch(signInUser(user, res.data.tokenAuth.token));
+
+          } else {
+            console.log(
+              "res                                                          "
+            );
+            console.log("res L:", res);
+            setError(
+              "we do not have any account with this email. try to signed up first"
+            );
+          }
+        })
+        .catch((err) => {
+
+          console.log("error line 156", err);
+        });
+    } else {
+
+      setWating(false)
+    }
+
+  }, [isLogin])
+
+
+  useEffect(() => {
+    if (signInSuccess) {
+
+      dispatch(resetAllAuthForms());
+      setWating(false)
+    }
+  }, [signInSuccess]);
+
+  if (waiting) {
+
+    return (
+      <BeforeSplash />
+    )
+  }
 
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialeRouteName="BeforeSplash"
+        initialeRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
       >
         {!currentUser && (
           <>
-            <Stack.Screen name="BeforeSplash" component={BeforeSplash} />
+            {/* <Stack.Screen name="BeforeSplash" component={BeforeSplash} /> */}
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Conscent" component={Conscent} />

@@ -8,6 +8,9 @@ import store from "./redux/createStore";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import * as Sentry from "sentry-expo";
+import BeforeSplash from './screens/BeforeSplash';
+import { storeData, removeStoreData, getStorage } from './util/AsyncStorage';
+
 const cache = new InMemoryCache();
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -22,12 +25,35 @@ Sentry.init({
 });
 
 const App = () => {
+
+  const [loading, setLoading] = React.useState(true);
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [userData, setUserData] = React.useState(undefined);
+
+  React.useEffect(async () => {
+
+    let user_info = await getStorage('user_info')
+
+    console.log('================', user_info)
+    if (user_info?.isLogin) {
+
+      setUserData(user_info)
+      setIsLogin(true)
+      setLoading(false)
+
+    } else {
+
+      setLoading(false)
+    }
+
+  }, [])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StripeProvider
         // publishableKey="pk_test_2Fr70nsDAtUaKwlIx73qEw8p"
         // publishableKey="pk_test_51L3CFeSIfO58XcZRgR6oWGXV6A90OC0jSQ4IYExtdNsb4806PrPZBnZ8hT1Sr6y0ZMRPcZZafcmwxRGsFOnrluBt00lHZYrUhU"
-        
+
         publishableKey="pk_live_HuXS0sPYQFn62lfDrx0SuoKR"
         merchantIdentifier="merchant.identifier"
       >
@@ -35,7 +61,14 @@ const App = () => {
           <Provider store={store}>
             {/* <StatusBar style="dark" /> */}
             <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
-            <AppMain />
+
+            {
+              loading ?
+                <BeforeSplash />
+                :
+                <AppMain isLogin={isLogin} userData={userData}/>
+            }
+
           </Provider>
         </ApolloProvider>
       </StripeProvider>

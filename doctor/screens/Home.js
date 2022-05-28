@@ -42,7 +42,7 @@ const CustomDrawerContent = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!currentUser) {
-      navigation.navigate("BeforeSplash");
+      navigation.navigate("Splash");
     }
   }, [currentUser]);
 

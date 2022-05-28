@@ -4,11 +4,11 @@ import { COLORS, images } from "../constants";
 
 const BeforeSplash = ({ navigation }) => {
   console.log("Before Splash Screen");
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("Splash");
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigation.navigate("Splash");
+  //   }, 3000);
+  // }, []);
 
   return (
     <View style={styles.container}>

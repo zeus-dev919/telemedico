@@ -18,6 +18,9 @@ const userTypes = {
   RESET_STATES: 'RESET_STATES',
   // ERROR
   SET_ERRORS: 'SET_ERRORS',
+
+  // loacal storage
+  SAVE_USER_INFO: 'SAVE_USER_INFO',
 };
 
 export default userTypes;
