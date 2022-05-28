@@ -31,7 +31,6 @@ const mapState = ({ user }) => ({
 });
 
 const PayCardsModel = (props) => {
-
   const { name, pay, navigation } = props;
   console.log("name, pay => ");
   console.log(name, pay);
@@ -54,11 +53,8 @@ const PayCardsModel = (props) => {
   //   Error data
   const [isSelectedError, setSelectedError] = useState(false);
 
-
   useEffect(() => {
-
     async function setStripeKey() {
-
       // initStripe({
       //   // publishableKey: EnvironmentVariables.UAT.stripeKey,  //pk_test_51L3CFeSIfO58XcZRgR6oWGXV6A90OC0jSQ4IYExtdNsb4806PrPZBnZ8hT1Sr6y0ZMRPcZZafcmwxRGsFOnrluBt00lHZYrUhU
       //   // merchantIdentifier: 'merchant.identifier',
@@ -66,77 +62,63 @@ const PayCardsModel = (props) => {
 
       initStripe({
         publishableKey: "pk_live_HuXS0sPYQFn62lfDrx0SuoKR",
-        merchantIdentifier: "merchant.identifier"
-      })
+        merchantIdentifier: "merchant.identifier",
+      });
     }
 
-    setStripeKey()
+    setStripeKey();
   }, []);
 
   useEffect(async () => {
-
-    getPaymentIntentFromServer()
+    getPaymentIntentFromServer();
   }, []);
 
   const handlePayment = async () => {
-
-    console.log('--------------- test payment key ', key)
+    console.log("--------------- test payment key ", key);
     setPaymentLoading(true);
     if (key) {
+      let clientSecret = key;
+      confirmPayment(clientSecret, {
+        type: "Card",
+        // billingDetails: {
+        //   email: userD.email,
+        //   amout: pay,
+        // },
+      })
+        .then((res) => {
+          console.log("==============-============-===========");
+          console.log("res.paymentIntent", res);
+          console.log("==============-============-===========");
 
-      let clientSecret = key
-      confirmPayment(clientSecret,
-        {
-          type: 'Card',
-          // billingDetails: {
-          //   email: userD.email,
-          //   amout: pay,
-          // },
-        }
-      ).then(res => {
+          if (res?.paymentIntent) {
+            Alert.alert(
+              "Received payment",
+              `Billed for $${parseInt(res.paymentIntent?.amount) / 100}`
+            );
+            // Success
+            setPaymentLoading(false);
+            setModalVisible(true);
+            setSuccess(true);
+          }
 
-        console.log('==============-============-===========');
-        console.log('res.paymentIntent', res);
-        console.log('==============-============-===========');
+          if (res?.error) {
+            Alert.alert(`Error code: ${res?.error?.code}`, res?.error?.message);
+            setPaymentLoading(false);
+            setSuccess(false);
+          }
+        })
+        .catch((error) => {
+          console.log("Payment confirmation error ==>", error);
 
-        if (res?.paymentIntent) {
-
-          Alert.alert(
-            "Received payment",
-            `Billed for $${parseInt(res.paymentIntent?.amount) / 100}`
-          );
-          // Success
-          setPaymentLoading(false);
-          setModalVisible(true);
-          setSuccess(true);
-        }
-
-        if (res?.error) {
-
-          Alert.alert(`Error code: ${res?.error?.code}`, res?.error?.message);
           setPaymentLoading(false);
           setSuccess(false);
-        }
-
-      }).catch(error => {
-
-        console.log('Payment confirmation error ==>', error);
-
-        setPaymentLoading(false);
-        setSuccess(false);
-        if (error?.message) {
-
-          Alert.alert(`Error code: ${error.code}`, error.message);
-          console.log('Payment confirmation error', error.message);
-
-        } else {
-
-          Alert.alert("Failed", "payment got some error");
-        }
-      })
-
-
-
+          if (error?.message) {
+            Alert.alert(`Error code: ${error.code}`, error.message);
+            console.log("Payment confirmation error", error.message);
+          } else {
+            Alert.alert("Failed", "payment got some error");
+          }
+        });
 
       // ======================= previous code for payment =============
 
@@ -147,7 +129,6 @@ const PayCardsModel = (props) => {
       //       amout: pay,
       //     },
       //   });
-
 
       // console.log('--------------- paymentIntent :', paymentIntent)
       // console.log('--------------- error :', error)
@@ -169,9 +150,7 @@ const PayCardsModel = (props) => {
       //   }
 
       // ======================= previous code for payment =============
-
     } else {
-
       setPaymentLoading(false);
       Alert.alert("Failed", "Something went wrong!\nplease try again later");
     }
@@ -212,7 +191,6 @@ const PayCardsModel = (props) => {
   };
 
   const getPaymentIntentFromServer = async () => {
-
     console.log("get payment intent from server =-=-=-=-=-=-=-=-=-=-=-");
 
     try {
@@ -237,17 +215,16 @@ const PayCardsModel = (props) => {
       setPaymentLoading(true);
       console.log("error =====> ", err);
     }
-  }
+  };
 
   return (
     <>
-
       {/* Stripe */}
       <CardField
         postalCodeEnabled={false}
-        // placeholder={{
-        //   number: "4242 4242 4242 4242",
-        // }}
+        placeholder={{
+          number: "Enter your card number ",
+        }}
         cardStyle={{
           backgroundColor: "#FFFFFF",
           textColor: "#000000",
@@ -261,7 +238,7 @@ const PayCardsModel = (props) => {
         onCardChange={(cardDetails) => {
           console.log("cardDetails", cardDetails);
           setValidCard(cardDetails.complete);
-          setcardData(cardDetails)
+          setcardData(cardDetails);
         }}
         onFocus={(focusedField) => {
           console.log("focusField", focusedField);
