@@ -51,6 +51,14 @@ const DoctorConsults = ({ route, navigation }) => {
   const getConsult = () => {
     let tab = []
 
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log('userD.email : ', userD.email)
+    console.log('data.allSchedules[i].customer?.user?.emaill : ',data.allSchedules)
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
+
+
     if (data?.allSchedules?.length > 0)
       for (let i = 0; i < data.allSchedules.length; i++) {
         if (data.allSchedules[i].customer?.user?.email === userD.email) {
@@ -92,6 +100,17 @@ const DoctorConsults = ({ route, navigation }) => {
         // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
         const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
 
+        
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        console.log('date :', data.allSchedules[i].date)
+        console.log('time :', data.allSchedules[i].startTime)
+        console.log('current_date_time_from_server :', current_date_time_from_server)
+          console.log('timeLeft  :', timeLeft  )
+          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+
+
           if (timeLeft > 0) {
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
@@ -111,9 +130,18 @@ const DoctorConsults = ({ route, navigation }) => {
     setSum(tab);
   };
 
+  
+  useEffect(() => {
+    alert(0)
+    if (isFocused) {
+      getConsult();
+    }
+  }, [isFocused]);
+
   useEffect(() => {
     if (!loading) getConsult();
   }, [loading]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>

@@ -19,18 +19,25 @@ const DoctorUpcomingConsult = (props) => {
     channelName,
     customerName,
     navigation,
+    item
   } = props;
   console.log("Consult => ", day, month);
   const { doctorD } = useSelector(mapState);
+
   const handleJoin = () => {
+
     const d = new Date();
     const timeLeft = (time - d) / 1000;
+
     navigation.navigate("beforecall", {
       timeLeft: timeLeft,
       RTCToken: rtcToken,
       channelName: channelName,
     });
   };
+
+  console.log('----------------------item', item)
+  
   return (
     <View style={[styles.card1, styles.shadow1]}>
       <View style={styles.doctorCard}>
