@@ -95,7 +95,7 @@ const Consults = ({ route, navigation }) => {
           //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
           // );
           
-
+          
           let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
             } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
               i

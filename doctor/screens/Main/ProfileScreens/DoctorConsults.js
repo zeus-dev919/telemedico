@@ -26,21 +26,22 @@ const CONSULT_QUERY = gql`
       specializations {
         specializationName
       }
-      doctor {
-        profilePicture
-        username {
-          email
-        }
-      }
       customer {
         user {
           username
           email
         }
       }
+      doctor {
+        profilePicture
+        username {
+          email
+        }
+      }
       rnToken
       channelName
     }
+    serverCurrenttime
   }
 `;
 
@@ -98,7 +99,7 @@ const DoctorConsults = ({ route, navigation }) => {
         let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
 
         // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
-        const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
+        const timeLeft = (appointment_date_time_utc - current_date_time_from_server) / 1000;
 
         
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
