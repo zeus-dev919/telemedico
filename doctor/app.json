@@ -2,7 +2,7 @@
   "expo": {
     "name": "MediPocket World",
     "slug": "HealthcareApp",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -33,7 +33,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#40e0d0"
       },
-      "versionCode": 7,
+      "versionCode": 8,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO"
