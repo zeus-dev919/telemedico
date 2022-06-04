@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
 import DoctorUpcomingConsult from "../../Models/DoctorUpcomingConsult";
 import { gql, useQuery } from "@apollo/client";
@@ -58,9 +59,10 @@ const Consults = ({ route, navigation }) => {
   const prev = route?.params?.prev;
   console.log("Prev => ", prev);
   const { userD } = useSelector(mapState);
-  const { data, loading } = useQuery(CONSULT_QUERY);
+  const { data, loading, refetch } = useQuery(CONSULT_QUERY);
   const [initialLoading, setInitialLoading] = useState(false);
   const [sum, setSum] = useState([]);
+  const [boolState, setBoolState] = useState(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -94,32 +96,40 @@ const Consults = ({ route, navigation }) => {
           //     i
           //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
           // );
-          
-          
-          let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
+
+          let appointment_date_time_in_given_gmt = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
             } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
               i
-            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`)
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`
+          );
 
-          let current_date_time_from_server = new Date(data.serverCurrenttime * 1000);
+          let current_date_time_from_server = new Date(
+            data.serverCurrenttime * 1000
+          );
 
           // var [nyear, nmonth, nday] = data.allSchedules[i].date.split('-');
           // var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(':');
           // let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
 
           // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
-          const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
+          const timeLeft =
+            (appointment_date_time_in_given_gmt -
+              current_date_time_from_server) /
+            1000;
 
-
-          
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-          console.log('date :', data.allSchedules[i].date)
-          console.log('time :', data.allSchedules[i].startTime)
-          console.log('current_date_time_from_server :', current_date_time_from_server)
-          console.log('timeLeft  :', timeLeft  )
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log("date :", data.allSchedules[i].date);
+          console.log("time :", data.allSchedules[i].startTime);
+          console.log(
+            "current_date_time_from_server :",
+            current_date_time_from_server
+          );
+          console.log("timeLeft  :", timeLeft);
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
           if (timeLeft > 0) {
             const t = {
@@ -128,7 +138,7 @@ const Consults = ({ route, navigation }) => {
                 parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
               ].substr(0, 3),
               spec: data.allSchedules[i].specializations.specializationName,
-              time:  appointment_date_time_in_given_gmt,
+              time: appointment_date_time_in_given_gmt,
               doctorImg: data.allSchedules[i].doctor.profilePicture,
               rtcToken: data.allSchedules[i].rnToken,
               channelName: data.allSchedules[i].channelName,
@@ -152,8 +162,14 @@ const Consults = ({ route, navigation }) => {
   }, [isFocused]);
 
   useEffect(() => {
-    getConsult();
-  }, []);
+    if (data) {
+      getConsult();
+    }
+  }, [data]);
+
+  const buttonPreesed = () => {
+    refetch();
+  };
 
   if (initialLoading) {
     return (
@@ -174,6 +190,9 @@ const Consults = ({ route, navigation }) => {
       <Header navigation={navigation} bg={COLORS.bgColor1} isHome={false} />
       <View style={styles.titleConatiner}>
         <Text style={styles.title1}>My Consults</Text>
+        <TouchableOpacity onPress={buttonPreesed}>
+          <FontAwesome name="refresh" size={24} color="green" />
+        </TouchableOpacity>
       </View>
       {/* ScrollView */}
       <ScrollView style={styles.scrollView}>
@@ -257,6 +276,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   titleConatiner: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 5,
   },
   title1: {

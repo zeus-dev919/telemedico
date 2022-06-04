@@ -12,7 +12,7 @@ import DoctorUpcomingConsult from "./DoctorUpcomingConsult";
 import { COLORS, icons, images } from "../../constants";
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
-
+import { FontAwesome } from "@expo/vector-icons";
 const mapState = ({ user }) => ({
   userD: user.userD,
 });
@@ -49,7 +49,7 @@ let j = 0;
 const DoctorHomeConsult = (props) => {
   const { navigation } = props;
   const { userD } = useSelector(mapState);
-  const { data, loading } = useQuery(CONSULT_QUERY);
+  const { data, loading, refetch } = useQuery(CONSULT_QUERY);
   const [sum, setSum] = useState([]);
   const getConsult = () => {
     let tab = [];
@@ -81,26 +81,33 @@ const DoctorHomeConsult = (props) => {
           // // const day = weekday[nbDate.getDay()];
           // const d = new Date();
 
+          let appointment_date_time_in_given_gmt = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+              i
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`
+          );
 
-          let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
-          } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
-            i
-          ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`)
+          let current_date_time_from_server = new Date(
+            data.serverCurrenttime * 1000
+          );
+          const timeLeft =
+            (appointment_date_time_in_given_gmt -
+              current_date_time_from_server) /
+            1000;
 
-        let current_date_time_from_server = new Date(data.serverCurrenttime * 1000);
-        const timeLeft = (appointment_date_time_in_given_gmt - current_date_time_from_server) / 1000;
-
-
-          
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('date :', data.allSchedules[i].date)
-        console.log('time :', data.allSchedules[i].startTime)
-        console.log('current_date_time_from_server :', current_date_time_from_server)
-        console.log('timeLeft  :', timeLeft  )
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log("date :", data.allSchedules[i].date);
+          console.log("time :", data.allSchedules[i].startTime);
+          console.log(
+            "current_date_time_from_server :",
+            current_date_time_from_server
+          );
+          console.log("timeLeft  :", timeLeft);
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
           if (timeLeft > 0) {
             const t = {
@@ -130,6 +137,9 @@ const DoctorHomeConsult = (props) => {
     if (!loading) getConsult();
   }, [loading]);
 
+  const buttonPreesed = () => {
+    refetch();
+  };
   return (
     <>
       <View style={styles.headerCards2}>
@@ -161,6 +171,9 @@ const DoctorHomeConsult = (props) => {
       {/* Consultations Title */}
       <View style={styles.specContainer}>
         <Text style={styles.SpecTitle}>My Consultations</Text>
+        <TouchableOpacity onPress={buttonPreesed}>
+          <FontAwesome name="refresh" size={24} color="green" />
+        </TouchableOpacity>
       </View>
       {sum.map((item, index) => {
         return (
@@ -277,6 +290,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   specContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     margin: 10,
     marginTop: 20,
   },
