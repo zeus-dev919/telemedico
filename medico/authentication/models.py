@@ -44,7 +44,7 @@ class Doctor(models.Model):
     time_slots = models.CharField(max_length=20,null=False, blank=True)
     consultation_time = models.IntegerField()
     experience = models.CharField(max_length=64,  verbose_name="experience", blank=True)
-
+    doctor_fees = models.IntegerField(max_length=10, null=True)
 
     def __str__(self):
         return self.first_name
