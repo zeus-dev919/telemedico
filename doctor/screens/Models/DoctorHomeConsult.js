@@ -109,7 +109,7 @@ const DoctorHomeConsult = (props) => {
           console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
           console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-          if (timeLeft > 0) {
+          if (timeLeft) {
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
               month: month[
@@ -123,6 +123,7 @@ const DoctorHomeConsult = (props) => {
               customerName: data.allSchedules[i].customer.user?.username
                 ? data.allSchedules[i].customer.user?.username
                 : "--",
+              timeLeft: timeLeft,
             };
             j++;
             tab.push(t);
@@ -187,6 +188,7 @@ const DoctorHomeConsult = (props) => {
             rtcToken={item.rtcToken}
             channelName={item.channelName}
             customerName={item.customerName}
+            timeLeft={item.timeLeft}
             navigation={navigation}
             item={item}
           />

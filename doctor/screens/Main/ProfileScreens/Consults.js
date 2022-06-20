@@ -49,12 +49,6 @@ const CONSULT_QUERY = gql`
   }
 `;
 
-// const CURRENT_TIME = gql`
-//   query {
-//     serverCurrenttime
-//   }
-// `;
-
 const Consults = ({ route, navigation }) => {
   const prev = route?.params?.prev;
   console.log("Prev => ", prev);
@@ -90,13 +84,6 @@ const Consults = ({ route, navigation }) => {
             "December",
           ];
 
-          // let appointment_date_time = new Date(
-          //   `${month[data.allSchedules[i].date.substr(5, 2) - 1]
-          //   } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
-          //     i
-          //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
-          // );
-
           let appointment_date_time_in_given_gmt = new Date(
             `${
               month[data.allSchedules[i].date.substr(5, 2) - 1]
@@ -108,30 +95,14 @@ const Consults = ({ route, navigation }) => {
           let current_date_time_from_server = new Date(
             data.serverCurrenttime * 1000
           );
-
-          // var [nyear, nmonth, nday] = data.allSchedules[i].date.split('-');
-          // var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(':');
-          // let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
-
-          // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
           const timeLeft =
             (appointment_date_time_in_given_gmt -
               current_date_time_from_server) /
             1000;
 
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          console.log("date :", data.allSchedules[i].date);
-          console.log("time :", data.allSchedules[i].startTime);
-          console.log(
-            "current_date_time_from_server :",
-            current_date_time_from_server
-          );
-          console.log("timeLeft  :", timeLeft);
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          console.log("Line 103 =>", timeLeft);
 
-          if (timeLeft > 0) {
+          if (timeLeft) {
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
               month: month[
@@ -145,6 +116,7 @@ const Consults = ({ route, navigation }) => {
               customerName: data.allSchedules[i].customer.user?.username
                 ? data.allSchedules[i].customer.user?.username
                 : "--",
+              timeLeft: timeLeft,
             };
             tab.push(t);
           }
@@ -207,6 +179,7 @@ const Consults = ({ route, navigation }) => {
               doctorImg={item.doctorImg}
               rtcToken={item.rtcToken}
               channelName={item.channelName}
+              timeLeft={item.timeLeft}
               navigation={navigation}
             />
           );

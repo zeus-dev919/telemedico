@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import BeforeSplash from './BeforeSplash'
+import BeforeSplash from "./BeforeSplash";
 import { gql, useMutation } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,7 +42,12 @@ import {
   BeforeCall,
   Call,
 } from "./index.js";
-import { FontAwesome, Fontisto, Entypo } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Fontisto,
+  Entypo,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -83,46 +88,68 @@ export const MyTabs = () => {
         }}
       />
       {!doctorD && (
-        <Tab.Screen
-          name="doctors"
-          component={Doctors}
-          options={{
-            tabBarLabel: () => (
-              <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
-                Doctors
-              </Text>
-            ),
-            tabBarIcon: () => (
-              <Fontisto
-                name="doctor"
-                color="#40e0d0"
-                size={22}
-                style={{ marginTop: 0 }}
-              />
-            ),
-          }}
-        />
+        <>
+          <Tab.Screen
+            name="doctors"
+            component={Doctors}
+            options={{
+              tabBarLabel: () => (
+                <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
+                  Doctors
+                </Text>
+              ),
+              tabBarIcon: () => (
+                <Fontisto
+                  name="doctor"
+                  color="#40e0d0"
+                  size={22}
+                  style={{ marginTop: 0 }}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="consults"
+            component={Consults}
+            initialParams={{ prev: "0" }}
+            options={{
+              tabBarLabel: () => (
+                <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
+                  Consultation
+                </Text>
+              ),
+              tabBarIcon: () => (
+                <Entypo
+                  name="calendar"
+                  color="#40e0d0"
+                  size={22}
+                  style={{ marginTop: 0 }}
+                />
+              ),
+            }}
+          />
+        </>
       )}
-      <Tab.Screen
-        name="consults"
-        component={Consults}
+      {/* <Tab.Screen
+        name="age"
+        component={Age}
         initialParams={{ prev: "0" }}
         options={{
           tabBarLabel: () => (
             <Text style={{ color: "grey", fontSize: 14, marginBottom: 5 }}>
-              Consultation
+              DR AI
             </Text>
           ),
           tabBarIcon: () => (
-            <Entypo
-              name="calendar"
+            <MaterialCommunityIcons
+              name="brain"
               color="#40e0d0"
-              size={22}
+              size={25}
               style={{ marginTop: 0 }}
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
@@ -139,7 +166,6 @@ const REGISTER_QUERY = gql`
 `;
 
 const AppMain = ({ isLogin, userData }) => {
-
   const { currentUser, signInSuccess, token, errors } = useSelector(mapState);
   const [SignIn, { data, loading }] = useMutation(REGISTER_QUERY);
   const dispatch = useDispatch();
@@ -147,18 +173,18 @@ const AppMain = ({ isLogin, userData }) => {
   const [waiting, setWating] = React.useState(true);
 
   useEffect(async () => {
-
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('isLogin', isLogin)
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('userData', userData)
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    console.log("isLogin", isLogin);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    console.log("userData", userData);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
     if (isLogin) {
-
       await SignIn({
-        variables: { email: userData.user.email, password: userData.user.password },
+        variables: {
+          email: userData.user.email,
+          password: userData.user.password,
+        },
       })
         .then((res) => {
           let user = {
@@ -169,7 +195,6 @@ const AppMain = ({ isLogin, userData }) => {
 
           if (res.data.tokenAuth.token) {
             dispatch(signInUser(user, res.data.tokenAuth.token));
-
           } else {
             console.log(
               "res                                                          "
@@ -181,30 +206,22 @@ const AppMain = ({ isLogin, userData }) => {
           }
         })
         .catch((err) => {
-
           console.log("error line 156", err);
         });
     } else {
-
-      setWating(false)
+      setWating(false);
     }
-
-  }, [isLogin])
-
+  }, [isLogin]);
 
   useEffect(() => {
     if (signInSuccess) {
-
       dispatch(resetAllAuthForms());
-      setWating(false)
+      setWating(false);
     }
   }, [signInSuccess]);
 
   if (waiting) {
-
-    return (
-      <BeforeSplash />
-    )
+    return <BeforeSplash />;
   }
 
   return (

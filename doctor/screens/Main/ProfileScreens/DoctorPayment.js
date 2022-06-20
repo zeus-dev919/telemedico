@@ -9,11 +9,106 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../../constants";
+import DoctorPaymentModel from "../../Models/DoctorPaymentModel";
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
-import DoctorPaymentModel from "../../Models/DoctorPaymentModel";
+
+const mapState = ({ user }) => ({
+  userD: user.userD,
+});
+
+const CONSULT_QUERY = gql`
+  query {
+    allSchedules {
+      startTime
+      endTime
+      date
+      specializations {
+        specializationName
+      }
+      doctor {
+        profilePicture
+        username {
+          email
+        }
+        doctorFees
+      }
+    }
+    serverCurrenttime
+  }
+`;
 
 const DoctorPayment = ({ navigation }) => {
+  const { userD } = useSelector(mapState);
+  const { data, loading } = useQuery(CONSULT_QUERY);
+  const [sum, setSum] = useState([]);
+  const getConsult = () => {
+    let tab = [];
+    if (data?.allSchedules?.length > 0)
+      for (let i = 0; i < data.allSchedules.length; i++) {
+        if (data.allSchedules[i].doctor?.username?.email === userD.email) {
+          const month = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+
+          let appointment_date_time_in_given_gmt = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+              i
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`
+          );
+
+          let current_date_time_from_server = new Date(
+            data.serverCurrenttime * 1000
+          );
+
+          var [nyear, nmonth, nday] = data.allSchedules[i].date.split("-");
+          var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(":");
+          let appointment_date_time_utc = Date.UTC(
+            nyear,
+            nmonth,
+            nday,
+            nhour,
+            nmin,
+            nsec
+          );
+          const timeLeft =
+            (appointment_date_time_utc - current_date_time_from_server) / 1000;
+
+          if (timeLeft) {
+            console.log("true line 85");
+            const t = {
+              startTime: data.allSchedules[i].startTime,
+              day: data.allSchedules[i].date.substr(8, 2),
+              month: month[
+                parseInt(data.allSchedules[i].date.substr(5, 2)) - 1
+              ].substr(0, 3),
+              time: appointment_date_time_in_given_gmt,
+              doctorFees: data.allSchedules[i].doctor.doctorFees,
+              timeLeft: timeLeft,
+            };
+            tab.push(t);
+          }
+        }
+      }
+    setSum(tab);
+  };
+
+  useEffect(() => {
+    if (!loading) getConsult();
+  }, [loading]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -37,9 +132,16 @@ const DoctorPayment = ({ navigation }) => {
         </View>
       </View>
       <ScrollView style={styles.scrollView}>
-        <DoctorPaymentModel />
-        <DoctorPaymentModel />
-        <DoctorPaymentModel />
+        {sum.map((item, index) => (
+          <DoctorPaymentModel
+            startTime={item.startTime}
+            day={item.day}
+            month={item.month}
+            time={item.time}
+            doctorFees={item.doctorFees}
+            timeleft={item.timeleft}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

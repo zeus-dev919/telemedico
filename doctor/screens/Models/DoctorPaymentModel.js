@@ -2,51 +2,25 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { COLORS, icons } from "../../constants";
 
-const DoctorPaymentModel = () => {
+const DoctorPaymentModel = (props) => {
+  const { day, month, time, doctorFees, timeLeft, startTime } = props;
+  console.log("Hello from Line 7");
+  // console.log(time.toString().substr(0, 4));
+  // let ch = time.toString().substr(0, 4);
   const [collapsed, setCollapsed] = useState(false);
   return (
     <View style={styles.containerBoxes}>
       <View style={styles.box}>
         <View style={styles.textContainer}>
-          <Text style={styles.cardTitle3}>Mon 15 March 2022 at 18:00</Text>
-          <Text style={styles.cardTitle4}>$150 </Text>
-        </View>
-        <View style={styles.joinContainer}>
-          {!collapsed ? (
-            <TouchableOpacity
-              onPress={() => setCollapsed(!collapsed)}
-              style={[styles.doctorBtnStyle, styles.shadow1]}
-            >
-              <Image
-                source={{
-                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Farrow-down.png?alt=media&token=088e6adb-e587-4484-ae6f-f9fa8272b891",
-                }}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => setCollapsed(!collapsed)}
-              style={[styles.doctorBtnStyle, styles.shadow1]}
-            >
-              <Image
-                source={{
-                  uri: "https://firebasestorage.googleapis.com/v0/b/medipocket2022.appspot.com/o/assets%2Ficons%2Fpayments%2Farrow-down.png?alt=media&token=088e6adb-e587-4484-ae6f-f9fa8272b891",
-                }}
-                style={styles.icon2}
-              />
-            </TouchableOpacity>
-          )}
+          <Text style={styles.cardTitle3}>Consultation Earnings</Text>
+          <Text style={styles.cardTitle3}>
+            {day} {month} {time.toString().substr(0, 4)} at {startTime}
+          </Text>
+          <Text style={styles.cardTitle4}>
+            {doctorFees ? `$${doctorFees}` : "$0"}
+          </Text>
         </View>
       </View>
-      {collapsed && (
-        <>
-          <Text style={styles.cardTitle4}>Duration: 30 min</Text>
-          <Text style={styles.cardTitle4}>Duration: 30 min</Text>
-          <Text style={styles.cardTitle4}>Duration: 30 min</Text>
-          <Text style={styles.cardTitle4}>Duration: 30 min</Text>
-        </>
-      )}
     </View>
   );
 };
@@ -76,7 +50,7 @@ const styles = StyleSheet.create({
   },
   cardTitle3: {
     color: COLORS.fontColor4,
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: "bold",
     paddingLeft: 10,
     margin: 0,

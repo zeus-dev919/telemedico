@@ -50,20 +50,11 @@ const DoctorConsults = ({ route, navigation }) => {
   const { data, loading } = useQuery(CONSULT_QUERY);
   const [sum, setSum] = useState([]);
   const getConsult = () => {
-    let tab = []
-
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('userD.email : ', userD.email)
-    console.log('data.allSchedules[i].customer?.user?.emaill : ',data.allSchedules)
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<><<><>><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>')
-
-
+    let tab = [];
     if (data?.allSchedules?.length > 0)
       for (let i = 0; i < data.allSchedules.length; i++) {
         if (data.allSchedules[i].customer?.user?.email === userD.email) {
-        const month = [
+          const month = [
             "January",
             "February",
             "March",
@@ -77,42 +68,34 @@ const DoctorConsults = ({ route, navigation }) => {
             "November",
             "December",
           ];
-          // const nbDate = new Date(
-          //   `${
-          //     month[data.allSchedules[i].date.substr(5, 2) - 1]
-          //   } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
-          //     i
-          //   ].date.substr(0, 4)} ${data.allSchedules[i].startTime}`
-          // );
-          // const d = new Date();
-          // const timeLeft = (nbDate - d) / 1000;
 
-          let appointment_date_time_in_given_gmt = new Date(`${month[data.allSchedules[i].date.substr(5, 2) - 1]
-          } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
-            i
-          ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`)
+          let appointment_date_time_in_given_gmt = new Date(
+            `${
+              month[data.allSchedules[i].date.substr(5, 2) - 1]
+            } ${data.allSchedules[i].date.substr(8, 2)}, ${data.allSchedules[
+              i
+            ].date.substr(0, 4)} ${data.allSchedules[i].startTime} GMT`
+          );
 
-        let current_date_time_from_server = new Date(data.serverCurrenttime * 1000);
+          let current_date_time_from_server = new Date(
+            data.serverCurrenttime * 1000
+          );
 
-        var [nyear, nmonth, nday] = data.allSchedules[i].date.split('-');
-        var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(':');
-        let appointment_date_time_utc = Date.UTC(nyear, nmonth, nday, nhour, nmin, nsec);
+          var [nyear, nmonth, nday] = data.allSchedules[i].date.split("-");
+          var [nhour, nmin, nsec] = data.allSchedules[i].startTime.split(":");
+          let appointment_date_time_utc = Date.UTC(
+            nyear,
+            nmonth,
+            nday,
+            nhour,
+            nmin,
+            nsec
+          );
+          const timeLeft =
+            (appointment_date_time_utc - current_date_time_from_server) / 1000;
 
-        // const timeLeft = appointment_date_time_utc - (data.serverCurrenttime * 1000);
-        const timeLeft = (appointment_date_time_utc - current_date_time_from_server) / 1000;
-
-        
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('date :', data.allSchedules[i].date)
-        console.log('time :', data.allSchedules[i].startTime)
-        console.log('current_date_time_from_server :', current_date_time_from_server)
-          console.log('timeLeft  :', timeLeft  )
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-
-
-          if (timeLeft > 0) {
+          if (timeLeft) {
+            console.log("true line 85");
             const t = {
               day: data.allSchedules[i].date.substr(8, 2),
               month: month[
@@ -123,6 +106,7 @@ const DoctorConsults = ({ route, navigation }) => {
               doctorImg: data.allSchedules[i].doctor.profilePicture,
               rtcToken: data.allSchedules[i].rnToken,
               channelName: data.allSchedules[i].channelName,
+              timeLeft: timeLeft,
             };
             tab.push(t);
           }
@@ -131,9 +115,8 @@ const DoctorConsults = ({ route, navigation }) => {
     setSum(tab);
   };
 
-  
   useEffect(() => {
-    alert(0)
+    alert(0);
     if (isFocused) {
       getConsult();
     }
@@ -178,6 +161,7 @@ const DoctorConsults = ({ route, navigation }) => {
               doctorImg={item.doctorImg}
               rtcToken={item.rtcToken}
               channelName={item.channelName}
+              timeLeft={item.timeLeft}
               navigation={navigation}
             />
           );

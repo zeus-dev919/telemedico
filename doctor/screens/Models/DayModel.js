@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../../constants";
 
 const DayModel = (props) => {
-  console.log("props from DayModel ", props);
   const { day, month, isSelected, bg } = props;
   var check = true;
   if (bg === "1") check = false;

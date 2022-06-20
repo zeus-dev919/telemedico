@@ -18,16 +18,16 @@ const DoctorUpcomingConsult = (props) => {
     rtcToken,
     channelName,
     customerName,
+    timeLeft,
     navigation,
-    item
+    item,
   } = props;
   console.log("Consult => ", day, month);
   const { doctorD } = useSelector(mapState);
 
   const handleJoin = () => {
-
     const d = new Date();
-    const timeLeft = (time - d) / 1000;
+    // const timeLeft = (time - d) / 1000;
 
     navigation.navigate("beforecall", {
       timeLeft: timeLeft,
@@ -36,8 +36,8 @@ const DoctorUpcomingConsult = (props) => {
     });
   };
 
-  console.log('----------------------item', item)
-  
+  console.log("----------------------item", item);
+
   return (
     <View style={[styles.card1, styles.shadow1]}>
       <View style={styles.doctorCard}>
@@ -70,12 +70,20 @@ const DoctorUpcomingConsult = (props) => {
               )}
             </View>
             <View style={styles.joinContainer}>
-              <TouchableOpacity
-                onPress={handleJoin}
-                style={[styles.doctorBtnStyle, styles.shadow1]}
-              >
-                <Text style={styles.doctorBtnStyleText}>Join Call</Text>
-              </TouchableOpacity>
+              {timeLeft > 0 ? (
+                <TouchableOpacity
+                  onPress={handleJoin}
+                  style={[styles.doctorBtnStyle, styles.shadow1]}
+                >
+                  <Text style={styles.doctorBtnStyleText}>Join Call</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={[styles.doctorBtnStyle2, styles.shadow1]}
+                >
+                  <Text style={styles.doctorBtnStyleText}>Call Ended</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
@@ -194,6 +202,13 @@ const styles = StyleSheet.create({
   doctorBtnStyle: {
     // backgroundColor: "#f7f9f8",
     backgroundColor: "#2758E4",
+    borderRadius: 8,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    marginTop: 10,
+  },
+  doctorBtnStyle2: {
+    backgroundColor: "#C70039",
     borderRadius: 8,
     paddingHorizontal: 40,
     paddingVertical: 10,
