@@ -18,7 +18,7 @@ const DoctorUpcomingConsult = (props) => {
     rtcToken,
     channelName,
     customerName,
-    timeLeft,
+    isExpired,
     navigation,
     item,
   } = props;
@@ -27,8 +27,7 @@ const DoctorUpcomingConsult = (props) => {
 
   const handleJoin = () => {
     const d = new Date();
-    // const timeLeft = (time - d) / 1000;
-
+    const timeLeft = (time - d) / 1000;
     navigation.navigate("beforecall", {
       timeLeft: timeLeft,
       RTCToken: rtcToken,
@@ -36,13 +35,11 @@ const DoctorUpcomingConsult = (props) => {
     });
   };
 
-  console.log("----------------------item", item);
-
   return (
     <View style={[styles.card1, styles.shadow1]}>
       <View style={styles.doctorCard}>
         <View style={styles.doctorCardLeft}>
-          {!doctorD && <Text style={styles.cardTitle1}>Upcoming Consult</Text>}
+          {!doctorD && <Text style={styles.cardTitle1}>{!isExpired ? "Previous Consult" : "Upcoming Consult"}</Text>}
           <View style={styles.containerBoxes}>
             <View style={styles.box}>
               <DayModel day={day} month={month} isSelected={false} bg="1" />
@@ -70,7 +67,7 @@ const DoctorUpcomingConsult = (props) => {
               )}
             </View>
             <View style={styles.joinContainer}>
-              {timeLeft > 0 ? (
+              {!isExpired ? (
                 <TouchableOpacity
                   onPress={handleJoin}
                   style={[styles.doctorBtnStyle, styles.shadow1]}

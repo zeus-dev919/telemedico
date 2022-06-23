@@ -179,7 +179,7 @@ const Consults = ({ route, navigation }) => {
               doctorImg={item.doctorImg}
               rtcToken={item.rtcToken}
               channelName={item.channelName}
-              timeLeft={item.timeLeft}
+              isExpired={item.timeLeft > 0 ? false : true}
               navigation={navigation}
             />
           );

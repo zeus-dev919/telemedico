@@ -138,8 +138,9 @@ const DoctorHomeConsult = (props) => {
     if (!loading) getConsult();
   }, [loading]);
 
-  const buttonPreesed = () => {
-    refetch();
+  const buttonPreesed = async () => {
+    await refetch();
+    getConsult();
   };
   return (
     <>
@@ -188,7 +189,7 @@ const DoctorHomeConsult = (props) => {
             rtcToken={item.rtcToken}
             channelName={item.channelName}
             customerName={item.customerName}
-            timeLeft={item.timeLeft}
+            isExpired={item.timeLeft > 0 ? false : true}
             navigation={navigation}
             item={item}
           />
