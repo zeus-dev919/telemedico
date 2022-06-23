@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "2.0.0",
+      "buildNumber": "2.0.1",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to use video call.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to use video call."
